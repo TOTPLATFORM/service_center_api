@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using ServiceCenter.API.ExceptionHandlers;
 using ServiceCenter.API.ExtensionMethods;
+using ServiceCenter.API.Middleware;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
+using Serilog;
 
 namespace ServiceCenter.API;
 
@@ -65,6 +67,21 @@ public class Program
 				   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionForSql"),
 					b => b.MigrationsAssembly("ServiceCenter.Infrastructure.Sql")));
 
+
+
+		builder.Services.AddJwtAuthentication(builder);
+
+		builder.Services.AddCors(options =>
+		{
+			options.AddPolicy("AllowAllOriginsPolicy", builder =>
+			{
+				builder
+				.AllowAnyOrigin()
+				.AllowAnyMethod()
+				.AllowAnyHeader();
+			});
+		});
+
 		var app = builder.Build();
 
 		// Configure the HTTP request pipeline.
@@ -77,7 +94,13 @@ public class Program
 		app.UseHttpsRedirection();
 
 		app.UseAuthorization();
+		app.UseMiddleware<AuditLogMiddleware>();
 
+		app.UseSerilogRequestLogging();
+
+		app.UseCors("AllowAllOriginsPolicy");
+
+		app.UseMiddleware<UserScopeMiddleware>();
 
 		app.MapControllers();
 
