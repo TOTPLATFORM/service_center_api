@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DTOS\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceCenter.Core\ServiceCenter.Core.csproj" />
+    <ProjectReference Include="..\ServiceCenter.Infrastructure.MySql\ServiceCenter.Infrastructure.MySql.csproj" />
+    <ProjectReference Include="..\ServiceCenter.Infrastructure.Postgresql\ServiceCenter.Infrastructure.Postgresql.csproj" />
+    <ProjectReference Include="..\ServiceCenter.Infrastructure.Sql\ServiceCenter.Infrastructure.Sql.csproj" />
+    <ProjectReference Include="..\ServiceCenter.Infrastructure\ServiceCenter.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
