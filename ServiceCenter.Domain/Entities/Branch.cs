@@ -13,6 +13,7 @@ public class Branch : AuditableEntity
     public Address Address { get; set; } 
     public string BranchPhoneNumber { get; set; } = "";
     public string EmailAddress { get; set; } = "";
-
+    public int CenterId { get; set; }
+    public Center Center { get; set; }
     public ICollection<Customer> Customers { get; set; } = new HashSet<Customer>();
 }

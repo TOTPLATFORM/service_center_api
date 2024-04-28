@@ -15,5 +15,8 @@ public class Service : AuditableEntity
     public int ServicePrice { get; set; }
     public Status Avaliable { get; set; }
 	public int ServiceCategoryId { get; set; }
-	public virtual ServiceCategory ServiceCategory { get; set; } 
+	public virtual ServiceCategory ServiceCategory { get; set; }
+	public int ServicePackageId { get; set; }
+	public virtual ServicePackage ServicePackage { get; set; }
+
 }
