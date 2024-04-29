@@ -74,6 +74,7 @@ namespace ServiceCenter.Application.Services
 
             return Result.Success(result);
         }
+        //<inheritdoc/>
         public async Task<Result<ProductBrandResponseDto>> UpdateProductBrandAsync(int id, ProductBrandRequestDto ProductBrandRequestDto)
         {
             var result = await _dbContext.ProductBrands.FindAsync(id);
@@ -107,6 +108,22 @@ namespace ServiceCenter.Application.Services
             _logger.LogInformation("Updated ProductBrand , Id {Id}", id);
 
             return Result.Success(ProductBrandResponse);
+        }
+        //<inheritdoc/>
+        public async Task<Result> DeleteProductBrandAsync(int id)
+        {
+            var ProductBrand = await _dbContext.ProductBrands.FindAsync(id);
+
+            if (ProductBrand is null)
+            {
+                _logger.LogWarning("ProductBrand Invaild Id ,Id {ProductBrandId}", id);
+                return Result.NotFound(["ProductBrand Invaild Id"]);
+            }
+
+            _dbContext.ProductBrands.Remove(ProductBrand);
+            await _dbContext.SaveChangesAsync();
+            _logger.LogInformation("ProductBrand removed successfully in the database");
+            return Result.SuccessWithMessage("ProductBrand removed successfully");
         }
 
 
