@@ -58,4 +58,23 @@ public class TimeSlotService(ServiceCenterBaseDbContext dbContext , IMapper mapp
 
 		return Result.Success(result);
 	}
+
+	///<inheritdoc/>
+	public async Task<Result<TimeSlotResponseDto>> GetTimeSlotByIdAsync(int id)
+	{
+		var result = await _dbContext.TimeSlots
+				.ProjectTo<TimeSlotResponseDto>(_mapper.ConfigurationProvider)
+				.FirstOrDefaultAsync(timeslot => timeslot.Id == id);
+
+		if (result is null)
+		{
+			_logger.LogWarning("TimeSlot Id not found,Id {TimeSlotId}", id);
+
+			return Result.NotFound(["TimeSlot not found"]);
+		}
+
+		_logger.LogInformation("Fetching TimeSlot");
+
+		return Result.Success(result);
+	}
 }
