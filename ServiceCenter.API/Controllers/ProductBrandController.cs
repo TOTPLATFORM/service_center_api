@@ -34,5 +34,18 @@ namespace ServiceCenter.API.Controllers
         {
             return await _productBrandService.GetAllProductBrandAsync();
         }
+        /// <summary>
+        /// action for get product brand by id that take product brand id.  
+        /// </summary>
+        /// <returns>result of product brand response dto</returns>
+        [HttpGet("{id}")]
+        //[Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(Result<ProductBrandResponseDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        public async Task<Result<ProductBrandResponseDto>> GetProductBrandById(int id)
+        {
+            return await _productBrandService.GetProductBrandByIdAsync(id);
+        }
+
     }
-    }
+}
