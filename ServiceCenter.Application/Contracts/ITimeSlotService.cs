@@ -38,5 +38,11 @@ namespace ServiceCenter.Application.Contracts
 		/// <returns>Updated TimeSlot </returns>
 		public Task<Result<TimeSlotResponseDto>> UpdateTimeSlotAsync(int id, TimeSlotRequestDto timeSlotRequestDto);
 
+		/// <summary>
+		/// function to delete TimeSlot that take timeSlotDto   
+		/// </summary>
+		/// <param name="id">time slot id</param>
+		/// <returns>TimeSlot removed successfully </returns>
+		public Task<Result> DeleteTimeSlotAsync(int id);
 	}
 }

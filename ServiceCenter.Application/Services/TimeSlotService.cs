@@ -114,4 +114,25 @@ public class TimeSlotService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 
 		return Result.Success(timeSlotResponse);
 	}
+
+	///<inheritdoc/>
+	public async Task<Result> DeleteTimeSlotAsync(int id)
+	{
+		var timeSlot = await _dbContext.TimeSlots.FindAsync(id);
+
+		if (timeSlot is null)
+		{
+			_logger.LogWarning("TimeSlot Invaild Id ,Id {TimeSlotId}", id);
+
+			return Result.NotFound(["TimeSlot Invaild Id"]);
+		}
+
+		_dbContext.TimeSlots.Remove(timeSlot);
+
+		await _dbContext.SaveChangesAsync();
+
+		_logger.LogInformation("TimeSlot removed successfully in the database");
+
+		return Result.SuccessWithMessage("TimeSlot removed successfully");
+	}
 }
