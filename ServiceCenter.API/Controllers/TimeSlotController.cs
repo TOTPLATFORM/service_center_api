@@ -46,4 +46,13 @@ public class TimeSlotController(ITimeSlotService timeSlotService) : BaseControll
 		return await _timeSlotService.GetTimeSlotByIdAsync(id);
 	}
 
+	[HttpPut("{id}")]
+	//[Authorize(Roles = "Admin")]
+	[ProducesResponseType(typeof(Result<TimeSlotResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result<TimeSlotResponseDto>> UpdateTimeSlot(int id, TimeSlotRequestDto timeSlotDto)
+	{
+		return await _timeSlotService.UpdateTimeSlotAsync(id, timeSlotDto);
+	}
+
 }
