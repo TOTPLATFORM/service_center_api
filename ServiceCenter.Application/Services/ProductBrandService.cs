@@ -56,6 +56,24 @@ namespace ServiceCenter.Application.Services
             return Result.Success(result);
         }
 
+        ///<inheritdoc/>
+        public async Task<Result<ProductBrandResponseDto>> GetProductBrandByIdAsync(int id)
+        {
+            var result = await _dbContext.ProductBrands
+                    .ProjectTo<ProductBrandResponseDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync(ProductBrand => ProductBrand.Id == id);
+
+            if (result is null)
+            {
+                _logger.LogWarning("ProductBrand Id not found,Id {ProductBrandId}", id);
+
+                return Result.NotFound(["ProductBrand not found"]);
+            }
+
+            _logger.LogInformation("Fetching ProductBrand");
+
+            return Result.Success(result);
+        }
 
 
 

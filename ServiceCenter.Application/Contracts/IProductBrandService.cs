@@ -21,6 +21,12 @@ namespace ServiceCenter.Application.Contracts
 		/// </summary>
 		/// <returns>list all product brand response dto </returns>
 		public Task<Result<List<ProductBrandResponseDto>>> GetAllProductBrandAsync();
+        /// <summary>
+        /// function to get  product brand by id that take   product brand id
+        /// </summary>
+        /// <param name="id"> product brand id</param>
+        /// <returns> product brand response dto</returns>
+        public Task<Result<ProductBrandResponseDto>> GetProductBrandByIdAsync(int id);
 
     }
 }
