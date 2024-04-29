@@ -11,9 +11,9 @@ public class Appotiment: Time
 {
 	
 	public DateOnly Date { get; set; }
-	public int CustomerId { get; set; }
+	public string CustomerId { get; set; } = "";
     public Customer Customer { get; set; }
-	public int EmployeeId { get; set; }
+	public string EmployeeId { get; set; } = "";
 	public Employee Employee { get; set; }
 
 

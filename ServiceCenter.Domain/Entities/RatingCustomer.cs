@@ -9,7 +9,7 @@ namespace ServiceCenter.Domain.Entities;
 
 public class RatingCustomer  : BaseEntity
 {
-    public int  CustomerId { get; set; }
+    public string CustomerId { get; set; } = "";
     public int RatingId { get; set; }
     public Customer Customer { get; set; }
     public Rating Rating { get; set; }

@@ -11,6 +11,6 @@ public class Schedule :  AuditableEntity
 {
 	public int? TimeSlotId { get; set; }
     public TimeSlot TimeSlot { get; set; }
-    public int?  EmployeeId  { get; set; }
+    public string?  EmployeeId  { get; set; }
     public Employee Employee { get; set; }
 }

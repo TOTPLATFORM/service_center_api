@@ -18,7 +18,7 @@ public class Service : AuditableEntity
 	public virtual ServiceCategory ServiceCategory { get; set; }
 	public int ServicePackageId { get; set; }
 	public virtual ServicePackage ServicePackage { get; set; }
-    public int EmployeeId { get; set; }
+    public string EmployeeId { get; set; } = "";
     public Employee Employee { get; set; }
 
 }

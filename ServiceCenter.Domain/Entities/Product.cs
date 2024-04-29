@@ -16,6 +16,6 @@ public class Product : AuditableEntity
     public virtual ProductCategory ProductCategory { get; set; }
 	public int ProductBrandId { get; set; }
 	public virtual ProductBrand ProductBrand { get; set; }
-    public int SalesId { get; set; }
+    public string SalesId { get; set; } = "";
     public virtual Sales Sales { get; set; }    
 }
