@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceCenter.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS
 {
-    public class ServiceCategoryRequestDto
+    public class ServicePackageRequestDto
     {
         [Required]
-        public string ServiceCategoryName { get; set; } = "";
+        public string PackageName { get; set; } = "";
         [Required]
-        public string ServiceCategoryDescription { get; set; } = "";
+        public string PackageDescription { get; set; } = "";
+        [Required]
+        public int PackagePrice { get; set; }
         [Required]
         public string ServiceName { get; set; } = "";
     }
