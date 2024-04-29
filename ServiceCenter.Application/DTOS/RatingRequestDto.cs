@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceCenter.Application.DTOS;
-    public class ItemOrderRequestDto
+namespace ServiceCenter.Application.DTOS
+{
+    public class RatingRequestDto
     {
         [Required]
-        public int ItemId { get; set; }
+        public int RatingValue { get; set; }
         [Required]
-        [Range(1, int.MaxValue)]
-        public int Quantity { get; set; }
+        public DateOnly RatingDate { get; set; }
+
     }
 }
