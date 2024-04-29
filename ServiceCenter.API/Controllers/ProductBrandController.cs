@@ -46,6 +46,14 @@ namespace ServiceCenter.API.Controllers
         {
             return await _productBrandService.GetProductBrandByIdAsync(id);
         }
+        [HttpPut("{id}")]
+        //[Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(Result<ProductBrandResponseDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        public async Task<Result<ProductBrandResponseDto>> UpdateProductBrand(int id, ProductBrandRequestDto productBrandDto)
+        {
+            return await _productBrandService.UpdateProductBrandAsync(id, productBrandDto);
+        }
 
     }
 }

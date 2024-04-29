@@ -1,0 +1,31 @@
+2024-04-30 00:45:43 [INF] [ServiceCenter.Application.Services.ProductBrandService] []  Fetching ProductBrand
+    
+2024-04-30 00:45:43 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/ProductBrand/1 responded 200 in 1072.3163 ms
+    
+2024-04-30 00:45:43 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:7163,Path:/api/ProductBrand/1,
+ Controller Name:ProductBrand,
+ Client IP: ::1 at 29-Apr-24 9:45:43 PM +00:00
+    
+2024-04-30 00:45:43 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 29-Apr-24 9:45:43 PM +00:00
+    
+2024-04-30 00:45:43 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":{"id":1,"brandName":"ghjkl","brandDescription":"hjkl","countryOfOrigin":"hjkl","foundedYear":"2024-03-03"},"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-04-30 01:04:49 [INF] [ServiceCenter.Application.Services.ProductBrandService] []  Updated ProductBrand , Id 1
+    
+2024-04-30 01:04:49 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP PUT /api/ProductBrand/1 responded 200 in 1333.8040 ms
+    
+2024-04-30 01:04:49 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:7163,Path:/api/ProductBrand/1,
+ Controller Name:ProductBrand,
+ Client IP: ::1 at 29-Apr-24 10:04:49 PM +00:00
+    
+2024-04-30 01:04:49 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "brandName": "uip",
+  "brandDescription": "kk",
+  "countryOfOrigin": "jkk",
+  "foundedYear": "2024-03-03"
+}
+    
+2024-04-30 01:04:49 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 29-Apr-24 10:04:49 PM +00:00
+    
+2024-04-30 01:04:49 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":{"id":1,"brandName":"uip","brandDescription":"kk","countryOfOrigin":"jkk","foundedYear":"2024-03-03"},"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
