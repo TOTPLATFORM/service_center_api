@@ -11,5 +11,5 @@ public class ProductCategory : AuditableEntity
 {
     public string CategoryName { get; set; } = "";
     public int ReferenceNumber { get; set; }
-    public ICollection<Product> Products { get; set; } = new HashSet<Product>();
+    public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
 }

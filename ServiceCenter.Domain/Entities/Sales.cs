@@ -8,6 +8,6 @@ namespace ServiceCenter.Domain.Entities;
 
 public class Sales : ApplicationUser
 {
-    public ICollection<Product> Products { get; set; } = new HashSet<Product>();
+    public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
     
 }

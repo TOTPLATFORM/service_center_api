@@ -9,8 +9,8 @@ namespace ServiceCenter.Domain.Entities;
 
 public class CustomerService : BaseEntity
 {
-    public int CustomerId { get; set; }
+    public string CustomerId { get; set; }
     public int ServiceId { get; set; }
-    public Customer Customer { get; set; }
+    public virtual Customer Customer { get; set; }
     public Service Service { get; set; }
 }
