@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -53,6 +54,19 @@ namespace ServiceCenter.API.Controllers
         public async Task<Result<ProductBrandResponseDto>> UpdateProductBrand(int id, ProductBrandRequestDto productBrandDto)
         {
             return await _productBrandService.UpdateProductBrandAsync(id, productBrandDto);
+        }
+        /// <summary>
+        ///  action for remove product brand that take product brand id   
+        /// </summary>
+        /// <param name="id">product brand id</param>
+        /// <returns>result of product brand removed successfully </returns>
+        [HttpDelete]
+      //  [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        public async Task<Result> DeleteProductBrandAsycn(int id)
+        {
+            return await _productBrandService.DeleteProductBrandAsync(id);
         }
 
     }
