@@ -9,4 +9,3 @@ public class Inventory : AuditableEntity
 	public int InventoryCapacity { get; set; }
 	public virtual ICollection<ItemCategory> Categories { get; set; } = new HashSet<ItemCategory>();
 }
-}
