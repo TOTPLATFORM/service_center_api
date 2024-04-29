@@ -27,6 +27,13 @@ namespace ServiceCenter.Application.Contracts
         /// <param name="id"> product brand id</param>
         /// <returns> product brand response dto</returns>
         public Task<Result<ProductBrandResponseDto>> GetProductBrandByIdAsync(int id);
+        /// <summary>
+		/// function to update product brand that take ProductBrandRequestDto   
+		/// </summary>
+		/// <param name="id">product brand id</param>
+		/// <param name="ProductBrandRequestDto">product brand dto</param>
+		/// <returns>Updated product brand </returns>
+		public Task<Result<ProductBrandResponseDto>> UpdateProductBrandAsync(int id, ProductBrandRequestDto ProductBrandRequestDto);
 
     }
 }

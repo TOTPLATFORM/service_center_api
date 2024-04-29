@@ -74,7 +74,40 @@ namespace ServiceCenter.Application.Services
 
             return Result.Success(result);
         }
+        public async Task<Result<ProductBrandResponseDto>> UpdateProductBrandAsync(int id, ProductBrandRequestDto ProductBrandRequestDto)
+        {
+            var result = await _dbContext.ProductBrands.FindAsync(id);
 
+            if (result is null)
+            {
+                _logger.LogWarning("ProductBrand Id not found,Id {ProductBrandId}", id);
+                return Result.NotFound(["ProductBrand not found"]);
+            }
+
+            result.ModifiedBy = _userContext.Email;
+
+            _mapper.Map(ProductBrandRequestDto, result);
+
+            await _dbContext.SaveChangesAsync();
+
+            var ProductBrandResponse = _mapper.Map<ProductBrandResponseDto>(result);
+            if (ProductBrandResponse is null)
+            {
+                _logger.LogError("Failed to map ProductBrandRequestDto to ProductBrandResponseDto. ProductBrandRequestDto: {@ProductBrandRequestDto}", ProductBrandResponse);
+
+                return Result.Invalid(new List<ValidationError>
+            {
+                    new ValidationError
+                    {
+                        ErrorMessage = "Validation Errror"
+                    }
+            });
+            }
+
+            _logger.LogInformation("Updated ProductBrand , Id {Id}", id);
+
+            return Result.Success(ProductBrandResponse);
+        }
 
 
     }
