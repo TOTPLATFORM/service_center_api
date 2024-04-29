@@ -15,6 +15,6 @@ public class Complaint : AuditableEntity
     public string ComplaintCategory { get; set; } = "";
     public Status ComplaintStatus { get; set; }
     public string AssignedTo { get; set; } = "";
-    public string CustomerId { get; set; } = "";
+    public string CustomerId { get; set; }
     public virtual Customer Customer { get; set; }
 }

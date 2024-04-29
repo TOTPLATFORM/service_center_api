@@ -1,8 +1,8 @@
 ﻿namespace ServiceCenter.Domain.Entities;
 
-public class Employee : ApplicationUser
+public class Employee :ApplicationUser
 {
     public int DepartmentId { get; set; }
-    public Department Department { get; set; }
-    public ICollection<Service> Services { get; set; }  =  new HashSet<Service>();
+    public virtual Department Department { get; set; }
+    public virtual ICollection<Service> Services { get; set; }  =  new HashSet<Service>();
 }

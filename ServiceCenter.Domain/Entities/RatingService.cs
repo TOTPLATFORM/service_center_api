@@ -11,6 +11,6 @@ public class RatingService : BaseEntity
 {
     public int RatingId { get; set; }
     public int ServiceId { get; set; }
-    public Service Service { get; set; }
-    public Rating Rating { get; set; }
+    public virtual Service Service { get; set; }
+    public virtual Rating Rating { get; set; }
 }

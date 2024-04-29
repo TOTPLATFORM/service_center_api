@@ -30,4 +30,8 @@ public class ServiceCenterBaseDbContext : IdentityDbContext<ApplicationUser>
         base.OnModelCreating(builder);
     }
 
+    public DbSet<TimeSlot> TimeSlots { get; set; }
+    public DbSet<Schedule> Schedules { get; set; }
+
+
 }

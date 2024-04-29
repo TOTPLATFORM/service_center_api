@@ -14,10 +14,6 @@ public class Shop : AuditableEntity
     public string ShopName { get; set; } = "";
     public string ShopPhoneNumber { get; set; } = "";
     public DateOnly CreatedDate { get; set; }
-     
-
-
-
-	public ICollection<Product> Products { get; set; } = new HashSet<Product>();
+	public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
 
 }

@@ -10,5 +10,5 @@ namespace ServiceCenter.Domain.Entities;
 public class Contract : AuditableEntity
 {
     public int ServicePackageId { get; set; }
-    public ServicePackage ServicePackage { get; set; }
+    public virtual ServicePackage ServicePackage { get; set; }
 }

@@ -1,0 +1,27 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using ServiceCenter.Application.Contracts;
+using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Result;
+
+namespace ServiceCenter.API.Controllers;
+
+public class TimeSlotController(ITimeSlotService timeSlotService) : BaseController
+{
+	private readonly ITimeSlotService _timeSlotService = timeSlotService;
+
+	/// <summary>
+	/// action for add time slot action that take timeSlot dto   
+	/// </summary>
+	/// <param name="timeSlotDto">time slot dto</param>
+	/// <returns>result for time slot added successfully.</returns>
+	[HttpPost]
+	//[Authorize(Roles = "Admin")]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result> AddTimeSlot(TimeSlotRequestDto timeSlotDto)
+	{
+		return await _timeSlotService.AddTimeSlotAsync(timeSlotDto);
+	}
+}

@@ -8,6 +8,8 @@ using ServiceCenter.API.Middleware;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
 using Serilog;
+using ServiceCenter.Application.Contracts;
+using ServiceCenter.Application.Services;
 
 namespace ServiceCenter.API;
 
@@ -24,6 +26,8 @@ public class Program
 		builder.Services.AddExceptionHandler<ResourceNotFoundExceptionHandler>();
 		builder.Services.AddExceptionHandler<AuthorizationExceptionHandler>();
 		builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+		builder.Services.AddScoped(typeof(UserContextService));
+
 		builder.Services.AddControllers();
 		// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 		builder.Services.AddEndpointsApiExplorer();
@@ -59,6 +63,7 @@ public class Program
 
 		builder.Services.AddCenterServices(builder.Configuration);
 
+		builder.Services.AddScoped(typeof(ITimeSlotService), typeof(TimeSlotService));
 
 		builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 				   .AddEntityFrameworkStores<ServiceCenterBaseDbContext>();

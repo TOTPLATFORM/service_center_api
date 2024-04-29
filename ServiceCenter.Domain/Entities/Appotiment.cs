@@ -11,11 +11,11 @@ public class Appotiment: Time
 {
 	
 	public DateOnly Date { get; set; }
-	public string CustomerId { get; set; } = "";
-    public Customer Customer { get; set; }
-	public string EmployeeId { get; set; } = "";
-	public Employee Employee { get; set; }
-
+	public string CustomerId { get; set; }
+    public virtual Customer Customer { get; set; }
+	//public string EmployeeId { get; set; }
+	//public virtual Employee Employee { get; set; }
 
 
 }
+

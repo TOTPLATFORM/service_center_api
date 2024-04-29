@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceCenter.Domain.Entities
+namespace ServiceCenter.Domain.Entities;
+
+public class ApplicationUser : IdentityUser
 {
-	public class ApplicationUser : IdentityUser
-{
-    public string FirstName { get; set; } = "";
+	public string FirstName { get; set; } = "";
 	public string LastName { get; set; } = "";
 	public DateOnly DateOfBirth { get; set; }
 	public string Gender { get; set; } = "";
-}
 }
