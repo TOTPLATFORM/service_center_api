@@ -25,4 +25,5 @@ namespace ServiceCenter.Application.DTOS
         public int ServicePackageId { get; set; }
         [Required]
         public string EmployeeId { get; set; } = "";
+    }
 }
