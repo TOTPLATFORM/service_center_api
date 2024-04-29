@@ -69,5 +69,19 @@ namespace ServiceCenter.API.Controllers
             return await _productBrandService.DeleteProductBrandAsync(id);
         }
 
+        /// <summary>
+        /// function to search by ProductBrand name  that take  ProductBrand name
+        /// </summary>
+        /// <param name="text">ProductBrand name</param>
+        /// <returns>ProductBrand response dto </returns>
+         [HttpGet("search")]
+        //[Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(Result<ProductBrandResponseDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        public async Task<Result<List<ProductBrandResponseDto>>> SearchProductBrandByTextAsync(string text)
+        {
+            return await _productBrandService.SearchProductBrandByTextAsync(text);
+        }
+
     }
 }
