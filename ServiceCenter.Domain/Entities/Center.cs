@@ -11,7 +11,7 @@ public class Center : AuditableEntity
 {
 	public string CenterName { get; set; } = "";
     public int OpeningHours { get; set; }
-    public string Specialty { get; set; }
+    public string Specialty { get; set; } = "";
 	public ICollection<Branch> branches { get; set; } = new HashSet<Branch>();
     public ICollection<Department> Departments { get; set; } = new HashSet<Department>();
     public ICollection<Room> Rooms { get; set; } = new HashSet<Room>();

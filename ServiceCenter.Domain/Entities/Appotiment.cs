@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Domain.Entities;
 
-public class Appotiment: AuditableEntity
+public class Appotiment: Time
 {
-	public TimeOnly StartTime { get; set; }
-	public TimeOnly EndTime { get; set; }
+	
 	public DateOnly Date { get; set; }
 	public int CustomerId { get; set; }
     public Customer Customer { get; set; }
+	public int EmployeeId { get; set; }
+	public Employee Employee { get; set; }
 
 
 

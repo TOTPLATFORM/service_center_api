@@ -12,10 +12,11 @@ namespace ServiceCenter.Domain.Entities
 	{
 		public string VendorName { get; set; } = "";
 		public string VendorType { get; set; } = "";
-        public string VendorPhoneNumber { get; set; } = "";
         public string ContactPerson { get; set; } = "";
         public DateOnly ContractStartDate { get; set; }
         public DateOnly ContractEndDate { get; set; }
+        public int CenterId { get; set; }
+        public Center Center { get; set; }
 
     }
 }
