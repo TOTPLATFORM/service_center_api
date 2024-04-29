@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Services;
 
-public class TimeSlotService(ServiceCenterBaseDbContext dbContext , IMapper mapper, ILogger<TimeSlotService> logger, IUserContextService userContext) : ITimeSlotService
+public class TimeSlotService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<TimeSlotService> logger, IUserContextService userContext) : ITimeSlotService
 {
 	private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
 	private readonly IMapper _mapper = mapper;
@@ -76,5 +76,42 @@ public class TimeSlotService(ServiceCenterBaseDbContext dbContext , IMapper mapp
 		_logger.LogInformation("Fetching TimeSlot");
 
 		return Result.Success(result);
+	}
+
+	///<inheritdoc/>
+
+	public async Task<Result<TimeSlotResponseDto>> UpdateTimeSlotAsync(int id, TimeSlotRequestDto timeSlotRequestDto)
+	{
+		var result = await _dbContext.TimeSlots.FindAsync(id);
+
+		if (result is null)
+		{
+			_logger.LogWarning("TimeSlot Id not found,Id {TimeSlotId}", id);
+			return Result.NotFound(["TimeSlot not found"]);
+		}
+
+		result.ModifiedBy = _userContext.Email;
+
+		_mapper.Map(timeSlotRequestDto, result);
+
+		await _dbContext.SaveChangesAsync();
+
+		var timeSlotResponse = _mapper.Map<TimeSlotResponseDto>(result);
+		if (timeSlotResponse is null)
+		{
+			_logger.LogError("Failed to map TimeSlotRequestDto to TimeSlotResponseDto. TimeSlotRequestDto: {@TimeSlotRequestDto}", timeSlotResponse);
+
+			return Result.Invalid(new List<ValidationError>
+			{
+					new ValidationError
+					{
+						ErrorMessage = "Validation Errror"
+					}
+			});
+		}
+
+		_logger.LogInformation("Updated TimeSlot , Id {Id}", id);
+
+		return Result.Success(timeSlotResponse);
 	}
 }
