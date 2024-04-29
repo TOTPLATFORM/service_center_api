@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -19,6 +21,9 @@ public class TimeSlotService(ServiceCenterBaseDbContext dbContext , IMapper mapp
 	private readonly IMapper _mapper = mapper;
 	private readonly ILogger<TimeSlotService> _logger = logger;
 	private readonly IUserContextService _userContext = userContext;
+
+
+	///<inheritdoc/>
 
 	public async Task<Result> AddTimeSlotAsync(TimeSlotRequestDto timeSlotRequestDto)
 	{
@@ -41,29 +46,16 @@ public class TimeSlotService(ServiceCenterBaseDbContext dbContext , IMapper mapp
 		return Result.SuccessWithMessage("TimeSlot added successfully");
 	}
 
+	///<inheritdoc/>
 
-	//public Task<Result> DeleteTimeSlotAsync(int id)
-	//{
-	//	throw new NotImplementedException();
-	//}
+	public async Task<Result<List<TimeSlotResponseDto>>> GetAllTimeSlotAsync()
+	{
+		var result = await _dbContext.TimeSlots
+				 .ProjectTo<TimeSlotResponseDto>(_mapper.ConfigurationProvider)
+				 .ToListAsync();
 
-	//public Task<Result<List<TimeSlotResponseDto>>> GetAllTimeSlotAsync()
-	//{
-	//	throw new NotImplementedException();
-	//}
+		_logger.LogInformation("Fetching all TimeSlot. Total count: {TimeSlot}.", result.Count);
 
-	//public Task<Result<TimeSlotResponseDto>> GetTimeSlotByIdAsync(int id)
-	//{
-	//	throw new NotImplementedException();
-	//}
-
-	//public Task<Result<TimeSlotResponseDto>> SearchTimeSlotByTextAsync(string text)
-	//{
-	//	throw new NotImplementedException();
-	//}
-
-	//public Task<Result<TimeSlotResponseDto>> UpdateTimeSlotAsync(int id, TimeSlotRequestDto timeSlotRequestDto)
-	//{
-	//	throw new NotImplementedException();
-	//}
+		return Result.Success(result);
+	}
 }
