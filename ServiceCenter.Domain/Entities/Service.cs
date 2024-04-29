@@ -1,0 +1,24 @@
+﻿using ServiceCenter.Core.Entities;
+using ServiceCenter.Domain.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ServiceCenter.Domain.Entities;
+
+public class Service : AuditableEntity
+{
+    public string ServiceName { get; set; } = "";
+    public string ServiceDescription { get; set; } = "";
+    public int ServicePrice { get; set; }
+    public Status Avaliable { get; set; }
+	public int ServiceCategoryId { get; set; }
+	public virtual ServiceCategory ServiceCategory { get; set; }
+	public int ServicePackageId { get; set; }
+	public virtual ServicePackage ServicePackage { get; set; }
+    public int EmployeeId { get; set; }
+    public Employee Employee { get; set; }
+
+}
