@@ -16,6 +16,11 @@ namespace ServiceCenter.Application.Contracts
         /// <param name=" productBrandRequestDto">product brand request dto</param>
         /// <returns> product brand added successfully </returns>
         public Task<Result> AddProductBrandAsync( ProductBrandRequestDto  productBrandRequestDto);
+        /// <summary>
+		/// function to get all productBrand 
+		/// </summary>
+		/// <returns>list all product brand response dto </returns>
+		public Task<Result<List<ProductBrandResponseDto>>> GetAllProductBrandAsync();
 
     }
 }

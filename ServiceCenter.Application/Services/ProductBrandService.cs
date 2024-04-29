@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
@@ -42,7 +43,18 @@ namespace ServiceCenter.Application.Services
             _logger.LogInformation("ProductBrand added successfully to the database");
             return Result.SuccessWithMessage("ProductBrand added successfully");
         }
+        ///<inheritdoc/>
 
+        public async Task<Result<List< ProductBrandResponseDto>>> GetAllProductBrandAsync()
+        {
+            var result = await _dbContext.ProductBrands
+                     .ProjectTo<ProductBrandResponseDto>(_mapper.ConfigurationProvider)
+                     .ToListAsync();
+
+            _logger.LogInformation("Fetching all  productBrand. Total count: { productBrand}.", result.Count);
+
+            return Result.Success(result);
+        }
 
 
 
