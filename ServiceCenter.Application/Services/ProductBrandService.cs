@@ -10,6 +10,7 @@ using ServiceCenter.Infrastructure.BaseContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -125,7 +126,17 @@ namespace ServiceCenter.Application.Services
             _logger.LogInformation("ProductBrand removed successfully in the database");
             return Result.SuccessWithMessage("ProductBrand removed successfully");
         }
+        //<inheritdoc/>
 
+        public async Task<Result<List<ProductBrandResponseDto>>> SearchProductBrandByTextAsync(string text)
+        {
+            var names = await _dbContext.Users.OfType<ProductBrand>()
+                .ProjectTo<ProductBrandResponseDto>(_mapper.ConfigurationProvider)
+                .Where(n => n.BrandName.Contains(text))
+                .ToListAsync();
+            _logger.LogInformation("Fetching search ProductBrand by name . Total count: {ProductBrand}.", names.Count);
+            return Result.Success(names);
+        }
 
     }
 }

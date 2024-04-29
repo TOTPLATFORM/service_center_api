@@ -40,5 +40,11 @@ namespace ServiceCenter.Application.Contracts
         /// <param name="id">product brand id</param>
         /// <returns>ProductBrand removed successfully </returns>
         public Task<Result> DeleteProductBrandAsync(int id);
+        /// <summary>
+        /// function to search by ProductBrand name  that take  ProductBrand name
+        /// </summary>
+        /// <param name="text">ProductBrand name</param>
+        /// <returns>ProductBrand response dto </returns>
+        public  Task<Result<List<ProductBrandResponseDto>>> SearchProductBrandByTextAsync(string text);
     }
 }
