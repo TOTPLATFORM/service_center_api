@@ -15,6 +15,6 @@ namespace ServiceCenter.Application.DTOS
         public string ComplaintCategory { get; set; } = "";
         public Status ComplaintStatus { get; set; }
         public string AssignedTo { get; set; } = "";
-        public string CustomerName { get; set; } = "";
+        public string? CustomerName { get; set; } = "";
     }
 }
