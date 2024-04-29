@@ -24,4 +24,12 @@ public class TimeSlotController(ITimeSlotService timeSlotService) : BaseControll
 	{
 		return await _timeSlotService.AddTimeSlotAsync(timeSlotDto);
 	}
+	[HttpGet]
+	//[Authorize(Roles = "Admin")]
+	[ProducesResponseType(typeof(Result<List<TimeSlotResponseDto>>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result<List<TimeSlotResponseDto>>> GetAllTimeSlots()
+	{
+		return await _timeSlotService.GetAllTimeSlotAsync();
+	}
 }
