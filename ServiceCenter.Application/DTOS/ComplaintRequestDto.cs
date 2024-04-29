@@ -20,7 +20,6 @@ namespace ServiceCenter.Application.DTOS
         public Status ComplaintStatus { get; set; }
         [Required]
         public string AssignedTo { get; set; } = "";
-        [Required]
-        public string CustomerId { get; set; } = "";
+        public string? CustomerId { get; set; } = "";
     }
 }
