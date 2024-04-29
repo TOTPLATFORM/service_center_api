@@ -1,6 +1,6 @@
-﻿using HMSWithLayers.Core.JWT;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using ServiceCenter.Core.JWT;
 using System.Text;
 
 namespace ServiceCenter.API.ExtensionMethods;
