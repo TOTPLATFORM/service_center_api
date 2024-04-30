@@ -5,83 +5,84 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using ServiceCenter.Application.Services;
 
 namespace ServiceCenter.API.Controllers;
 
-public class ItemCategoryController(IItemCategoryService itemCategoryService) : BaseController
+public class ItemCategoryCategoryController(IItemCategoryService itemCategoryService) : BaseController
 {
     private readonly IItemCategoryService _itemCategoryService = itemCategoryService;
 
-
     /// <summary>
-    /// action for get all item categories .
+    /// action for add ItemCategory action that take  ItemCategory dto   
     /// </summary>
-    /// <returns>result of list from  item category response dtos</returns>
+    /// <param name="itemCategoryDto">ItemCategory dto</param>
+    /// <returns>result for ItemCategory added successfully.</returns>
+    [HttpPost]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result> AddItemCategory(ItemCategoryRequestDto itemCategoryDto)
+    {
+        return await _itemCategoryService.AddItemCategoryAsync(itemCategoryDto);
+    }
+
     [HttpGet]
-    [Authorize(Roles = "Admin , Employee")]
+    //[Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<ItemCategoryResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<ItemCategoryResponseDto>>> GetAllCategoriesAsync()
+    public async Task<Result<List<ItemCategoryResponseDto>>> GetAllItemCategorys()
     {
-        return await _itemCategoryService.GetAllCategoriesAsync();
+        return await _itemCategoryService.GetAllItemCategoryAsync();
     }
-
     /// <summary>
-    /// action for get item category by id.
+    /// action for get ItemCategory by id that take ItemCategory id.  
     /// </summary>
-    /// <param name="id">id for item category</param>
-    /// <returns>result of item category response dto</returns>
+    /// <returns>result of ItemCategory response dto</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "Admin , Employee")]
+    //[Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<ItemCategoryResponseDto>> GetCategoryByIdAsync(int id)
+    public async Task<Result<ItemCategoryResponseDto>> GetItemCategoryById(int id)
     {
-        return await _itemCategoryService.GetCategoryByIdAsync(id);
+        return await _itemCategoryService.GetItemCategoryByIdAsync(id);
     }
-
-    /// <summary>
-    /// action for add new item category that take item category request dto.
-    /// </summary>
-    /// <param name="categoryDto">item category request dto</param>
-    /// <returns>result of an added item category successfully</returns>
-
-    [HttpPost]
-    [Authorize(Roles = "Admin , Employee")]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result> AddCategoryAsync(ItemCategoryRequestDto categoryDto)
-    {
-        return await _itemCategoryService.AddCategoryAsync(categoryDto);
-    }
-
-    /// <summary>
-    /// action for update an existing item category that take item category request dto and id item category.
-    /// </summary>
-    /// <param name="id">id of the item category</param>
-    /// <returns>result of item category after updated</returns>
-
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin , Employee")]
+    //[Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<ItemCategoryResponseDto>> UpdateCategoryAsync(ItemCategoryRequestDto categoryDto, int id)
+    public async Task<Result<ItemCategoryResponseDto>> UpdateItemCategory(int id, ItemCategoryRequestDto itemCategoryDto)
     {
-        return await _itemCategoryService.UpdateCategoryAsync(id, categoryDto);
+        return await _itemCategoryService.UpdateItemCategoryAsync(id, itemCategoryDto);
+    }
+    /// <summary>
+    ///  action for remove ItemCategory that take ItemCategory id   
+    /// </summary>
+    /// <param name="id">ItemCategory id</param>
+    /// <returns>result of ItemCategory removed successfully </returns>
+    [HttpDelete]
+    //  [Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result> DeleteItemCategoryAsycn(int id)
+    {
+        return await _itemCategoryService.DeleteItemCategoryAsync(id);
     }
 
     /// <summary>
-    /// action for remove an item category that take item category id.
+    /// function to search by ItemCategory name  that take  ItemCategory name
     /// </summary>
-    /// <param name="id">id of the item category</param>
-    /// <returns>result of an remove item category successfully</returns>
-
-    [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin , Employee")]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    /// <param name="text">ItemCategory name</param>
+    /// <returns>ItemCategory response dto </returns>
+    [HttpGet("search")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result> DeleteCategoryAsync(int id)
+    public async Task<Result<List<ItemCategoryResponseDto>>> SearchItemCategoryByTextAsync(string text)
     {
-        return await _itemCategoryService.DeleteCategoryAsync(id);
+        return await _itemCategoryService.SearchItemCategoryByTextAsync(text);
     }
 }
+
+
+
