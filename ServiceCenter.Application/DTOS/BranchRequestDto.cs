@@ -15,13 +15,14 @@ public class BranchRequestDto
     [Required]
     public Address Address { get; set; }
     [Required]
+    [Phone]
     public string BranchPhoneNumber { get; set; } = "";
     [Required]
+    [EmailAddress]
     public string EmailAddress { get; set; } = "";
     [Required]
     public int CenterId { get; set; }
-    [Required]
-    public string CustomerId { get; set; } = "";
+    public string? CustomerId { get; set; } = default;
     
 
 }
