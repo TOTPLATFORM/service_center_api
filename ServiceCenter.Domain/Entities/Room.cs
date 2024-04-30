@@ -12,5 +12,5 @@ public class Room : AuditableEntity
 	public int RoomNumber { get; set; }
 	public bool Availability { get; set; }
     public int CenterId { get; set; }
-    public virtual Center Center { get; set; }
+	public virtual Center Center { get; set; } = default;
 }

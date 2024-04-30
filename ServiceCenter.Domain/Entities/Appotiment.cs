@@ -11,10 +11,9 @@ public class Appotiment: Time
 {
 	
 	public DateOnly Date { get; set; }
-	public string CustomerId { get; set; }
-    public virtual Customer Customer { get; set; }
-	//public string EmployeeId { get; set; }
-	//public virtual Employee Employee { get; set; }
+	public string CustomerId { get; set; } = default;
+	public virtual Customer Customer { get; set; } = default;
+
 
 
 }

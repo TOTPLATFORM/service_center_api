@@ -12,5 +12,5 @@ public class CustomerService : BaseEntity
     public string CustomerId { get; set; }
     public int ServiceId { get; set; }
     public virtual Customer Customer { get; set; }
-    public Service Service { get; set; }
+    public virtual Service Service { get; set; }
 }

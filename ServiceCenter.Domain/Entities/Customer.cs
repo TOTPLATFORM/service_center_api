@@ -8,9 +8,9 @@ namespace ServiceCenter.Domain.Entities;
 
 public class Customer : ApplicationUser
 {
-    public Address Address { get; set; } 
+    public Address Address { get; set; } = default;
     public int BranchId { get; set; }
-    public virtual Branch Branch { get; set; }
+    public virtual Branch Branch { get; set; } = default;
     public  virtual ICollection<Complaint> Complaints { get; set; } = new HashSet<Complaint>();
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new HashSet<Feedback>();
     public virtual ICollection<Appotiment> Appotiments  { get; set; } = new HashSet<Appotiment>();
