@@ -20,6 +20,7 @@ public class MappingProfiles : Profile
 
       
         this.AddProductCategoryMapping();
+        this.AddProductMapping();
       
     }
 }
