@@ -34,4 +34,10 @@ public interface IProductService : IApplicationService, IScopedService
     /// <param name="productRequestDto">Product dto</param>
     /// <returns>Updated Product </returns>
     public Task<Result<ProductResponseDto>> UpdateProductAsync(int id, ProductRequestDto productRequestDto);
+    /// <summary>
+    /// function to delete product  that take product  id   
+    /// </summary>
+    /// <param name="id">product  id</param>
+    /// <returns>product  removed successfully </returns>
+    public Task<Result> DeleteProductAsync(int id);
 }

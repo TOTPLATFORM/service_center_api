@@ -108,6 +108,22 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
         return Result.Success(ProductResponse);
     }
+    ///<inheritdoc/>
+    public async Task<Result> DeleteProductAsync(int id)
+    {
+        var Product = await _dbContext.ProductCategories.FindAsync(id);
+
+        if (Product is null)
+        {
+            _logger.LogWarning("Product Invaild Id ,Id {ProductId}", id);
+            return Result.NotFound(["Product Invaild Id"]);
+        }
+
+        _dbContext.ProductCategories.Remove(Product);
+        await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("Product removed successfully in the database");
+        return Result.SuccessWithMessage("Product removed successfully");
+    }
 
 
 }
