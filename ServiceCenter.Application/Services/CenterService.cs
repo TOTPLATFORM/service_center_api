@@ -138,7 +138,7 @@ public class CenterService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 
 		var Days = await _dbContext.Centers
 					   .ProjectTo<CenterResponseDto>(_mapper.ConfigurationProvider)
-					   .Where(n => n.CenterName.Contains(text))
+					   .Where(n => n.CenterName.Contains(text) || n.Specialty.Contains(text))
 					   .ToListAsync();
 
 		_logger.LogInformation("Fetching search center by name . Total count: {center}.", Days.Count);
