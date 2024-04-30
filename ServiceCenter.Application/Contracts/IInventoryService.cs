@@ -16,4 +16,10 @@ public interface IInventoryService : IApplicationService ,IScopedService
 	/// <param name="timeSlotRequestDto">time slot request dto</param>
 	/// <returns>Inventory added successfully </returns>
 	public Task<Result> AddInventoryAsync(InventoryRequestDto inventoryRequestDto);
+
+	/// <summary>
+	/// function to get all inventories 
+	/// </summary>
+	/// <returns>list all inventoryResponseDto </returns>
+	public Task<Result<List<InventoryResponseDto>>> GetAllInventoriesAsync();
 }

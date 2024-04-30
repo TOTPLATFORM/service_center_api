@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -47,5 +49,16 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 		_logger.LogInformation("Inventory added successfully to the database");
 
 		return Result.SuccessWithMessage("Inventory added successfully");
+	}
+
+	public async Task<Result<List<InventoryResponseDto>>> GetAllInventoriesAsync()
+	{
+		var result = await _dbContext.Inventories
+				 .ProjectTo<InventoryResponseDto>(_mapper.ConfigurationProvider)
+				 .ToListAsync();
+
+		_logger.LogInformation("Fetching all Inventories. Total count: {TimeSlot}.", result.Count);
+
+		return Result.Success(result);
 	}
 }
