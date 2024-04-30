@@ -17,166 +17,119 @@ public class ItemService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
     private readonly ILogger<ItemService> _logger = logger;
     private readonly IUserContextService _userContext = userContext;
 
-
-
-    /// <summary>
-    /// Gets all items asynchronously.
-    /// </summary>
-    /// <returns>A Result containing item response DTOs.</returns>
-    public async Task<Result<List<ItemResponseDto>>> GetAllItemsAsync()
+    ///<inheritdoc/>
+    public async Task<Result> AddItemAsync(ItemRequestDto ItemRequestDto)
     {
-        var itemsResponseDto = await _dbContext.Items
-            .ProjectTo<ItemResponseDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
+        var result = _mapper.Map<Item>(ItemRequestDto);
+        if (result is null)
+        {
+            _logger.LogError("Failed to map ItemRequestDto to Item. ItemRequestDto: {@ItemRequestDto}", ItemRequestDto);
+            return Result.Invalid(new List<ValidationError>
+            {
+                new ValidationError
+                {
+                    ErrorMessage = "Validation Errror"
+                }
+            });
+        }
+        result.CreatedBy = _userContext.Email;
+        _dbContext.Items.Add(result);
+        await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("Item added successfully to the database");
+        return Result.SuccessWithMessage("Item added successfully");
+    }
+    ///<inheritdoc/>
 
-        _logger.LogInformation("Fetching all items. Total count: {itemsResponseDto}.", itemsResponseDto.Count);
-        return Result.Success(itemsResponseDto);
+    public async Task<Result<List<ItemResponseDto>>> GetAllItemAsync()
+    {
+        var result = await _dbContext.Items
+                 .ProjectTo<ItemResponseDto>(_mapper.ConfigurationProvider)
+                 .ToListAsync();
+
+        _logger.LogInformation("Fetching all  Item. Total count: { Item}.", result.Count);
+
+        return Result.Success(result);
     }
 
-    /// <summary>
-    /// Gets an item by ID asynchronously.
-    /// </summary>
-    /// <param name="id">The ID of the item to retrieve.</param>
-    /// <returns>A Result containing item response DTO or NotFound Result if item is not found.</returns>
+    ///<inheritdoc/>
     public async Task<Result<ItemResponseDto>> GetItemByIdAsync(int id)
     {
-        var itemResponseDto = await _dbContext.Items
-            .ProjectTo<ItemResponseDto>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(item => item.Id == id);
+        var result = await _dbContext.Items
+                .ProjectTo<ItemResponseDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync(Item => Item.Id == id);
 
-        if (itemResponseDto is null)
+        if (result is null)
         {
-            _logger.LogWarning("Item Id not found,Id {id}", id);
-            return Result.NotFound(["The item is not found"]);
+            _logger.LogWarning("Item Id not found,Id {ItemId}", id);
+
+            return Result.NotFound(["Item not found"]);
         }
 
-        _logger.LogInformation("Fetched one item");
-        return Result.Success(itemResponseDto);
+        _logger.LogInformation("Fetching Item");
+
+        return Result.Success(result);
     }
-
-    /// <summary>
-    /// Adds a new item asynchronously.
-    /// </summary>
-    /// <param name="itemRequestDto">The DTO representing the item to add.</param>
-    /// <returns>Result of the add attempt.</returns>
-    public async Task<Result> AddItemAsync(ItemRequestDto itemRequestDto)
+    //<inheritdoc/>
+    public async Task<Result<ItemResponseDto>> UpdateItemAsync(int id, ItemRequestDto ItemRequestDto)
     {
-        var item = _mapper.Map<Item>(itemRequestDto);
+        var result = await _dbContext.Items.FindAsync(id);
 
-        if (item is null)
+        if (result is null)
         {
-            _logger.LogError("Failed to map ItemRequestDto to Item. ItemCategoryDto: {@ItemCategoryDto}", itemRequestDto);
+            _logger.LogWarning("Item Id not found,Id {ItemId}", id);
+            return Result.NotFound(["Item not found"]);
+        }
+
+        result.ModifiedBy = _userContext.Email;
+
+        _mapper.Map(ItemRequestDto, result);
+
+        await _dbContext.SaveChangesAsync();
+
+        var ItemResponse = _mapper.Map<ItemResponseDto>(result);
+        if (ItemResponse is null)
+        {
+            _logger.LogError("Failed to map ItemRequestDto to ItemResponseDto. ItemRequestDto: {@ItemRequestDto}", ItemResponse);
+
             return Result.Invalid(new List<ValidationError>
-                {
+            {
                     new ValidationError
                     {
                         ErrorMessage = "Validation Errror"
                     }
-                });
+            });
         }
-        item.CreatedBy = _userContext.Email;
 
-        _dbContext.Items.Add(item);
-        await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("Updated Item , Id {Id}", id);
 
-        _logger.LogInformation("Item added successfully to the database");
-        return Result.SuccessWithMessage("Item added successfully");
+        return Result.Success(ItemResponse);
     }
-
-    /// <summary>
-    /// Updates an existing item asynchronously.
-    /// </summary>
-    /// <param name="itemRequestDto">The DTO representing the item to update.</param>
-    /// <param name="id">The ID of the item to update.</param>
-    /// <returns>The Result of the update attempt.</returns>
-    public async Task<Result<ItemResponseDto>> UpdateItemAsync(int id,ItemRequestDto itemRequestDto)
-    {
-        var item = await _dbContext.Items.FindAsync(id);
-
-        if (item is null)
-        {
-            _logger.LogWarning("Item Id not found,Id {id}", id);
-            return Result.NotFound(["The item is not found"]);
-        }
-        item.ModifiedBy = _userContext.Email;
-        _mapper.Map(itemRequestDto, item);
-
-        await _dbContext.SaveChangesAsync();
-
-        var updatedItem = _mapper.Map<ItemResponseDto>(item);
-
-        _logger.LogInformation("ItemCategory updated successfully");
-        return Result.Success(updatedItem, "Laboratorist updated successfully");
-    }
-
-    /// <summary>
-    /// Deletes an item asynchronously.
-    /// </summary>
-    /// <param name="Id">The ID of the item to delete.</param>
-    /// <returns>The Result of the delete attempt</returns>
+    //<inheritdoc/>
     public async Task<Result> DeleteItemAsync(int id)
     {
-        var item = await _dbContext.Items.FindAsync(id);
+        var Item = await _dbContext.Items.FindAsync(id);
 
-        if (item is null)
+        if (Item is null)
         {
-            _logger.LogWarning($"Item with id {id} was not found while attempting to delete");
-            return Result.NotFound(["The item is not found"]);
+            _logger.LogWarning("Item Invaild Id ,Id {ItemId}", id);
+            return Result.NotFound(["Item Invaild Id"]);
         }
 
-        _dbContext.Items.Remove(item);
+        _dbContext.Items.Remove(Item);
         await _dbContext.SaveChangesAsync();
-
-        _logger.LogInformation($"Successfulle removed item {item}");
+        _logger.LogInformation("Item removed successfully in the database");
         return Result.SuccessWithMessage("Item removed successfully");
     }
+    //<inheritdoc/>
 
-    /// <summary>
-    /// Increases items quantity asynchronously.
-    /// </summary>
-    /// <param name="orderedItems">Collection of The ordered items with ordered quantity.</param>
-    /// <returns>The Result of the increase items quantity attempt</returns>
-    public async Task<Result> IncreaseItemsQuantity(ICollection<ItemOrderRequestDto> orderedItems)
+    public async Task<Result<List<ItemResponseDto>>> SearchItemByTextAsync(string text)
     {
-        var itemsIds = orderedItems.Select(item => item.ItemId).ToList();
-
-        var items = await _dbContext.Items.Where(item => itemsIds.Contains(item.Id)).ToListAsync();
-
-        foreach (var item in items)
-        {
-            var stockLevel = item.ItemStock;
-            var quantity = orderedItems.Where(orderedItem => orderedItem.ItemId == item.Id).Select(orderedItem => orderedItem.Quantity).Single();
-            item.ItemStock += quantity;
-        }
-
-        return Result.Success();
+        var names = await _dbContext.Users.OfType<Item>()
+            .ProjectTo<ItemResponseDto>(_mapper.ConfigurationProvider)
+            .Where(n => n.ItemName.Contains(text))
+            .ToListAsync();
+        _logger.LogInformation("Fetching search Item by name . Total count: {Item}.", names.Count);
+        return Result.Success(names);
     }
 
-    /// <summary>
-    /// Decreases items quantity asynchronously.
-    /// </summary>
-    /// <param name="orderedItems">Collection of The ordered items with ordered quantity.</param>
-    /// <returns>The Result of the decrease items quantity attempt</returns>
-    public async Task<Result> DecreaseItemsQuantity(ICollection<ItemOrderRequestDto> orderedItems)
-    {
-        var itemsIds = orderedItems.Select(item => item.ItemId).ToList();
-
-        var items = await _dbContext.Items.Where(item => itemsIds.Contains(item.Id)).ToListAsync();
-
-        foreach (var item in items)
-        {
-            var stockLevel = item.ItemStock;
-            var quantity = orderedItems.Where(orderedItem => orderedItem.ItemId == item.Id).Select(orderedItem => orderedItem.Quantity).Single();
-
-            item.ItemStock -= quantity;
-
-            if (item.ItemStock < 0)
-            {
-                _logger.LogWarning($"item with id {item.Id} does not have sufficient quantity available in stock, only {stockLevel} available");
-                return Result.Error([$"{item.ItemStock} does not have sufficient quantity available in stock"]);
-            }
-        }
-
-        return Result.Success();
-    }
 }
