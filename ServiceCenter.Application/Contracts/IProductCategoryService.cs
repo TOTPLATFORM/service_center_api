@@ -21,5 +21,11 @@ namespace ServiceCenter.Application.Contracts
         /// </summary>
         /// <returns>list all Product category response dto </returns>
         public Task<Result<List<ProductCategoryResponseDto>>> GetAllProductCategoryAsync();
+        /// <summary>
+        /// function to get  product category by id that take   item id
+        /// </summary>
+        /// <param name="id"> product category id</param>
+        /// <returns> product category response dto</returns>
+        public Task<Result<ProductCategoryResponseDto>> GetProductCategoryByIdAsync(int id);
     }
 }

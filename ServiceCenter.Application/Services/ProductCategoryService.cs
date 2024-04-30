@@ -44,6 +44,7 @@ namespace ServiceCenter.Application.Services
             return Result.SuccessWithMessage("ProductCategory added successfully");
         }
 
+        ///<inheritdoc/>
         public async Task<Result<List<ProductCategoryResponseDto>>> GetAllProductCategoryAsync()
         {
             var result = await _dbContext.ProductCategories
@@ -54,5 +55,28 @@ namespace ServiceCenter.Application.Services
 
             return Result.Success(result);
         }
+
+        ///<inheritdoc/>
+        public async  Task<Result<ProductCategoryResponseDto>> GetProductCategoryByIdAsync(int id)
+        {
+            var result = await _dbContext.ProductCategories
+                .ProjectTo<ProductCategoryResponseDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (result is null)
+            {
+                _logger.LogWarning("ProductCategory Id not found,Id {ProductCategoryId}", id);
+
+                return Result.NotFound(["ProductCategory not found"]);
+            }
+
+            _logger.LogInformation("Fetching ProductCategory");
+
+            return Result.Success(result);
+        }
+
+        ///<inheritdoc/>
+        ///
+        ///<inheritdoc/>
     }
 }
