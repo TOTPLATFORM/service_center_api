@@ -16,6 +16,7 @@ public class MappingProfiles : Profile
         this.AddItemMapping();
         this.AddOrderMapping();
         this.AddItemCategoryMapping();
+        this.AddServiceCategoryMapping();
 
       
         this.AddProductCategoryMapping();
