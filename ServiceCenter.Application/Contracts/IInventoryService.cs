@@ -13,7 +13,43 @@ public interface IInventoryService : IApplicationService ,IScopedService
 	/// <summary>
 	/// function to add inventory that take inventoryDto   
 	/// </summary>
-	/// <param name="timeSlotRequestDto">time slot request dto</param>
+	/// <param name="InventoryRequestDto">time slot request dto</param>
 	/// <returns>Inventory added successfully </returns>
 	public Task<Result> AddInventoryAsync(InventoryRequestDto inventoryRequestDto);
+
+	/// <summary>
+	/// function to get all inventories 
+	/// </summary>
+	/// <returns>list all inventoryResponseDto </returns>
+	public Task<Result<List<InventoryResponseDto>>> GetAllInventoriesAsync();
+
+	/// <summary>
+	/// function to get inventory by id that take  inventory id
+	/// </summary>
+	/// <param name="id">inventory id</param>
+	/// <returns>inventory response dto</returns>
+	public Task<Result<InventoryResponseDto>> GetInventoryByIdAsync(int id);
+
+	/// <summary>
+	/// function to update inventory that take InventoryRequestDto   
+	/// </summary>
+	/// <param name="id">inventory id</param>
+	/// <param name="InventoryRequestDto">inventory dto</param>
+	/// <returns>Updated Inventory </returns>
+	public Task<Result<InventoryResponseDto>> UpdateInventoryAsync(int id, InventoryRequestDto InventoryRequestDto);
+
+
+	/// <summary>
+	/// function to search inventory by text  that take text   
+	/// </summary>
+	/// <param name="text">text</param>
+	/// <returns>all inventory that contain this text </returns>
+	public Task<Result<List<InventoryResponseDto>>> SearchInventoryByTextAsync(string text);
+
+	/// <summary>
+	/// function to delete Inventory that take InventoryDto   
+	/// </summary>
+	/// <param name="id">time slot id</param>
+	/// <returns>Inventory removed successfully </returns>
+	public Task<Result> DeleteInventoryAsync(int id);
 }
