@@ -16,5 +16,10 @@ namespace ServiceCenter.Application.Contracts
         /// <param name="productCategoryRequestDto">product category request dto</param>
         /// <returns> product category added successfully </returns>
         public Task<Result> AddProductCategoryAsync(ProductCategoryRequestDto productCategoryRequestDto);
-}
+        /// <summary>
+        /// function to get all product category 
+        /// </summary>
+        /// <returns>list all Product category response dto </returns>
+        public Task<Result<List<ProductCategoryResponseDto>>> GetAllProductCategoryAsync();
+    }
 }

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -41,7 +43,16 @@ namespace ServiceCenter.Application.Services
             _logger.LogInformation("ProductCategory added successfully to the database");
             return Result.SuccessWithMessage("ProductCategory added successfully");
         }
-       
-    
+
+        public async Task<Result<List<ProductCategoryResponseDto>>> GetAllProductCategoryAsync()
+        {
+            var result = await _dbContext.ProductCategories
+                 .ProjectTo<ProductCategoryResponseDto>(_mapper.ConfigurationProvider)
+                 .ToListAsync();
+
+            _logger.LogInformation("Fetching all  ProductCategory. Total count: { ProductCategory}.", result.Count);
+
+            return Result.Success(result);
+        }
     }
 }
