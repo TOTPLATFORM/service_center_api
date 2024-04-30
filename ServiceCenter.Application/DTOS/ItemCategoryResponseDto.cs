@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
-public class ItemCategoryResponeDto
+public class ItemCategoryResponseDto
 {
     public int Id { get; set; }
     public string CategoryName { get; set; } = "";

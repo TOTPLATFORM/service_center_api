@@ -12,5 +12,5 @@ public string ItemName { get; set; } = "";
 public string ItemDescription { get; set; } = "";
 public int ItemStock { get; set; }
 public int ItemPrice { get; set; }
-public virtual ItemCategoryResponeDto Category { get; set; }
+public virtual ItemCategoryResponseDto Category { get; set; }
  }

@@ -13,5 +13,5 @@ public class InventoryResponseDto
     public string InventoryLocation { get; set; } = "";
     public int InventoryCapacity { get; set; }
 
-    public ICollection<ItemCategoryResponeDto> Categories { get; set; }
+    public ICollection<ItemCategoryResponseDto> Categories { get; set; }
 }
