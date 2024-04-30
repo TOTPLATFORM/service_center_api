@@ -12,7 +12,8 @@ namespace ServiceCenter.Application.DTOS
         public string InventoryName { get; set; } = "";
         public string InventoryLocation { get; set; } = "";
         public int InventoryCapacity { get; set; }
+        public string CategoryName { get; set; } = "";
+		public int ReferenceNumber { get; set; }
 
-        public ICollection<ItemCategoryResponeDto> Categories { get; set; }
-    }
+	}
 }
