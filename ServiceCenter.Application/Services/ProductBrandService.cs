@@ -130,7 +130,7 @@ public class ProductBrandService(ServiceCenterBaseDbContext dbContext, IMapper m
 
     public async Task<Result<List<ProductBrandResponseDto>>> SearchProductBrandByTextAsync(string text)
     {
-        var names = await _dbContext.Users.OfType<ProductBrand>()
+        var names = await _dbContext.ProductBrands
             .ProjectTo<ProductBrandResponseDto>(_mapper.ConfigurationProvider)
             .Where(n => n.BrandName.Contains(text))
             .ToListAsync();

@@ -61,7 +61,7 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
     /// <param name="id">product brand id</param>
     /// <returns>result of product brand removed successfully </returns>
     [HttpDelete]
-  //  [Authorize(Roles = "Admin")]
+    //  [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> DeleteProductBrandAsycn(int id)
@@ -74,7 +74,7 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
     /// </summary>
     /// <param name="text">ProductBrand name</param>
     /// <returns>ProductBrand response dto </returns>
-     [HttpGet("search")]
+    [HttpGet("search /{text}")]
     //[Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<ProductBrandResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
