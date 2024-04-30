@@ -42,4 +42,36 @@ public class ProductController(IProductService productService) : BaseController
     {
         return await _productService.GetAllProductAsync();
     }
+    /// <summary>
+    /// get product by id in the system.
+    /// </summary>
+    ///<param name="id">id of Product.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpGet("{id}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ProductResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<ProductResponseDto>> GetProductById(int id)
+    {
+        return await _productService.GetProductByIdAsync(id);
+    }
+    /// </summary>
+    ///<param name="id">id of Product.</param>
+    ///<param name="ProductRequestDto">Product dto.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+    [HttpPut("{id}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ProductResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<ProductResponseDto>> UpdateProduct(int id, ProductRequestDto ProductRequestDto)
+    {
+        return await _productService.UpdateProductAsync(id, ProductRequestDto);
+    }
 }
