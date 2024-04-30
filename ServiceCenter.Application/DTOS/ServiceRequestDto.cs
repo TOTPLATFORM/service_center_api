@@ -7,23 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceCenter.Application.DTOS
+namespace ServiceCenter.Application.DTOS;
+
+public class ServiceRequestDto
 {
-    public class ServiceRequestDto
-    {
-        [Required]
-        public string ServiceName { get; set; } = "";
-        [Required]
-        public string ServiceDescription { get; set; } = "";
-        [Required]
-        public int ServicePrice { get; set; }
-        [Required]
-        public Status Avaliable { get; set; }
-        [Required]
-        public int ServiceCategoryId { get; set; }
-        [Required]
-        public int ServicePackageId { get; set; }
-        [Required]
-        public string EmployeeId { get; set; } = "";
-    }
+    [Required]
+    public string ServiceName { get; set; } = "";
+    [Required]
+    public string ServiceDescription { get; set; } = "";
+    [Required]
+    public int ServicePrice { get; set; }
+    [Required]
+    public Status Avaliable { get; set; }
+    [Required]
+    public int ServiceCategoryId { get; set; }
+    [Required]
+    public int ServicePackageId { get; set; }
+    [Required]
+    public string EmployeeId { get; set; } = "";
 }

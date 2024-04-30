@@ -6,17 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceCenter.Application.DTOS
+namespace ServiceCenter.Application.DTOS;
+
+public class ServicePackageRequestDto
 {
-    public class ServicePackageRequestDto
-    {
-        [Required]
-        public string PackageName { get; set; } = "";
-        [Required]
-        public string PackageDescription { get; set; } = "";
-        [Required]
-        public int PackagePrice { get; set; }
-        [Required]
-        public string ServiceName { get; set; } = "";
-    }
+    [Required]
+    public string PackageName { get; set; } = "";
+    [Required]
+    public string PackageDescription { get; set; } = "";
+    [Required]
+    public int PackagePrice { get; set; }
+    [Required]
+    public string ServiceName { get; set; } = "";
 }
