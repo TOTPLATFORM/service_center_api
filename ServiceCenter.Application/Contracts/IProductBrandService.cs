@@ -34,6 +34,17 @@ namespace ServiceCenter.Application.Contracts
 		/// <param name="ProductBrandRequestDto">product brand dto</param>
 		/// <returns>Updated product brand </returns>
 		public Task<Result<ProductBrandResponseDto>> UpdateProductBrandAsync(int id, ProductBrandRequestDto ProductBrandRequestDto);
-
+        /// <summary>
+        /// function to delete ProductBrand that take product brand id   
+        /// </summary>
+        /// <param name="id">product brand id</param>
+        /// <returns>ProductBrand removed successfully </returns>
+        public Task<Result> DeleteProductBrandAsync(int id);
+        /// <summary>
+        /// function to search by ProductBrand name  that take  ProductBrand name
+        /// </summary>
+        /// <param name="text">ProductBrand name</param>
+        /// <returns>ProductBrand response dto </returns>
+        public  Task<Result<List<ProductBrandResponseDto>>> SearchProductBrandByTextAsync(string text);
     }
 }
