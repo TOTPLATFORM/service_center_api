@@ -44,6 +44,7 @@ namespace ServiceCenter.Application.Services
             return Result.SuccessWithMessage("ProductCategory added successfully");
         }
 
+      
         ///<inheritdoc/>
         public async Task<Result<List<ProductCategoryResponseDto>>> GetAllProductCategoryAsync()
         {
@@ -111,7 +112,23 @@ namespace ServiceCenter.Application.Services
         }
 
 
-   
+
         ///<inheritdoc/>
+        public async Task<Result> DeleteProductCategoryAsync(int id)
+        {
+            var ProductCategory = await _dbContext.ProductCategories.FindAsync(id);
+
+            if (ProductCategory is null)
+            {
+                _logger.LogWarning("ProductCategory Invaild Id ,Id {ProductCategoryId}", id);
+                return Result.NotFound(["ProductCategory Invaild Id"]);
+            }
+
+            _dbContext.ProductCategories.Remove(ProductCategory);
+            await _dbContext.SaveChangesAsync();
+            _logger.LogInformation("ProductCategory removed successfully in the database");
+            return Result.SuccessWithMessage("ProductCategory removed successfully");
+        }
+
     }
 }
