@@ -10,4 +10,5 @@ public class ItemCategoryResponseDto
     public int Id { get; set; }
     public string CategoryName { get; set; } = "";
     public int ReferenceNumber { get; set; }
+    public string InventoryName { get; set; } = "";
 }
