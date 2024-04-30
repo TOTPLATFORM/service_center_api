@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceCenter.Application.DTOS
+namespace ServiceCenter.Application.DTOS;
+
+public class ContractRequestDto
 {
-    public class ContractRequestDto
-    {
-        [Required]
-        public string Duration { get; set; } = "";
-        [Required]
-        public int ServicePackageId { get; set; }
-    }
+    [Required]
+    public string Duration { get; set; } = "";
+    [Required]
+    public int ServicePackageId { get; set; }
 }

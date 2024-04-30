@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS
 {
-    public class VendorRequestDto
+    public class VendorRequestDto;
     {
         [Required]
         public string VendorName { get; set; } = "";

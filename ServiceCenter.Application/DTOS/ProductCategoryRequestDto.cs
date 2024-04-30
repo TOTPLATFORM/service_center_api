@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceCenter.Application.DTOS
+namespace ServiceCenter.Application.DTOS;
+
+public class ProductCategoryRequestDto
 {
-    public class ProductCategoryRequestDto
-    {
-        [Required]
-        public string CategoryName { get; set; } = "";
-        [Required]
-        public int ReferenceNumber { get; set; }
-    }
+    [Required]
+    public string CategoryName { get; set; } = "";
+    [Required]
+    public int ReferenceNumber { get; set; }
 }
