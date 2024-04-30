@@ -13,7 +13,6 @@ public class DepartmentRequestDto
     public string DepartmentName { get; set; } = "";
     [Required]
     public int CenterId { get; set; }
-    [Required]
-    public int EmployeeId { get; set; }
+    public string? EmployeeId { get; set; }
 
 }
