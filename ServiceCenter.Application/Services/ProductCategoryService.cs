@@ -74,9 +74,44 @@ namespace ServiceCenter.Application.Services
 
             return Result.Success(result);
         }
-
         ///<inheritdoc/>
-        ///
+        public async Task<Result<ProductCategoryResponseDto>> UpdateProductCategoryAsync(int id, ProductCategoryRequestDto productCategoryRequestDto)
+        {
+            var result = await _dbContext.ProductCategories.FindAsync(id);
+
+            if (result is null)
+            {
+                _logger.LogWarning("ProductCategory Id not found,Id {ProductCategoryId}", id);
+                return Result.NotFound(["ProductCategory not found"]);
+            }
+
+            result.ModifiedBy = _userContext.Email;
+
+            _mapper.Map(productCategoryRequestDto, result);
+
+            await _dbContext.SaveChangesAsync();
+
+            var ProductCategoryResponse = _mapper.Map<ProductCategoryResponseDto>(result);
+            if (ProductCategoryResponse is null)
+            {
+                _logger.LogError("Failed to map ProductCategoryRequestDto to ProductCategoryResponseDto. ProductCategoryRequestDto: {@ProductCategoryRequestDto}", ProductCategoryResponse);
+
+                return Result.Invalid(new List<ValidationError>
+            {
+                    new ValidationError
+                    {
+                        ErrorMessage = "Validation Errror"
+                    }
+            });
+            }
+
+            _logger.LogInformation("Updated ProductCategory , Id {Id}", id);
+
+            return Result.Success(ProductCategoryResponse);
+        }
+
+
+   
         ///<inheritdoc/>
     }
 }

@@ -22,10 +22,17 @@ namespace ServiceCenter.Application.Contracts
         /// <returns>list all Product category response dto </returns>
         public Task<Result<List<ProductCategoryResponseDto>>> GetAllProductCategoryAsync();
         /// <summary>
-        /// function to get  product category by id that take   item id
+        /// function to get  product category by id that take   ProductCategory id
         /// </summary>
         /// <param name="id"> product category id</param>
         /// <returns> product category response dto</returns>
         public Task<Result<ProductCategoryResponseDto>> GetProductCategoryByIdAsync(int id);
+        /// <summary>
+        /// function to update Product category that take ProductCategoryRequestDto   
+        /// </summary>
+        /// <param name="id">ProductCategory id</param>
+        /// <param name="productCategoryRequestDto">ProductCategory dto</param>
+        /// <returns>Updated ProductCategory </returns>
+        public Task<Result<ProductCategoryResponseDto>> UpdateProductCategoryAsync(int id, ProductCategoryRequestDto productCategoryRequestDto);
     }
 }
