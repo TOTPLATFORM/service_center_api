@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Infrastructure.Configuration;
 
-public class ItemCategoryConfiguration : IEntityTypeConfiguration<ItemCategory>
+public class ItemCategoryConfigurations : IEntityTypeConfiguration<ItemCategory>
 {
     public void Configure(EntityTypeBuilder<ItemCategory> builder)
     {
