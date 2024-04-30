@@ -40,4 +40,22 @@ public interface IProductService : IApplicationService, IScopedService
     /// <param name="id">product  id</param>
     /// <returns>product  removed successfully </returns>
     public Task<Result> DeleteProductAsync(int id);
+    /// <summary>
+    /// function to search by Product name  that take  Product name
+    /// </summary>
+    /// <param name="text">Product name</param>
+    /// <returns>Product response dto </returns>
+    public Task<Result<List<ProductResponseDto>>> SearchProductByTextAsync(string text);
+    /// <summary>
+    /// function to search by Product   that take  Product category name
+    /// </summary>
+    /// <param name="text">Product  name</param>
+    /// <returns>Product response dto </returns>
+    public Task<Result<List<ProductResponseDto>>> GetAllProductsForSpecificProductCategory(string text);
+    /// <summary>
+    /// function to search by Product   that take  Product name
+    /// </summary>
+    /// <param name="text">Product  name</param>
+    /// <returns>Product response dto </returns>
+    public Task<Result<List<ProductResponseDto>>> GetAllProductsForSpecificProductBrand(string text);
 }

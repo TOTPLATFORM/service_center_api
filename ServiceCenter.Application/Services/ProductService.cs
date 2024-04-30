@@ -125,5 +125,35 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         return Result.SuccessWithMessage("Product removed successfully");
     }
 
+    public async Task<Result<List<ProductResponseDto>>> SearchProductByTextAsync(string text)
+    {
+        var names = await _dbContext.Products
+        .ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider)
+        .Where(n => n.ProductName.Contains(text))
+        .ToListAsync();
+        _logger.LogInformation("Fetching search ProductCategory by name . Total count: {ProductCategory}.", names.Count);
+        return Result.Success(names);
+    }
 
+    public async  Task<Result<List<ProductResponseDto>>> GetAllProductsForSpecificProductCategory(string categoryname)
+    {
+        var products = await _dbContext.Products
+              .Where(s => s.ProductCategory.CategoryName == categoryname)
+              .ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider)
+              .ToListAsync();
+
+        _logger.LogInformation("Fetching products. Total count: {products}.", products.Count);
+        return Result.Success(products);
+    }
+
+    public async  Task<Result<List<ProductResponseDto>>> GetAllProductsForSpecificProductBrand(string brandName)
+    {
+        var products = await _dbContext.Products
+              .Where(s => s.ProductBrand.BrandName == brandName)
+              .ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider)
+              .ToListAsync();
+
+        _logger.LogInformation("Fetching products. Total count: {products}.", products.Count);
+        return Result.Success(products);
+    }
 }
