@@ -130,5 +130,15 @@ namespace ServiceCenter.Application.Services
             return Result.SuccessWithMessage("ProductCategory removed successfully");
         }
 
+        ///<inheritdoc/>
+        public async  Task<Result<List<ProductCategoryResponseDto>>> SearchProductCategoryByTextAsync(string text)
+        {
+            var names = await _dbContext.ProductCategories
+            .ProjectTo<ProductCategoryResponseDto>(_mapper.ConfigurationProvider)
+            .Where(n => n.CategoryName.Contains(text))
+            .ToListAsync();
+            _logger.LogInformation("Fetching search ProductCategory by name . Total count: {ProductCategory}.", names.Count);
+            return Result.Success(names);
+        }
     }
 }

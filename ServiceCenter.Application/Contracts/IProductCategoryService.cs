@@ -40,5 +40,11 @@ namespace ServiceCenter.Application.Contracts
         /// <param name="id">product category id</param>
         /// <returns>product category removed successfully </returns>
         public Task<Result> DeleteProductCategoryAsync(int id);
+        /// <summary>
+        /// function to search by ProductCategory name  that take  ProductCategory name
+        /// </summary>
+        /// <param name="text">ProductCategory name</param>
+        /// <returns>ProductCategory response dto </returns>
+        public Task<Result<List<ProductCategoryResponseDto>>> SearchProductCategoryByTextAsync(string text);
     }
 }
