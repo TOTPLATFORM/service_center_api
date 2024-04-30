@@ -20,12 +20,12 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <returns>result of list from order response dto.</returns>
 
     [HttpGet("{status}")]
-    [Authorize(Roles = "Admin")]
+   // [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<OrderResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<OrderResponseDto>>> GetAllOrdersAsync(Status status)
     {
-        return await _orderService.GetAllOrdersAsync(status);
+        return await _orderService.GetAllOrderAsync(status);
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <returns>result of order response dto </returns>
 
     [HttpGet("{id:int}")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<OrderResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<OrderResponseDto>> GetOrderByIdAsync(int id)
@@ -66,7 +66,7 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <returns>result of the order response dto after updated successfully</returns>
 
     [HttpPut("orderId/{id}/status/{status}")]
-    [Authorize(Roles = "Admin")]
+  //  [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<OrderResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<OrderResponseDto>> UpdateOrderStatusAsync(Status status, int id)

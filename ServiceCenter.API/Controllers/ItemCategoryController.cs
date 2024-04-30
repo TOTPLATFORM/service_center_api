@@ -9,7 +9,7 @@ using ServiceCenter.Application.Services;
 
 namespace ServiceCenter.API.Controllers;
 
-public class ItemCategoryCategoryController(IItemCategoryService itemCategoryService) : BaseController
+public class ItemCategoryController(IItemCategoryService itemCategoryService) : BaseController
 {
     private readonly IItemCategoryService _itemCategoryService = itemCategoryService;
 
