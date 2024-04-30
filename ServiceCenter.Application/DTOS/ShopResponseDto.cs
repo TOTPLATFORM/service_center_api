@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceCenter.Application.DTOS
+namespace ServiceCenter.Application.DTOS;
+
+public class ShopResponseDto
 {
-    public class ShopResponseDto
-    {
-        public int Id { get; set; }
-        public string ShopPhoneNumber { get; set; } = "";
-        public DateOnly CreatedDate { get; set; }
-        public virtual ICollection<ProductResponseDto> Products { get; set; }
-    }
+    public int Id { get; set; }
+    public string ShopPhoneNumber { get; set; } = "";
+    public DateOnly CreatedDate { get; set; }
+    public virtual ICollection<ProductResponseDto> Products { get; set; }
 }

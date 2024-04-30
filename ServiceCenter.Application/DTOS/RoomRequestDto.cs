@@ -5,15 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceCenter.Application.DTOS
+namespace ServiceCenter.Application.DTOS;
+
+public class RoomRequestDto
 {
-    public class RoomRequestDto
-    {
-        [Required]
-        public int RoomNumber { get; set; }
-        [Required]
-        public bool Availability { get; set; }
-        [Required]
-        public int CenterId { get; set; }
-    }
+    [Required]
+    public int RoomNumber { get; set; }
+    [Required]
+    public bool Availability { get; set; }
+    [Required]
+    public int CenterId { get; set; }
 }

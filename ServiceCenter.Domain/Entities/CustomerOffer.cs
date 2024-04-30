@@ -9,8 +9,8 @@ namespace ServiceCenter.Domain.Entities;
 
 public class CustomerOffer : BaseEntity
 {
-    public string CustomerId { get; set; }
+    public string CustomerId { get; set; } = default;
     public int OfferId { get; set; }
-    public virtual Customer Customer { get; set; }
-    public virtual Offer Offer { get; set; }
+    public virtual Customer Customer { get; set; } = default;
+    public virtual Offer Offer { get; set; } = default;
 }

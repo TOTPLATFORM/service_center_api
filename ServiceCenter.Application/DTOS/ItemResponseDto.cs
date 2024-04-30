@@ -4,15 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceCenter.Application.DTOS
+namespace ServiceCenter.Application.DTOS;
+public class ItemResponseDto
 {
-    public class ItemResponseDto
-    {
-        public int Id { get; set; }
-        public string ItemName { get; set; } = "";
-        public string ItemDescription { get; set; } = "";
-        public int ItemStock { get; set; }
-        public int ItemPrice { get; set; }
-        public virtual ItemCategoryResponeDto Category { get; set; }
-    }
-}
+ public int Id { get; set; }
+public string ItemName { get; set; } = "";
+public string ItemDescription { get; set; } = "";
+public int ItemStock { get; set; }
+public int ItemPrice { get; set; }
+public virtual ItemCategoryResponseDto Category { get; set; }
+ }

@@ -9,7 +9,15 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         this.AddTimeSlotMapping();
+
         this.AddProductBrandMapping();
+
+        this.AddInventoryMapping();
+        this.AddItemMapping();
+        this.AddOrderMapping();
+        this.AddItemCategoryMapping();
+
+      
         this.AddProductCategoryMapping();
       
     }

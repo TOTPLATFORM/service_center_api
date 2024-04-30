@@ -14,5 +14,5 @@ public class Item : AuditableEntity
 	public int ItemStock { get; set; }
 	public int ItemPrice { get; set; }
 	public int CategoryId { get; set; }
-	public virtual ItemCategory Category { get; set; }
+	public virtual ItemCategory Category { get; set; } = default;
 }

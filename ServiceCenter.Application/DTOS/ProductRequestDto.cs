@@ -6,20 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceCenter.Application.DTOS
+namespace ServiceCenter.Application.DTOS;
+
+public class ProductRequestDto
 {
-    public class ProductRequestDto
-    {
-        [Required]
-        public string ProductName { get; set; } = "";
-        [Required]
-        public string ProductDescription { get; set; } = "";
-        [Required]
-        public string ProductPrice { get; set; } = "";
-        [Required]
-        public int CategoryId { get; set; }
-        [Required]
-        public int ProductBrandId { get; set; }
-        public string? SalesId { get; set; } = "";
-    }
+    [Required]
+    public string ProductName { get; set; } = "";
+    [Required]
+    public string ProductDescription { get; set; } = "";
+    [Required]
+    public string ProductPrice { get; set; } = "";
+    [Required]
+    public int CategoryId { get; set; }
+    [Required]
+    public int ProductBrandId { get; set; }
+    public string? SalesId { get; set; } = "";
 }

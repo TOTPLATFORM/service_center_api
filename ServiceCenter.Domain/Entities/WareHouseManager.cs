@@ -13,7 +13,7 @@ public class WareHouseManager : ApplicationUser
     public DateOnly StartDate { get; set; }
 	public DateOnly EndtDate { get; set; }
     public int InventoryId { get; set; }
-    public virtual Inventory Inventory { get; set; }
+    public virtual Inventory Inventory { get; set; } = default;
 
 
 }

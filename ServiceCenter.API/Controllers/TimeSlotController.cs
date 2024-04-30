@@ -55,4 +55,25 @@ public class TimeSlotController(ITimeSlotService timeSlotService) : BaseControll
 		return await _timeSlotService.UpdateTimeSlotAsync(id, timeSlotDto);
 	}
 
+	[HttpGet("search/{text}")]
+	//[Authorize(Roles = "Admin")]
+	[ProducesResponseType(typeof(Result<TimeSlotResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result<List<TimeSlotResponseDto>>> SerachTimeSlotByText(string text)
+	{
+		return await _timeSlotService.SearchTimeSlotByTextAsync(text);
+	}
+	/// <summary>
+	///  action for remove TimeSlot that take timeSlot id   
+	/// </summary>
+	/// <param name="Id">time slot id</param>
+	/// <returns>result of TimeSlot removed successfully </returns>
+	[HttpDelete]
+	//[Authorize(Roles = "Admin")]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result> DeleteTimeSlotAsycn(int id)
+	{
+		return await _timeSlotService.DeleteTimeSlotAsync(id);
+	}
 }

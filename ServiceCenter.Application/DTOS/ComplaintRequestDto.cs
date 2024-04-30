@@ -6,20 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceCenter.Application.DTOS
+namespace ServiceCenter.Application.DTOS;
+
+public class ComplaintRequestDto
 {
-    public class ComplaintRequestDto
-    {
-        [Required]
-        public DateOnly ComplaintDate { get; set; }
-        [Required]
-        public string ComplaintDescription { get; set; } = "";
-        [Required]
-        public string ComplaintCategory { get; set; } = "";
-        [Required]
-        public Status ComplaintStatus { get; set; }
-        [Required]
-        public string AssignedTo { get; set; } = "";
-        public string? CustomerId { get; set; } = "";
-    }
+    [Required]
+    public DateOnly ComplaintDate { get; set; }
+    [Required]
+    public string ComplaintDescription { get; set; } = "";
+    [Required]
+    public string ComplaintCategory { get; set; } = "";
+    [Required]
+    public Status ComplaintStatus { get; set; }
+    [Required]
+    public string AssignedTo { get; set; } = "";
+    public string? CustomerId { get; set; } = "";
 }
