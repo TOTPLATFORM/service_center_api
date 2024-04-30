@@ -21,4 +21,17 @@ public interface IProductService : IApplicationService, IScopedService
     /// </summary>
     /// <returns>list all Product  response dto </returns>
     public Task<Result<List<ProductResponseDto>>> GetAllProductAsync();
+    /// <summary>
+    /// function to get  product  by id that take   Product id
+    /// </summary>
+    /// <param name="id"> product  id</param>
+    /// <returns> product  response dto</returns>
+    public Task<Result<ProductResponseDto>> GetProductByIdAsync(int id);
+    /// <summary>
+    /// function to update Product  that take ProductRequestDto   
+    /// </summary>
+    /// <param name="id">Product id</param>
+    /// <param name="productRequestDto">Product dto</param>
+    /// <returns>Updated Product </returns>
+    public Task<Result<ProductResponseDto>> UpdateProductAsync(int id, ProductRequestDto productRequestDto);
 }

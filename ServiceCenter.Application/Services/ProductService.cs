@@ -56,4 +56,58 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
         return Result.Success(result);
     }
+    public async Task<Result<ProductResponseDto>> GetProductByIdAsync(int id)
+    {
+        var result = await _dbContext.Products
+            .ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+        if (result is null)
+        {
+            _logger.LogWarning("Product Id not found,Id {ProductId}", id);
+
+            return Result.NotFound(["Product not found"]);
+        }
+
+        _logger.LogInformation("Fetching Product");
+
+        return Result.Success(result);
+    }
+    ///<inheritdoc/>
+    public async Task<Result<ProductResponseDto>> UpdateProductAsync(int id, ProductRequestDto productRequestDto)
+    {
+        var result = await _dbContext.Products.FindAsync(id);
+
+        if (result is null)
+        {
+            _logger.LogWarning("Product Id not found,Id {ProductId}", id);
+            return Result.NotFound(["Product not found"]);
+        }
+
+        result.ModifiedBy = _userContext.Email;
+
+        _mapper.Map(productRequestDto, result);
+
+        await _dbContext.SaveChangesAsync();
+
+        var ProductResponse = _mapper.Map<ProductResponseDto>(result);
+        if (ProductResponse is null)
+        {
+            _logger.LogError("Failed to map ProductRequestDto to ProductResponseDto. ProductRequestDto: {@ProductRequestDto}", ProductResponse);
+
+            return Result.Invalid(new List<ValidationError>
+        {
+                new ValidationError
+                {
+                    ErrorMessage = "Validation Errror"
+                }
+        });
+        }
+
+        _logger.LogInformation("Updated Product , Id {Id}", id);
+
+        return Result.Success(ProductResponse);
+    }
+
+
 }
