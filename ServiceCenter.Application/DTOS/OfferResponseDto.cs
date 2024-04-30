@@ -14,4 +14,5 @@ public class OfferResponseDto
     public DateOnly StartDate { get; set; }
     public DateOnly EndDate { get; set; }
     public int Discount { get; set; }
+    public string ProductName { get; set; } = "";
 }
