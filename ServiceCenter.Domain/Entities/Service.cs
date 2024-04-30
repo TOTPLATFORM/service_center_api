@@ -15,10 +15,10 @@ public class Service : AuditableEntity
     public int ServicePrice { get; set; }
     public Status Avaliable { get; set; }
 	public int ServiceCategoryId { get; set; }
-	public virtual ServiceCategory ServiceCategory { get; set; }
+    public virtual ServiceCategory ServiceCategory { get; set; } = default;
 	public int ServicePackageId { get; set; }
-	public virtual ServicePackage ServicePackage { get; set; }
-    public string EmployeeId { get; set; } = "";
-    public virtual Employee Employee { get; set; }
+    public virtual ServicePackage ServicePackage { get; set; } = default;
+    public string? EmployeeId { get; set; } 
+    public virtual Employee Employee { get; set; } = default;
 
 }

@@ -11,6 +11,6 @@ public class Department : AuditableEntity
 {
 	public string DepartmentName { get; set; } = "";
     public int CenterId { get; set; }
-    public virtual Center Center { get; set; }
+    public virtual Center Center { get; set; } = default;
     public virtual ICollection<Employee> Employees { get; set; } = new HashSet<Employee>();
 }

@@ -13,7 +13,7 @@ public class Manager : ApplicationUser
     public int WorkingHours { get; set; }
     public int Experience { get; set; }
     public int DepartmentId { get; set; }
-    public virtual Department Department { get; set; }
+    public virtual Department Department { get; set; } = default;
     public virtual ICollection<TimeSlot> TimeSlots { get; set; } = new HashSet<TimeSlot>();
 
 }
