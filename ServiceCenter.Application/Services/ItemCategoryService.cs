@@ -18,117 +18,119 @@ public class ItemCategoryService(ServiceCenterBaseDbContext dbContext, IMapper m
     private readonly ILogger<ItemCategoryService> _logger = logger;
     private readonly IUserContextService _userContext = userContext;
 
-
-
-    /// <summary>
-    /// Retrieves all categories asynchronously.
-    /// </summary>
-    /// <returns>A result containg list of item category response DTOs.</returns>
-    public async Task<Result<List<ItemCategoryResponseDto>>> GetAllCategoriesAsync()
+    ///<inheritdoc/>
+    public async Task<Result> AddItemCategoryAsync(ItemCategoryRequestDto ItemCategoryRequestDto)
     {
-        var categoriesResponseDto = await _dbContext.ItemCategories
-            .ProjectTo<ItemCategoryResponseDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
+        var result = _mapper.Map<ItemCategory>(ItemCategoryRequestDto);
+        if (result is null)
+        {
+            _logger.LogError("Failed to map ItemCategoryRequestDto to ItemCategory. ItemCategoryRequestDto: {@ItemCategoryRequestDto}", ItemCategoryRequestDto);
+            return Result.Invalid(new List<ValidationError>
+            {
+                new ValidationError
+                {
+                    ErrorMessage = "Validation Errror"
+                }
+            });
+        }
+        result.CreatedBy = _userContext.Email;
+        _dbContext.ItemCategories.Add(result);
+        await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("ItemCategory added successfully to the database");
+        return Result.SuccessWithMessage("ItemCategory added successfully");
+    }
+    ///<inheritdoc/>
 
-        _logger.LogInformation("Fetching all item categories. Total count: {ItemCategories}.", categoriesResponseDto.Count);
-        return Result.Success(categoriesResponseDto);
+    public async Task<Result<List<ItemCategoryResponseDto>>> GetAllItemCategoryAsync()
+    {
+        var result = await _dbContext.ItemCategories
+                 .ProjectTo<ItemCategoryResponseDto>(_mapper.ConfigurationProvider)
+                 .ToListAsync();
+
+        _logger.LogInformation("Fetching all  ItemCategory. Total count: { ItemCategory}.", result.Count);
+
+        return Result.Success(result);
     }
 
-    /// <summary>
-    /// Retrieves a category by its ID asynchronously.
-    /// </summary>
-    /// <param name="Id">The ID of the category to retrieve.</param>
-    /// <returns>The Result containg item category response DTO, or NotFound Result.</returns>
-    public async Task<Result<ItemCategoryResponseDto>> GetCategoryByIdAsync(int id)
+    ///<inheritdoc/>
+    public async Task<Result<ItemCategoryResponseDto>> GetItemCategoryByIdAsync(int id)
     {
-        var itemCategoryResponseDto = await _dbContext.ItemCategories
-            .ProjectTo<ItemCategoryResponseDto>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(category => category.Id == id);
+        var result = await _dbContext.ItemCategories
+                .ProjectTo<ItemCategoryResponseDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync(ItemCategory => ItemCategory.Id == id);
 
-        if (itemCategoryResponseDto is null)
+        if (result is null)
         {
-            _logger.LogWarning("Category Id not found,Id {id}", id);
-            return Result.NotFound(["The category is not found"]);
+            _logger.LogWarning("ItemCategory Id not found,Id {ItemCategoryId}", id);
+
+            return Result.NotFound(["ItemCategory not found"]);
         }
 
-        _logger.LogInformation("Fetched one item category");
-        return Result.Success(itemCategoryResponseDto);
+        _logger.LogInformation("Fetching ItemCategory");
+
+        return Result.Success(result);
     }
-
-    /// <summary>
-    /// Adds a new category asynchronously.
-    /// </summary>
-    /// <param name="itemCategoryDto">The DTO representing the category to add.</param>
-    /// <returns>Result of the add attempt.</returns>
-    public async Task<Result> AddCategoryAsync(ItemCategoryRequestDto itemCategoryDto)
+    //<inheritdoc/>
+    public async Task<Result<ItemCategoryResponseDto>> UpdateItemCategoryAsync(int id, ItemCategoryRequestDto ItemCategoryRequestDto)
     {
-        var category = _mapper.Map<ItemCategory>(itemCategoryDto);
+        var result = await _dbContext.ItemCategories.FindAsync(id);
 
-        if (category is null)
+        if (result is null)
         {
-            _logger.LogError("Failed to map ItemCategoryDto to ItemCategory. ItemCategoryDto: {@ItemCategoryDto}", itemCategoryDto);
+            _logger.LogWarning("ItemCategory Id not found,Id {ItemCategoryId}", id);
+            return Result.NotFound(["ItemCategory not found"]);
+        }
+
+        result.ModifiedBy = _userContext.Email;
+
+        _mapper.Map(ItemCategoryRequestDto, result);
+
+        await _dbContext.SaveChangesAsync();
+
+        var ItemCategoryResponse = _mapper.Map<ItemCategoryResponseDto>(result);
+        if (ItemCategoryResponse is null)
+        {
+            _logger.LogError("Failed to map ItemCategoryRequestDto to ItemCategoryResponseDto. ItemCategoryRequestDto: {@ItemCategoryRequestDto}", ItemCategoryResponse);
+
             return Result.Invalid(new List<ValidationError>
-                {
+            {
                     new ValidationError
                     {
                         ErrorMessage = "Validation Errror"
                     }
-                });
+            });
         }
-        category.CreatedBy = _userContext.Email;
-        _dbContext.ItemCategories.Add(category);
-        await _dbContext.SaveChangesAsync();
 
-        _logger.LogInformation("ItemCategory added successfully to the database");
-        return Result.SuccessWithMessage("Item Category added successfully");
+        _logger.LogInformation("Updated ItemCategory , Id {Id}", id);
+
+        return Result.Success(ItemCategoryResponse);
     }
-
-    /// <summary>
-    /// Updates an existing category asynchronously.
-    /// </summary>
-    /// <param name="itemCategoryDto">The DTO representing the category to update.</param>
-    /// <param name="id">The ID of the category to update.</param>
-    /// <returns>The Result of the update attempt.</returns>
-    public async Task<Result<ItemCategoryResponseDto>> UpdateCategoryAsync(int id,ItemCategoryRequestDto itemCategoryDto)
+    //<inheritdoc/>
+    public async Task<Result> DeleteItemCategoryAsync(int id)
     {
-        var itemCategory = await _dbContext.ItemCategories.FindAsync(id);
+        var ItemCategory = await _dbContext.ItemCategories.FindAsync(id);
 
-        if (itemCategory is null)
+        if (ItemCategory is null)
         {
-            _logger.LogWarning("category id not found,Id {categoryId}", id);
-            return Result.NotFound(["The category is not found"]);
+            _logger.LogWarning("ItemCategory Invaild Id ,Id {ItemCategoryId}", id);
+            return Result.NotFound(["ItemCategory Invaild Id"]);
         }
 
-        itemCategory.ModifiedBy = _userContext.Email;
-        _mapper.Map(itemCategoryDto, itemCategory);
-
+        _dbContext.ItemCategories.Remove(ItemCategory);
         await _dbContext.SaveChangesAsync();
-
-        var updatedItemCategory = _mapper.Map<ItemCategoryResponseDto>(itemCategory);
-
-        _logger.LogInformation("ItemCategory updated successfully");
-        return Result.Success(updatedItemCategory, "Successfully updated item category");
+        _logger.LogInformation("ItemCategory removed successfully in the database");
+        return Result.SuccessWithMessage("ItemCategory removed successfully");
     }
+    //<inheritdoc/>
 
-    /// <summary>
-    /// Deletes a category asynchronously.
-    /// </summary>
-    /// <param name="Id">The ID of the category to delete.</param>
-    /// <returns>The Result of the delete attempt</returns>
-    public async Task<Result> DeleteCategoryAsync(int id)
+    public async Task<Result<List<ItemCategoryResponseDto>>> SearchItemCategoryByTextAsync(string text)
     {
-        var category = await _dbContext.ItemCategories.FindAsync(id);
-
-        if (category is null)
-        {
-            _logger.LogWarning("category id not found,Id {categoryId}", id);
-            return Result.NotFound(["The category is not found"]);
-        }
-
-        _dbContext.ItemCategories.Remove(category);
-        await _dbContext.SaveChangesAsync();
-
-        _logger.LogInformation("laboratorist remove successfully in the database");
-        return Result.SuccessWithMessage("category remove successfully");
+        var names = await _dbContext.Users.OfType<ItemCategory>()
+            .ProjectTo<ItemCategoryResponseDto>(_mapper.ConfigurationProvider)
+            .Where(n => n.CategoryName.Contains(text))
+            .ToListAsync();
+        _logger.LogInformation("Fetching search ItemCategory by name . Total count: {ItemCategory}.", names.Count);
+        return Result.Success(names);
     }
+
 }
