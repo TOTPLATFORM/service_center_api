@@ -13,7 +13,7 @@ public interface IItemCategoryService : IApplicationService, IScopedService
     /// <summary>
     /// function to add  item category that take  item category Dto   
     /// </summary>
-    /// <param name="ItemCategoryRequestDto">item category request dto</param>
+    /// <param name="itemCategoryRequestDto">item category request dto</param>
     /// <returns> ItemCategory added successfully </returns>
     public Task<Result> AddItemCategoryAsync(ItemCategoryRequestDto itemCategoryRequestDto);
     /// <summary>

@@ -132,4 +132,42 @@ public class ItemService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
         return Result.Success(names);
     }
 
+    public async Task<Result> DecreaseItemsQuantity(ICollection<ItemOrderRequestDto> orderedItems)
+    {
+        var itemsIds = orderedItems.Select(item => item.ItemId).ToList();
+
+        var items = await _dbContext.Items.Where(item => itemsIds.Contains(item.Id)).ToListAsync();
+
+        foreach (var item in items)
+        {
+            var stockLevel = item.ItemStock;
+            var quantity = orderedItems.Where(orderedItem => orderedItem.ItemId == item.Id).Select(orderedItem => orderedItem.Quantity).Single();
+
+            item.ItemStock -= quantity;
+
+            if (item.ItemStock < 0)
+            {
+                _logger.LogWarning($"item with id {item.Id} does not have sufficient quantity available in stock, only {stockLevel} available");
+                return Result.Error([$"{item.ItemName} does not have sufficient quantity available in stock"]);
+            }
+        }
+
+        return Result.Success();
+    }
+
+    public async Task<Result> IncreaseItemsQuantity(ICollection<ItemOrderRequestDto> orderedItems)
+    {
+        var itemsIds = orderedItems.Select(item => item.ItemId).ToList();
+
+        var items = await _dbContext.Items.Where(item => itemsIds.Contains(item.Id)).ToListAsync();
+
+        foreach (var item in items)
+        {
+            var stockLevel = item.ItemStock;
+            var quantity = orderedItems.Where(orderedItem => orderedItem.ItemId == item.Id).Select(orderedItem => orderedItem.Quantity).Single();
+            item.ItemStock += quantity;
+        }
+
+        return Result.Success();
+    }
 }

@@ -19,13 +19,10 @@ public class OrderService(IItemService itemService, ServiceCenterBaseDbContext d
     private readonly ILogger<OrderService> _logger = logger;
     private readonly IUserContextService _userContext = userContext;
 
-    /// <summary>
-    /// Gets all orders asynchronously.
-    /// </summary>
-    /// <returns>A Result containing order response DTOs.</returns>
-    public async Task<Result<List<OrderResponseDto>>> GetAllOrdersAsync(Status status)
+    ///<inheritdoc/>
+    public async Task<Result<List<OrderResponseDto>>> GetAllOrderAsync(Status status)
     {
-        var ordersResponseDto = await _dbContext.Order
+        var ordersResponseDto = await _dbContext.Orders
             .Where(order => order.OrderStatus == status)
             .ProjectTo<OrderResponseDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
@@ -34,14 +31,10 @@ public class OrderService(IItemService itemService, ServiceCenterBaseDbContext d
         return Result.Success(ordersResponseDto);
     }
 
-    /// <summary>
-    /// Gets an Order by ID asynchronously.
-    /// </summary>
-    /// <param name="id">The ID of the order to retrieve.</param>
-    /// <returns>A Result containing order response DTO or NotFound Result if order is not found.</returns>
+    ///<inheritdoc/>
     public async Task<Result<OrderResponseDto>> GetOrderByIdAsync(int id)
     {
-        var orderResponseDto = await _dbContext.Order
+        var orderResponseDto = await _dbContext.Orders
             .ProjectTo<OrderResponseDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(item => item.Id == id);
 
@@ -54,12 +47,7 @@ public class OrderService(IItemService itemService, ServiceCenterBaseDbContext d
         _logger.LogInformation("Fetched one order");
         return Result.Success(orderResponseDto);
     }
-
-    /// <summary>
-    /// Creates order asynchronously.
-    /// </summary>
-    /// <param name="orderDto">The Order to create.</param>
-    /// <returns>A Result containing order response DTO or Result returned from item service.</returns>
+    ///<inheritdoc/>
     public async Task<Result> AddOrderAsync(OrderRequestDto orderDto)
     {
         var order = _mapper.Map<Order>(orderDto);
@@ -72,22 +60,17 @@ public class OrderService(IItemService itemService, ServiceCenterBaseDbContext d
         }
 
         order.CreatedBy = _userContext.Email;
-        _dbContext.Order.Add(order);
+        _dbContext.Orders.Add(order);
         await _dbContext.SaveChangesAsync();
 
         _logger.LogInformation($"Successfully placed an order : {order}");
         return Result.SuccessWithMessage("Successfully placed order");
     }
 
-    /// <summary>
-    /// Updates the status of an order asynchronously.
-    /// </summary>
-    /// <param name="status">The new status of the order.</param>
-    /// <param name="id">The ID of the order to update.</param>
-    /// <returns>A Result containing the updated order response DTO.</returns>
+    ///<inheritdoc/>
     public async Task<Result<OrderResponseDto>> UpdateOrderStatusAsync(int id,Status status)
     {
-        var order = await _dbContext.Order.FindAsync(id);
+        var order = await _dbContext.Orders.FindAsync(id);
 
         if (order is null)
         {
@@ -113,5 +96,16 @@ public class OrderService(IItemService itemService, ServiceCenterBaseDbContext d
 
         _logger.LogInformation($"Successfully update order status to: {order.OrderStatus} from: {previousOrderStatus}");
         return Result.Success(orderResponseDto, "Successfully updated order");
+    }
+
+  
+    public async Task<Result<List<OrderResponseDto>>> SearchOrderByTextAsync(Status text)
+    {
+        var orders = await _dbContext.Users.OfType<Order>()
+            .ProjectTo<OrderResponseDto>(_mapper.ConfigurationProvider)
+            .Where(n => n.OrderStatus.Equals(text))
+            .ToListAsync();
+        _logger.LogInformation("Fetching search Order by name . Total count: {order}.", orders.Count);
+        return Result.Success(orders);
     }
 }

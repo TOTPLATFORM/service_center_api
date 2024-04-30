@@ -45,5 +45,19 @@ public interface IItemService : IApplicationService, IScopedService
     /// <param name="text">item name</param>
     /// <returns>Item response dto </returns>
     public Task<Result<List<ItemResponseDto>>> SearchItemByTextAsync(string text);
+    /// <summary>
+    /// Decreases items quantity asynchronously.
+    /// </summary>
+    /// <param name="orderedItems">Collection of The ordered items with ordered quantity.</param>
+    /// <returns>The Result of the decrease items quantity attempt</returns>
+    public  Task<Result> DecreaseItemsQuantity(ICollection<ItemOrderRequestDto> orderedItems);
+
+    /// <summary>
+    /// Increases items quantity asynchronously.
+    /// </summary>
+    /// <param name="orderedItems">Collection of The ordered items with ordered quantity.</param>
+    /// <returns>The Result of the increase items quantity attempt</returns>
+    public Task<Result> IncreaseItemsQuantity(ICollection<ItemOrderRequestDto> orderedItems);
+
 
 }
