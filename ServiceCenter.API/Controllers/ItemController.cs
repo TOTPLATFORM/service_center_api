@@ -68,14 +68,15 @@ public async Task<Result> DeleteItemAsycn(int id)
     return await _ItemService.DeleteItemAsync(id);
 }
 
-/// <summary>
-/// function to search by Item name  that take  Item name
-/// </summary>
-/// <param name="text">Item name</param>
-/// <returns>Item response dto </returns>
-[HttpGet("search")]
-//[Authorize(Roles = "Admin")]
-[ProducesResponseType(typeof(Result<ItemResponseDto>), StatusCodes.Status200OK)]
+    /// <summary>
+    /// function to search by Item name  that take  Item name
+    /// </summary>
+    /// <param name="text">Item name</param>
+    /// <returns>Item response dto </returns>
+
+    [HttpGet("search/{text}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ItemResponseDto>), StatusCodes.Status200OK)]
 [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 public async Task<Result<List<ItemResponseDto>>> SearchItemByTextAsync(string text)
 {

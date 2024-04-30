@@ -74,15 +74,25 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     /// </summary>
     /// <param name="text">ItemCategory name</param>
     /// <returns>ItemCategory response dto </returns>
-    [HttpGet("search")]
+
+    [HttpGet("search/{text}")]
     //[Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<ItemCategoryResponseDto>>> SearchItemCategoryByTextAsync(string text)
+    public async Task<Result<List<ItemCategoryResponseDto>>> SearchItemCategoryByText(string text)
     {
         return await _itemCategoryService.SearchItemCategoryByTextAsync(text);
     }
+    [HttpGet("searchByRelation/{text}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<List<ItemCategoryResponseDto>>> SearchItemCategoryByRelation(string text)
+    {
+        return await _itemCategoryService.GetAllItemsCategoryForSpecificInventory (text);
+    }
 }
+
 
 
 
