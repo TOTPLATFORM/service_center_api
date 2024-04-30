@@ -17,5 +17,9 @@ public class ProductBrandConfiguration : IEntityTypeConfiguration<ProductBrand>
                     .IsRequired();
         builder.Property(T => T.BrandDescription)
                .IsRequired();
+        builder.Property(T => T.CountryOfOrigin)
+            .IsRequired();
+        builder.Property(T => T.FoundedYear)
+            .IsRequired();
     }
 }
