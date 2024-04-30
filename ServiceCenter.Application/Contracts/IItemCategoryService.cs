@@ -46,4 +46,10 @@ public interface IItemCategoryService : IApplicationService, IScopedService
     /// <param name="text">item category name</param>
     /// <returns>item category response dto </returns>
     public Task<Result<List<ItemCategoryResponseDto>>> SearchItemCategoryByTextAsync(string text);
+    /// <summary>
+    /// function to search by inventory  that take  inventory name
+    /// </summary>
+    /// <param name="inventoryName">inventory name</param>
+    /// <returns>item category response dto </returns
+    public Task<Result<List<ItemCategoryResponseDto>>> GetAllItemsCategoryForSpecificInventory(string inventoryName);
 }

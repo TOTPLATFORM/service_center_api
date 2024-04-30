@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Domain.Entities;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace ServiceCenter.Application.Services;
@@ -125,12 +126,23 @@ public class ItemCategoryService(ServiceCenterBaseDbContext dbContext, IMapper m
 
     public async Task<Result<List<ItemCategoryResponseDto>>> SearchItemCategoryByTextAsync(string text)
     {
-        var names = await _dbContext.Users.OfType<ItemCategory>()
+        var names = await _dbContext.ItemCategories
             .ProjectTo<ItemCategoryResponseDto>(_mapper.ConfigurationProvider)
             .Where(n => n.CategoryName.Contains(text))
             .ToListAsync();
         _logger.LogInformation("Fetching search ItemCategory by name . Total count: {ItemCategory}.", names.Count);
         return Result.Success(names);
     }
+    //<inheritdoc/>
 
+    public async Task<Result<List<ItemCategoryResponseDto>>> GetAllItemsCategoryForSpecificInventory(string inventoryName)
+    {
+        var items = await _dbContext.ItemCategories
+            .Where(s => s.Inventory.InventoryName == inventoryName)
+            .ProjectTo<ItemCategoryResponseDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        _logger.LogInformation("Fetching items. Total count: {items}.", items.Count);
+        return Result.Success(items);
+    }
 }
