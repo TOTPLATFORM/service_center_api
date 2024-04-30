@@ -59,6 +59,24 @@ namespace ServiceCenter.API.Controllers
         {
             return await _productCategoryService.GetProductCategoryByIdAsync(id);
         }
+        /// <summary>
+        /// get  ProductCategory by id in the system.
+        /// </summary>
+        ///<param name="id">id of ProductCategory.</param>
+        ///<param name="ProductCategoryRequestDto">ProductCategory dto.</param>
+        /// <remarks>
+        /// Access is limited to users with the "Admin" role.
+        /// </remarks>
+        /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+        [HttpPut("{id}")]
+        //[Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(Result<ProductCategoryResponseDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        public async Task<Result<ProductCategoryResponseDto>> UpdateProductCategory(int id, ProductCategoryRequestDto ProductCategoryRequestDto)
+        {
+            return await _productCategoryService.UpdateProductCategoryAsync(id, ProductCategoryRequestDto);
+        }
 
     }
 }
