@@ -16,6 +16,9 @@ namespace ServiceCenter.API.Controllers
         /// action for add product category action that take  ProductCategory dto   
         /// </summary>
         /// <param name="productCategoryDto">product category dto</param>
+     	/// <remarks>
+        /// Access is limited to users with the "Admin" role.
+        /// </remarks>
         /// <returns>result for product category added successfully.</returns>
         [HttpPost]
     //[Authorize(Roles = "Admin")]
@@ -25,7 +28,21 @@ namespace ServiceCenter.API.Controllers
     {
         return await _productCategoryService.AddProductCategoryAsync(productCategoryDto);
     }
+        /// <summary>
+        /// get all product categories in the system.
+        /// </summary>
+        /// <remarks>
+        /// Access is limited to users with the "Admin" role.
+        /// </remarks>
+        /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+        [HttpGet]
+        //[Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(Result<List<ProductCategoryResponseDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        public async Task<Result<List<ProductCategoryResponseDto>>> GetAllProductCategories()
+        {
+            return await _productCategoryService.GetAllProductCategoryAsync();
+        }
 
-
-}
+    }
 }
