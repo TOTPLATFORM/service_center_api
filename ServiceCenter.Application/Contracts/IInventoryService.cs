@@ -22,4 +22,11 @@ public interface IInventoryService : IApplicationService ,IScopedService
 	/// </summary>
 	/// <returns>list all inventoryResponseDto </returns>
 	public Task<Result<List<InventoryResponseDto>>> GetAllInventoriesAsync();
+
+	/// <summary>
+	/// function to get inventory by id that take  inventory id
+	/// </summary>
+	/// <param name="id">inventory id</param>
+	/// <returns>time slot response dto</returns>
+	public Task<Result<InventoryResponseDto>> GetInventoryByIdAsync(int id);
 }

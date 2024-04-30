@@ -50,7 +50,7 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 
 		return Result.SuccessWithMessage("Inventory added successfully");
 	}
-
+	///<inheritdoc/>
 	public async Task<Result<List<InventoryResponseDto>>> GetAllInventoriesAsync()
 	{
 		var result = await _dbContext.Inventories
@@ -58,6 +58,24 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 				 .ToListAsync();
 
 		_logger.LogInformation("Fetching all Inventories. Total count: {TimeSlot}.", result.Count);
+
+		return Result.Success(result);
+	}
+	///<inheritdoc/>
+	public async Task<Result<InventoryResponseDto>> GetInventoryByIdAsync(int id)
+	{
+		var result = await _dbContext.Inventories
+				.ProjectTo<InventoryResponseDto>(_mapper.ConfigurationProvider)
+				.FirstOrDefaultAsync(timeslot => timeslot.Id == id);
+
+		if (result is null)
+		{
+			_logger.LogWarning("Inventory Id not found,Id {InevntoryId}", id);
+
+			return Result.NotFound(["Inventory not found"]);
+		}
+
+		_logger.LogInformation("Fetching Inventory");
 
 		return Result.Success(result);
 	}
