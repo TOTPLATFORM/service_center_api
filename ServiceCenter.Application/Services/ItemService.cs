@@ -124,7 +124,7 @@ public class ItemService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
 
     public async Task<Result<List<ItemResponseDto>>> SearchItemByTextAsync(string text)
     {
-        var names = await _dbContext.Users.OfType<Item>()
+        var names = await _dbContext.Items
             .ProjectTo<ItemResponseDto>(_mapper.ConfigurationProvider)
             .Where(n => n.ItemName.Contains(text))
             .ToListAsync();

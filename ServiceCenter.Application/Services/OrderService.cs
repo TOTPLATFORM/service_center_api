@@ -101,7 +101,7 @@ public class OrderService(IItemService itemService, ServiceCenterBaseDbContext d
   
     public async Task<Result<List<OrderResponseDto>>> SearchOrderByTextAsync(Status text)
     {
-        var orders = await _dbContext.Users.OfType<Order>()
+        var orders = await _dbContext.Orders
             .ProjectTo<OrderResponseDto>(_mapper.ConfigurationProvider)
             .Where(n => n.OrderStatus.Equals(text))
             .ToListAsync();

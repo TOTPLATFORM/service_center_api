@@ -10,5 +10,7 @@ public static class OrderMapping
     {
         map.CreateMap<OrderRequestDto, Order>().ReverseMap();
         map.CreateMap<Order, OrderResponseDto>().ReverseMap();
+        map.CreateMap<ItemOrderRequestDto, ItemOrder>().ReverseMap();
+        map.CreateMap<ItemOrder, ItemOrderResponseDto>().ReverseMap();
     }
 }
