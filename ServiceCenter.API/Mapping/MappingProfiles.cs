@@ -13,10 +13,17 @@ public class MappingProfiles : Profile
         this.AddProductBrandMapping();
 
         this.AddInventoryMapping();
+
         this.AddItemMapping();
+
         this.AddOrderMapping();
+
         this.AddItemCategoryMapping();
+
         this.AddBranchMapping();
-      
-    }
+
+        this.AddDepartmentMapping();
+
+
+	}
 }

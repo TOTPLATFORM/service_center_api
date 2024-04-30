@@ -66,7 +66,7 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 	{
 		var result = await _dbContext.Inventories
 				.ProjectTo<InventoryResponseDto>(_mapper.ConfigurationProvider)
-				.FirstOrDefaultAsync(timeslot => timeslot.Id == id);
+				.FirstOrDefaultAsync(inventory => inventory.Id == id);
 
 		if (result is null)
 		{
@@ -82,7 +82,7 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 
 	///<inheritdoc/>
 
-	public async Task<Result<InventoryResponseDto>> UpdateInventoryAsync(int id, InventoryRequestDto timeSlotRequestDto)
+	public async Task<Result<InventoryResponseDto>> UpdateInventoryAsync(int id, InventoryRequestDto inventoryRequestDto)
 	{
 		var result = await _dbContext.Inventories.FindAsync(id);
 
@@ -94,7 +94,7 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 
 		result.ModifiedBy = _userContext.Email;
 
-		_mapper.Map(timeSlotRequestDto, result);
+		_mapper.Map(inventoryRequestDto, result);
 
 		await _dbContext.SaveChangesAsync();
 
@@ -136,30 +136,30 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 		//	});
 		//}
 
-		var Days = await _dbContext.Inventories
+		var name = await _dbContext.Inventories
 					   .ProjectTo<InventoryResponseDto>(_mapper.ConfigurationProvider)
 					   .Where(n => n.InventoryName.Contains(text))
 					   .ToListAsync();
 
-		_logger.LogInformation("Fetching search time slot by name . Total count: {time slot}.", Days.Count);
+		_logger.LogInformation("Fetching search time slot by name . Total count: {time slot}.", name.Count);
 
-		return Result.Success(Days);
+		return Result.Success(name);
 
 	}
 
 	///<inheritdoc/>
 	public async Task<Result> DeleteInventoryAsync(int id)
 	{
-		var timeSlot = await _dbContext.Inventories.FindAsync(id);
+		var inventory = await _dbContext.Inventories.FindAsync(id);
 
-		if (timeSlot is null)
+		if (inventory is null)
 		{
 			_logger.LogWarning("Inventory Invaild Id ,Id {InventoryId}", id);
 
 			return Result.NotFound(["Inventory Invaild Id"]);
 		}
 
-		_dbContext.Inventories.Remove(timeSlot);
+		_dbContext.Inventories.Remove(inventory);
 
 		await _dbContext.SaveChangesAsync();
 
