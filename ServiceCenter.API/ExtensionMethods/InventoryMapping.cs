@@ -8,8 +8,11 @@ public static class InventoryMapping
 {
 	public static void AddInventoryMapping(this MappingProfiles map)
 	{
-		map.CreateMap<InventoryRequestDto, Inventory>().ReverseMap();
+		map.CreateMap<InventoryRequestDto, Inventory>()
+			.ReverseMap();
 
-		map.CreateMap<Inventory, InventoryResponseDto>().ReverseMap();
+		map.CreateMap<Inventory, InventoryResponseDto>()
+			//.ForMember(dest=>dest.ca,src=>src.MapFrom(src=>src.))
+			.ReverseMap();
 	}
 }
