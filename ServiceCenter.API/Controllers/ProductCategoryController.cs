@@ -93,5 +93,20 @@ namespace ServiceCenter.API.Controllers
         {
             return await _productCategoryService.DeleteProductCategoryAsync(id);
         }
+        /// </summary>
+        ///<param name="text">id</param>
+        /// <remarks>
+        /// Access is limited to users with the "Admin" role.
+        /// </remarks>
+        /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+        [HttpGet("search/{text}")]
+        //[Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(Result<ProductCategoryResponseDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        public async Task<Result<List<ProductCategoryResponseDto>>> SearchProductCategoryByText(string text)
+        {
+            return await _productCategoryService.SearchProductCategoryByTextAsync(text);
+        }
     }
 }
