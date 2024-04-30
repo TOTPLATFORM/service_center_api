@@ -9,7 +9,7 @@ namespace ServiceCenter.Domain.Entities;
 
 public class ServiceCategory : AuditableEntity
 {
-    public string ServiceName { get; set; } = "";
-    public string ServiceDescription { get; set; } = "";
+    public string ServiceCategoryName { get; set; } = "";
+    public string ServiceCategoryDescription { get; set; } = "";
     public virtual ICollection<Service> Services { get; set; } = new HashSet<Service>();
 }

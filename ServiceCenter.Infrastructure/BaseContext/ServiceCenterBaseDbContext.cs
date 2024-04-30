@@ -35,6 +35,7 @@ public class ServiceCenterBaseDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<ItemCategory> ItemCategories { get; set; }
     public DbSet<Item> Items { get; set; }
     public DbSet<Order> Order { get; set; }
+    public DbSet<ProductBrand> ProductBrands { get; set; }
 
 
 }

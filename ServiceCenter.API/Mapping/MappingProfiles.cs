@@ -9,6 +9,7 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         this.AddTimeSlotMapping();
+        this.AddProductBrandMapping();
       
     }
 }
