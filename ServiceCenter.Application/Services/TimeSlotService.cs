@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
@@ -10,6 +11,7 @@ using ServiceCenter.Infrastructure.BaseContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -116,6 +118,35 @@ public class TimeSlotService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 	}
 
 	///<inheritdoc/>
+	public async Task<Result<List<TimeSlotResponseDto>>> SearchTimeSlotByTextAsync(string text)
+	{
+
+
+		//if (string.IsNullOrWhiteSpace(text))
+		//{
+		//	_logger.LogError("Search text cannot be empty", text);
+
+		//	return new Result.Invalid(new List<ValidationError>
+		//	{
+		//		new ValidationError
+		//		{
+		//			ErrorMessage = "Validation Errror : Search text cannot be empty"
+		//		}
+		//	});
+		//}
+
+		var Days = await _dbContext.TimeSlots
+                       .ProjectTo<TimeSlotResponseDto>(_mapper.ConfigurationProvider)
+		               .Where(n => n.Day.Contains(text))
+		               .ToListAsync();
+
+		_logger.LogInformation("Fetching search time slot by name . Total count: {time slot}.", Days.Count);
+
+		return Result.Success(Days);
+
+	}
+
+	///<inheritdoc/>
 	public async Task<Result> DeleteTimeSlotAsync(int id)
 	{
 		var timeSlot = await _dbContext.TimeSlots.FindAsync(id);
@@ -135,4 +166,5 @@ public class TimeSlotService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 
 		return Result.SuccessWithMessage("TimeSlot removed successfully");
 	}
+
 }
