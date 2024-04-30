@@ -18,5 +18,7 @@ public class MappingProfiles : Profile
         this.AddItemCategoryMapping();
 
       
+        this.AddProductCategoryMapping();
+      
     }
 }
