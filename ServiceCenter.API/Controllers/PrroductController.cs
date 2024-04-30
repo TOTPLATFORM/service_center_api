@@ -90,4 +90,35 @@ public class ProductController(IProductService productService) : BaseController
     {
         return await _productService.DeleteProductAsync(id);
     }
+    /// </summary>
+    ///<param name="text">id</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+    [HttpGet("search/{text}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ProductResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<List<ProductResponseDto>>> SearchProductByText(string text)
+    {
+        return await _productService.SearchProductByTextAsync(text);
+    }
+    [HttpGet("searchByProductCategory/{text}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ProductResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<List<ProductResponseDto>>> SearchProductByProductCategory(string text)
+    {
+        return await _productService.GetAllProductsForSpecificProductCategory(text);
+    }
+    [HttpGet("searchByProductBrand/{text}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ProductResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<List<ProductResponseDto>>> SearchProductByProductBrand(string text)
+    {
+        return await _productService.GetAllProductsForSpecificProductBrand(text);
+    }
 }
