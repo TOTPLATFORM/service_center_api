@@ -10,9 +10,9 @@ namespace ServiceCenter.Domain.Entities;
 public class Schedule :  AuditableEntity
 {
 	public int? TimeSlotId { get; set; }
-    public virtual TimeSlot TimeSlot { get; set; }
+    public virtual TimeSlot TimeSlot { get; set; } = default;
     public string?  EmployeeId  { get; set; }
-    public virtual Employee Employee { get; set; }
+    public virtual Employee Employee { get; set; } = default;
     public int? AppotimentId { get; set; }
-    public virtual Appotiment Appotiment { get; set; }
+    public virtual Appotiment Appotiment { get; set; } = default;
 }

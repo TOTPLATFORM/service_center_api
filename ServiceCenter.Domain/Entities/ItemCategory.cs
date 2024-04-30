@@ -12,7 +12,7 @@ namespace ServiceCenter.Domain.Entities
 		public string CategoryName { get; set; } = "";
 		public int ReferenceNumber { get; set; }
 		public int InventoryId { get; set; }
-		public virtual Inventory Inventory { get; set; }
+		public virtual Inventory Inventory { get; set; } = default;
         public virtual ICollection<Item> Items { get; set; } = new HashSet<Item>();
     }
 }

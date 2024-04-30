@@ -11,4 +11,6 @@ public class CenterService : BaseEntity
 {
     public int CenterId { get; set; }
     public int ServiceId { get; set; }
+    public virtual Center Center { get; set; } = default;
+    public virtual Service Service { get; set; } = default;
 }
