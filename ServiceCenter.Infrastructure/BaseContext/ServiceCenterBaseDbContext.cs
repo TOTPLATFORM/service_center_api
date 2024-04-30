@@ -32,6 +32,7 @@ public class ServiceCenterBaseDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<TimeSlot> TimeSlots { get; set; }
     public DbSet<Schedule> Schedules { get; set; }
+    public DbSet<ProductBrand> ProductBrands { get; set; }
 
 
 }
