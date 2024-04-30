@@ -19,9 +19,7 @@ public class BranchConfigurations : IEntityTypeConfiguration<Branch>
 		builder.Property(p => p.BranchPhoneNumber)
 		.IsRequired()
 		.HasMaxLength(50);
-		builder.Property(p => p.Address)
-		.IsRequired()
-		.HasMaxLength(50);
+		
 		builder.Property(p => p.EmailAddress)
 		.IsRequired()
 		.HasMaxLength(50);
