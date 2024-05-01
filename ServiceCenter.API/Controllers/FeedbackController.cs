@@ -58,4 +58,20 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     {
         return await _FeedbackService.GetFeedbackByIdAsync(id);
     }
+    /// </summary>
+    ///<param name="id">id of Feedback.</param>
+    ///<param name="FeedbackRequestDto">Feedback dto.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+    [HttpPut("{id}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<FeedbackResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<FeedbackResponseDto>> UpdateFeedback(int id, FeedbackRequestDto FeedbackRequestDto)
+    {
+        return await _FeedbackService.UpdateFeedbackAsync(id, FeedbackRequestDto);
+    }
 }
