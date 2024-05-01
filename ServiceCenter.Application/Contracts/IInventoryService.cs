@@ -13,7 +13,7 @@ public interface IInventoryService : IApplicationService ,IScopedService
 	/// <summary>
 	/// function to add inventory that take inventoryDto   
 	/// </summary>
-	/// <param name="InventoryRequestDto">time slot request dto</param>
+	/// <param name="InventoryRequestDto">inventory request dto</param>
 	/// <returns>Inventory added successfully </returns>
 	public Task<Result> AddInventoryAsync(InventoryRequestDto inventoryRequestDto);
 
@@ -49,7 +49,7 @@ public interface IInventoryService : IApplicationService ,IScopedService
 	/// <summary>
 	/// function to delete Inventory that take InventoryDto   
 	/// </summary>
-	/// <param name="id">time slot id</param>
+	/// <param name="id">inventory id</param>
 	/// <returns>Inventory removed successfully </returns>
 	public Task<Result> DeleteInventoryAsync(int id);
 }
