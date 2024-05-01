@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -42,5 +44,16 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
         await _dbContext.SaveChangesAsync();
         _logger.LogInformation("Schedule added successfully to the database");
         return Result.SuccessWithMessage("Schedule added successfully");
+    }
+    ///<inheritdoc/>
+    public async Task<Result<List<ScheduleResponseDto>>> GetAllScheduleAsync()
+    {
+        var result = await _dbContext.Schedules
+             .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
+             .ToListAsync();
+
+        _logger.LogInformation("Fetching all  Schedule. Total count: { Schedule}.", result.Count);
+
+        return Result.Success(result);
     }
 }

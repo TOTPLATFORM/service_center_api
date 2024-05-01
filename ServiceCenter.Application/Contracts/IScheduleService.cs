@@ -16,4 +16,9 @@ public interface IScheduleService : IApplicationService, IScopedService
     /// <param name="ScheduleRequestDto">Schedule  request dto</param>
     /// <returns> Schedule  added successfully </returns>
     public Task<Result> AddScheduleAsync(ScheduleRequestDto ScheduleRequestDto);
+    /// <summary>
+    /// function to get all Schedule  
+    /// </summary>
+    /// <returns>list all Schedule  response dto </returns>
+    public Task<Result<List<ScheduleResponseDto>>> GetAllScheduleAsync();
 }
