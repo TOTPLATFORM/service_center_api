@@ -20,5 +20,5 @@ public class ComplaintRequestDto
     public Status ComplaintStatus { get; set; }
     [Required]
     public string AssignedTo { get; set; } = "";
-    public string? CustomerId { get; set; } = "";
+    public string? CustomerId { get; set; } = default;
 }
