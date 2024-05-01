@@ -40,4 +40,10 @@ public interface IServiceService : IApplicationService, IScopedService
     /// <param name="id">Service  id</param>
     /// <returns>Service  removed successfully </returns>
     public Task<Result> DeleteServiceAsync(int id);
+    /// <summary>
+    /// function to search by Service name  that take  Service name
+    /// </summary>
+    /// <param name="text">Service name</param>
+    /// <returns>Service response dto </returns>
+    public Task<Result<List<ServiceResponseDto>>> SearchServiceByTextAsync(string text);
 }

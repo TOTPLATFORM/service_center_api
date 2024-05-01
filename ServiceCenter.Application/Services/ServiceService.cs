@@ -125,4 +125,14 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         _logger.LogInformation("Service removed successfully in the database");
         return Result.SuccessWithMessage("Service removed successfully");
     }
+    ///<inheritdoc/>
+    public async Task<Result<List<ServiceResponseDto>>> SearchServiceByTextAsync(string text)
+    {
+        var names = await _dbContext.Services
+        .ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
+        .Where(n => n.ServiceName.Contains(text))
+        .ToListAsync();
+        _logger.LogInformation("Fetching search Service by name . Total count: {Prouct}.", names.Count);
+        return Result.Success(names);
+    }
 }

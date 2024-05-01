@@ -89,4 +89,20 @@ public class ServiceController(IServiceService ServiceService) : BaseController
     {
         return await _ServiceService.DeleteServiceAsync(id);
     }
+    /// </summary>
+    ///<param name="text">id</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+    [HttpGet("search/{text}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ServiceResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<List<ServiceResponseDto>>> SearchServiceByText(string text)
+    {
+        return await _ServiceService.SearchServiceByTextAsync(text);
+    }
+    
 }
