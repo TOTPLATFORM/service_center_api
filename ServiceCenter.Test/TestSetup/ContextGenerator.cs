@@ -25,6 +25,7 @@ public class ContextGenerator
             Context.Database.EnsureCreated();
             Context.AddItem();
             Context.AddItemCategory();
+            Context.AddInventory();
             
             Context.SaveChanges();
         }
