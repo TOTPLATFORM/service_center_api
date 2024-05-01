@@ -74,4 +74,20 @@ public class RoomController(IRoomService RoomService) : BaseController
     {
         return await _RoomService.UpdateRoomAsync(id, RoomRequestDto);
     }
+    /// <summary>
+    /// delete  Room  by id from the system.
+    /// </summary>
+    ///<param name="id">id</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpDelete]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result> DeleteRoomAsycn(int id)
+    {
+        return await _RoomService.DeleteRoomAsync(id);
+    }
 }
