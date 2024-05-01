@@ -21,4 +21,10 @@ public interface IScheduleService : IApplicationService, IScopedService
     /// </summary>
     /// <returns>list all Schedule  response dto </returns>
     public Task<Result<List<ScheduleResponseDto>>> GetAllScheduleAsync();
+    /// <summary>
+    /// function to get  Schedule  by id that take   Schedule id
+    /// </summary>
+    /// <param name="id"> Schedule  id</param>
+    /// <returns> Schedule  response dto</returns>
+    public Task<Result<ScheduleResponseDto>> GetScheduleByIdAsync(int id);
 }

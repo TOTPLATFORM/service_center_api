@@ -56,4 +56,22 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 
         return Result.Success(result);
     }
+    ///<inheritdoc/>
+    public async Task<Result<ScheduleResponseDto>> GetScheduleByIdAsync(int id)
+    {
+        var result = await _dbContext.Schedules
+            .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+        if (result is null)
+        {
+            _logger.LogWarning("Schedule Id not found,Id {ScheduleId}", id);
+
+            return Result.NotFound(["Schedule not found"]);
+        }
+
+        _logger.LogInformation("Fetching Schedule");
+
+        return Result.Success(result);
+    }
 }

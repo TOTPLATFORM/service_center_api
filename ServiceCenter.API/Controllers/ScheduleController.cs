@@ -43,4 +43,20 @@ public async Task<Result<List<ScheduleResponseDto>>> GetAllSchedule()
 {
     return await _ScheduleService.GetAllScheduleAsync();
 }
+    /// <summary>
+    /// get Schedule by id in the system.
+    /// </summary>
+    ///<param name="id">id of Schedule.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpGet("{id}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ScheduleResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<ScheduleResponseDto>> GetScheduleById(int id)
+    {
+        return await _ScheduleService.GetScheduleByIdAsync(id);
+    }
 }
