@@ -44,7 +44,7 @@ public class MappingProfiles : Profile
         this.AddCompliantMapping();
 
         this.AddServicePackageMapping();
-       
+       this.AddScheduleMapping();
         this.AddServiceMapping();
 	}
 
