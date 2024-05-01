@@ -15,5 +15,5 @@ public class FeedbackRequestDto
     public string FeedbackDescription { get; set; } = "";
     [Required]
     public string FeedbackCategory { get; set; } = "";
-    public string? CustomerId { get; set; }
+    public string? CustomerId { get; set; } = default;
 }
