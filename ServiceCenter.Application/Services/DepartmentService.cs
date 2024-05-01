@@ -24,13 +24,13 @@ public class DepartmentService(ServiceCenterBaseDbContext dbContext, IMapper map
 
 
 	///<inheritdoc/>
-	public async Task<Result> AddDepartmentAsync(DepartmentRequestDto inventoryRequestDto)
+	public async Task<Result> AddDepartmentAsync(DepartmentRequestDto departmentRequestDto)
 	{
-		var result = _mapper.Map<Department>(inventoryRequestDto);
+		var result = _mapper.Map<Department>(departmentRequestDto);
 
 		if (result is null)
 		{
-			_logger.LogError("Failed to map DepartmentRequestDto to Department. DepartmentRequestDto: {@InevntoryRequestDto}", inventoryRequestDto);
+			_logger.LogError("Failed to map DepartmentRequestDto to Department. DepartmentRequestDto: {@DepartmentRequestDto}", departmentRequestDto);
 
 			return Result.Invalid(new List<ValidationError>
 			{
