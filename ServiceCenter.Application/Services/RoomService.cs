@@ -56,5 +56,22 @@ public class RoomService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
 
         return Result.Success(result);
     }
+    ///<inheritdoc/>
+    public async Task<Result<RoomResponseDto>> GetRoomByIdAsync(int id)
+    {
+        var result = await _dbContext.Rooms
+            .ProjectTo<RoomResponseDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(p => p.Id == id);
 
+        if (result is null)
+        {
+            _logger.LogWarning("Room Id not found,Id {RoomId}", id);
+
+            return Result.NotFound(["Room not found"]);
+        }
+
+        _logger.LogInformation("Fetching Room");
+
+        return Result.Success(result);
+    }
 }
