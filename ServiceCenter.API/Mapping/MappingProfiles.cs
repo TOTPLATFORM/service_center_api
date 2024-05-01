@@ -42,6 +42,8 @@ public class MappingProfiles : Profile
         this.AddFeedbackMapping();
 
         this.AddServicePackageMapping();
+       
+        this.AddServiceMapping();
 	}
 
 }
