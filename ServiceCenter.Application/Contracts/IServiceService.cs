@@ -27,4 +27,11 @@ public interface IServiceService : IApplicationService, IScopedService
     /// <param name="id"> Service  id</param>
     /// <returns> Service  response dto</returns>
     public Task<Result<ServiceResponseDto>> GetServiceByIdAsync(int id);
+    /// <summary>
+    /// function to update Service  that take ServiceRequestDto   
+    /// </summary>
+    /// <param name="id">Service id</param>
+    /// <param name="ServiceRequestDto">Service dto</param>
+    /// <returns>Updated Service </returns>
+    public Task<Result<ServiceResponseDto>> UpdateServiceAsync(int id, ServiceRequestDto ServiceRequestDto);
 }

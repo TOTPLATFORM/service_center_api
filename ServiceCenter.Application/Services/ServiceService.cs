@@ -74,4 +74,39 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
         return Result.Success(result);
     }
+    ///<inheritdoc/>
+    public async Task<Result<ServiceResponseDto>> UpdateServiceAsync(int id, ServiceRequestDto ServiceRequestDto)
+    {
+        var result = await _dbContext.Services.FindAsync(id);
+
+        if (result is null)
+        {
+            _logger.LogWarning("Service Id not found,Id {ServiceId}", id);
+            return Result.NotFound(["Service not found"]);
+        }
+
+        result.ModifiedBy = _userContext.Email;
+
+        _mapper.Map(ServiceRequestDto, result);
+
+        await _dbContext.SaveChangesAsync();
+
+        var ServiceResponse = _mapper.Map<ServiceResponseDto>(result);
+        if (ServiceResponse is null)
+        {
+            _logger.LogError("Failed to map ServiceRequestDto to ServiceResponseDto. ServiceRequestDto: {@ServiceRequestDto}", ServiceResponse);
+
+            return Result.Invalid(new List<ValidationError>
+        {
+                new ValidationError
+                {
+                    ErrorMessage = "Validation Errror"
+                }
+        });
+        }
+
+        _logger.LogInformation("Updated Service , Id {Id}", id);
+
+        return Result.Success(ServiceResponse);
+    }
 }
