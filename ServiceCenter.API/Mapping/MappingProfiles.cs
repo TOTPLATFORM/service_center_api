@@ -19,20 +19,14 @@ public class MappingProfiles : Profile
         this.AddOrderMapping();
 
         this.AddItemCategoryMapping();
+
         this.AddServiceCategoryMapping();
 
-<<<<<<<<< Temporary merge branch 1
         this.AddCenterMapping();
-
-
-=========
-      
+        
         this.AddProductCategoryMapping();
+
         this.AddProductMapping();
-      
-    
->>>>>>>>> Temporary merge branch 2
-=========
 
         this.AddItemMapping();
 
@@ -46,5 +40,5 @@ public class MappingProfiles : Profile
 
 
 	}
->>>>>>>>> Temporary merge branch 2
+
 }
