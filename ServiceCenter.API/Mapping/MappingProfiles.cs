@@ -32,6 +32,7 @@ public class MappingProfiles : Profile
 
 		this.AddProductMapping();
 
+        this.AddEmployeeMapping();
 
 	}
         

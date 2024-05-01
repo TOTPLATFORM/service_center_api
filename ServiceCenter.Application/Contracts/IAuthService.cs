@@ -1,4 +1,5 @@
-﻿using ServiceCenter.Core.Result;
+﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Result;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -16,8 +17,8 @@ public interface IAuthService: IApplicationService, IScopedService
     //Task<Result> RegisterPharmacistAsync(PharmacistRequestDto pharmacistDto);
     //Task<Result> RegisterLaboratoristAsync(LaboratoriestRequestDto laboratoristDto);
     //Task<Result> RegisterNurseAsync(NurseRequestDto nurseDto);
-    //Task<Result> RegisterEmployeeAsync(EmployeeRequestDto employeeDto);
+    Task<Result> RegisterEmployeeAsync(EmployeeRequestDto employeeRequestDto);
     Task<Result> AddUserToRoleAsync(string userId, string roleName);
     Task InitializeRoles();
-    Task CreateAdminAccount();
+    Task CreateManagerAccount();
 }
