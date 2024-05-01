@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
@@ -56,4 +58,21 @@ public class ServicePackageService(ServiceCenterBaseDbContext dbContext, IMapper
 
         return Result.Success(result);
     }
+    ///<inheritdoc/>
+    public async Task<Result> DeleteServicePackageAsync(int id)
+    {
+        var ServicePackage = await _dbContext.ServicePackages.FindAsync(id);
+
+        if (ServicePackage is null)
+        {
+            _logger.LogWarning("ServicePackage Invaild Id ,Id {ServicePackageId}", id);
+            return Result.NotFound(["ServicePackage Invaild Id"]);
+        }
+
+        _dbContext.ServicePackages.Remove(ServicePackage);
+        await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("ServicePackage removed successfully in the database");
+        return Result.SuccessWithMessage("ServicePackage removed successfully");
+    }
+ 
 }
