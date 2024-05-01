@@ -34,4 +34,10 @@ public interface IServicePackageService : IApplicationService, IScopedService
     /// <param name="ServicePackageRequestDto">ServicePackage dto</param>
     /// <returns>Updated ServicePackage </returns>
     public Task<Result<ServicePackageResponseDto>> UpdateServicePackageAsync(int id, ServicePackageRequestDto ServicePackageRequestDto);
+    /// <summary>
+    /// function to get  ServicePackage  by id that take   ServicePackage id
+    /// </summary>
+    /// <param name="id"> ServicePackage  id</param>
+    /// <returns> ServicePackage  response dto</returns>
+    public Task<Result<ServicePackageResponseDto>> GetServicePackageByIdAsync(int id);
 }

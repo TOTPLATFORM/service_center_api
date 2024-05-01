@@ -109,4 +109,22 @@ public class ServicePackageService(ServiceCenterBaseDbContext dbContext, IMapper
 
         return Result.Success(ServicePackageResponse);
     }
+    ///<inheritdoc/>
+    public async Task<Result<ServicePackageResponseDto>> GetServicePackageByIdAsync(int id)
+    {
+        var result = await _dbContext.ServicePackages
+            .ProjectTo<ServicePackageResponseDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+        if (result is null)
+        {
+            _logger.LogWarning("ServicePackage Id not found,Id {ServicePackageId}", id);
+
+            return Result.NotFound(["ServicePackage not found"]);
+        }
+
+        _logger.LogInformation("Fetching ServicePackage");
+
+        return Result.Success(result);
+    }
 }
