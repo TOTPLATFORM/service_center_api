@@ -30,6 +30,9 @@ public class MappingProfiles : Profile
 
         this.AddDepartmentMapping();
 
+        this.AddCenterMapping();
+
+
 
 	}
 }
