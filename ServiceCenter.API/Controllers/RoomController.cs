@@ -27,6 +27,7 @@ public class RoomController(IRoomService RoomService) : BaseController
     {
         return await _RoomService.AddRoomAsync(RoomDto);
     }
+
     /// <summary>
     /// get all Room categories in the system.
     /// </summary>
