@@ -16,7 +16,7 @@ public static class EmployeeMapping
 			.ReverseMap();
 
 		map.CreateMap<Employee, EmployeeResponseDto>()
-			.ForPath(dest => dest.Department.DepartmentName, src => src.MapFrom(src => src.Department.DepartmentName))
+			.ForPath(dest => dest.DepartmentName, src => src.MapFrom(src => src.Department.DepartmentName))
 			.ReverseMap();
 	}
 }
