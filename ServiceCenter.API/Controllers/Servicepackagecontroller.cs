@@ -7,29 +7,29 @@ using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
 
-public class RoomController(IRoomService RoomService) : BaseController
+
+public class ServicePackageController(IServicePackageService ServicePackageService) : BaseController
 {
-    private readonly IRoomService _RoomService = RoomService;
+    private readonly IServicePackageService _ServicePackageService = ServicePackageService;
 
     /// <summary>
-    /// action for add Room  action that take  Room dto   
+    /// action for add ServicePackage  action that take  ServicePackage dto   
     /// </summary>
-    /// <param name="RoomDto">Room  dto</param>
+    /// <param name="ServicePackageDto">ServicePackage  dto</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>result for Room  added successfully.</returns>
+    /// <returns>result for ServicePackage  added successfully.</returns>
     [HttpPost]
     //[Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result> AddRoom(RoomRequestDto RoomDto)
+    public async Task<Result> AddServicePackage(ServicePackageRequestDto ServicePackageDto)
     {
-        return await _RoomService.AddRoomAsync(RoomDto);
+        return await _ServicePackageService.AddServicePackageAsync(ServicePackageDto);
     }
-
     /// <summary>
-    /// get all Room  in the system.
+    /// get all ServicePackage  in the system.
     /// </summary>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
@@ -37,46 +37,14 @@ public class RoomController(IRoomService RoomService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
     //[Authorize(Roles = "Admin")]
-    [ProducesResponseType(typeof(Result<List<RoomResponseDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<List<ServicePackageResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<RoomResponseDto>>> GetAllRoom()
+    public async Task<Result<List<ServicePackageResponseDto>>> GetAllServicePackage()
     {
-        return await _RoomService.GetAllRoomAsync();
+        return await _ServicePackageService.GetAllServicePackageAsync();
     }
     /// <summary>
-    /// get Room by id in the system.
-    /// </summary>
-    ///<param name="id">id of Room.</param>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpGet("{id}")]
-    //[Authorize(Roles = "Admin")]
-    [ProducesResponseType(typeof(Result<RoomResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<RoomResponseDto>> GetRoomById(int id)
-    {
-        return await _RoomService.GetRoomByIdAsync(id);
-    }
-    /// </summary>
-    ///<param name="id">id of Room.</param>
-    ///<param name="RoomRequestDto">Room dto.</param>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-
-    [HttpPut("{id}")]
-    //[Authorize(Roles = "Admin")]
-    [ProducesResponseType(typeof(Result<RoomResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<RoomResponseDto>> UpdateRoom(int id, RoomRequestDto RoomRequestDto)
-    {
-        return await _RoomService.UpdateRoomAsync(id, RoomRequestDto);
-    }
-    /// <summary>
-    /// delete  Room  by id from the system.
+    /// delete  ServicePackage  by id from the system.
     /// </summary>
     ///<param name="id">id</param>
     /// <remarks>
@@ -87,12 +55,44 @@ public class RoomController(IRoomService RoomService) : BaseController
     //[Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result> DeleteRoomAsycn(int id)
+    public async Task<Result> DeleteServicePackageAsycn(int id)
     {
-        return await _RoomService.DeleteRoomAsync(id);
+        return await _ServicePackageService.DeleteServicePackageAsync(id);
     }
     /// </summary>
-    ///<param name="text">bool </param>
+    ///<param name="id">id of ServicePackage.</param>
+    ///<param name="ServicePackageRequestDto">ServicePackage dto.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+    [HttpPut("{id}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ServicePackageResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<ServicePackageResponseDto>> UpdateServicePackage(int id, ServicePackageRequestDto ServicePackageRequestDto)
+    {
+        return await _ServicePackageService.UpdateServicePackageAsync(id, ServicePackageRequestDto);
+    }
+    /// <summary>
+    /// get ServicePackage by id in the system.
+    /// </summary>
+    ///<param name="id">id of ServicePackage.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpGet("{id}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ServicePackageResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<ServicePackageResponseDto>> GetServicePackageById(int id)
+    {
+        return await _ServicePackageService.GetServicePackageByIdAsync(id);
+    }
+    /// </summary>
+    ///<param name="text">id</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
@@ -100,18 +100,10 @@ public class RoomController(IRoomService RoomService) : BaseController
 
     [HttpGet("search/{text}")]
     //[Authorize(Roles = "Admin")]
-    [ProducesResponseType(typeof(Result<RoomResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<ServicePackageResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<RoomResponseDto>>> SearchRoomByText(bool text)
+    public async Task<Result<List<ServicePackageResponseDto>>> SearchServicePackageByText(string text)
     {
-        return await _RoomService.SearchRoomByAvaliabilityAsync(text);
-    }
-    [HttpGet("searchByCenter/{text}")]
-    //[Authorize(Roles = "Admin")]
-    [ProducesResponseType(typeof(Result<RoomResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<RoomResponseDto>>> SearchByCenter(string text)
-    {
-        return await _RoomService.GetAllRoomsForSpecificCenter(text);
+        return await _ServicePackageService.SearchServicePackageByTextAsync(text);
     }
 }

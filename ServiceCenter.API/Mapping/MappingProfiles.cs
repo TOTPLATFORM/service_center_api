@@ -40,6 +40,16 @@ public class MappingProfiles : Profile
         this.AddDepartmentMapping();
 
         this.AddFeedbackMapping();
+
+        this.AddCompliantMapping();
+
+        this.AddServicePackageMapping();
+       
+        this.AddServiceMapping();
+
+        this.AddContractMapping();
+
+        this.AddAppointmentMapping(); //Not finished yet
 	}
 
 }

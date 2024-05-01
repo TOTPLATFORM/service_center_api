@@ -141,7 +141,7 @@ public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 
 		return Result.Success(employee);
 
-		return Result.Success(names);
+		return Result.Success(employee);
 	}
 
 	///<inheritdoc/>
