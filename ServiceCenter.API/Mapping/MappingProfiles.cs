@@ -13,8 +13,11 @@ public class MappingProfiles : Profile
         this.AddProductBrandMapping();
 
         this.AddInventoryMapping();
+
         this.AddItemMapping();
+
         this.AddOrderMapping();
+
         this.AddItemCategoryMapping();
         this.AddServiceCategoryMapping();
 
@@ -23,4 +26,10 @@ public class MappingProfiles : Profile
         this.AddProductMapping();
       
     }
+        this.AddBranchMapping();
+
+        this.AddDepartmentMapping();
+
+
+	}
 }

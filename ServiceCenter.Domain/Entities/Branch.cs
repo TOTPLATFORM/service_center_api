@@ -15,5 +15,5 @@ public class Branch : AuditableEntity
     public string EmailAddress { get; set; } = "";
     public int CenterId { get; set; }
     public virtual Center Center { get; set; } = default;
-    public virtual ICollection<Customer> Customers { get; set; } = new HashSet<Customer>();
+    public virtual ICollection<Customer?> Customers { get; set; } = new HashSet<Customer>();
 }

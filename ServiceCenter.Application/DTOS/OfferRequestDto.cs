@@ -19,4 +19,6 @@ public class OfferRequestDto
     public DateOnly EndDate { get; set; }
     [Required]
     public int Discount { get; set; }
+    [Required]
+    public int ProductId { get; set; }
 }

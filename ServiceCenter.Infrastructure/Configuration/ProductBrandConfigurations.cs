@@ -9,19 +9,17 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Infrastructure.Configuration;
 
-public class ItemConfiguration : IEntityTypeConfiguration<Item>
+public class ProductBrandConfigurations : IEntityTypeConfiguration<ProductBrand>
 {
-    public void Configure(EntityTypeBuilder<Item> builder)
+    public void Configure(EntityTypeBuilder<ProductBrand> builder)
     {
-        builder.Property(T => T.ItemName)
-                .IsRequired();
-        builder.Property(T => T.ItemDescription)
+        builder.Property(T => T.BrandName)
+                    .IsRequired();
+        builder.Property(T => T.BrandDescription)
                .IsRequired();
-        builder.Property(T => T.ItemPrice)
+        builder.Property(T => T.CountryOfOrigin)
             .IsRequired();
-        builder.Property(T => T.ItemStock)
-            .IsRequired();
-        builder.Property(T => T.CategoryId)
+        builder.Property(T => T.FoundedYear)
             .IsRequired();
     }
 }

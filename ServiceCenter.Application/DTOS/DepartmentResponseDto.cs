@@ -9,6 +9,7 @@ namespace ServiceCenter.Application.DTOS;
 
 public class DepartmentResponseDto
 {
+    public int Id { get; set; }
     public string DepartmentName { get; set; } = "";
     public string CenterName { get; set; } = "";
     public virtual ICollection<EmployeeResponseDto> Employees { get; set; }
