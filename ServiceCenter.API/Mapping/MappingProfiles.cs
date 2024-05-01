@@ -24,18 +24,18 @@ public class MappingProfiles : Profile
 
         this.AddDepartmentMapping();
 
+		this.AddServiceCategoryMapping();
 
-	}
-        this.AddServiceCategoryMapping();
-
-        this.AddCenterMapping();
+		this.AddCenterMapping();
 
 		this.AddProductCategoryMapping();
 
 		this.AddProductMapping();
 
+
 	}
+        
+
+}
  
       
-    }
-}
