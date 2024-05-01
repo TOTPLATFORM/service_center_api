@@ -44,5 +44,53 @@ public class ContractController(IContractService ContractService) : BaseControll
     {
         return await _ContractService.GetAllContractAsync();
     }
+    /// <summary>
+    /// get Contract by id in the system.
+    /// </summary>
+    ///<param name="id">id of Contract.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpGet("{id}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ContractResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<ContractResponseDto>> GetContractById(int id)
+    {
+        return await _ContractService.GetContractByIdAsync(id);
+    }
+    /// </summary>
+    ///<param name="id">id of Contract.</param>
+    ///<param name="ContractRequestDto">Contract dto.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+    [HttpPut("{id}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ContractResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<ContractResponseDto>> UpdateContract(int id, ContractRequestDto ContractRequestDto)
+    {
+        return await _ContractService.UpdateContractAsync(id, ContractRequestDto);
+    }
+    /// <summary>
+    /// delete  Contract  by id from the system.
+    /// </summary>
+    ///<param name="id">id</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpDelete]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result> DeleteContractAsycn(int id)
+    {
+        return await _ContractService.DeleteContractAsync(id);
+    }
 
 }
