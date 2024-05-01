@@ -16,4 +16,9 @@ public interface IServicePackageService : IApplicationService, IScopedService
     /// <param name="ServicePackageRequestDto">ServicePackage  request dto</param>
     /// <returns> ServicePackage  added successfully </returns>
     public Task<Result> AddServicePackageAsync(ServicePackageRequestDto ServicePackageRequestDto);
+    /// <summary>
+    /// function to get all ServicePackage  
+    /// </summary>
+    /// <returns>list all ServicePackage  response dto </returns>
+    public Task<Result<List<ServicePackageResponseDto>>> GetAllServicePackageAsync();
 }
