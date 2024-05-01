@@ -21,7 +21,7 @@ public class ServiceRequestDto
     public Status Avaliable { get; set; }
     [Required]
     public int ServiceCategoryId { get; set; } 
-    public int? ServicePackageId { get; set; }=default;
+    public int? ServicePackageId { get; set; } = default;
     [Required]
     public string EmployeeId { get; set; } = "";
 }

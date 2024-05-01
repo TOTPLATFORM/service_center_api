@@ -15,7 +15,6 @@ public class ServicePackageRequestDto
     [Required]
     public string PackageDescription { get; set; } = "";
     [Required]
+    [Range(10, int.MaxValue)]
     public int PackagePrice { get; set; }
-    [Required]
-    public string ServiceName { get; set; } = "";
 }
