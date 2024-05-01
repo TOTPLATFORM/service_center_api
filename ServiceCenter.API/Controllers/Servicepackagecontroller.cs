@@ -59,5 +59,21 @@ public class ServicePackageController(IServicePackageService ServicePackageServi
     {
         return await _ServicePackageService.DeleteServicePackageAsync(id);
     }
+    /// </summary>
+    ///<param name="id">id of ServicePackage.</param>
+    ///<param name="ServicePackageRequestDto">ServicePackage dto.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+    [HttpPut("{id}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ServicePackageResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<ServicePackageResponseDto>> UpdateServicePackage(int id, ServicePackageRequestDto ServicePackageRequestDto)
+    {
+        return await _ServicePackageService.UpdateServicePackageAsync(id, ServicePackageRequestDto);
+    }
 
 }

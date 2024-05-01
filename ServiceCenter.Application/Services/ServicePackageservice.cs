@@ -74,5 +74,39 @@ public class ServicePackageService(ServiceCenterBaseDbContext dbContext, IMapper
         _logger.LogInformation("ServicePackage removed successfully in the database");
         return Result.SuccessWithMessage("ServicePackage removed successfully");
     }
- 
+    ///<inheritdoc/>
+    public async Task<Result<ServicePackageResponseDto>> UpdateServicePackageAsync(int id, ServicePackageRequestDto ServicePackageRequestDto)
+    {
+        var result = await _dbContext.ServicePackages.FindAsync(id);
+
+        if (result is null)
+        {
+            _logger.LogWarning("ServicePackage Id not found,Id {ServicePackageId}", id);
+            return Result.NotFound(["ServicePackage not found"]);
+        }
+
+        result.ModifiedBy = _userContext.Email;
+
+        _mapper.Map(ServicePackageRequestDto, result);
+
+        await _dbContext.SaveChangesAsync();
+
+        var ServicePackageResponse = _mapper.Map<ServicePackageResponseDto>(result);
+        if (ServicePackageResponse is null)
+        {
+            _logger.LogError("Failed to map ServicePackageRequestDto to ServicePackageResponseDto. ServicePackageRequestDto: {@ServicePackageRequestDto}", ServicePackageResponse);
+
+            return Result.Invalid(new List<ValidationError>
+        {
+                new ValidationError
+                {
+                    ErrorMessage = "Validation Errror"
+                }
+        });
+        }
+
+        _logger.LogInformation("Updated ServicePackage , Id {Id}", id);
+
+        return Result.Success(ServicePackageResponse);
+    }
 }

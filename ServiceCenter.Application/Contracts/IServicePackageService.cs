@@ -27,4 +27,11 @@ public interface IServicePackageService : IApplicationService, IScopedService
     /// <param name="id">ServicePackage  id</param>
     /// <returns>ServicePackage  removed successfully </returns>
     public Task<Result> DeleteServicePackageAsync(int id);
+    /// <summary>
+    /// function to update ServicePackage  that take ServicePackageRequestDto   
+    /// </summary>
+    /// <param name="id">ServicePackage id</param>
+    /// <param name="ServicePackageRequestDto">ServicePackage dto</param>
+    /// <returns>Updated ServicePackage </returns>
+    public Task<Result<ServicePackageResponseDto>> UpdateServicePackageAsync(int id, ServicePackageRequestDto ServicePackageRequestDto);
 }
