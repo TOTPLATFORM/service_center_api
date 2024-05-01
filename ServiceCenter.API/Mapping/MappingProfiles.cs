@@ -26,4 +26,16 @@ public class MappingProfiles : Profile
 
 
 	}
+        this.AddServiceCategoryMapping();
+
+        this.AddCenterMapping();
+
+		this.AddProductCategoryMapping();
+
+		this.AddProductMapping();
+
+	}
+ 
+      
+    }
 }
