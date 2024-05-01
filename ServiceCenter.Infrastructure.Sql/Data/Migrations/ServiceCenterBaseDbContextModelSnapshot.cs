@@ -8,7 +8,7 @@ using ServiceCenter.Infrastructure.BaseContext;
 
 #nullable disable
 
-namespace ServiceCenter.Infrastructure.Sql.Migrations
+namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
     partial class ServiceCenterBaseDbContextModelSnapshot : ModelSnapshot
