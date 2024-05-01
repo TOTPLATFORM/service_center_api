@@ -44,7 +44,9 @@ public class MappingProfiles : Profile
 
         this.AddServicePackageMapping();
 
-        this.AddAppointmentMapping();
+        this.AddContractMapping();
+
+        this.AddAppointmentMapping(); //Not finished yet
 	}
 
 }
