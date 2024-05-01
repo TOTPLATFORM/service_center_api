@@ -40,4 +40,11 @@ public interface IRoomService : IApplicationService, IScopedService
     /// <param name="id">Room  id</param>
     /// <returns>Room  removed successfully </returns>
     public Task<Result> DeleteRoomAsync(int id);
+    /// <summary>
+    /// function to search by room availability that take  Rooms
+    /// </summary>
+    /// <param name="text">boolean </param>
+    /// <returns>Room response dto </returns>
+    public Task<Result<List<RoomResponseDto>>> SearchRoomByAvaliabilityAsync(bool text);
+    public  Task<Result<List<RoomResponseDto>>> GetAllRoomsForSpecificCenter(string centerName);
 }

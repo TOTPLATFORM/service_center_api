@@ -112,7 +112,7 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
     ///<inheritdoc/>
     public async Task<Result> DeleteProductAsync(int id)
     {
-        var Product = await _dbContext.ProductCategories.FindAsync(id);
+        var Product = await _dbContext.Products.FindAsync(id);
 
         if (Product is null)
         {
@@ -120,19 +120,19 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
             return Result.NotFound(["Product Invaild Id"]);
         }
 
-        _dbContext.ProductCategories.Remove(Product);
+        _dbContext.Products.Remove(Product);
         await _dbContext.SaveChangesAsync();
         _logger.LogInformation("Product removed successfully in the database");
         return Result.SuccessWithMessage("Product removed successfully");
     }
-
+    ///<inheritdoc/>
     public async Task<Result<List<ProductResponseDto>>> SearchProductByTextAsync(string text)
     {
         var names = await _dbContext.Products
         .ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider)
         .Where(n => n.ProductName.Contains(text))
         .ToListAsync();
-        _logger.LogInformation("Fetching search ProductCategory by name . Total count: {ProductCategory}.", names.Count);
+        _logger.LogInformation("Fetching search Product by name . Total count: {Prouct}.", names.Count);
         return Result.Success(names);
     }
 

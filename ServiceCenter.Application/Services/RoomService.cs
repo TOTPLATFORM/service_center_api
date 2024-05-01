@@ -125,4 +125,24 @@ public class RoomService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
         _logger.LogInformation("Room removed successfully in the database");
         return Result.SuccessWithMessage("Room removed successfully");
     }
+    ///<inheritdoc/>
+    public async Task<Result<List<RoomResponseDto>>> SearchRoomByAvaliabilityAsync(bool text)
+    {
+        var Available = await _dbContext.Rooms
+        .ProjectTo<RoomResponseDto>(_mapper.ConfigurationProvider)
+        .Where(n => n.Availability.Equals(text))
+        .ToListAsync();
+        _logger.LogInformation("Fetching search Room  Available . Total count: {Room}.", Available.Count);
+        return Result.Success(Available);
+    }
+    public async Task<Result<List<RoomResponseDto>>> GetAllRoomsForSpecificCenter(string centerName)
+    {
+        var Rooms = await _dbContext.Rooms
+              .Where(s => s.Center.CenterName == centerName)
+              .ProjectTo<RoomResponseDto>(_mapper.ConfigurationProvider)
+              .ToListAsync();
+
+        _logger.LogInformation("Fetching Rooms. Total count: {Rooms}.", Rooms.Count);
+        return Result.Success(Rooms);
+    }
 }
