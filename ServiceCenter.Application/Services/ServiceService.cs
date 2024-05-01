@@ -56,4 +56,22 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
         return Result.Success(result);
     }
+    ///<inheritdoc/>
+    public async Task<Result<ServiceResponseDto>> GetServiceByIdAsync(int id)
+    {
+        var result = await _dbContext.Services
+            .ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+        if (result is null)
+        {
+            _logger.LogWarning("Service Id not found,Id {ServiceId}", id);
+
+            return Result.NotFound(["Service not found"]);
+        }
+
+        _logger.LogInformation("Fetching Service");
+
+        return Result.Success(result);
+    }
 }
