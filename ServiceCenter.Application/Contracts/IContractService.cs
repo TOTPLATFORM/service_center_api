@@ -16,4 +16,10 @@ public interface IContractService : IApplicationService, IScopedService
     /// <param name="ContractRequestDto">Contract request dto</param>
     /// <returns> Contract  added successfully </returns>
     public Task<Result> AddContractAsync(ContractRequestDto ContractRequestDto);
+
+    /// <summary>
+    /// function to get all Contract  
+    /// </summary>
+    /// <returns>list all Contract  response dto </returns>
+    public Task<Result<List<ContractResponseDto>>> GetAllContractAsync();
 }
