@@ -17,8 +17,8 @@ public class ProductRequestDto
     [Required]
     public string ProductPrice { get; set; } = "";
     [Required]
-    public int CategoryId { get; set; }
+    public int ProductCategoryId { get; set; }
     [Required]
     public int ProductBrandId { get; set; }
-    public string? SalesId { get; set; } = "";
+    public string? SalesId { get; set; } = default;
 }

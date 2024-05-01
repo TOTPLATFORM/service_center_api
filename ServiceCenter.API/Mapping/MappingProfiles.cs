@@ -19,10 +19,16 @@ public class MappingProfiles : Profile
         this.AddOrderMapping();
 
         this.AddItemCategoryMapping();
+        this.AddServiceCategoryMapping();
 
         this.AddCenterMapping();
 
+		this.AddProductCategoryMapping();
 
+		this.AddProductMapping();
 
 	}
+ 
+      
+    }
 }
