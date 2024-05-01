@@ -16,4 +16,9 @@ public interface IServiceService : IApplicationService, IScopedService
     /// <param name="ServiceRequestDto">Service  request dto</param>
     /// <returns> Service  added successfully </returns>
     public Task<Result> AddServiceAsync(ServiceRequestDto ServiceRequestDto);
+    /// <summary>
+    /// function to get all Service  
+    /// </summary>
+    /// <returns>list all Service  response dto </returns>
+    public Task<Result<List<ServiceResponseDto>>> GetAllServiceAsync();
 }

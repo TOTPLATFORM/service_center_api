@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -42,5 +44,16 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         await _dbContext.SaveChangesAsync();
         _logger.LogInformation("Service added successfully to the database");
         return Result.SuccessWithMessage("Service added successfully");
+    }
+    ///<inheritdoc/>
+    public async Task<Result<List<ServiceResponseDto>>> GetAllServiceAsync()
+    {
+        var result = await _dbContext.Services
+             .ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
+             .ToListAsync();
+
+        _logger.LogInformation("Fetching all  Service. Total count: { Service}.", result.Count);
+
+        return Result.Success(result);
     }
 }
