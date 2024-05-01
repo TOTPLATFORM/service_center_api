@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Services;
 
-public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<EmployeeService> logger, IUserContextService userContext , IAuthService authService) : IEmployeeService
+public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<EmployeeService> logger, IUserContextService userContext, IAuthService authService) : IEmployeeService
 {
 	private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
 	private readonly IMapper _mapper = mapper;
@@ -61,17 +61,15 @@ public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 	}
 
 	///<inheritdoc/>
-
-	public async Task<Result<EmployeeResponseDto>> GetEmployeeByIdAsync(string id)
+	public async Task<Result<EmployeeResponseDto>> GetEmployeeByIdAsync(string Id)
 	{
 		var employee = await _dbContext.Employees
-					.ProjectTo<EmployeeResponseDto>(_mapper.ConfigurationProvider)
-					.FirstOrDefaultAsync(d => d.Id == id);
+			.ProjectTo<EmployeeResponseDto>(_mapper.ConfigurationProvider)
+			.FirstOrDefaultAsync(d => d.Id == Id);
 
 		if (employee is null)
 		{
-			_logger.LogWarning("employee Id not found,Id {employeeId}", id);
-
+			_logger.LogWarning("employee Id not found,Id {employeeId}", Id);
 			return Result.NotFound(["employee not found"]);
 		}
 		_logger.LogInformation("Fetching employee");
@@ -101,13 +99,14 @@ public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 		if (employeeResponse is null)
 		{
 			_logger.LogError("Failed to map employeeRequestDto to employeeResponseDto. employeeRequestDto: {@employeeRequestDto}", employeeRequestDto);
+
 			return Result.Invalid(new List<ValidationError>
+			{
+				new ValidationError
 				{
-					new ValidationError
-					{
-						ErrorMessage = "Validation Errror"
-					}
-				});
+					ErrorMessage = "Validation Errror"
+				}
+			});
 		}
 
 		_logger.LogInformation("Updated employee , Id {Id}", id);
@@ -119,19 +118,35 @@ public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 
 	public async Task<Result<List<EmployeeResponseDto>>> SearchEmployeeByTextAsync(string text)
 	{
-		var names = await _dbContext.Employees
-			.ProjectTo<EmployeeResponseDto>(_mapper.ConfigurationProvider)
-			.Where(n => n.EmployeeFirstName.Contains(text))
-			.ToListAsync();
 
-		_logger.LogInformation("Fetching search Employee by name . Total count: {Employee}.", names.Count);
+		//if (string.IsNullOrWhiteSpace(text))
+		//{
+		//	_logger.LogError("Search text cannot be empty", text);
+
+		//	return new Result.Invalid(new List<ValidationError>
+		//	{
+		//		new ValidationError
+		//		{
+		//			ErrorMessage = "Validation Errror : Search text cannot be empty"
+		//		}
+		//	});
+		//}
+
+		var employee = await _dbContext.Employees
+					   .ProjectTo<EmployeeResponseDto>(_mapper.ConfigurationProvider)
+					   .Where(n => n.EmployeeFirstName.Contains(text) )
+					   .ToListAsync();
+
+		_logger.LogInformation("Fetching search branch by name . Total count: {branch}.", employee.Count);
+
+		return Result.Success(employee);
 
 		return Result.Success(names);
 	}
 
 	///<inheritdoc/>
 
-	public async Task<Result> DeleteEmployeeAsync(int id)
+	public async Task<Result> DeleteEmployeeAsync(string id)
 	{
 		var employee = await _dbContext.Employees.FindAsync(id);
 
@@ -151,3 +166,5 @@ public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 		return Result.SuccessWithMessage("employee remove successfully ");
 	}
 }
+
+

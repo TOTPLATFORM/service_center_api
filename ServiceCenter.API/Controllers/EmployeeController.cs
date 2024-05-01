@@ -108,7 +108,7 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	//[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result> DeleteEmployeeAsycn(int id)
+	public async Task<Result> DeleteEmployeeAsycn(string id)
 	{
 		return await _employeeService.DeleteEmployeeAsync(id);
 	}

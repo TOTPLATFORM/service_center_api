@@ -18,7 +18,7 @@ public interface IDepartmentService : IApplicationService, IScopedService
 	public Task<Result> AddDepartmentAsync(DepartmentRequestDto departmentRequestDto);
 
 	/// <summary>
-	/// function to get all inventories 
+	/// function to get all departments 
 	/// </summary>
 	/// <returns>list all departmentResponseDto </returns>
 	public Task<Result<List<DepartmentResponseDto>>> GetAllDepartmentsAsync();

@@ -16,7 +16,5 @@ public class EmployeeResponseDto
     public string EmployeePhoneNumber { get; set; } = "";
     public string UserName { get; set; } = "";
     public string DepartmentName { get; set; } = "";
-
     //public virtual ICollection<ServiceResponseDto> Services { get; set; }
-
 }

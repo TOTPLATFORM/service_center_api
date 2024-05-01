@@ -51,5 +51,5 @@ public interface IEmployeeService : IApplicationService, IScopedService
 	/// </summary>
 	/// <param name="id">departmnet id</param>
 	/// <returns>Employee removed successfully </returns>
-	public Task<Result> DeleteEmployeeAsync(int id);
+	public Task<Result> DeleteEmployeeAsync(string id);
 }

@@ -31,6 +31,7 @@ public class MappingProfiles : Profile
         this.AddItemMapping();
 
         this.AddOrderMapping();
+        this.AddEmployeeMapping();
 
         this.AddItemCategoryMapping();
 
