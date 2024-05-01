@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Test.TestSetup.Data;
 
-[TestCaseOrderer(
-ordererTypeName: "ServiceCenter.Test.TestPriority.PriorityOrderer",
-ordererAssemblyName: "ServiceCenter.Test")]
+
 public static class ItemTest
 {
 

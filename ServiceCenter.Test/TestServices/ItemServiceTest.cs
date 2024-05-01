@@ -12,8 +12,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceCenter.Test.TestServices
-{
+namespace ServiceCenter.Test.TestServices;
+    [TestCaseOrderer(
+ordererTypeName: "ServiceCenter.Test.TestPriority.PriorityOrderer",
+ordererAssemblyName: "ServiceCenter.Test")]
+
     public  class ItemServiceTest
     {
         private static ItemService _itemService;
@@ -153,4 +156,4 @@ namespace ServiceCenter.Test.TestServices
 
         }
     }
-}
+
