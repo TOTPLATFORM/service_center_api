@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceCenter.Infrastructure.BaseContext;
 
@@ -11,9 +12,11 @@ using ServiceCenter.Infrastructure.BaseContext;
 namespace ServiceCenter.Infrastructure.Sql.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
-    partial class ServiceCenterBaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240501091204_UpdateComplaint")]
+    partial class UpdateComplaint
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -429,6 +432,7 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CustomerId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ModifiedBy")
@@ -1557,7 +1561,9 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                 {
                     b.HasOne("ServiceCenter.Domain.Entities.Customer", "Customer")
                         .WithMany("Complaints")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
                 });
