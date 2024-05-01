@@ -19,8 +19,4 @@
     <ProjectReference Include="..\ServiceCenter.Application\ServiceCenter.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Logs\" />
-  </ItemGroup>
-
 </Project>
