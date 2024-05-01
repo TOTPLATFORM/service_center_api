@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -42,5 +44,16 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
         await _dbContext.SaveChangesAsync();
         _logger.LogInformation("Feedback added successfully to the database");
         return Result.SuccessWithMessage("Feedback added successfully");
+    }
+    ///<inheritdoc/>
+    public async Task<Result<List<FeedbackResponseDto>>> GetAllFeedbackAsync()
+    {
+        var result = await _dbContext.Feedbacks
+             .ProjectTo<FeedbackResponseDto>(_mapper.ConfigurationProvider)
+             .ToListAsync();
+
+        _logger.LogInformation("Fetching all  Feedback. Total count: { Feedback}.", result.Count);
+
+        return Result.Success(result);
     }
 }

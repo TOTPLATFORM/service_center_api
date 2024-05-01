@@ -16,4 +16,9 @@ public interface IFeedbackService : IApplicationService, IScopedService
     /// <param name="FeedbackRequestDto">Feedback  request dto</param>
     /// <returns> Feedback  added successfully </returns>
     public Task<Result> AddFeedbackAsync(FeedbackRequestDto FeedbackRequestDto);
+    /// <summary>
+    /// function to get all Feedback  
+    /// </summary>
+    /// <returns>list all Feedback  response dto </returns>
+    public Task<Result<List<FeedbackResponseDto>>> GetAllFeedbackAsync();
 }
