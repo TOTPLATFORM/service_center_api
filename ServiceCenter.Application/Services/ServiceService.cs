@@ -109,4 +109,20 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
         return Result.Success(ServiceResponse);
     }
+    ///<inheritdoc/>
+    public async Task<Result> DeleteServiceAsync(int id)
+    {
+        var Service = await _dbContext.Services.FindAsync(id);
+
+        if (Service is null)
+        {
+            _logger.LogWarning("Service Invaild Id ,Id {ServiceId}", id);
+            return Result.NotFound(["Service Invaild Id"]);
+        }
+
+        _dbContext.Services.Remove(Service);
+        await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("Service removed successfully in the database");
+        return Result.SuccessWithMessage("Service removed successfully");
+    }
 }

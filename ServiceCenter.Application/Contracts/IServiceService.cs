@@ -34,4 +34,10 @@ public interface IServiceService : IApplicationService, IScopedService
     /// <param name="ServiceRequestDto">Service dto</param>
     /// <returns>Updated Service </returns>
     public Task<Result<ServiceResponseDto>> UpdateServiceAsync(int id, ServiceRequestDto ServiceRequestDto);
+    /// <summary>
+    /// function to delete Service  that take Service  id   
+    /// </summary>
+    /// <param name="id">Service  id</param>
+    /// <returns>Service  removed successfully </returns>
+    public Task<Result> DeleteServiceAsync(int id);
 }
