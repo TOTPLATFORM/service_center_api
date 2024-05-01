@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -43,4 +45,16 @@ public class RoomService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
         _logger.LogInformation("Room added successfully to the database");
         return Result.SuccessWithMessage("Room added successfully");
     }
+    ///<inheritdoc/>
+    public async Task<Result<List<RoomResponseDto>>> GetAllRoomAsync()
+    {
+        var result = await _dbContext.Rooms
+             .ProjectTo<RoomResponseDto>(_mapper.ConfigurationProvider)
+             .ToListAsync();
+
+        _logger.LogInformation("Fetching all  Room. Total count: { Room}.", result.Count);
+
+        return Result.Success(result);
+    }
+
 }

@@ -56,6 +56,7 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
         return Result.Success(result);
     }
+    ///<inheritdoc/>
     public async Task<Result<ProductResponseDto>> GetProductByIdAsync(int id)
     {
         var result = await _dbContext.Products
