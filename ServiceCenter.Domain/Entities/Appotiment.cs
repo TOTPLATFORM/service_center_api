@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Domain.Entities;
 
-public class Appotiment: Time
+public class Appointment : Time
 {
 	
 	public DateOnly Date { get; set; }
