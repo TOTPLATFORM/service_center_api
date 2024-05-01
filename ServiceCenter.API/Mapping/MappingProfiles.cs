@@ -38,7 +38,7 @@ public class MappingProfiles : Profile
 
         this.AddDepartmentMapping();
 
-
+        this.AddFeedbackMapping();
 	}
 
 }
