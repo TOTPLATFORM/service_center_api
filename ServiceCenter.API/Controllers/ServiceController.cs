@@ -41,4 +41,20 @@ public class ServiceController(IServiceService ServiceService) : BaseController
     {
         return await _ServiceService.GetAllServiceAsync();
     }
+    /// <summary>
+    /// get Service by id in the system.
+    /// </summary>
+    ///<param name="id">id of Service.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpGet("{id}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ServiceResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<ServiceResponseDto>> GetServiceById(int id)
+    {
+        return await _ServiceService.GetServiceByIdAsync(id);
+    }
 }
