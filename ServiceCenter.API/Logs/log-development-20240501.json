@@ -1,0 +1,150 @@
+2024-05-01 12:58:20 [INF] [ComplaintService] []  Fetching all  Complaint. Total count: { Complaint}.
+    
+2024-05-01 12:58:20 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint responded 200 in 4053.7486 ms
+    
+2024-05-01 12:58:20 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:7163,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 01/05/2024 9:58:20 AM +00:00
+    
+2024-05-01 12:58:21 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 01/05/2024 9:58:21 AM +00:00
+    
+2024-05-01 12:58:21 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"id":9,"complaintDate":"2024-01-23","complaintDescription":"string","complaintCategory":"string","complaintStatus":"Pending","assignedTo":"string","customerName":null}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-01 13:00:18 [INF] [ComplaintService] []  Fetching Complaint
+    
+2024-05-01 13:00:18 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint/9 responded 200 in 191.7287 ms
+    
+2024-05-01 13:00:18 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:7163,Path:/api/Complaint/9,
+ Controller Name:Complaint,
+ Client IP: ::1 at 01/05/2024 10:00:18 AM +00:00
+    
+2024-05-01 13:00:18 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 01/05/2024 10:00:18 AM +00:00
+    
+2024-05-01 13:00:18 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":{"id":9,"complaintDate":"2024-01-23","complaintDescription":"string","complaintCategory":"string","complaintStatus":"Pending","assignedTo":"string","customerName":null},"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-01 13:09:10 [INF] [ComplaintService] []  Updated Complaint , Id 9
+    
+2024-05-01 13:09:10 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP PUT /api/Complaint/9 responded 200 in 3869.8555 ms
+    
+2024-05-01 13:09:10 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:7163,Path:/api/Complaint/9,
+ Controller Name:Complaint,
+ Client IP: ::1 at 01/05/2024 10:09:10 AM +00:00
+    
+2024-05-01 13:09:10 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "complaintDate": "2024-06-04",
+  "complaintDescription": "Updated",
+  "complaintCategory": "Updated",
+  "complaintStatus": "Pending",
+  "assignedTo": "Updated",
+  "customerId": null
+}
+    
+2024-05-01 13:09:10 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 01/05/2024 10:09:10 AM +00:00
+    
+2024-05-01 13:09:10 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":{"id":9,"complaintDate":"2024-06-04","complaintDescription":"Updated","complaintCategory":"Updated","complaintStatus":"Pending","assignedTo":"Updated","customerName":null},"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-01 13:18:07 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP DELETE /api/Complaint/9 responded 405 in 3.6908 ms
+    
+2024-05-01 13:18:07 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:7163,Path:/api/Complaint/9,
+ Controller Name:,
+ Client IP: ::1 at 01/05/2024 10:18:07 AM +00:00
+    
+2024-05-01 13:18:07 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 405 at: 01/05/2024 10:18:07 AM +00:00
+    
+2024-05-01 13:18:07 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: 
+    
+2024-05-01 13:21:05 [INF] [ComplaintService] []  Fetching all  Complaint. Total count: { Complaint}.
+    
+2024-05-01 13:21:05 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint responded 200 in 2524.4738 ms
+    
+2024-05-01 13:21:05 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:7163,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 01/05/2024 10:21:05 AM +00:00
+    
+2024-05-01 13:21:05 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 01/05/2024 10:21:05 AM +00:00
+    
+2024-05-01 13:21:05 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"id":9,"complaintDate":"2024-06-04","complaintDescription":"Updated","complaintCategory":"Updated","complaintStatus":"Pending","assignedTo":"Updated","customerName":null}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-01 13:21:15 [INF] [ComplaintService] []  Complaint removed successfully in the database
+    
+2024-05-01 13:21:15 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP DELETE /api/Complaint responded 200 in 447.3921 ms
+    
+2024-05-01 13:21:15 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:7163,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 01/05/2024 10:21:15 AM +00:00
+    
+2024-05-01 13:21:15 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Query Parameters: ?id=9
+    
+2024-05-01 13:21:15 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 01/05/2024 10:21:15 AM +00:00
+    
+2024-05-01 13:21:15 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Complaint removed successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-01 13:21:27 [INF] [ComplaintService] []  Fetching all  Complaint. Total count: { Complaint}.
+    
+2024-05-01 13:21:27 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint responded 200 in 109.1200 ms
+    
+2024-05-01 13:21:27 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:7163,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 01/05/2024 10:21:27 AM +00:00
+    
+2024-05-01 13:21:27 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 01/05/2024 10:21:27 AM +00:00
+    
+2024-05-01 13:21:27 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-01 13:24:53 [INF] [ComplaintService] []  Complaint added successfully to the database
+    
+2024-05-01 13:24:53 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Complaint responded 200 in 119.1981 ms
+    
+2024-05-01 13:24:53 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:7163,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 01/05/2024 10:24:53 AM +00:00
+    
+2024-05-01 13:24:53 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "complaintDate": "2024-01-23",
+  "complaintDescription": "string",
+  "complaintCategory": "string",
+  "complaintStatus": "Pending",
+  "assignedTo": "string",
+  "customerId": null
+}
+    
+2024-05-01 13:24:53 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 01/05/2024 10:24:53 AM +00:00
+    
+2024-05-01 13:24:53 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Complaint added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-01 13:24:59 [INF] [ComplaintService] []  Fetching all  Complaint. Total count: { Complaint}.
+    
+2024-05-01 13:24:59 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint responded 200 in 15.1354 ms
+    
+2024-05-01 13:24:59 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:7163,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 01/05/2024 10:24:59 AM +00:00
+    
+2024-05-01 13:24:59 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 01/05/2024 10:24:59 AM +00:00
+    
+2024-05-01 13:24:59 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"id":10,"complaintDate":"2024-01-23","complaintDescription":"string","complaintCategory":"string","complaintStatus":"Pending","assignedTo":"string","customerName":null}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-01 13:25:34 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP DELETE /api/Complaint/10 responded 405 in 0.1068 ms
+    
+2024-05-01 13:25:34 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:7163,Path:/api/Complaint/10,
+ Controller Name:,
+ Client IP: ::1 at 01/05/2024 10:25:34 AM +00:00
+    
+2024-05-01 13:25:34 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 405 at: 01/05/2024 10:25:34 AM +00:00
+    
+2024-05-01 13:25:34 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: 
+    
+2024-05-01 13:26:01 [INF] [ComplaintService] []  Complaint removed successfully in the database
+    
+2024-05-01 13:26:01 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP DELETE /api/Complaint responded 200 in 17.9311 ms
+    
+2024-05-01 13:26:01 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:7163,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 01/05/2024 10:26:01 AM +00:00
+    
+2024-05-01 13:26:01 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Query Parameters: ?id=10
+    
+2024-05-01 13:26:01 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 01/05/2024 10:26:01 AM +00:00
+    
+2024-05-01 13:26:01 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Complaint removed successfully","correlationId":"","errors":[],"validationErrors":[]}
+    

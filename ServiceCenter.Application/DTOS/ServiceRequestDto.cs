@@ -20,9 +20,8 @@ public class ServiceRequestDto
     [Required]
     public Status Avaliable { get; set; }
     [Required]
-    public int ServiceCategoryId { get; set; }
-    [Required]
-    public int ServicePackageId { get; set; }
+    public int ServiceCategoryId { get; set; } 
+    public int? ServicePackageId { get; set; }=default;
     [Required]
     public string EmployeeId { get; set; } = "";
 }

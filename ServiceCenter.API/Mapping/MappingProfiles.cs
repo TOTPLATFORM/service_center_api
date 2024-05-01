@@ -20,22 +20,36 @@ public class MappingProfiles : Profile
 
         this.AddItemCategoryMapping();
 
+        this.AddServiceCategoryMapping();
+
+        this.AddCenterMapping();
+        
+        this.AddProductCategoryMapping();
+
+        this.AddProductMapping();
+
+        this.AddItemMapping();
+
+        this.AddOrderMapping();
+        this.AddEmployeeMapping();
+
+        this.AddItemCategoryMapping();
+
         this.AddBranchMapping();
 
         this.AddDepartmentMapping();
 
+        this.AddFeedbackMapping();
 
+        this.AddCompliantMapping();
+
+        this.AddServicePackageMapping();
+       
+        this.AddServiceMapping();
+
+        this.AddContractMapping();
+
+        this.AddAppointmentMapping(); //Not finished yet
 	}
-        this.AddServiceCategoryMapping();
 
-        this.AddCenterMapping();
-
-		this.AddProductCategoryMapping();
-
-		this.AddProductMapping();
-
-	}
- 
-      
-    }
 }

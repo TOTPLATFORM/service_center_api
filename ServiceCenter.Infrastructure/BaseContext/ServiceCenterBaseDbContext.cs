@@ -32,7 +32,7 @@ public class ServiceCenterBaseDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<TimeSlot> TimeSlots { get; set; }
     public DbSet<Schedule> Schedules { get; set; }
-	public DbSet<Appotiment> Appotiments { get; set; }
+	public DbSet<Appointment> Appointments { get; set; }
 	public DbSet<Product> Products { get; set; }
 	public DbSet<ProductCategory> ProductCategories { get; set; }
 	public DbSet<Branch> Branches { get; set; }
@@ -60,7 +60,6 @@ public class ServiceCenterBaseDbContext : IdentityDbContext<ApplicationUser>
 	public DbSet<Offer> Offers { get; set; }
     public DbSet<CenterService>  CenterServices { get; set; }
 	public DbSet<CustomerService> CustomerServices { get; set; }
-	public DbSet<CustomerOffer> CustomerOffers { get; set; }
 	public DbSet<RatingCustomer> RatingCustomers { get; set; }
 	public DbSet<RatingService> RatingServices { get; set; }
 
