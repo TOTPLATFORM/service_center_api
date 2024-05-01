@@ -13,6 +13,5 @@ public class ServiceCategoryRequestDto
     public string ServiceCategoryName { get; set; } = "";
     [Required]
     public string ServiceCategoryDescription { get; set; } = "";
-    [Required]
-    public string ServiceName { get; set; } = "";
+    
 }
