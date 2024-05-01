@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ServiceCenter.Test.TestSetup.Data;
 
-namespace HMSWithLayers.Test.TestSetup;
+namespace ServiceCenter.Test.TestSetup;
 
 public class ContextGenerator
 {
@@ -22,6 +23,9 @@ public class ContextGenerator
             Context = new ServiceCenterBaseDbContext(options);
             Context.Database.EnsureDeleted();
             Context.Database.EnsureCreated();
+            Context.AddItem();
+            Context.AddItemCategory();
+            Context.AddInventory();
             
             Context.SaveChanges();
         }
