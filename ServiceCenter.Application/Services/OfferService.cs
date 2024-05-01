@@ -26,18 +26,19 @@ public class OfferService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
     public async Task<Result> AddOfferAsync(OfferRequestDto OfferRequestDto)
     {
         var result = _mapper.Map<Offer>(OfferRequestDto);
-        if (result is null)
-        {
-            _logger.LogError("Failed to map OfferRequestDto to Offer. OfferRequestDto: {@OfferRequestDto}", OfferRequestDto);
-            return Result.Invalid(new List<ValidationError>
-    {
-        new ValidationError
-        {
-            ErrorMessage = "Validation Errror"
-        }
-    });
-        }
-        result.CreatedBy = _userContext.Email;
+		if (result is null)
+		{
+			_logger.LogError("Failed to map DepartmentRequestDto to Department. DepartmentRequestDto: {@DepartmentRequestDto}", departmentRequestDto);
+
+			return Result.Invalid(new List<ValidationError>
+			{
+				new ValidationError
+				{
+					ErrorMessage = "Validation Errror"
+				}
+			});
+		}
+		result.CreatedBy = _userContext.Email;
 
         _dbContext.Offers.Add(result);
 
