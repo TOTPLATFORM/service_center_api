@@ -27,4 +27,11 @@ public interface IRoomService : IApplicationService, IScopedService
     /// <param name="id"> Room  id</param>
     /// <returns> Room  response dto</returns>
     public Task<Result<RoomResponseDto>> GetRoomByIdAsync(int id);
+    /// <summary>
+    /// function to update Room  that take RoomRequestDto   
+    /// </summary>
+    /// <param name="id">Room id</param>
+    /// <param name="RoomRequestDto">Room dto</param>
+    /// <returns>Updated Room </returns>
+    public Task<Result<RoomResponseDto>> UpdateRoomAsync(int id, RoomRequestDto RoomRequestDto);
 }

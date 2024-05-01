@@ -74,4 +74,39 @@ public class RoomService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
 
         return Result.Success(result);
     }
+    ///<inheritdoc/>
+    public async Task<Result<RoomResponseDto>> UpdateRoomAsync(int id, RoomRequestDto RoomRequestDto)
+    {
+        var result = await _dbContext.Rooms.FindAsync(id);
+
+        if (result is null)
+        {
+            _logger.LogWarning("Room Id not found,Id {RoomId}", id);
+            return Result.NotFound(["Room not found"]);
+        }
+
+        result.ModifiedBy = _userContext.Email;
+
+        _mapper.Map(RoomRequestDto, result);
+
+        await _dbContext.SaveChangesAsync();
+
+        var RoomResponse = _mapper.Map<RoomResponseDto>(result);
+        if (RoomResponse is null)
+        {
+            _logger.LogError("Failed to map RoomRequestDto to RoomResponseDto. RoomRequestDto: {@RoomRequestDto}", RoomResponse);
+
+            return Result.Invalid(new List<ValidationError>
+        {
+                new ValidationError
+                {
+                    ErrorMessage = "Validation Errror"
+                }
+        });
+        }
+
+        _logger.LogInformation("Updated Room , Id {Id}", id);
+
+        return Result.Success(RoomResponse);
+    }
 }
