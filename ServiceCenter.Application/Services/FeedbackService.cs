@@ -74,4 +74,39 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 
         return Result.Success(result);
     }
+    ///<inheritdoc/>
+    public async Task<Result<FeedbackResponseDto>> UpdateFeedbackAsync(int id, FeedbackRequestDto FeedbackRequestDto)
+    {
+        var result = await _dbContext.Feedbacks.FindAsync(id);
+
+        if (result is null)
+        {
+            _logger.LogWarning("Feedback Id not found,Id {FeedbackId}", id);
+            return Result.NotFound(["Feedback not found"]);
+        }
+
+        result.ModifiedBy = _userContext.Email;
+
+        _mapper.Map(FeedbackRequestDto, result);
+
+        await _dbContext.SaveChangesAsync();
+
+        var FeedbackResponse = _mapper.Map<FeedbackResponseDto>(result);
+        if (FeedbackResponse is null)
+        {
+            _logger.LogError("Failed to map FeedbackRequestDto to FeedbackResponseDto. FeedbackRequestDto: {@FeedbackRequestDto}", FeedbackResponse);
+
+            return Result.Invalid(new List<ValidationError>
+        {
+                new ValidationError
+                {
+                    ErrorMessage = "Validation Errror"
+                }
+        });
+        }
+
+        _logger.LogInformation("Updated Feedback , Id {Id}", id);
+
+        return Result.Success(FeedbackResponse);
+    }
 }
