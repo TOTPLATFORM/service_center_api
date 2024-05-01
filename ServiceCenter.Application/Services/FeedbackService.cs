@@ -125,4 +125,15 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
         _logger.LogInformation("Feedback removed successfully in the database");
         return Result.SuccessWithMessage("Feedback removed successfully");
     }
+    ///<inheritdoc/>
+    public async Task<Result<List<FeedbackResponseDto>>> GetAllFeedbacksForSpecificCustomer(string customerName)
+    {
+        var Feedbacks = await _dbContext.Feedbacks
+              .Where(s => s.Customer.FirstName == customerName)
+              .ProjectTo<FeedbackResponseDto>(_mapper.ConfigurationProvider)
+              .ToListAsync();
+
+        _logger.LogInformation("Fetching Feedbacks. Total count: {Feedbacks}.", Feedbacks.Count);
+        return Result.Success(Feedbacks);
+    }
 }

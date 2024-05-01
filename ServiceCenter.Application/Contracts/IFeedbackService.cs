@@ -40,4 +40,9 @@ public interface IFeedbackService : IApplicationService, IScopedService
     /// <param name="id">Feedback  id</param>
     /// <returns>Feedback  removed successfully </returns>
     public Task<Result> DeleteFeedbackAsync(int id);
+    /// function to search by customer name  that take  Feedbacks
+    /// </summary>
+    /// <param name="text">customer name </param>
+    /// <returns>Feedback response dto </returns>
+    public Task<Result<List<FeedbackResponseDto>>> GetAllFeedbacksForSpecificCustomer(string customerName);
 }
