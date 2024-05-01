@@ -27,4 +27,17 @@ public interface IScheduleService : IApplicationService, IScopedService
     /// <param name="id"> Schedule  id</param>
     /// <returns> Schedule  response dto</returns>
     public Task<Result<ScheduleResponseDto>> GetScheduleByIdAsync(int id);
+    /// <summary>
+    /// function to update Schedule  that take ScheduleRequestDto   
+    /// </summary>
+    /// <param name="id">Schedule id</param>
+    /// <param name="ScheduleRequestDto">Schedule dto</param>
+    /// <returns>Updated Schedule </returns>
+    public Task<Result<ScheduleResponseDto>> UpdateScheduleAsync(int id, ScheduleRequestDto ScheduleRequestDto);
+    /// <summary>
+    /// function to delete Schedule  that take Schedule  id   
+    /// </summary>
+    /// <param name="id">Schedule  id</param>
+    /// <returns>Schedule  removed successfully </returns>
+    public Task<Result> DeleteScheduleAsync(int id);
 }
