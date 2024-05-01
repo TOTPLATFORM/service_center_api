@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -40,6 +42,37 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
         await _dbContext.SaveChangesAsync();
         _logger.LogInformation("Complaint added successfully to the database");
         return Result.SuccessWithMessage("Complaint added successfully");
+    }
+
+    ///<inheritdoc/>
+    public async Task<Result<List<ComplaintResponseDto>>> GetAllComplaintsAsync()
+    {
+        var result = await _dbContext.Complaints
+             .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
+             .ToListAsync();
+
+        _logger.LogInformation("Fetching all  Complaint. Total count: { Complaint}.", result.Count);
+
+        return Result.Success(result);
+    }
+
+    ///<inheritdoc/>
+    public async Task<Result<ComplaintResponseDto>> GetComplaintByIdAsync(int id)
+    {
+        var result = await _dbContext.Complaints
+            .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+        if (result is null)
+        {
+            _logger.LogWarning("Complaint Id not found,Id {ComplaintId}", id);
+
+            return Result.NotFound(["Complaint not found"]);
+        }
+
+        _logger.LogInformation("Fetching Complaint");
+
+        return Result.Success(result);
     }
 
 }

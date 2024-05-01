@@ -17,4 +17,17 @@ public interface IComplaintService : IApplicationService, IScopedService
     /// <returns> Complaint  added successfully </returns>
     public Task<Result> AddComplaintAsync(ComplaintRequestDto ComplaintRequestDto);
 
+    /// <summary>
+    /// function to get all Complaint  
+    /// </summary>
+    /// <returns>list all Complaint  response dto </returns>
+    public Task<Result<List<ComplaintResponseDto>>> GetAllComplaintsAsync();
+
+    /// <summary>
+    /// function to get Complaint by id that take Complaint id
+    /// </summary>
+    /// <param name="id"> Complaint id</param>
+    /// <returns> Complaint  response dto</returns>
+    public Task<Result<ComplaintResponseDto>> GetComplaintByIdAsync(int id);
+
 }
