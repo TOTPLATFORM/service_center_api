@@ -29,9 +29,4 @@
     <ProjectReference Include="..\ServiceCenter.Infrastructure\ServiceCenter.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="TestServices\" />
-    <Folder Include="TestSetup\Data\" />
-  </ItemGroup>
-
 </Project>
