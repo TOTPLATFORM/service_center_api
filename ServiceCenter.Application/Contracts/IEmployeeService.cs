@@ -28,7 +28,7 @@ public interface IEmployeeService : IApplicationService, IScopedService
 	/// </summary>
 	/// <param name="id">employee id</param>
 	/// <returns>employee response dto</returns>
-	public Task<Result<EmployeeResponseDto>> GetEmployeeByIdAsync(int id);
+	public Task<Result<EmployeeResponseDto>> GetEmployeeByIdAsync(string id);
 
 	/// <summary>
 	/// function to update employee that take EmployeeRequestDto   
@@ -36,7 +36,7 @@ public interface IEmployeeService : IApplicationService, IScopedService
 	/// <param name="id">employee id</param>
 	/// <param name="employeeRequestDto">employee dto</param>
 	/// <returns>Updated Employee </returns>
-	public Task<Result<EmployeeResponseDto>> UpdateEmployeeAsync(int id, EmployeeRequestDto employeeRequestDto);
+	public Task<Result<EmployeeResponseDto>> UpdateEmployeeAsync(string id, EmployeeRequestDto employeeRequestDto);
 
 
 	/// <summary>
@@ -47,16 +47,9 @@ public interface IEmployeeService : IApplicationService, IScopedService
 	public Task<Result<List<EmployeeResponseDto>>> SearchEmployeeByTextAsync(string text);
 
 	/// <summary>
-	/// function to search employee by relation  that take text   
-	/// </summary>
-	/// <param name="text">text</param>
-	/// <returns>all employeees that contain this relation </returns>
-	public Task<Result<List<EmployeeResponseDto>>> GetAllItemsCategoryForSpecificInventoryAsync(string text);
-
-	/// <summary>
 	/// function to delete Employee that take EmployeeDto   
 	/// </summary>
 	/// <param name="id">departmnet id</param>
 	/// <returns>Employee removed successfully </returns>
-	public Task<Result> DeleteEmployeeAsync(int id);
+	public Task<Result> DeleteEmployeeAsync(string id);
 }

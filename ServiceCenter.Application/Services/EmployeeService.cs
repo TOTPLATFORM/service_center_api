@@ -15,14 +15,13 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Services;
 
-public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<EmployeeService> logger, IUserContextService userContext , IAuthService authService) : IEmployeeService
+public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<EmployeeService> logger, IUserContextService userContext, IAuthService authService) : IEmployeeService
 {
 	private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
 	private readonly IMapper _mapper = mapper;
 	private readonly ILogger<IEmployeeService> _logger = logger;
 	private readonly IUserContextService _userContext = userContext;
 	private readonly IAuthService _authService = authService;
-
 
 	///<inheritdoc/>
 	public async Task<Result> AddEmployeeAsync(EmployeeRequestDto employeeRequestDto)
@@ -61,28 +60,12 @@ public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 	}
 
 	///<inheritdoc/>
-	public async Task<Result> DeleteEmployeeAsync(string id)
-	{
-		var employee = await _dbContext.Employees.FindAsync(id);
-
-		if (employee is null)
-		{
-			_logger.LogWarning("employee Invaild Id ,Id {employeeId}", id);
-			return Result.NotFound(["employee Invaild Id"]);
-		}
-
-		_dbContext.Employees.Remove(employee);
-		await _dbContext.SaveChangesAsync();
-		_logger.LogInformation("employee remove successfully in the database");
-		return Result.SuccessWithMessage("employee remove successfully ");
-	}
-
-	///<inheritdoc/>
 	public async Task<Result<EmployeeResponseDto>> GetEmployeeByIdAsync(string Id)
 	{
 		var employee = await _dbContext.Employees
 			.ProjectTo<EmployeeResponseDto>(_mapper.ConfigurationProvider)
 			.FirstOrDefaultAsync(d => d.Id == Id);
+
 		if (employee is null)
 		{
 			_logger.LogWarning("employee Id not found,Id {employeeId}", Id);
@@ -100,6 +83,7 @@ public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 		if (employee is null)
 		{
 			_logger.LogWarning("employee Id not found,Id {employeeId}", id);
+
 			return Result.NotFound(["employee not found"]);
 		}
 
@@ -108,16 +92,18 @@ public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 		await _dbContext.SaveChangesAsync();
 
 		var employeeResponse = _mapper.Map<EmployeeResponseDto>(employee);
+
 		if (employeeResponse is null)
 		{
 			_logger.LogError("Failed to map employeeRequestDto to employeeResponseDto. employeeRequestDto: {@employeeRequestDto}", employeeRequestDto);
+
 			return Result.Invalid(new List<ValidationError>
+			{
+				new ValidationError
 				{
-					new ValidationError
-					{
-						ErrorMessage = "Validation Errror"
-					}
-				});
+					ErrorMessage = "Validation Errror"
+				}
+			});
 		}
 
 		_logger.LogInformation("Updated employee , Id {Id}", id);
@@ -125,28 +111,54 @@ public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 		return Result.Success(employeeResponse);
 	}
 
-	public Task<Result<EmployeeResponseDto>> GetEmployeeByIdAsync(int id)
+	///<inheritdoc/>
+	public async Task<Result<List<EmployeeResponseDto>>> SearchEmployeeByTextAsync(string text)
 	{
-		throw new NotImplementedException();
-	}
 
-	public Task<Result<EmployeeResponseDto>> UpdateEmployeeAsync(int id, EmployeeRequestDto employeeRequestDto)
-	{
-		throw new NotImplementedException();
-	}
+		//if (string.IsNullOrWhiteSpace(text))
+		//{
+		//	_logger.LogError("Search text cannot be empty", text);
 
-	public Task<Result<List<EmployeeResponseDto>>> SearchEmployeeByTextAsync(string text)
-	{
-		throw new NotImplementedException();
-	}
+		//	return new Result.Invalid(new List<ValidationError>
+		//	{
+		//		new ValidationError
+		//		{
+		//			ErrorMessage = "Validation Errror : Search text cannot be empty"
+		//		}
+		//	});
+		//}
 
-	public Task<Result<List<EmployeeResponseDto>>> GetAllItemsCategoryForSpecificInventoryAsync(string text)
-	{
-		throw new NotImplementedException();
-	}
+		var employee = await _dbContext.Employees
+					   .ProjectTo<EmployeeResponseDto>(_mapper.ConfigurationProvider)
+					   .Where(n => n.EmployeeFirstName.Contains(text) )
+					   .ToListAsync();
 
-	public Task<Result> DeleteEmployeeAsync(int id)
+		_logger.LogInformation("Fetching search branch by name . Total count: {branch}.", employee.Count);
+
+		return Result.Success(employee);
+
+	}
+	///<inheritdoc/>
+
+	public async Task<Result> DeleteEmployeeAsync(string id)
 	{
-		throw new NotImplementedException();
+		var employee = await _dbContext.Employees.FindAsync(id);
+
+		if (employee is null)
+		{
+			_logger.LogWarning("employee Invaild Id ,Id {employeeId}", id);
+
+			return Result.NotFound(["employee Invaild Id"]);
+		}
+
+		_dbContext.Employees.Remove(employee);
+
+		await _dbContext.SaveChangesAsync();
+
+		_logger.LogInformation("employee remove successfully in the database");
+
+		return Result.SuccessWithMessage("employee remove successfully ");
 	}
 }
+
+
