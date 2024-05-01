@@ -8,7 +8,7 @@ using ServiceCenter.Infrastructure.BaseContext;
 
 #nullable disable
 
-namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
+namespace ServiceCenter.Infrastructure.Sql.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
     partial class ServiceCenterBaseDbContextModelSnapshot : ModelSnapshot
@@ -295,11 +295,13 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     b.Property<string>("BranchName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("BranchPhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("CenterId")
                         .HasColumnType("int");
@@ -313,7 +315,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     b.Property<string>("EmailAddress")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
@@ -339,7 +342,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     b.Property<string>("CenterName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -357,7 +361,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     b.Property<string>("Specialty")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -545,7 +550,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     b.Property<string>("DepartmentName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
@@ -624,11 +630,13 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     b.Property<string>("InventoryLocation")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("InventoryName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
@@ -800,6 +808,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
                     b.Property<DateOnly>("StartDate")
                         .HasColumnType("date");
 
@@ -807,6 +818,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Offers");
                 });
@@ -828,7 +841,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     b.Property<string>("From")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
@@ -858,9 +872,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -1658,6 +1669,17 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .HasForeignKey("OrderId");
 
                     b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Offer", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Product", b =>
