@@ -100,7 +100,7 @@ public class Program
 
 		app.UseAuthorization();
 		app.UseMiddleware<AuditLogMiddleware>();
-
+		app.UseExceptionHandler(opt => { });
 		app.UseSerilogRequestLogging();
 
 		app.UseCors("AllowAllOriginsPolicy");

@@ -44,10 +44,12 @@ public class MappingProfiles : Profile
         this.AddCompliantMapping();
 
         this.AddServicePackageMapping();
-       
+       this.AddScheduleMapping();
         this.AddServiceMapping();
 
         this.AddContractMapping();
+
+        this.AddOfferMapping();
 
         this.AddAppointmentMapping(); //Not finished yet
 	}
