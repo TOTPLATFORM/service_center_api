@@ -57,6 +57,75 @@ public class ContractService(ServiceCenterBaseDbContext dbContext, IMapper mappe
         return Result.Success(result);
     }
 
+    ///<inheritdoc/>
+    public async Task<Result<ContractResponseDto>> GetContractByIdAsync(int id)
+    {
+        var result = await _dbContext.Contracts
+            .ProjectTo<ContractResponseDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+        if (result is null)
+        {
+            _logger.LogWarning("Contract Id not found,Id {ContractId}", id);
+
+            return Result.NotFound(["Contract not found"]);
+        }
+
+        _logger.LogInformation("Fetching Contract");
+
+        return Result.Success(result);
+    }
+    ///<inheritdoc/>
+    public async Task<Result<ContractResponseDto>> UpdateContractAsync(int id, ContractRequestDto ContractRequestDto)
+    {
+        var result = await _dbContext.Contracts.FindAsync(id);
+
+        if (result is null)
+        {
+            _logger.LogWarning("Contract Id not found,Id {ContractId}", id);
+            return Result.NotFound(["Contract not found"]);
+        }
+
+        result.ModifiedBy = _userContext.Email;
+
+        _mapper.Map(ContractRequestDto, result);
+
+        await _dbContext.SaveChangesAsync();
+
+        var ContractResponse = _mapper.Map<ContractResponseDto>(result);
+        if (ContractResponse is null)
+        {
+            _logger.LogError("Failed to map ContractRequestDto to ContractResponseDto. ContractRequestDto: {@ContractRequestDto}", ContractResponse);
+
+            return Result.Invalid(new List<ValidationError>
+        {
+                new ValidationError
+                {
+                    ErrorMessage = "Validation Errror"
+                }
+        });
+        }
+
+        _logger.LogInformation("Updated Contract , Id {Id}", id);
+
+        return Result.Success(ContractResponse);
+    }
+    ///<inheritdoc/>
+    public async Task<Result> DeleteContractAsync(int id)
+    {
+        var Contract = await _dbContext.Contracts.FindAsync(id);
+
+        if (Contract is null)
+        {
+            _logger.LogWarning("Contract Invaild Id ,Id {ContractId}", id);
+            return Result.NotFound(["Contract Invaild Id"]);
+        }
+
+        _dbContext.Contracts.Remove(Contract);
+        await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("Contract removed successfully in the database");
+        return Result.SuccessWithMessage("Contract removed successfully");
+    }
 
 
 }
