@@ -90,4 +90,27 @@ public class RoomController(IRoomService RoomService) : BaseController
     {
         return await _RoomService.DeleteRoomAsync(id);
     }
+    /// </summary>
+    ///<param name="text">bool </param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+    [HttpGet("search/{text}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<RoomResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<List<RoomResponseDto>>> SearchRoomByText(bool text)
+    {
+        return await _RoomService.SearchRoomByAvaliabilityAsync(text);
+    }
+    [HttpGet("searchByCenter/{text}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<RoomResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<List<RoomResponseDto>>> SearchByCenter(string text)
+    {
+        return await _RoomService.GetAllRoomsForSpecificCenter(text);
+    }
 }
