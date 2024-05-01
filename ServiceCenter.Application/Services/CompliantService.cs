@@ -6,6 +6,7 @@ using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
+using ServiceCenter.Domain.Enums;
 using ServiceCenter.Infrastructure.BaseContext;
 using System;
 using System.Collections.Generic;
@@ -109,6 +110,34 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
         _logger.LogInformation("Updated Complaint , Id {Id}", id);
 
         return Result.Success(ComplaintResponse);
+    }
+
+    ///<inheritdoc/>
+    public async Task<Result> DeleteComplaintAsync(int id)
+    {
+        var Complaint = await _dbContext.Complaints.FindAsync(id);
+
+        if (Complaint is null)
+        {
+            _logger.LogWarning("Complaint Invaild Id ,Id {ComplaintId}", id);
+            return Result.NotFound(["Complaint Invaild Id"]);
+        }
+
+        _dbContext.Complaints.Remove(Complaint);
+        await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("Complaint removed successfully in the database");
+        return Result.SuccessWithMessage("Complaint removed successfully");
+    }
+
+    ///<inheritdoc/>
+    public async Task<Result<List<ComplaintResponseDto>>> SearchComplaintByTextAsync(Status text)
+    {
+        var Complaints = await _dbContext.Complaints
+            .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
+            .Where(n => n.ComplaintStatus.Equals(text))
+            .ToListAsync();
+        _logger.LogInformation("Fetching search Complaint by name . Total count: {Complaint}.", Complaints.Count);
+        return Result.Success(Complaints);
     }
 }
 

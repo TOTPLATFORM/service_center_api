@@ -1,5 +1,6 @@
 ﻿using ServiceCenter.Application.DTOS;
 using ServiceCenter.Core.Result;
+using ServiceCenter.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,4 +38,18 @@ public interface IComplaintService : IApplicationService, IScopedService
     /// <param name="ComplaintRequestDto">Complaint dto</param>
     /// <returns>Updated Complaint </returns>
     public Task<Result<ComplaintResponseDto>> UpdateComplaintAsync(int id, ComplaintRequestDto ComplaintRequestDto);
+
+    /// <summary>
+    /// function to delete Complaint  that take Complaint  id   
+    /// </summary>
+    /// <param name="id">Complaint  id</param>
+    /// <returns>Complaint  removed successfully </returns>
+    public Task<Result> DeleteComplaintAsync(int id);
+
+    /// <summary>
+    /// function to search by Complaint status  that take  Complaint status
+    /// </summary>
+    /// <param name="text">Complaint status</param>
+    /// <returns>Complaint response dto </returns>
+    public Task<Result<List<ComplaintResponseDto>>> SearchComplaintByTextAsync(Status text);
 }
