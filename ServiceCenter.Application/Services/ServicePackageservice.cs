@@ -127,4 +127,14 @@ public class ServicePackageService(ServiceCenterBaseDbContext dbContext, IMapper
 
         return Result.Success(result);
     }
+    ///<inheritdoc/>
+    public async Task<Result<List<ServicePackageResponseDto>>> SearchServicePackageByTextAsync(string text)
+    {
+        var names = await _dbContext.ServicePackages
+        .ProjectTo<ServicePackageResponseDto>(_mapper.ConfigurationProvider)
+        .Where(n => n.PackageName.Contains(text))
+        .ToListAsync();
+        _logger.LogInformation("Fetching search ServicePackage by name . Total count: {Prouct}.", names.Count);
+        return Result.Success(names);
+    }
 }

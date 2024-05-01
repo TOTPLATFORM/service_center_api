@@ -40,4 +40,10 @@ public interface IServicePackageService : IApplicationService, IScopedService
     /// <param name="id"> ServicePackage  id</param>
     /// <returns> ServicePackage  response dto</returns>
     public Task<Result<ServicePackageResponseDto>> GetServicePackageByIdAsync(int id);
+    /// <summary>
+    /// function to search by ServicePackage name  that take  ServicePackage name
+    /// </summary>
+    /// <param name="text">ServicePackage name</param>
+    /// <returns>ServicePackage response dto </returns>
+    public Task<Result<List<ServicePackageResponseDto>>> SearchServicePackageByTextAsync(string text);
 }
