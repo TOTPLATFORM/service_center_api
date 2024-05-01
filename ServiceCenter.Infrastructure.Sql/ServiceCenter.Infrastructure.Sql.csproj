@@ -10,8 +10,4 @@
     <ProjectReference Include="..\ServiceCenter.Infrastructure\ServiceCenter.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
-
 </Project>
