@@ -28,7 +28,7 @@ public class RoomController(IRoomService RoomService) : BaseController
         return await _RoomService.AddRoomAsync(RoomDto);
     }
     /// <summary>
-    /// get all Room categories in the system.
+    /// get all Room  in the system.
     /// </summary>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
