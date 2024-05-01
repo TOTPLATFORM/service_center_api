@@ -20,8 +20,7 @@ public class MappingProfiles : Profile
 
         this.AddItemCategoryMapping();
         this.AddServiceCategoryMapping();
-
-      
+        this.AddRoomMapping();      
         this.AddProductCategoryMapping();
         this.AddProductMapping();
       
