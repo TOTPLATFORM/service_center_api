@@ -109,4 +109,20 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 
         return Result.Success(FeedbackResponse);
     }
+    ///<inheritdoc/>
+    public async Task<Result> DeleteFeedbackAsync(int id)
+    {
+        var Feedback = await _dbContext.Feedbacks.FindAsync(id);
+
+        if (Feedback is null)
+        {
+            _logger.LogWarning("Feedback Invaild Id ,Id {FeedbackId}", id);
+            return Result.NotFound(["Feedback Invaild Id"]);
+        }
+
+        _dbContext.Feedbacks.Remove(Feedback);
+        await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("Feedback removed successfully in the database");
+        return Result.SuccessWithMessage("Feedback removed successfully");
+    }
 }

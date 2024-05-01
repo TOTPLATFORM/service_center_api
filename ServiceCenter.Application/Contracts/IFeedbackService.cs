@@ -34,4 +34,10 @@ public interface IFeedbackService : IApplicationService, IScopedService
     /// <param name="FeedbackRequestDto">Feedback dto</param>
     /// <returns>Updated Feedback </returns>
     public Task<Result<FeedbackResponseDto>> UpdateFeedbackAsync(int id, FeedbackRequestDto FeedbackRequestDto);
+    /// <summary>
+    /// function to delete Feedback  that take Feedback  id   
+    /// </summary>
+    /// <param name="id">Feedback  id</param>
+    /// <returns>Feedback  removed successfully </returns>
+    public Task<Result> DeleteFeedbackAsync(int id);
 }
