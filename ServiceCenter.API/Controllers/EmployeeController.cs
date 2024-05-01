@@ -30,7 +30,7 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	}
 
 	/// <summary>
-	/// get all departments in the system.
+	/// get all employees in the system.
 	/// </summary>
 	/// <remarks>
 	/// Access is limited to users with the "Admin" role.
@@ -40,32 +40,32 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	//[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<List<EmployeeResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<List<EmployeeResponseDto>>> GetAllDepartments()
+	public async Task<Result<List<EmployeeResponseDto>>> GetAllEmployees()
 	{
 		return await _employeeService.GetAllEmployeesAsync();
 	}
 	/// <summary>
-	/// get all departments in the system.
+	/// get all employees in the system.
 	/// </summary>
-	///<param name="id">id of department.</param>
+	///<param name="id">id of employee.</param>
 	/// <remarks>
 	/// Access is limited to users with the "Admin" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
 	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<DepartmentResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<DepartmentResponseDto>> GetDepartmentById(int id)
+	public async Task<Result<EmployeeResponseDto>> GetEmployeeById(string id)
 	{
 		return await _employeeService.GetEmployeeByIdAsync(id);
 	}
 
 	/// <summary>
-	/// get  department by id in the system.
+	/// get  employee by id in the system.
 	/// </summary>
-	///<param name="id">id of department.</param>
-	///<param name="departmentRequestDto">department dto.</param>
+	///<param name="id">id of employee.</param>
+	///<param name="employeeRequestDto">employee dto.</param>
 	/// <remarks>
 	/// Access is limited to users with the "Admin" role.
 	/// </remarks>
@@ -75,12 +75,12 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	//[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<EmployeeResponseDto>> UpdateDepartment(int id, EmployeeRequestDto employeeRequestDto)
+	public async Task<Result<EmployeeResponseDto>> UpdateEmployee(string id, EmployeeRequestDto employeeRequestDto)
 	{
 		return await _employeeService.UpdateEmployeeAsync(id, employeeRequestDto);
 	}
 	/// <summary>
-	/// search  department by text in the system.
+	/// search  employee by text in the system.
 	/// </summary>
 	///<param name="text">id</param>
 	/// <remarks>
@@ -92,12 +92,12 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	//[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<List<EmployeeResponseDto>>> SerachDepartmentByText(string text)
+	public async Task<Result<List<EmployeeResponseDto>>> SerachEmployeeByText(string text)
 	{
 		return await _employeeService.SearchEmployeeByTextAsync(text);
 	}
 	/// <summary>
-	/// delete  department by id from the system.
+	/// delete  employee by id from the system.
 	/// </summary>
 	///<param name="id">id</param>
 	/// <remarks>
@@ -108,7 +108,7 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	//[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result> DeleteDepartmentAsycn(int id)
+	public async Task<Result> DeleteEmployeeAsycn(string id)
 	{
 		return await _employeeService.DeleteEmployeeAsync(id);
 	}
