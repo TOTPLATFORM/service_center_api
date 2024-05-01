@@ -109,4 +109,20 @@ public class RoomService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
 
         return Result.Success(RoomResponse);
     }
+    ///<inheritdoc/>
+    public async Task<Result> DeleteRoomAsync(int id)
+    {
+        var Room = await _dbContext.Rooms.FindAsync(id);
+
+        if (Room is null)
+        {
+            _logger.LogWarning("Room Invaild Id ,Id {RoomId}", id);
+            return Result.NotFound(["Room Invaild Id"]);
+        }
+
+        _dbContext.Rooms.Remove(Room);
+        await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("Room removed successfully in the database");
+        return Result.SuccessWithMessage("Room removed successfully");
+    }
 }

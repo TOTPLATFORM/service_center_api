@@ -34,4 +34,10 @@ public interface IRoomService : IApplicationService, IScopedService
     /// <param name="RoomRequestDto">Room dto</param>
     /// <returns>Updated Room </returns>
     public Task<Result<RoomResponseDto>> UpdateRoomAsync(int id, RoomRequestDto RoomRequestDto);
+    /// <summary>
+    /// function to delete Room  that take Room  id   
+    /// </summary>
+    /// <param name="id">Room  id</param>
+    /// <returns>Room  removed successfully </returns>
+    public Task<Result> DeleteRoomAsync(int id);
 }
