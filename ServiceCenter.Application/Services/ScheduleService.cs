@@ -125,4 +125,14 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
         _logger.LogInformation("Schedule removed successfully in the database");
         return Result.SuccessWithMessage("Schedule removed successfully");
     }
+    public async Task<Result<List<ScheduleResponseDto>>> GetAllSchedulesForSpecificEmployee(string employeeId)
+    {
+        var Schedules = await _dbContext.Schedules
+              .Where(s => s.Employee.Id == employeeId)
+              .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
+              .ToListAsync();
+
+        _logger.LogInformation("Fetching Schedules. Total count: {Schedules}.", Schedules.Count);
+        return Result.Success(Schedules);
+    }
 }

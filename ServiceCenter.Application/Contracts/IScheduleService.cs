@@ -40,4 +40,5 @@ public interface IScheduleService : IApplicationService, IScopedService
     /// <param name="id">Schedule  id</param>
     /// <returns>Schedule  removed successfully </returns>
     public Task<Result> DeleteScheduleAsync(int id);
+    public Task<Result<List<ScheduleResponseDto>>> GetAllSchedulesForSpecificEmployee(string employeeId);
 }

@@ -91,4 +91,12 @@ public async Task<Result<List<ScheduleResponseDto>>> GetAllSchedule()
     {
         return await _ScheduleService.DeleteScheduleAsync(id);
     }
+    [HttpGet("searchByEmployee/{text}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ScheduleResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<List<ScheduleResponseDto>>> SearchByEmployee(string text)
+    {
+        return await _ScheduleService.GetAllSchedulesForSpecificEmployee(text);
+    }
 }
