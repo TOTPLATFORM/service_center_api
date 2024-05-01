@@ -15,6 +15,6 @@ public class EmployeeResponseDto
     public string EmployeeLastName { get; set; } = "";
     public string EmployeePhoneNumber { get; set; } = "";
     public string UserName { get; set; } = "";
-    public DepartmentResponseDto Department { get; set; }
+    public string DepartmentName { get; set; } = "";
     //public virtual ICollection<ServiceResponseDto> Services { get; set; }
 }
