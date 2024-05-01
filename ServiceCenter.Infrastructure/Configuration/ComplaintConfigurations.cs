@@ -13,10 +13,7 @@ public class ComplaintConfigurations : IEntityTypeConfiguration<Complaint>
     {
         builder.Property(T => T.CreatedDate)
                .IsRequired();
-        builder.Property(T => T.CreatedBy)
-              .IsRequired();
-        builder.Property(T => T.CustomerId)
-              .IsRequired();
+      
         builder.Property(T => T.ComplaintStatus)
               .IsRequired();
         builder.Property(T => T.ComplaintDescription)
