@@ -58,4 +58,20 @@ public class RoomController(IRoomService RoomService) : BaseController
     {
         return await _RoomService.GetRoomByIdAsync(id);
     }
+    /// </summary>
+    ///<param name="id">id of Room.</param>
+    ///<param name="RoomRequestDto">Room dto.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+    [HttpPut("{id}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<RoomResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<RoomResponseDto>> UpdateRoom(int id, RoomRequestDto RoomRequestDto)
+    {
+        return await _RoomService.UpdateRoomAsync(id, RoomRequestDto);
+    }
 }
