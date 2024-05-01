@@ -52,14 +52,14 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	/// Access is limited to users with the "Admin" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpGet("{id}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<DepartmentResponseDto>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<DepartmentResponseDto>> GetDepartmentById(int id)
-	{
-		return await _employeeService.GetEmployeeByIdAsync(id);
-	}
+	//[HttpGet("{id}")]
+	////[Authorize(Roles = "Admin")]
+	//[ProducesResponseType(typeof(Result<DepartmentResponseDto>), StatusCodes.Status200OK)]
+	//[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	//public async Task<Result<DepartmentResponseDto>> GetDepartmentById(int id)
+	//{
+	//	return await _employeeService.GetEmployeeByIdAsync(id);
+	//}
 
 	/// <summary>
 	/// get  department by id in the system.
