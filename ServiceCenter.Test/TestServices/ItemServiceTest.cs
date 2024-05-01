@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using HMSWithLayers.Test.TestSetup;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.API.Mapping;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
 using ServiceCenter.Test.TestPriority;
+using ServiceCenter.Test.TestSetup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace ServiceCenter.Test.TestServices
     public  class ItemServiceTest
     {
         private static ItemService _itemService;
-        private string userEmail = "hagershaaban7@gmail.com";
+        private string userEmail = "mariamAbdeen@gmail.com";
         private ItemService CreateItemService()
         {
 
