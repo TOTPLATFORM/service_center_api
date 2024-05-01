@@ -75,5 +75,40 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
         return Result.Success(result);
     }
 
+    ///<inheritdoc/>
+    public async Task<Result<ComplaintResponseDto>> UpdateComplaintAsync(int id, ComplaintRequestDto ComplaintRequestDto)
+    {
+        var result = await _dbContext.Complaints.FindAsync(id);
+
+        if (result is null)
+        {
+            _logger.LogWarning("Complaint Id not found,Id {ComplaintId}", id);
+            return Result.NotFound(["Complaint not found"]);
+        }
+
+        result.ModifiedBy = _userContext.Email;
+
+        _mapper.Map(ComplaintRequestDto, result);
+
+        await _dbContext.SaveChangesAsync();
+
+        var ComplaintResponse = _mapper.Map<ComplaintResponseDto>(result);
+        if (ComplaintResponse is null)
+        {
+            _logger.LogError("Failed to map ComplaintRequestDto to ComplaintResponseDto. ComplaintRequestDto: {@ComplaintRequestDto}", ComplaintResponse);
+
+            return Result.Invalid(new List<ValidationError>
+        {
+                new ValidationError
+                {
+                    ErrorMessage = "Validation Errror"
+                }
+        });
+        }
+
+        _logger.LogInformation("Updated Complaint , Id {Id}", id);
+
+        return Result.Success(ComplaintResponse);
+    }
 }
 

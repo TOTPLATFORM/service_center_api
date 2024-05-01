@@ -30,4 +30,11 @@ public interface IComplaintService : IApplicationService, IScopedService
     /// <returns> Complaint  response dto</returns>
     public Task<Result<ComplaintResponseDto>> GetComplaintByIdAsync(int id);
 
+    /// <summary>
+    /// function to update Complaint that take ComplaintRequestDto   
+    /// </summary>
+    /// <param name="id">Complaint id</param>
+    /// <param name="ComplaintRequestDto">Complaint dto</param>
+    /// <returns>Updated Complaint </returns>
+    public Task<Result<ComplaintResponseDto>> UpdateComplaintAsync(int id, ComplaintRequestDto ComplaintRequestDto);
 }
