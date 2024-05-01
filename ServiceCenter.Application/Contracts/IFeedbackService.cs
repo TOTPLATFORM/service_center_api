@@ -21,4 +21,10 @@ public interface IFeedbackService : IApplicationService, IScopedService
     /// </summary>
     /// <returns>list all Feedback  response dto </returns>
     public Task<Result<List<FeedbackResponseDto>>> GetAllFeedbackAsync();
+    /// <summary>
+    /// function to get  Feedback  by id that take   Feedback id
+    /// </summary>
+    /// <param name="id"> Feedback  id</param>
+    /// <returns> Feedback  response dto</returns>
+    public Task<Result<FeedbackResponseDto>> GetFeedbackByIdAsync(int id);
 }

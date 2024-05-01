@@ -56,4 +56,22 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 
         return Result.Success(result);
     }
+    ///<inheritdoc/>
+    public async Task<Result<FeedbackResponseDto>> GetFeedbackByIdAsync(int id)
+    {
+        var result = await _dbContext.Feedbacks
+            .ProjectTo<FeedbackResponseDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+        if (result is null)
+        {
+            _logger.LogWarning("Feedback Id not found,Id {FeedbackId}", id);
+
+            return Result.NotFound(["Feedback not found"]);
+        }
+
+        _logger.LogInformation("Fetching Feedback");
+
+        return Result.Success(result);
+    }
 }
