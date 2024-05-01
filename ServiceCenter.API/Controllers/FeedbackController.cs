@@ -90,4 +90,18 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     {
         return await _FeedbackService.DeleteFeedbackAsync(id);
     }
+    /// </summary>
+    ///<param name="text">customer name </param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpGet("searchByCustomerName/{text}")]
+    //[Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<FeedbackResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<List<FeedbackResponseDto>>> SearchByCustomer(string text)
+    {
+        return await _FeedbackService.GetAllFeedbacksForSpecificCustomer(text);
+    }
 }
