@@ -29,7 +29,7 @@ public class ContextGenerator
             Context.AddDepartment();
             Context.AddRoom();
             Context.AddTimeSlot();
-            Context.AddSchedule();
+            Context.AddFeedback();
             Context.SaveChanges();
         }
 
