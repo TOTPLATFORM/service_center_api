@@ -26,6 +26,7 @@ public class ContextGenerator
             Context.AddItem();
             Context.AddItemCategory();
             Context.AddInventory();
+            Context.AddDepartment();
             
             Context.SaveChanges();
         }
