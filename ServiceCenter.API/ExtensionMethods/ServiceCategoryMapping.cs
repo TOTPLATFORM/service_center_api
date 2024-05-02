@@ -9,6 +9,7 @@ public static class ServiceCategoryMapping
     public static void AddServiceCategoryMapping(this MappingProfiles map)
     {
         map.CreateMap<ServiceCategoryRequestDto, ServiceCategory>().ReverseMap();
-        map.CreateMap<ServiceCategory, ServiceCategoryResponseDto>().ReverseMap();
+        map.CreateMap<ServiceCategory, ServiceCategoryResponseDto>()
+            .ReverseMap();
     }
 }

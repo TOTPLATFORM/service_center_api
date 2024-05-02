@@ -12,8 +12,8 @@ using ServiceCenter.Infrastructure.BaseContext;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
-    [Migration("20240501150215_initiaCreate")]
-    partial class initiaCreate
+    [Migration("20240502084252_UpdateDatabase6")]
+    partial class UpdateDatabase6
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -780,11 +780,13 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     b.Property<string>("OfferDescription")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("OfferName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -1169,9 +1171,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ServicePackageId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ServicePrice")
                         .HasColumnType("int");
 
@@ -1183,8 +1182,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.HasIndex("ServiceCategoryId");
-
-                    b.HasIndex("ServicePackageId");
 
                     b.ToTable("Services");
                 });
@@ -1302,6 +1299,21 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.HasIndex("ManagerId");
 
                     b.ToTable("TimeSlots");
+                });
+
+            modelBuilder.Entity("ServicePackageServices", b =>
+                {
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServicePackageId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ServiceId", "ServicePackageId");
+
+                    b.HasIndex("ServicePackageId");
+
+                    b.ToTable("ServicePackageServices");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Customer", b =>
@@ -1746,15 +1758,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ServiceCenter.Domain.Entities.ServicePackage", "ServicePackage")
-                        .WithMany("Services")
-                        .HasForeignKey("ServicePackageId");
-
                     b.Navigation("Employee");
 
                     b.Navigation("ServiceCategory");
-
-                    b.Navigation("ServicePackage");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.TimeSlot", b =>
@@ -1764,6 +1770,21 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .HasForeignKey("ManagerId");
 
                     b.Navigation("Manager");
+                });
+
+            modelBuilder.Entity("ServicePackageServices", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Service", null)
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServiceCenter.Domain.Entities.ServicePackage", null)
+                        .WithMany()
+                        .HasForeignKey("ServicePackageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Customer", b =>
@@ -1933,11 +1954,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.ServiceCategory", b =>
-                {
-                    b.Navigation("Services");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.ServicePackage", b =>
                 {
                     b.Navigation("Services");
                 });
