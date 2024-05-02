@@ -22,6 +22,5 @@ public class ServiceRequestDto
     [Required]
     public int ServiceCategoryId { get; set; }
     public int? ServicePcakageId { get; set; }
-    [Required]
-    public string EmployeeId { get; set; } = "";
+    public string? EmployeeId { get; set; } = "";
 }
