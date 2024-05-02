@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceCenter.Domain.Entities;
 
-public class ServicePackageServices
+[NotMapped]
+public class ServicePackageServices 
 {
     public int ServiceId { get; set; }
-    public Service Service { get; set; } = default;
+    public virtual Service Service { get; set; } = default;
     public int ServicePackageId { get; set; }
-    public ServicePackage ServicePackage { get; set; } = default;
+    public virtual ServicePackage ServicePackage { get; set; } = default;
 }

@@ -20,8 +20,8 @@ public class ServiceRequestDto
     [Required]
     public Status Avaliable { get; set; }
     [Required]
-    public int ServiceCategoryId { get; set; } 
-    public ICollection<PackageServiceRequestDto> PackageServiceRequestDto  { get; set; } = new HashSet<PackageServiceRequestDto>();
+    public int ServiceCategoryId { get; set; }
+    public int? ServicePcakageId { get; set; }
     [Required]
     public string EmployeeId { get; set; } = "";
 }

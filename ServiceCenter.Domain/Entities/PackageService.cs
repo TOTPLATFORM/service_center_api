@@ -9,7 +9,7 @@ namespace ServiceCenter.Domain.Entities;
 public class PackageService 
 {
     public int ServiceId { get; set; }
-    public Service Service { get; set; } = default;
+    public virtual Service Service { get; set; } = default;
     public int ServicePackageId { get; set; }
-    public ServicePackage ServicePackage { get; set; } = default;
+    public virtual ServicePackage ServicePackage { get; set; } = default;
 }
