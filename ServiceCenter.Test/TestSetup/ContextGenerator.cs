@@ -28,6 +28,7 @@ public class ContextGenerator
             Context.AddInventory();
             Context.AddDepartment();
             Context.AddRoom();
+            Context.AddTimeSlot();
             Context.SaveChanges();
         }
 
