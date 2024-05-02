@@ -40,21 +40,21 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		}
 		result.CreatedBy = _userContext.Email;
 
-		if (ServiceRequestDto.ServicePackageId > 0)
-		{
-			var servicePackage = await _dbContext.ServicePackages.FindAsync(ServiceRequestDto.ServicePackageId);
+        if (ServiceRequestDto.ServicePackageId > 0)
+        {
+            var servicePackage = await _dbContext.ServicePackages.FindAsync(ServiceRequestDto.ServicePackageId);
 
-			if (servicePackage is not null)
-			{
-				result.ServicePackages.Add(servicePackage);
-			}
-			else
-			{
-				_logger.LogWarning("ServicePackage with ID {ServicePackageId} not found.", ServiceRequestDto.ServicePackageId);
-			}
-		}
+            if (servicePackage is not null)
+            {
+                result.ServicePackages.Add(servicePackage);
+            }
+            else
+            {
+                _logger.LogWarning("ServicePackage with ID {ServicePackageId} not found.", ServiceRequestDto.ServicePackageId);
+            }
+        }
 
-		_dbContext.Services.Add(result);
+        _dbContext.Services.Add(result);
 
 		await _dbContext.SaveChangesAsync();
 
