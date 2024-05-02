@@ -4,6 +4,7 @@ using ServiceCenter.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,6 +21,21 @@ public  class serviceConfigurations : IEntityTypeConfiguration<Service>
         builder.Property(T => T.ServicePrice)
           .IsRequired();
         builder.Property(T => T.Avaliable)
-               .IsRequired();
-    }
+		.IsRequired();
+
+		builder.HasMany(s => s.ServicePackages)
+			.WithMany(sp => sp.Services)
+			.UsingEntity<Dictionary<string, object>>(
+				"ServicePackageServices",
+				j => j.HasOne<ServicePackage>()
+					  .WithMany()
+					  .HasForeignKey("ServicePackageId"),
+				j => j.HasOne<Service>()
+					  .WithMany()
+					  .HasForeignKey("ServiceId"),
+				j =>
+				{
+					j.HasKey("ServiceId", "ServicePackageId");
+				});
+	}
 }

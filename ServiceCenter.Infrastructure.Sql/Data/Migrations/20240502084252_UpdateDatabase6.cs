@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initiaCreate : Migration
+    public partial class UpdateDatabase6 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -662,8 +662,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OfferName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OfferDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OfferName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    OfferDescription = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false),
                     EndDate = table.Column<DateOnly>(type: "date", nullable: false),
                     Discount = table.Column<int>(type: "int", nullable: false),
@@ -799,7 +799,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     ServicePrice = table.Column<int>(type: "int", nullable: false),
                     Avaliable = table.Column<int>(type: "int", nullable: false),
                     ServiceCategoryId = table.Column<int>(type: "int", nullable: false),
-                    ServicePackageId = table.Column<int>(type: "int", nullable: true),
                     EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -820,11 +819,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         principalTable: "ServiceCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Services_ServicePackages_ServicePackageId",
-                        column: x => x.ServicePackageId,
-                        principalTable: "ServicePackages",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -954,6 +948,30 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RatingServices_Services_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "Services",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ServicePackageServices",
+                columns: table => new
+                {
+                    ServiceId = table.Column<int>(type: "int", nullable: false),
+                    ServicePackageId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServicePackageServices", x => new { x.ServiceId, x.ServicePackageId });
+                    table.ForeignKey(
+                        name: "FK_ServicePackageServices_ServicePackages_ServicePackageId",
+                        column: x => x.ServicePackageId,
+                        principalTable: "ServicePackages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ServicePackageServices_Services_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "Services",
                         principalColumn: "Id",
@@ -1179,6 +1197,11 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 column: "TimeSlotId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ServicePackageServices_ServicePackageId",
+                table: "ServicePackageServices",
+                column: "ServicePackageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Services_EmployeeId",
                 table: "Services",
                 column: "EmployeeId");
@@ -1187,11 +1210,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 name: "IX_Services_ServiceCategoryId",
                 table: "Services",
                 column: "ServiceCategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Services_ServicePackageId",
-                table: "Services",
-                column: "ServicePackageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TimeSlots_ManagerId",
@@ -1261,6 +1279,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 name: "Schedules");
 
             migrationBuilder.DropTable(
+                name: "ServicePackageServices");
+
+            migrationBuilder.DropTable(
                 name: "Vendors");
 
             migrationBuilder.DropTable(
@@ -1282,13 +1303,16 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 name: "Ratings");
 
             migrationBuilder.DropTable(
-                name: "Services");
-
-            migrationBuilder.DropTable(
                 name: "Appointments");
 
             migrationBuilder.DropTable(
                 name: "TimeSlots");
+
+            migrationBuilder.DropTable(
+                name: "ServicePackages");
+
+            migrationBuilder.DropTable(
+                name: "Services");
 
             migrationBuilder.DropTable(
                 name: "ItemCategories");
@@ -1303,19 +1327,16 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 name: "Sales");
 
             migrationBuilder.DropTable(
-                name: "Employees");
-
-            migrationBuilder.DropTable(
-                name: "ServiceCategories");
-
-            migrationBuilder.DropTable(
-                name: "ServicePackages");
-
-            migrationBuilder.DropTable(
                 name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Managers");
+
+            migrationBuilder.DropTable(
+                name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "ServiceCategories");
 
             migrationBuilder.DropTable(
                 name: "Inventories");

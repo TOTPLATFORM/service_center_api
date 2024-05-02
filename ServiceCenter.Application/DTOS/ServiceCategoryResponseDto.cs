@@ -11,5 +11,5 @@ public class ServiceCategoryResponseDto
     public int Id { get; set; }
     public string ServiceCategoryName { get; set; } = "";
     public string ServiceCategoryDescription { get; set; } = "";
-    public ICollection<ServiceResponseDto> Services { get; set; }
+    public ICollection<ServiceResponseDto> Services { get; set; } =  new HashSet<ServiceResponseDto>();
 }

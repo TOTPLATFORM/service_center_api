@@ -16,6 +16,6 @@ public class ServiceResponseDto
     public int ServicePrice { get; set; }
     public Status Avaliable { get; set; }
     public string ServiceCategoryName { get; set; } = "";
-    public string PackageName { get; set; } = "";
-    public string EmployeeName { get; set; } = "";
+	public virtual HashSet<string> LinkedPackages { get; set; } = new HashSet<string>();
+	public string EmployeeName { get; set; } = "";
 }
