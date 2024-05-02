@@ -28,7 +28,7 @@ public class OfferService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
         var result = _mapper.Map<Offer>(OfferRequestDto);
 		if (result is null)
 		{
-			_logger.LogError("Failed to map DepartmentRequestDto to Department. DepartmentRequestDto: {@DepartmentRequestDto}", departmentRequestDto);
+			_logger.LogError("Failed to map DepartmentRequestDto to Department. DepartmentRequestDto: {@DepartmentRequestDto}", OfferRequestDto);
 
 			return Result.Invalid(new List<ValidationError>
 			{
