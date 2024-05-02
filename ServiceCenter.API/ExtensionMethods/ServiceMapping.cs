@@ -8,13 +8,12 @@ public static  class ServiceMapping
 {
     public static void AddServiceMapping(this MappingProfiles map)
     {
-        map.CreateMap<ServiceRequestDto, ServiceResponseDto>()
+        map.CreateMap<ServiceRequestDto, Service>()
 			   .ReverseMap();
 
         map.CreateMap<Service, ServiceResponseDto>()
-            .ForMember(dest => dest.LinkedPackages, src => src.MapFrom(src => src.ServicePackages))
-             .ForMember(dest => dest.ServiceCategoryName, src => src.MapFrom(src => src.ServiceCategory.ServiceCategoryName))
-              .ForMember(dest => dest.EmployeeName, src => src.MapFrom(src => src.Employee.FirstName))
-            .ReverseMap();
+		   .ForMember(dest => dest.ServiceCategoryName, src => src.MapFrom(src => src.ServiceCategory.ServiceCategoryName))
+           .ForMember(dest => dest.EmployeeName, src => src.MapFrom(src => src.Employee.FirstName))
+           .ReverseMap();
     }
 }

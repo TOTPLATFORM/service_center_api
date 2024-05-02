@@ -13,5 +13,5 @@ public class ServicePackageResponseDto
     public string PackageName { get; set; } = "";
     public string PackageDescription { get; set; } = "";
     public int PackagePrice { get; set; }
-    public virtual ICollection<ServiceResponseDto> Services { get; set; }
+    public ICollection<ServiceResponseDto> Services { get; set; } = new HashSet<ServiceResponseDto>();
 }
