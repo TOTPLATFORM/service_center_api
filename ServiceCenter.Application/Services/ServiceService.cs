@@ -17,122 +17,125 @@ namespace ServiceCenter.Application.Services;
 
 public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<ServiceService> logger, IUserContextService userContext) : IServiceService
 {
-    private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
-    private readonly IMapper _mapper = mapper;
-    private readonly ILogger<ServiceService> _logger = logger;
-    private readonly IUserContextService _userContext = userContext;
+	private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
+	private readonly IMapper _mapper = mapper;
+	private readonly ILogger<ServiceService> _logger = logger;
+	private readonly IUserContextService _userContext = userContext;
 
-    ///<inheritdoc/>
-    public async Task<Result> AddServiceAsync(ServiceRequestDto ServiceRequestDto)
-    {
-        var result = _mapper.Map<Service>(ServiceRequestDto);
-        if (result is null)
-        {
-            _logger.LogError("Failed to map ServiceRequestDto to Service. ServiceRequestDto: {@ServiceRequestDto}", ServiceRequestDto);
-            return Result.Invalid(new List<ValidationError>
-    {
-        new ValidationError
-        {
-            ErrorMessage = "Validation Errror"
-        }
-    });
-        }
-        result.CreatedBy = _userContext.Email;
+	///<inheritdoc/>
+	public async Task<Result> AddServiceAsync(ServiceRequestDto ServiceRequestDto)
+	{
+		var result = _mapper.Map<Service>(ServiceRequestDto);
+		if (result is null)
+		{
+			_logger.LogError("Failed to map DepartmentRequestDto to Department. DepartmentRequestDto: {@DepartmentRequestDto}", ServiceRequestDto);
 
-        _dbContext.Services.Add(result);
+			return Result.Invalid(new List<ValidationError>
+			{
+				new ValidationError
+				{
+					ErrorMessage = "Validation Errror"
+				}
+			});
+		}
+		result.CreatedBy = _userContext.Email;
 
-        await _dbContext.SaveChangesAsync();
-        _logger.LogInformation("Service added successfully to the database");
-        return Result.SuccessWithMessage("Service added successfully");
-    }
-    ///<inheritdoc/>
-    public async Task<Result<List<ServiceResponseDto>>> GetAllServiceAsync()
-    {
-        var result = await _dbContext.Services
-             .ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
-             .ToListAsync();
+		_dbContext.Services.Add(result);
 
-        _logger.LogInformation("Fetching all  Service. Total count: { Service}.", result.Count);
+		//var servicePackages = await _dbContext.ServicePackages.Where(package => package.Contains(ServiceRequestDto.));
 
-        return Result.Success(result);
-    }
-    ///<inheritdoc/>
-    public async Task<Result<ServiceResponseDto>> GetServiceByIdAsync(int id)
-    {
-        var result = await _dbContext.Services
-            .ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(p => p.Id == id);
+		await _dbContext.SaveChangesAsync();
+		_logger.LogInformation("Service added successfully to the database");
+		return Result.SuccessWithMessage("Service added successfully");
+	}
+	///<inheritdoc/>
+	public async Task<Result<List<ServiceResponseDto>>> GetAllServiceAsync()
+	{
+		var result = await _dbContext.Services
+			 .ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
+			 .ToListAsync();
 
-        if (result is null)
-        {
-            _logger.LogWarning("Service Id not found,Id {ServiceId}", id);
+		_logger.LogInformation("Fetching all  Service. Total count: { Service}.", result.Count);
 
-            return Result.NotFound(["Service not found"]);
-        }
+		return Result.Success(result);
+	}
+	///<inheritdoc/>
+	public async Task<Result<ServiceResponseDto>> GetServiceByIdAsync(int id)
+	{
+		var result = await _dbContext.Services
+			.ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
+			.FirstOrDefaultAsync(p => p.Id == id);
 
-        _logger.LogInformation("Fetching Service");
+		if (result is null)
+		{
+			_logger.LogWarning("Service Id not found,Id {ServiceId}", id);
 
-        return Result.Success(result);
-    }
-    ///<inheritdoc/>
-    public async Task<Result<ServiceResponseDto>> UpdateServiceAsync(int id, ServiceRequestDto ServiceRequestDto)
-    {
-        var result = await _dbContext.Services.FindAsync(id);
+			return Result.NotFound(["Service not found"]);
+		}
 
-        if (result is null)
-        {
-            _logger.LogWarning("Service Id not found,Id {ServiceId}", id);
-            return Result.NotFound(["Service not found"]);
-        }
+		_logger.LogInformation("Fetching Service");
 
-        result.ModifiedBy = _userContext.Email;
+		return Result.Success(result);
+	}
+	///<inheritdoc/>
+	public async Task<Result<ServiceResponseDto>> UpdateServiceAsync(int id, ServiceRequestDto ServiceRequestDto)
+	{
+		var result = await _dbContext.Services.FindAsync(id);
 
-        _mapper.Map(ServiceRequestDto, result);
+		if (result is null)
+		{
+			_logger.LogWarning("Service Id not found,Id {ServiceId}", id);
+			return Result.NotFound(["Service not found"]);
+		}
 
-        await _dbContext.SaveChangesAsync();
+		result.ModifiedBy = _userContext.Email;
 
-        var ServiceResponse = _mapper.Map<ServiceResponseDto>(result);
-        if (ServiceResponse is null)
-        {
-            _logger.LogError("Failed to map ServiceRequestDto to ServiceResponseDto. ServiceRequestDto: {@ServiceRequestDto}", ServiceResponse);
+		_mapper.Map(ServiceRequestDto, result);
 
-            return Result.Invalid(new List<ValidationError>
-        {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-        });
-        }
+		await _dbContext.SaveChangesAsync();
 
-        _logger.LogInformation("Updated Service , Id {Id}", id);
+		var ServiceResponse = _mapper.Map<ServiceResponseDto>(result);
+		if (ServiceResponse is null)
+		{
+			_logger.LogError("Failed to map ServiceRequestDto to ServiceResponseDto. ServiceRequestDto: {@ServiceRequestDto}", ServiceResponse);
 
-        return Result.Success(ServiceResponse);
-    }
-    ///<inheritdoc/>
-    public async Task<Result> DeleteServiceAsync(int id)
-    {
-        var Service = await _dbContext.Services.FindAsync(id);
+			return Result.Invalid(new List<ValidationError>
+		{
+				new ValidationError
+				{
+					ErrorMessage = "Validation Errror"
+				}
+		});
+		}
 
-        if (Service is null)
-        {
-            _logger.LogWarning("Service Invaild Id ,Id {ServiceId}", id);
-            return Result.NotFound(["Service Invaild Id"]);
-        }
+		_logger.LogInformation("Updated Service , Id {Id}", id);
 
-        _dbContext.Services.Remove(Service);
-        await _dbContext.SaveChangesAsync();
-        _logger.LogInformation("Service removed successfully in the database");
-        return Result.SuccessWithMessage("Service removed successfully");
-    }
-    ///<inheritdoc/>
-    public async Task<Result<List<ServiceResponseDto>>> SearchServiceByTextAsync(string text)
-    {
-        var names = await _dbContext.Services
-        .ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
-        .Where(n => n.ServiceName.Contains(text))
-        .ToListAsync();
-        _logger.LogInformation("Fetching search Service by name . Total count: {Prouct}.", names.Count);
-        return Result.Success(names);
-    }
+		return Result.Success(ServiceResponse);
+	}
+	///<inheritdoc/>
+	public async Task<Result> DeleteServiceAsync(int id)
+	{
+		var Service = await _dbContext.Services.FindAsync(id);
+
+		if (Service is null)
+		{
+			_logger.LogWarning("Service Invaild Id ,Id {ServiceId}", id);
+			return Result.NotFound(["Service Invaild Id"]);
+		}
+
+		_dbContext.Services.Remove(Service);
+		await _dbContext.SaveChangesAsync();
+		_logger.LogInformation("Service removed successfully in the database");
+		return Result.SuccessWithMessage("Service removed successfully");
+	}
+	///<inheritdoc/>
+	public async Task<Result<List<ServiceResponseDto>>> SearchServiceByTextAsync(string text)
+	{
+		var names = await _dbContext.Services
+		.ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
+		.Where(n => n.ServiceName.Contains(text))
+		.ToListAsync();
+		_logger.LogInformation("Fetching search Service by name . Total count: {Prouct}.", names.Count);
+		return Result.Success(names);
+	}
 }

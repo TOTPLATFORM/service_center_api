@@ -148,6 +148,19 @@ public class DepartmentService(ServiceCenterBaseDbContext dbContext, IMapper map
 	}
 
 	///<inheritdoc/>
+	public async Task<Result<List<DepartmentResponseDto>>> GetAllEmployeesForSpecificDepartmentAsync(int id)
+	{
+		var employees = await _dbContext.Departments
+		   .Where(s => s.Id == id)
+		   .ProjectTo<DepartmentResponseDto>(_mapper.ConfigurationProvider)
+		   .ToListAsync();
+
+		_logger.LogInformation("Fetching employees. Total count: {employee}.", employees.Count);
+
+		return Result.Success(employees);
+	}
+
+	///<inheritdoc/>
 	public async Task<Result> DeleteDepartmentAsync(int id)
 	{
 		var department = await _dbContext.Departments.FindAsync(id);
@@ -167,4 +180,5 @@ public class DepartmentService(ServiceCenterBaseDbContext dbContext, IMapper map
 
 		return Result.SuccessWithMessage("Department removed successfully");
 	}
+
 }

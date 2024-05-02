@@ -96,6 +96,25 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	{
 		return await _departmentService.SearchDepartmentByTextAsync(text);
 	}
+
+	/// <summary>
+	/// get all   department by text in the system.
+	/// </summary>
+	///<param name="text">id</param>
+	/// <remarks>
+	/// Access is limited to users with the "Admin" role.
+	/// </remarks>
+	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+	[HttpGet("searchByRelation/{id}")]
+	//[Authorize(Roles = "Admin")]
+	[ProducesResponseType(typeof(Result<DepartmentResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result<List<DepartmentResponseDto>>> SearchDepartmentByRelation(int id)
+	{
+		return await _departmentService.GetAllEmployeesForSpecificDepartmentAsync(id);
+	}
+
 	/// <summary>
 	/// delete  department by id from the system.
 	/// </summary>
@@ -104,6 +123,7 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	/// Access is limited to users with the "Admin" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
 	[HttpDelete]
 	//[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]

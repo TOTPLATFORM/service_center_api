@@ -12,6 +12,5 @@ public class ServicePackage : AuditableEntity
 	public string PackageName { get; set; } = "";
 	public string PackageDescription { get; set; } = "";
     public int PackagePrice { get; set; }
-    public int ServiceId { get; set; }
-    public Service Service { get; set; } = default;
+    public ICollection<PackageService>? PackageServices { get; set; } = new HashSet<PackageService>();
 }

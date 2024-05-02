@@ -8,8 +8,10 @@ public static  class ServiceMapping
 {
     public static void AddServiceMapping(this MappingProfiles map)
     {
-        map.CreateMap<ServiceRequestDto, Service>()
+        map.CreateMap<ServiceCategoryRequestDto, Service>();
+        map.CreateMap<List<ServiceRequestDto>, List<Service>>()
                .ReverseMap();
+
         map.CreateMap<Service, ServiceResponseDto>()
             .ForMember(dest => dest.PackageName, src => src.MapFrom(src => src.servicePackages))
              .ForMember(dest => dest.ServiceCategoryName, src => src.MapFrom(src => src.ServiceCategory.ServiceCategoryName))

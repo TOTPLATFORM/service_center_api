@@ -47,6 +47,12 @@ public interface IDepartmentService : IApplicationService, IScopedService
 	public Task<Result<List<DepartmentResponseDto>>> SearchDepartmentByTextAsync(string text);
 
 	/// <summary>
+	/// function to search department by text  that take text   
+	/// </summary>
+	/// <param name="text">text</param>
+	/// <returns>all departmentes that contain this text </returns>
+	public Task<Result<List<DepartmentResponseDto>>> GetAllEmployeesForSpecificDepartmentAsync(int id);
+	/// <summary>
 	/// function to delete Department that take DepartmentDto   
 	/// </summary>
 	/// <param name="id">departmnet id</param>
