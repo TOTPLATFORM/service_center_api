@@ -30,6 +30,7 @@ public class ContextGenerator
             Context.AddRoom();
             Context.AddTimeSlot();
             Context.AddFeedback();
+            Context.AddComplaint();
             Context.SaveChanges();
         }
 

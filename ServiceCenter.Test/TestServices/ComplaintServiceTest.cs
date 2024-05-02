@@ -4,9 +4,9 @@ using ServiceCenter.API.Mapping;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
+using ServiceCenter.Domain.Enums;
 using ServiceCenter.Test.TestPriority;
 using ServiceCenter.Test.TestSetup;
-using ServiceCenter.Test.TestSetup.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,67 +14,68 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceCenter.Test.TestServices;
+
 [TestCaseOrderer(
 ordererTypeName: "ServiceCenter.Test.TestPriority.PriorityOrderer",
 ordererAssemblyName: "ServiceCenter.Test")]
-public class FeedbackServiceTest
+public class ComplaintServiceTest
 {
-    private static FeedbackService _feedbackService;
+    private static ComplaintService _ComplaintService;
     private string userEmail = "Mariamabdeeen@gmail.com";
-    private FeedbackService CreatefeedbackService()
+    private ComplaintService CreateComplaintService()
     {
 
-        if (_feedbackService is null)
+        if (_ComplaintService is null)
         {
             var dbContext = ContextGenerator.Generator();
 
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfiles>()).CreateMapper();
 
-            ILogger<FeedbackService> logger = new LoggerFactory().CreateLogger<FeedbackService>();
+            ILogger<ComplaintService> logger = new LoggerFactory().CreateLogger<ComplaintService>();
 
             IUserContextService userContext = new UserContextService();
 
-            _feedbackService = new FeedbackService(dbContext, mapper, logger, userContext);
+            _ComplaintService = new ComplaintService(dbContext, mapper, logger, userContext);
         }
 
-        return _feedbackService;
+        return _ComplaintService;
     }
     private void CheckService()
     {
-        if (_feedbackService is null)
-            _feedbackService = CreatefeedbackService();
+        if (_ComplaintService is null)
+            _ComplaintService = CreateComplaintService();
     }
 
     /// <summary>
-    /// fuction to get all  feedbacks as a test case 
+    /// fuction to get all  Complaints as a test case 
     /// </summary>
     [Fact, TestPriority(1)]
-    public async Task GetAllfeedback()
+    public async Task GetAllComplaint()
     {
         // Arrange
         CheckService();
 
         // Act
-        var result = await _feedbackService.GetAllFeedbackAsync();
+        var result = await _ComplaintService.GetAllComplaintsAsync();
 
         // Assert
         Assert.True(result.IsSuccess);
 
     }
     /// <summary>
-    /// fuction to get feedback by id as a test case 
+    /// fuction to get Complaint by id as a test case 
     /// </summary>
-    /// <param name="id"> feedback id</param>
+    /// <param name="id"> Complaint id</param>
     [Theory, TestPriority(2)]
     [InlineData(1)]
     [InlineData(6)]
-    public async Task GetByIdfeedback(int id)
+    public async Task GetByIdComplaint(int id)
     {
         // Arrange
         CheckService();
 
         // Act
-        var result = await _feedbackService.GetFeedbackByIdAsync(id);
+        var result = await _ComplaintService.GetComplaintByIdAsync(id);
 
         // Assert
         if (result.IsSuccess)
@@ -84,19 +85,19 @@ public class FeedbackServiceTest
 
     }
     /// <summary>
-    /// fuction to add feedback as a test case that take  timeslot id ,created by user name
+    /// fuction to add Complaint as a test case that take  timeslot id ,created by user name
     /// </summary>
 
     [Theory, TestPriority(0)]
-    [InlineData("Desc1", "Product", "7/11/2024", "53ae72a7-589e-4f0b-81ed-4038169498")]
-    public async Task Addfeedback(string feedbackDesc, string feedbackCategory,string feedbackDate,string customerId)
+    [InlineData("Desc1", "Product", "03:00:00", "53ae72a7-589e-4f0b-81ed-4038169498","Dep1",Status.Pending)]
+    public async Task AddComplaint(string ComplaintDesc, string ComplaintCategory, string ComplaintDate, string customerId,string assigned ,Status status)
     {
         // Arrange
         CheckService();
-        var feedbackRequestDto = new FeedbackRequestDto { FeedbackDescription= feedbackDesc, FeedbackCategory= feedbackCategory, FeedbackDate= DateOnly.Parse(feedbackDate) ,CustomerId= customerId };
+        var ComplaintRequestDto = new ComplaintRequestDto { ComplaintDescription = ComplaintDesc, ComplaintCategory = ComplaintCategory, ComplaintDate = DateOnly.Parse(ComplaintDate), CustomerId = customerId,AssignedTo=assigned ,ComplaintStatus=status };
 
         // Act
-        var result = await _feedbackService.AddFeedbackAsync(feedbackRequestDto);
+        var result = await _ComplaintService.AddComplaintAsync(ComplaintRequestDto);
 
         // Assert
         if (result.IsSuccess)
@@ -105,19 +106,19 @@ public class FeedbackServiceTest
             Assert.False(result.IsSuccess);
     }
     /// <summary>
-    /// fuction to remove feedback as a test case that take feedback id
+    /// fuction to remove Complaint as a test case that take Complaint id
     /// </summary>
-    /// <param name="id"> feedback id</param>
+    /// <param name="id"> Complaint id</param>
     [Theory, TestPriority(4)]
     [InlineData(1)]
     [InlineData(50)]
-    public async Task Removefeedback(int id)
+    public async Task RemoveComplaint(int id)
     {
         // Arrange
         CheckService();
 
         // Act
-        var result = await _feedbackService.DeleteFeedbackAsync(id);
+        var result = await _ComplaintService.DeleteComplaintAsync(id);
 
         // Assert
         if (result.IsSuccess)
@@ -128,20 +129,22 @@ public class FeedbackServiceTest
     }
 
     /// <summary>
-    /// fuction to update feedback as a test case that take id Updated by user name,expected result
+    /// fuction to update Complaint as a test case that take id Updated by user name,expected result
     /// </summary>
-    /// <param name="id">feedback id</param>  
+    /// <param name="id">Complaint id</param>  
     [Theory, TestPriority(3)]
     [InlineData(1, true)]
     [InlineData(30, false)]
-    public async Task Updatefeedback(int id, bool expectedResult)
+    public async Task UpdateComplaint(int id, bool expectedResult)
     {
         // Arrange
         CheckService();
-        var feedbackRequestDto = new FeedbackRequestDto { FeedbackDescription = "feedbackDesc", FeedbackCategory = "feedbackCategory", FeedbackDate = DateOnly.Parse("7/11/2024"), CustomerId = "53ae72a7-589e-4f0b-81ed-4038169498" };
+        var ComplaintRequestDto = new ComplaintRequestDto { ComplaintDescription = "ComplaintDesc", ComplaintCategory = "ComplaintCategory", ComplaintDate = DateOnly.Parse("7/11/2024"), CustomerId = "53ae72a7-589e-4f0b-81ed-4038169498" ,AssignedTo = "Dep2",
+            ComplaintStatus = Status.Cancelled,
+        };
 
         // Act
-        var result = await _feedbackService.UpdateFeedbackAsync(id, feedbackRequestDto);
+        var result = await _ComplaintService.UpdateComplaintAsync(id, ComplaintRequestDto);
 
         if (expectedResult)
         {
@@ -153,3 +156,4 @@ public class FeedbackServiceTest
         }
     }
 }
+
