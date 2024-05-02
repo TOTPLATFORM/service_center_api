@@ -16,7 +16,7 @@ public class Service : AuditableEntity
     public Status Avaliable { get; set; }
 	public int ServiceCategoryId { get; set; }
     public virtual ServiceCategory ServiceCategory { get; set; } = default;
-    public ICollection<PackageService>? PackageServices { get; set; } = new HashSet<PackageService>();
+    public ICollection<ServicePackage> ServicePackages { get; set; } = new HashSet<ServicePackage>();
     public string? EmployeeId { get; set; } 
     public virtual Employee Employee { get; set; } = default;
 

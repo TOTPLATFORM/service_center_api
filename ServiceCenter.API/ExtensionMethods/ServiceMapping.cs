@@ -13,7 +13,7 @@ public static  class ServiceMapping
                .ReverseMap();
 
         map.CreateMap<Service, ServiceResponseDto>()
-            .ForMember(dest => dest.PackageName, src => src.MapFrom(src => src.servicePackages))
+            .ForMember(dest => dest.LinkedPackages, src => src.MapFrom(src => src.ServicePackages))
              .ForMember(dest => dest.ServiceCategoryName, src => src.MapFrom(src => src.ServiceCategory.ServiceCategoryName))
               .ForMember(dest => dest.EmployeeName, src => src.MapFrom(src => src.Employee.FirstName))
             .ReverseMap();
