@@ -29,23 +29,23 @@ public class ContactController(IContactService contactService) : BaseController
 	}
 
 
+	/// <summary>
+	/// get all contacts in the system.
+	/// </summary>
+	/// <remarks>
+	/// Access is limited to users with the "Admin" role.
+	/// </remarks>
+	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+	[HttpGet]
+	//[Authorize(Roles = "Admin")]
+	[ProducesResponseType(typeof(Result<List<ContactResponseDto>>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result<List<ContactResponseDto>>> GetAllContacts()
+	{
+		return await _contactService.GetAllContactsAsync();
+	}
 	///// <summary>
-	///// get all contactes in the system.
-	///// </summary>
-	///// <remarks>
-	///// Access is limited to users with the "Admin" role.
-	///// </remarks>
-	///// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	//[HttpGet]
-	////[Authorize(Roles = "Admin")]
-	//[ProducesResponseType(typeof(Result<List<ContactResponseDto>>), StatusCodes.Status200OK)]
-	//[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	//public async Task<Result<List<ContactResponseDto>>> GetAllInventories()
-	//{
-	//	return await _contactService.GetAllContactesAsync();
-	//}
-	///// <summary>
-	///// get all contactes in the system.
+	///// get all contacts in the system.
 	///// </summary>
 	/////<param name="id">id of contact.</param>
 	///// <remarks>
