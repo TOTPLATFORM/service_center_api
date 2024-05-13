@@ -15,7 +15,9 @@ public class AppointmentRequestDto
     public TimeOnly EndTime { get; set; }
     [Required]
     public DateOnly Date { get; set; }
-   [Required]
+    [Required]
+    public string Day { get; set; } = "";
+    [Required]
     public string CustomerId { get; set; } = "";
     [Required]
     public string EmployeeId { get; set; } = "";

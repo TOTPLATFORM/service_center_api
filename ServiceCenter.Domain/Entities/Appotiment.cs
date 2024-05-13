@@ -9,9 +9,9 @@ namespace ServiceCenter.Domain.Entities;
 
 public class Appointment : Time
 {
-	
 	public DateOnly Date { get; set; }
-	public string CustomerId { get; set; } = default;
+	public string Day { get; set; } = "";
+    public string CustomerId { get; set; } = default;
 	public virtual Customer Customer { get; set; } = default;
 
 
