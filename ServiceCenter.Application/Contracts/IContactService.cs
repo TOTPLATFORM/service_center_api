@@ -1,5 +1,6 @@
 ﻿using ServiceCenter.Application.DTOS;
 using ServiceCenter.Core.Result;
+using ServiceCenter.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,4 +23,13 @@ public interface IContactService : IApplicationService, IScopedService
 	/// </summary>
 	/// <returns>list all contactResponseDto </returns>
 	public Task<Result<List<ContactResponseDto>>> GetAllContactsAsync();
+
+	/// <summary>
+	/// function to update contact that take contactRequestDto   
+	/// </summary>
+	/// <param name="id">contact id</param>
+	///   <param name="status">contact status</param>
+	/// <returns>Updated contact </returns>
+	public Task<Result<ContactResponseDto>> UpdateContactStatusAsync(int id, ContactStatus status);
+
 }
