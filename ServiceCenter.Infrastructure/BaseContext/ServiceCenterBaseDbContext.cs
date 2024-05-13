@@ -55,7 +55,8 @@ public class ServiceCenterBaseDbContext : IdentityDbContext<ApplicationUser>
 	public DbSet<Contract> Contracts { get; set; }
 	public DbSet<Department> Departments { get; set; }
 	public DbSet<Employee> Employees { get; set; }
-	public DbSet<WareHouseManager> WareHouseManagers { get; set; }
+    public DbSet<Contact> Contacts { get; set; }
+    public DbSet<WareHouseManager> WareHouseManagers { get; set; }
 	public DbSet<Manager> Managers { get; set; }
 	public DbSet<Offer> Offers { get; set; }
     public DbSet<CenterService>  CenterServices { get; set; }
