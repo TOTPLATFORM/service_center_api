@@ -12,49 +12,46 @@ public class AuthController(IAuthService authService) : BaseController
 {
     private readonly IAuthService _authService= authService;
 
-    /// <summary>
-    /// action for registration a new patient that take patient request dto.
-    /// </summary>
-    /// <param name="registerModel">The registration model.</param>
-    /// <returns>result representing of the registration successfully.</returns>
-    //[HttpPost("RegisterPatient")]
-    //[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    //[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    //public async Task<Result> RegisterAsync(PatientRequestDto patientDto)
-    //{
+	/// <summary>
+	/// action for registration a new customer that take customer request dto.
+	/// </summary>
+	/// <param name="customerRequestDto">The registration model.</param>
+	/// <returns>result representing of the registration successfully.</returns>
+	[HttpPost("RegisterCustomer")]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result> RegisterAsync(CustomerRequestDto customerRequestDto)
+	{
+		return await _authService.RegisterCustomerAsync(customerRequestDto);
+	}
 
-    //    var result = await _authService.RegisterPatientAsync(patientDto);
+	/// <summary>
+	/// action for login a user that take login request dto.
+	/// </summary>
+	/// <param name="loginModel">The login model.</param>
+	/// <returns>result representing of the login successfully.</returns>
+	//[HttpPost("Login")]
+	//[ProducesResponseType(typeof(Result<LoginResponseDto>), StatusCodes.Status200OK)]
+	//[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	//public async Task<Result<LoginResponseDto>> LoginAsync(LoginRequestDto loginModel)
+	//{
+	//    var result = await _authService.Login(loginModel);
 
-    //    return result;
-    //}
+	//    if (!result.IsSuccess)
+	//    {
+	//        return result;
+	//    }
 
-    /// <summary>
-    /// action for login a user that take login request dto.
-    /// </summary>
-    /// <param name="loginModel">The login model.</param>
-    /// <returns>result representing of the login successfully.</returns>
-    //[HttpPost("Login")]
-    //[ProducesResponseType(typeof(Result<LoginResponseDto>), StatusCodes.Status200OK)]
-    //[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    //public async Task<Result<LoginResponseDto>> LoginAsync(LoginRequestDto loginModel)
-    //{
-    //    var result = await _authService.Login(loginModel);
+	//    return result;
+	//}
 
-    //    if (!result.IsSuccess)
-    //    {
-    //        return result;
-    //    }
-
-    //    return result;
-    //}
-
-    /// <summary>
-    /// action add a user to a specific role.
-    /// </summary>
-    /// <param name="userId">the user id.</param>
-    /// <param name="roleName">the role name.</param>
-    /// <returns>result representing the adding the user to the role successfully.</returns>
-    [Authorize(Roles = "Admin")]
+	/// <summary>
+	/// action add a user to a specific role.
+	/// </summary>
+	/// <param name="userId">the user id.</param>
+	/// <param name="roleName">the role name.</param>
+	/// <returns>result representing the adding the user to the role successfully.</returns>
+	[Authorize(Roles = "Admin")]
     [HttpPost("AddUserToRole/userId/{userId}/roleName/{roleName}")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
