@@ -74,11 +74,14 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		return Result.Success(result);
 	}
 	///<inheritdoc/>
-	public async Task<Result<ServiceResponseDto>> GetServiceByIdAsync(int id)
+	public async Task<Result<ServiceGetByIdResponseDto>> GetServiceByIdAsync(int id)
 	{
 		var result = await _dbContext.Services
-			.ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
+			.ProjectTo<ServiceGetByIdResponseDto>(_mapper.ConfigurationProvider)
 			.FirstOrDefaultAsync(p => p.Id == id);
+
+		result.TimeSlots = await _dbContext.TimeSlots.ProjectTo<TimeSlotResponseDto>(_mapper.ConfigurationProvider)
+			.ToListAsync();
 
 		if (result is null)
 		{

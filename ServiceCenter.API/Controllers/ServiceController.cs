@@ -53,7 +53,7 @@ public class ServiceController(IServiceService ServiceService) : BaseController
     //[Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<ServiceResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<ServiceResponseDto>> GetServiceById(int id)
+    public async Task<Result<ServiceGetByIdResponseDto>> GetServiceById(int id)
     {
         return await _ServiceService.GetServiceByIdAsync(id);
     }

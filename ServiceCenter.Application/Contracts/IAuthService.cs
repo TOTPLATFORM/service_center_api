@@ -12,7 +12,7 @@ namespace ServiceCenter.Application.Contracts;
 public interface IAuthService: IApplicationService, IScopedService
 {
     //Task<Result<LoginResponseDto>> Login(LoginRequestDto LoginRequestDto);
-    //Task<Result> RegisterPatientAsync(PatientRequestDto patientDto);
+    Task<Result> RegisterCustomerAsync(CustomerRequestDto customerRequestDto);
     //Task<Result> RegisterDoctorAsync(DoctorRequestDto doctorDto);
     //Task<Result> RegisterPharmacistAsync(PharmacistRequestDto pharmacistDto);
     //Task<Result> RegisterLaboratoristAsync(LaboratoriestRequestDto laboratoristDto);

@@ -135,19 +135,19 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
         return Result.SuccessWithMessage($"Successfully created a new user {registerResult.Value.UserName} with role {role}");
     }
 
-    /// <summary>
-    /// Registers a new patient with patient role.
-    /// </summary>
-    /// <param name="patientDto">The Dto of the patient.</param>
-    /// <returns>The result of the registration attempt.</returns>
-    //public async Task<Result> RegisterPatientAsync(PatientRequestDto patientDto)
-    //{
-    //    string role = "Patient";
+	/// <summary>
+	/// Registers a new customer with customer role.
+	/// </summary>
+	/// <param name="customerRequestDto">The Dto of the customer.</param>
+	/// <returns>The result of the registration attempt.</returns>
+	public async Task<Result> RegisterCustomerAsync(CustomerRequestDto customerRequestDto)
+    {
+        string role = "Customer";
 
-    //    var patient = _mapper.Map<Patient>(patientDto);
+        var customer = _mapper.Map<Customer>(customerRequestDto);
 
-    //    return await RegisterUserWithRoleAsync(patient, patientDto.Password, role);
-    //}
+        return await RegisterUserWithRoleAsync(customer, customerRequestDto.Password, role);
+    }
 
     /// <summary>
     /// Registers a new doctor with doctor role.
@@ -269,7 +269,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
 
     public async Task InitializeRoles()
     {
-        var roles = new List<string> {"Manager", "Employee"};
+        var roles = new List<string> {"Manager", "Employee","Customer"};
 
         foreach (var role in roles)
         {

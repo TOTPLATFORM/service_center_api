@@ -7,4 +7,5 @@ public class TimeSlot : Time
 	public string Day { get; set; } = "";
     public string? ManagerId { get; set; }
     public virtual Manager Manager { get; set; }
+
 }

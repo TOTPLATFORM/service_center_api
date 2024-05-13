@@ -13,6 +13,7 @@ using System.Linq;
 using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
+using CenterService = ServiceCenter.Application.Services.CenterService;
 
 namespace ServiceCenter.Test.TestServices;
 [TestCaseOrderer(
@@ -54,7 +55,7 @@ public class CenterServiceTest
     /// <param name="CenterAvaliabitlity">Center availability</param>
     /// <param name="centerId">Center Type id</param>
     [Theory, TestPriority(0)]
-    [InlineData("center1",2,"spec1")]
+    [InlineData("center1", 2, "spec1")]
     public async Task AddCenter(string centerName, int hours, string specialty)
     {
         // Arrange
@@ -118,7 +119,7 @@ public class CenterServiceTest
     /// <param name="centerId">Center Type id</param>
     /// <param name="expectedResult">expected result</param>
     [Theory, TestPriority(3)]
-    [InlineData(1, "center1",2,"spec1", true)]
+    [InlineData(1, "center1", 2, "spec1", true)]
     [InlineData(1, "center1", 2, "spec1", true)]
     public async Task UpdateCenter(int id, string centerName, int hours, string specialty, bool expectedResult)
     {
@@ -161,3 +162,4 @@ public class CenterServiceTest
             Assert.False(result.IsSuccess);
 
     }
+}

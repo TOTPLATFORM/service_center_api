@@ -9,6 +9,8 @@ public static class TimeSlotMapping
 	public static void AddTimeSlotMapping(this MappingProfiles map)
 	{
 		map.CreateMap<TimeSlotRequestDto, TimeSlot>().ReverseMap();
-		map.CreateMap<TimeSlot, TimeSlotResponseDto>().ReverseMap();
+		map.CreateMap<TimeSlot, TimeSlotResponseDto>()
+			.ForMember(dest=>dest.Day,src=>src.MapFrom(src=>src.Day))
+			.ReverseMap();
 	}
 }

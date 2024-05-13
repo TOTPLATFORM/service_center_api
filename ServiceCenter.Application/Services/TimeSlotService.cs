@@ -135,14 +135,14 @@ public class TimeSlotService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 		//	});
 		//}
 
-		var Days = await _dbContext.TimeSlots
+		var Day = await _dbContext.TimeSlots
                        .ProjectTo<TimeSlotResponseDto>(_mapper.ConfigurationProvider)
 		               .Where(n => n.Day.Contains(text))
 		               .ToListAsync();
 
-		_logger.LogInformation("Fetching search time slot by name . Total count: {time slot}.", Days.Count);
+		_logger.LogInformation("Fetching search time slot by name . Total count: {time slot}.", Day.Count);
 
-		return Result.Success(Days);
+		return Result.Success(Day);
 
 	}
 

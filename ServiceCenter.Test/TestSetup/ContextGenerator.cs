@@ -31,6 +31,7 @@ public class ContextGenerator
             Context.AddTimeSlot();
             Context.AddFeedback();
             Context.AddComplaint();
+            Context.AddCenter();
             Context.SaveChanges();
         }
 

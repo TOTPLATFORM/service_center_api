@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateDatabase6 : Migration
+    public partial class edit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
