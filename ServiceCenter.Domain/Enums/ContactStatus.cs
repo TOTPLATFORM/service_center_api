@@ -12,5 +12,6 @@ public enum ContactStatus
 {
 	Lead , 
 	Oppurtienty,
-	Cancelled
+	Cancelled,
+	Customer
 }

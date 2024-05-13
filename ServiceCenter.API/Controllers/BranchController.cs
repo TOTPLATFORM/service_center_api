@@ -41,7 +41,7 @@ public class BranchController(IBranchService branchService) : BaseController
 	//[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<List<BranchResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<List<BranchResponseDto>>> GetAllInventories()
+	public async Task<Result<List<BranchResponseDto>>> GetAllBranches()
 	{
 		return await _branchService.GetAllBranchesAsync();
 	}
@@ -76,7 +76,7 @@ public class BranchController(IBranchService branchService) : BaseController
 	//[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<BranchResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<BranchResponseDto>> UpdateInventory(int id, BranchRequestDto branchRequestDto)
+	public async Task<Result<BranchResponseDto>> UpdateBranch(int id, BranchRequestDto branchRequestDto)
 	{
 		return await _branchService.UpdateBranchAsync(id, branchRequestDto);
 	}
@@ -93,7 +93,7 @@ public class BranchController(IBranchService branchService) : BaseController
 	//[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<BranchResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<List<BranchResponseDto>>> SerachInventoryByText(string text)
+	public async Task<Result<List<BranchResponseDto>>> SerachBranchByText(string text)
 	{
 		return await _branchService.SearchBranchByTextAsync(text);
 	}
@@ -109,7 +109,7 @@ public class BranchController(IBranchService branchService) : BaseController
 	//[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result> DeleteInventoryAsycn(int id)
+	public async Task<Result> DeleteBranchAsycn(int id)
 	{
 		return await _branchService.DeleteBranchAsync(id);
 	}

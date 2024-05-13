@@ -52,6 +52,8 @@ public class MappingProfiles : Profile
         this.AddOfferMapping();
 
         this.AddAppointmentMapping(); //Not finished yet
+
+        this.AddContactMapping();
 	}
 
 }

@@ -18,7 +18,7 @@ public interface IBranchService : IApplicationService, IScopedService
 	public Task<Result> AddBranchAsync(BranchRequestDto branchRequestDto);
 
 	/// <summary>
-	/// function to get all inventories 
+	/// function to get all branches 
 	/// </summary>
 	/// <returns>list all branchResponseDto </returns>
 	public Task<Result<List<BranchResponseDto>>> GetAllBranchesAsync();
