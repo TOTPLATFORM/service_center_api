@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HMSWithLayers.Application.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Core.Result;
+using ServiceCenter.Domain.Enums;
 
 namespace ServiceCenter.API.Controllers;
 
@@ -44,72 +46,20 @@ public class ContactController(IContactService contactService) : BaseController
 	{
 		return await _contactService.GetAllContactsAsync();
 	}
-	///// <summary>
-	///// get all contacts in the system.
-	///// </summary>
-	/////<param name="id">id of contact.</param>
-	///// <remarks>
-	///// Access is limited to users with the "Admin" role.
-	///// </remarks>
-	///// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	//[HttpGet("{id}")]
-	////[Authorize(Roles = "Admin")]
-	//[ProducesResponseType(typeof(Result<ContactResponseDto>), StatusCodes.Status200OK)]
-	//[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	//public async Task<Result<ContactResponseDto>> GetContactById(int id)
-	//{
-	//	return await _contactService.GetContactByIdAsync(id);
-	//}
 
-	///// <summary>
-	///// get  contact by id in the system.
-	///// </summary>
-	/////<param name="id">id of contact.</param>
-	/////<param name="contactRequestDto">contact dto.</param>
-	///// <remarks>
-	///// Access is limited to users with the "Admin" role.
-	///// </remarks>
-	///// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+	/// <summary>
+	/// action for update an contact status that take contact status and conatct id.
+	/// </summary>
+	/// <param name="id">contact id.</param>
+	/// <param name="status">contact status</param>
+	/// <returns>result of the contact response dto after updated successfully</returns>
 
-	//[HttpPut("{id}")]
-	////[Authorize(Roles = "Admin")]
-	//[ProducesResponseType(typeof(Result<ContactResponseDto>), StatusCodes.Status200OK)]
-	//[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	//public async Task<Result<ContactResponseDto>> UpdateInventory(int id, ContactRequestDto contactRequestDto)
-	//{
-	//	return await _contactService.UpdateContactAsync(id, contactRequestDto);
-	//}
-	///// <summary>
-	///// search  contact by text in the system.
-	///// </summary>
-	/////<param name="text">id</param>
-	///// <remarks>
-	///// Access is limited to users with the "Admin" role.
-	///// </remarks>
-	///// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-
-	//[HttpGet("search/{text}")]
-	////[Authorize(Roles = "Admin")]
-	//[ProducesResponseType(typeof(Result<ContactResponseDto>), StatusCodes.Status200OK)]
-	//[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	//public async Task<Result<List<ContactResponseDto>>> SerachInventoryByText(string text)
-	//{
-	//	return await _contactService.SearchContactByTextAsync(text);
-	//}
-	///// <summary>
-	///// delete  contact by id from the system.
-	///// </summary>
-	/////<param name="id">id</param>
-	///// <remarks>
-	///// Access is limited to users with the "Admin" role.
-	///// </remarks>
-	///// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	//[HttpDelete]
-	////[Authorize(Roles = "Admin")]
-	//[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-	//[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	//public async Task<Result> DeleteInventoryAsycn(int id)
-	//{
-	//	return await _contactService.DeleteContactAsync(id);
-	//}
+	[HttpPut("contactId/{id}/status/{status}")]
+	//[Authorize(Roles = "Admin")]
+	[ProducesResponseType(typeof(Result<ContactResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result<ContactResponseDto>> UpdateContactStatusAsync(ContactStatus status, int id)
+	{
+		return await _contactService.UpdateContactStatusAsync(id, status);
+	}
 }
