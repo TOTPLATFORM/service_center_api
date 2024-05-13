@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
@@ -48,6 +49,18 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		_logger.LogInformation("Contact added successfully to the database");
 
 		return Result.SuccessWithMessage("Contact added successfully");
+	}
+
+	///<inheritdoc/>
+	public async Task<Result<List<ContactResponseDto>>> GetAllContactsAsync()
+	{
+		var result = await _dbContext.Contacts
+				 .ProjectTo<ContactResponseDto>(_mapper.ConfigurationProvider)
+				 .ToListAsync();
+
+		_logger.LogInformation("Fetching all Contacts. Total count: {Contact}.", result.Count);
+
+		return Result.Success(result);
 	}
 
 }
