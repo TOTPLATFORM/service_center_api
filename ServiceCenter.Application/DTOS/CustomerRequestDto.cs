@@ -27,4 +27,5 @@ public class CustomerRequestDto
 	public DateOnly DateOfBirth { get; set; }
 	public string Gender { get; set; } = "";
 	public Address Address { get; set; } = default;
+    public int BranchId { get; set; } 
 }
