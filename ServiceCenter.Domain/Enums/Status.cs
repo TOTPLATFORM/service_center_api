@@ -12,5 +12,6 @@ public enum Status
 {
 	Pending,
 	Approved,
-	Cancelled
+	Cancelled,
+	Resolved
 }
