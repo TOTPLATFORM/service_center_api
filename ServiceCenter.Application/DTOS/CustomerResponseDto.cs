@@ -15,6 +15,4 @@ public class CustomerResponseDto
 	public string CustomerFirstName { get; set; } = "";
 	public string? CustomerLastName { get; set; }
 	public string CustomerPhoneNumber { get; set; } = "";
-	public string BranchName { get; set; } = "";
-
 }

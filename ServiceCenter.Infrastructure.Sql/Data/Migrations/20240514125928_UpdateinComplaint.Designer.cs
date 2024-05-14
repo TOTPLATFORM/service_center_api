@@ -12,8 +12,8 @@ using ServiceCenter.Infrastructure.BaseContext;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
-    [Migration("20240514102415_ChangeInConfig1")]
-    partial class ChangeInConfig1
+    [Migration("20240514125928_UpdateinComplaint")]
+    partial class UpdateinComplaint
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -434,6 +434,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CustomerId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ModifiedBy")
@@ -1615,9 +1616,13 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Complaint", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Customer", null)
+                    b.HasOne("ServiceCenter.Domain.Entities.Customer", "Customer")
                         .WithMany("Complaints")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Contact", b =>

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class ChangeInConfig1 : Migration
+    public partial class UpdateinComplaint : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -745,7 +745,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     ComplaintDescription = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     ComplaintCategory = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     ComplaintStatus = table.Column<int>(type: "int", nullable: false),
-                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -758,7 +758,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         name: "FK_Complaints_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

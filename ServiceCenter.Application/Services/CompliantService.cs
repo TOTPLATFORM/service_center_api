@@ -140,5 +140,18 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 		_logger.LogInformation("Fetching search Complaint by name . Total count: {Complaint}.", Complaints.Count);
 		return Result.Success(Complaints);
 	}
+
+	///<inheritdoc/>
+	public async Task<Result<List<ComplaintResponseDto>>> GetComplaintsByCustomerAsync(string customerId)
+	{
+		var complaints = await _dbContext.Complaints
+			  .Where(s => s.CustomerId == customerId)
+			  .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
+			  .ToListAsync();
+
+		_logger.LogInformation("Fetching complaints. Total count: {complaints}.", complaints.Count);
+
+		return Result.Success(complaints);
+	}
 }
 
