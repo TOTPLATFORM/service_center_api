@@ -431,6 +431,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CustomerId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ModifiedBy")
@@ -1612,9 +1613,13 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Complaint", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Customer", null)
+                    b.HasOne("ServiceCenter.Domain.Entities.Customer", "Customer")
                         .WithMany("Complaints")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Contact", b =>
