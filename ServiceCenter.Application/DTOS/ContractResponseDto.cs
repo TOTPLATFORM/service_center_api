@@ -9,6 +9,6 @@ namespace ServiceCenter.Application.DTOS;
 public class ContractResponseDto
 {
     public int Id { get; set; }
-    public string Duration { get; set; } = "";
+    public DateOnly Duration { get; set; } 
     public string PackageName { get; set; } = "";
 }
