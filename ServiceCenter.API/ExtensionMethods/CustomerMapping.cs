@@ -16,6 +16,11 @@ public static class CustomerMapping
 			.ReverseMap();
 
 		map.CreateMap<Customer, CustomerResponseDto>()
+			.ForMember(dest=>dest.BranchName,src=>src.MapFrom(src=>src.Branch.BranchName))
+			.ForMember(dest => dest.CustomerFirstName, src => src.MapFrom(src => src.FirstName))
+			.ForMember(dest => dest.CustomerLastName, src => src.MapFrom(src => src.LastName))
+			.ForMember(dest => dest.CustomerEmail, src => src.MapFrom(src => src.Email))
+			.ForMember(dest => dest.CustomerPhoneNumber, src => src.MapFrom(src => src.PhoneNumber))
 			.ReverseMap();
 	}
 }
