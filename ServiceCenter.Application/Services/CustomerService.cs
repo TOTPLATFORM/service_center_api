@@ -54,94 +54,92 @@ public class CustomerService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 		return Result.Success(customer);
 	}
 
-	/////<inheritdoc/>
+	///<inheritdoc/>
 
-	//public async Task<Result<CustomerResponseDto>> UpdateCustomerAsync(string id, CustomerRequestDto customerRequestDto)
-	//{
-	//	var customer = await _dbContext.Customers.FindAsync(id);
+	public async Task<Result<CustomerResponseDto>> UpdateCustomerAsync(string id, CustomerRequestDto customerRequestDto)
+	{
+		var customer = await _dbContext.Customers.FindAsync(id);
 
-	//	if (customer is null)
-	//	{
-	//		_logger.LogWarning("customer Id not found,Id {customerId}", id);
+		if (customer is null)
+		{
+			_logger.LogWarning("customer Id not found,Id {customerId}", id);
 
-	//		return Result.NotFound(["customer not found"]);
-	//	}
+			return Result.NotFound(["customer not found"]);
+		}
 
-	//	_mapper.Map(customerRequestDto, customer);
+		_mapper.Map(customerRequestDto, customer);
 
-	//	await _dbContext.SaveChangesAsync();
+		await _dbContext.SaveChangesAsync();
 
-	//	var customerResponse = _mapper.Map<CustomerResponseDto>(customer);
+		var customerResponse = _mapper.Map<CustomerResponseDto>(customer);
 
-	//	if (customerResponse is null)
-	//	{
-	//		_logger.LogError("Failed to map customerRequestDto to customerResponseDto. customerRequestDto: {@customerRequestDto}", customerRequestDto);
+		if (customerResponse is null)
+		{
+			_logger.LogError("Failed to map customerRequestDto to customerResponseDto. customerRequestDto: {@customerRequestDto}", customerRequestDto);
 
-	//		return Result.Invalid(new List<ValidationError>
-	//		{
-	//			new ValidationError
-	//			{
-	//				ErrorMessage = "Validation Errror"
-	//			}
-	//		});
-	//	}
+			return Result.Invalid(new List<ValidationError>
+			{
+				new ValidationError
+				{
+					ErrorMessage = "Validation Errror"
+				}
+			});
+		}
 
-	//	_logger.LogInformation("Updated customer , Id {Id}", id);
+		_logger.LogInformation("Updated customer , Id {Id}", id);
 
-	//	return Result.Success(customerResponse);
-	//}
+		return Result.Success(customerResponse);
+	}
 
-	/////<inheritdoc/>
+	///<inheritdoc/>
 
-	//public async Task<Result<List<CustomerResponseDto>>> SearchCustomerByTextAsync(string text)
-	//{
+	public async Task<Result<List<CustomerResponseDto>>> SearchCustomerByTextAsync(string text)
+	{
 
-	//	//if (string.IsNullOrWhiteSpace(text))
-	//	//{
-	//	//	_logger.LogError("Search text cannot be empty", text);
+		//if (string.IsNullOrWhiteSpace(text))
+		//{
+		//	_logger.LogError("Search text cannot be empty", text);
 
-	//	//	return new Result.Invalid(new List<ValidationError>
-	//	//	{
-	//	//		new ValidationError
-	//	//		{
-	//	//			ErrorMessage = "Validation Errror : Search text cannot be empty"
-	//	//		}
-	//	//	});
-	//	//}
+		//	return new Result.Invalid(new List<ValidationError>
+		//	{
+		//		new ValidationError
+		//		{
+		//			ErrorMessage = "Validation Errror : Search text cannot be empty"
+		//		}
+		//	});
+		//}
 
-	//	var customer = await _dbContext.Customers
-	//				   .ProjectTo<CustomerResponseDto>(_mapper.ConfigurationProvider)
-	//				   .Where(n => n.CustomerFirstName.Contains(text))
-	//				   .ToListAsync();
+		var customer = await _dbContext.Customers
+					   .ProjectTo<CustomerResponseDto>(_mapper.ConfigurationProvider)
+					   .Where(n => n.CustomerFirstName.Contains(text))
+					   .ToListAsync();
 
-	//	_logger.LogInformation("Fetching search branch by name . Total count: {branch}.", customer.Count);
+		_logger.LogInformation("Fetching search branch by name . Total count: {branch}.", customer.Count);
 
-	//	return Result.Success(customer);
+		return Result.Success(customer);
+	}
 
-	//	return Result.Success(customer);
-	//}
+	///<inheritdoc/>
 
-	/////<inheritdoc/>
+	public async Task<Result> DeleteCustomerAsync(string id)
+	{
+		var customer = await _dbContext.Customers.FindAsync(id);
 
-	//public async Task<Result> DeleteCustomerAsync(string id)
-	//{
-	//	var customer = await _dbContext.Customers.FindAsync(id);
+		if (customer is null)
+		{
+			_logger.LogWarning("customer Invaild Id ,Id {customerId}", id);
 
-	//	if (customer is null)
-	//	{
-	//		_logger.LogWarning("customer Invaild Id ,Id {customerId}", id);
+			return Result.NotFound(["customer Invaild Id"]);
+		}
 
-	//		return Result.NotFound(["customer Invaild Id"]);
-	//	}
+		_dbContext.Customers.Remove(customer);
 
-	//	_dbContext.Customers.Remove(customer);
+		await _dbContext.SaveChangesAsync();
 
-	//	await _dbContext.SaveChangesAsync();
+		_logger.LogInformation("customer remove successfully in the database");
 
-	//	_logger.LogInformation("customer remove successfully in the database");
-
-	//	return Result.SuccessWithMessage("customer remove successfully ");
-	//}
+		return Result.SuccessWithMessage("customer remove successfully ");
+	}
 }
 
 
