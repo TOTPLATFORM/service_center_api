@@ -1,0 +1,1809 @@
+2024-05-14 11:55:27 [INF] [ComplaintService] []  Complaint added successfully to the database
+    
+2024-05-14 11:55:27 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Complaint responded 200 in 6353.1512 ms
+    
+2024-05-14 11:55:27 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 8:55:27 AM +00:00
+    
+2024-05-14 11:55:27 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "complaintDate": "2024-05-15",
+  "complaintDescription": "hhhhhhhhhhhhh",
+  "complaintCategory": "call center service",
+  "complaintStatus": "Pending"
+}
+    
+2024-05-14 11:55:27 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 8:55:27 AM +00:00
+    
+2024-05-14 11:55:27 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Complaint added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 11:56:02 [INF] [ComplaintService] []  Fetching all  Complaint. Total count: { Complaint}.
+    
+2024-05-14 11:56:02 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint responded 200 in 887.6644 ms
+    
+2024-05-14 11:56:02 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 8:56:02 AM +00:00
+    
+2024-05-14 11:56:02 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 8:56:02 AM +00:00
+    
+2024-05-14 11:56:02 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"id":1,"complaintDate":"2024-05-15","complaintDescription":"hhhhhhhhhhhhh","complaintCategory":"call center service","complaintStatus":"Pending"}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 11:56:22 [INF] [ComplaintService] []  Fetching Complaint
+    
+2024-05-14 11:56:22 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint/1 responded 200 in 159.3912 ms
+    
+2024-05-14 11:56:22 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint/1,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 8:56:22 AM +00:00
+    
+2024-05-14 11:56:22 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 8:56:22 AM +00:00
+    
+2024-05-14 11:56:22 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":{"id":1,"complaintDate":"2024-05-15","complaintDescription":"hhhhhhhhhhhhh","complaintCategory":"call center service","complaintStatus":"Pending"},"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 11:57:22 [INF] [ComplaintService] []  Fetching Complaint
+    
+2024-05-14 11:57:22 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint/1 responded 200 in 42.1515 ms
+    
+2024-05-14 11:57:22 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint/1,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 8:57:22 AM +00:00
+    
+2024-05-14 11:57:22 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "complaintDate": "2024-05-15",
+  "complaintDescription": "hhhhhhhhhhhhh",
+  "complaintCategory": "bad service",
+  "complaintStatus": "Pending"
+}
+    
+2024-05-14 11:57:22 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 8:57:22 AM +00:00
+    
+2024-05-14 11:57:22 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":{"id":1,"complaintDate":"2024-05-15","complaintDescription":"hhhhhhhhhhhhh","complaintCategory":"call center service","complaintStatus":"Pending"},"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 11:58:54 [INF] [ComplaintService] []  Fetching Complaint
+    
+2024-05-14 11:58:54 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint/1 responded 200 in 21.7814 ms
+    
+2024-05-14 11:58:54 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint/1,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 8:58:54 AM +00:00
+    
+2024-05-14 11:58:54 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "complaintDate": "2024-05-15",
+  "complaintDescription": "hhhhhhhhhhhhh",
+  "complaintCategory": "bad service",
+  "complaintStatus": "Pending"
+}
+    
+2024-05-14 11:58:54 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 8:58:54 AM +00:00
+    
+2024-05-14 11:58:54 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":{"id":1,"complaintDate":"2024-05-15","complaintDescription":"hhhhhhhhhhhhh","complaintCategory":"call center service","complaintStatus":"Pending"},"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 12:01:43 [INF] [ComplaintService] []  Fetching Complaint
+    
+2024-05-14 12:01:43 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint/1 responded 200 in 2096.3514 ms
+    
+2024-05-14 12:01:43 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint/1,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 9:01:43 AM +00:00
+    
+2024-05-14 12:01:43 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "complaintDate": "2024-05-15",
+  "complaintDescription": "hhhhhhhhhhhhh",
+  "complaintCategory": "bad service",
+  "complaintStatus": "Pending"
+}
+    
+2024-05-14 12:01:43 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 9:01:43 AM +00:00
+    
+2024-05-14 12:01:43 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":{"id":1,"complaintDate":"2024-05-15","complaintDescription":"hhhhhhhhhhhhh","complaintCategory":"call center service","complaintStatus":"Pending"},"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 12:02:20 [INF] [ComplaintService] []  Updated Complaint , Id 1
+    
+2024-05-14 12:02:20 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP PUT /api/Complaint/1 responded 200 in 426.6829 ms
+    
+2024-05-14 12:02:20 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint/1,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 9:02:20 AM +00:00
+    
+2024-05-14 12:02:20 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "complaintDate": "2024-05-15",
+  "complaintDescription": "hhhhhhhhhhhhh",
+  "complaintCategory": "bad service",
+  "complaintStatus": "Pending"
+}
+    
+2024-05-14 12:02:20 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 9:02:20 AM +00:00
+    
+2024-05-14 12:02:20 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":{"id":1,"complaintDate":"2024-05-15","complaintDescription":"hhhhhhhhhhhhh","complaintCategory":"bad service","complaintStatus":"Pending"},"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 12:09:05 [INF] [ServiceCenter.Application.Services.TimeSlotService] []  TimeSlot added successfully to the database
+    
+2024-05-14 12:09:05 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/TimeSlot responded 200 in 186.6220 ms
+    
+2024-05-14 12:09:05 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/TimeSlot,
+ Controller Name:TimeSlot,
+ Client IP: ::1 at 5/14/2024 9:09:05 AM +00:00
+    
+2024-05-14 12:09:05 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "startTime":"09:30:00",  
+  "endTime": "11:30:00",
+  "day": "Sunday"
+}
+    
+2024-05-14 12:09:05 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 9:09:05 AM +00:00
+    
+2024-05-14 12:09:05 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"TimeSlot added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 12:12:10 [ERR] [Microsoft.EntityFrameworkCore.Update] []  An exception occurred in the database while saving changes for context type 'ServiceCenter.Infrastructure.BaseContext.ServiceCenterBaseDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ServiceCenter.dbo.TimeSlots', column 'Day'. Truncated value: 'S'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:f0e70c8f-e630-4861-a9e5-0c9bb61195f0
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+    
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ServiceCenter.dbo.TimeSlots', column 'Day'. Truncated value: 'S'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:f0e70c8f-e630-4861-a9e5-0c9bb61195f0
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2024-05-14 12:12:11 [ERR] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/TimeSlot responded 500 in 2354.6445 ms
+    
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ServiceCenter.dbo.TimeSlots', column 'Day'. Truncated value: 'S'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:f0e70c8f-e630-4861-a9e5-0c9bb61195f0
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at ServiceCenter.Application.Services.TimeSlotService.AddTimeSlotAsync(TimeSlotRequestDto timeSlotRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\TimeSlotService.cs:line 46
+   at ServiceCenter.API.Controllers.TimeSlotController.AddTimeSlot(TimeSlotRequestDto timeSlotDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Controllers\TimeSlotController.cs:line 25
+   at lambda_method7(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at ServiceCenter.API.Middleware.UserScopeMiddleware.InvokeAsync(HttpContext context, IUserContextService userContext) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Middleware\UserScopeMiddleware.cs:line 39
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-05-14 12:12:11 [ERR] [Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware] []  An unhandled exception has occurred while executing the request.
+    
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ServiceCenter.dbo.TimeSlots', column 'Day'. Truncated value: 'S'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:f0e70c8f-e630-4861-a9e5-0c9bb61195f0
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at ServiceCenter.Application.Services.TimeSlotService.AddTimeSlotAsync(TimeSlotRequestDto timeSlotRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\TimeSlotService.cs:line 46
+   at ServiceCenter.API.Controllers.TimeSlotController.AddTimeSlot(TimeSlotRequestDto timeSlotDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Controllers\TimeSlotController.cs:line 25
+   at lambda_method7(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at ServiceCenter.API.Middleware.UserScopeMiddleware.InvokeAsync(HttpContext context, IUserContextService userContext) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Middleware\UserScopeMiddleware.cs:line 39
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-05-14 12:12:11 [ERR] [ServiceCenter.API.ExceptionHandlers.GlobalExceptionHandler] []  Exception occurred: An error occurred while saving the entity changes. See the inner exception for details.
+    
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ServiceCenter.dbo.TimeSlots', column 'Day'. Truncated value: 'S'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:f0e70c8f-e630-4861-a9e5-0c9bb61195f0
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at ServiceCenter.Application.Services.TimeSlotService.AddTimeSlotAsync(TimeSlotRequestDto timeSlotRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\TimeSlotService.cs:line 46
+   at ServiceCenter.API.Controllers.TimeSlotController.AddTimeSlot(TimeSlotRequestDto timeSlotDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Controllers\TimeSlotController.cs:line 25
+   at lambda_method7(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at ServiceCenter.API.Middleware.UserScopeMiddleware.InvokeAsync(HttpContext context, IUserContextService userContext) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Middleware\UserScopeMiddleware.cs:line 39
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-05-14 12:12:11 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/TimeSlot,
+ Controller Name:,
+ Client IP: ::1 at 5/14/2024 9:12:11 AM +00:00
+    
+2024-05-14 12:12:11 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "startTime":"09:30:00",  
+  "endTime": "11:30:00",
+  "day": "Sunday"
+}
+    
+2024-05-14 12:12:11 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 500 at: 5/14/2024 9:12:11 AM +00:00
+    
+2024-05-14 12:12:11 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":500,"isSuccess":false,"successMessage":"","correlationId":"","errors":["Exception occurred: An error occurred while saving the entity changes. See the inner exception for details."],"validationErrors":[]}
+    
+2024-05-14 12:44:36 [INF] [ServiceCenter.Application.Services.TimeSlotService] []  TimeSlot added successfully to the database
+    
+2024-05-14 12:44:36 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/TimeSlot responded 200 in 2364.1470 ms
+    
+2024-05-14 12:44:36 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/TimeSlot,
+ Controller Name:TimeSlot,
+ Client IP: ::1 at 5/14/2024 9:44:36 AM +00:00
+    
+2024-05-14 12:44:36 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "startTime":"09:30:00",  
+  "endTime": "11:30:00",
+  "day": "Sunday"
+}
+    
+2024-05-14 12:44:36 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 9:44:36 AM +00:00
+    
+2024-05-14 12:44:36 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"TimeSlot added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 12:46:10 [INF] [ComplaintService] []  Complaint added successfully to the database
+    
+2024-05-14 12:46:10 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Complaint responded 200 in 148.8832 ms
+    
+2024-05-14 12:46:10 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 9:46:10 AM +00:00
+    
+2024-05-14 12:46:10 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "complaintDate": "2024-05-15",
+  "complaintDescription": "hhhhhhhhhhhhh",
+  "complaintCategory": "call center service",
+  "complaintStatus": "Pending"
+}
+    
+2024-05-14 12:46:10 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 9:46:10 AM +00:00
+    
+2024-05-14 12:46:10 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Complaint added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 12:46:30 [INF] [ComplaintService] []  Complaint removed successfully in the database
+    
+2024-05-14 12:46:30 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP DELETE /api/Complaint responded 200 in 440.7753 ms
+    
+2024-05-14 12:46:30 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 9:46:30 AM +00:00
+    
+2024-05-14 12:46:30 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Query Parameters: ?id=1
+    
+2024-05-14 12:46:30 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 9:46:30 AM +00:00
+    
+2024-05-14 12:46:30 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Complaint removed successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 12:48:07 [INF] [ComplaintService] []  Complaint added successfully to the database
+    
+2024-05-14 12:48:07 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Complaint responded 200 in 15.9624 ms
+    
+2024-05-14 12:48:07 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 9:48:07 AM +00:00
+    
+2024-05-14 12:48:07 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "complaintDate": "2024-05-15",
+  "complaintDescription": "hhhhhhhhhhhhh",
+  "complaintCategory": "call center service",
+  "complaintStatus": "Pending"
+}
+    
+2024-05-14 12:48:07 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 9:48:07 AM +00:00
+    
+2024-05-14 12:48:07 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Complaint added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 12:48:36 [INF] [ComplaintService] []  Fetching all  Complaint. Total count: { Complaint}.
+    
+2024-05-14 12:48:36 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint responded 200 in 81.8632 ms
+    
+2024-05-14 12:48:36 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 9:48:36 AM +00:00
+    
+2024-05-14 12:48:36 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 9:48:36 AM +00:00
+    
+2024-05-14 12:48:36 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"id":2,"complaintDate":"2024-05-15","complaintDescription":"hhhhhhhhhhhhh","complaintCategory":"call center service","complaintStatus":"Pending"}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 12:49:33 [INF] [ComplaintService] []  Fetching Complaint
+    
+2024-05-14 12:49:33 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint/2 responded 200 in 31.1523 ms
+    
+2024-05-14 12:49:33 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint/2,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 9:49:33 AM +00:00
+    
+2024-05-14 12:49:33 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 9:49:33 AM +00:00
+    
+2024-05-14 12:49:33 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":{"id":2,"complaintDate":"2024-05-15","complaintDescription":"hhhhhhhhhhhhh","complaintCategory":"call center service","complaintStatus":"Pending"},"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 12:50:16 [INF] [ComplaintService] []  Updated Complaint , Id 2
+    
+2024-05-14 12:50:16 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP PUT /api/Complaint/2 responded 200 in 46.3943 ms
+    
+2024-05-14 12:50:16 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint/2,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 9:50:16 AM +00:00
+    
+2024-05-14 12:50:16 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "complaintDate": "2024-05-16",
+  "complaintDescription": "hhhhhhhhhhhhh",
+  "complaintCategory": "bad service",
+  "complaintStatus": "Pending"
+}
+    
+2024-05-14 12:50:16 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 9:50:16 AM +00:00
+    
+2024-05-14 12:50:16 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":{"id":2,"complaintDate":"2024-05-16","complaintDescription":"hhhhhhhhhhhhh","complaintCategory":"bad service","complaintStatus":"Pending"},"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 13:27:36 [ERR] [Microsoft.EntityFrameworkCore.Database.Command] []  Failed executing DbCommand (13ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (DbType = Int32), @p2='?' (Size = 4000), @p3='?' (DbType = Date), @p4='?' (Size = 256), @p5='?' (DbType = Boolean), @p6='?' (Size = 30) (DbType = AnsiString), @p7='?' (Size = 20) (DbType = AnsiString), @p8='?' (Size = 30) (DbType = AnsiString), @p9='?' (DbType = Boolean), @p10='?' (DbType = DateTimeOffset), @p11='?' (Size = 256), @p12='?' (Size = 256), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (DbType = Boolean), @p16='?' (Size = 4000), @p17='?' (DbType = Boolean), @p18='?' (Size = 256), @p19='?' (Size = 450), @p20='?' (DbType = Int32), @p21='?' (Size = 4000), @p22='?' (Size = 4000), @p23='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [ConcurrencyStamp], [DateOfBirth], [Email], [EmailConfirmed], [FirstName], [Gender], [LastName], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18);
+INSERT INTO [Customers] ([Id], [BranchId], [Address_City], [Address_Country], [Address_PostalCode])
+VALUES (@p19, @p20, @p21, @p22, @p23);
+    
+2024-05-14 13:27:36 [ERR] [Microsoft.EntityFrameworkCore.Update] []  An exception occurred in the database while saving changes for context type 'ServiceCenter.Infrastructure.BaseContext.ServiceCenterBaseDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BranchId', table 'ServiceCenter.dbo.Customers'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:4e66dc82-668a-41c9-b653-d8fdf8afb0d0
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+    
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BranchId', table 'ServiceCenter.dbo.Customers'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:4e66dc82-668a-41c9-b653-d8fdf8afb0d0
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2024-05-14 13:27:36 [ERR] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Auth/RegisterCustomer responded 500 in 8375.8035 ms
+    
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BranchId', table 'ServiceCenter.dbo.Customers'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:4e66dc82-668a-41c9-b653-d8fdf8afb0d0
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`9.CreateAsync(TUser user, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user, String password)
+   at ServiceCenter.Application.Services.AuthService.RegisterAsync(ApplicationUser user, String password) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 65
+   at ServiceCenter.Application.Services.AuthService.RegisterUserWithRoleAsync(ApplicationUser user, String password, String role) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 121
+   at ServiceCenter.Application.Services.AuthService.RegisterCustomerAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 149
+   at ServiceCenter.API.Controllers.AuthController.RegisterAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Controllers\AuthController.cs:line 25
+   at lambda_method7(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at ServiceCenter.API.Middleware.UserScopeMiddleware.InvokeAsync(HttpContext context, IUserContextService userContext) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Middleware\UserScopeMiddleware.cs:line 39
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-05-14 13:27:36 [ERR] [Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware] []  An unhandled exception has occurred while executing the request.
+    
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BranchId', table 'ServiceCenter.dbo.Customers'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:4e66dc82-668a-41c9-b653-d8fdf8afb0d0
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`9.CreateAsync(TUser user, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user, String password)
+   at ServiceCenter.Application.Services.AuthService.RegisterAsync(ApplicationUser user, String password) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 65
+   at ServiceCenter.Application.Services.AuthService.RegisterUserWithRoleAsync(ApplicationUser user, String password, String role) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 121
+   at ServiceCenter.Application.Services.AuthService.RegisterCustomerAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 149
+   at ServiceCenter.API.Controllers.AuthController.RegisterAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Controllers\AuthController.cs:line 25
+   at lambda_method7(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at ServiceCenter.API.Middleware.UserScopeMiddleware.InvokeAsync(HttpContext context, IUserContextService userContext) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Middleware\UserScopeMiddleware.cs:line 39
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-05-14 13:27:36 [ERR] [ServiceCenter.API.ExceptionHandlers.GlobalExceptionHandler] []  Exception occurred: An error occurred while saving the entity changes. See the inner exception for details.
+    
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BranchId', table 'ServiceCenter.dbo.Customers'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:4e66dc82-668a-41c9-b653-d8fdf8afb0d0
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`9.CreateAsync(TUser user, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user, String password)
+   at ServiceCenter.Application.Services.AuthService.RegisterAsync(ApplicationUser user, String password) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 65
+   at ServiceCenter.Application.Services.AuthService.RegisterUserWithRoleAsync(ApplicationUser user, String password, String role) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 121
+   at ServiceCenter.Application.Services.AuthService.RegisterCustomerAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 149
+   at ServiceCenter.API.Controllers.AuthController.RegisterAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Controllers\AuthController.cs:line 25
+   at lambda_method7(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at ServiceCenter.API.Middleware.UserScopeMiddleware.InvokeAsync(HttpContext context, IUserContextService userContext) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Middleware\UserScopeMiddleware.cs:line 39
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-05-14 13:27:36 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Auth/RegisterCustomer,
+ Controller Name:,
+ Client IP: ::1 at 5/14/2024 10:27:36 AM +00:00
+    
+2024-05-14 13:27:36 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "customerEmail": "dodo@gmail.com",
+  "customerFirstName": "dodo",
+  "customerLastName": "ayman",
+  "customerPhoneNumber": "01140812059",
+  "userName": "dodoayman",
+  "password": "P@ssw0rd",
+  "dateOfBirth": "2024-05-13",
+  "gender": "female",
+  "address": {
+    "city": "cairo",
+    "country": "egypt",
+    "postalCode": "12345"
+  }
+}
+    
+2024-05-14 13:27:36 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 500 at: 5/14/2024 10:27:36 AM +00:00
+    
+2024-05-14 13:27:36 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":500,"isSuccess":false,"successMessage":"","correlationId":"","errors":["Exception occurred: An error occurred while saving the entity changes. See the inner exception for details."],"validationErrors":[]}
+    
+2024-05-14 13:40:33 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Branch responded 400 in 32.3853 ms
+    
+2024-05-14 13:40:33 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Branch,
+ Controller Name:Branch,
+ Client IP: ::1 at 5/14/2024 10:40:33 AM +00:00
+    
+2024-05-14 13:40:33 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "branchName": "string",
+  "address": {
+    "city": "string",
+    "country": "string",
+    "postalCode": "string"
+  },
+  "branchPhoneNumber": "string",
+  "emailAddress": "user@example.com",
+  "centerId": 0,
+  "customerId": "string"
+}
+    
+2024-05-14 13:40:33 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 400 at: 5/14/2024 10:40:33 AM +00:00
+    
+2024-05-14 13:40:33 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":400,"isSuccess":false,"successMessage":"","correlationId":"","errors":[],"validationErrors":[{"identifier":null,"errorMessage":"The BranchPhoneNumber field is not a valid phone number.","errorCode":null,"severity":0}]}
+    
+2024-05-14 13:42:25 [INF] [ServiceCenter.Application.Services.CenterService] []  Center added successfully to the database
+    
+2024-05-14 13:42:25 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Center responded 200 in 137.1345 ms
+    
+2024-05-14 13:42:25 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Center,
+ Controller Name:Center,
+ Client IP: ::1 at 5/14/2024 10:42:25 AM +00:00
+    
+2024-05-14 13:42:25 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "centerName": "beauty center",
+  "openingHours": 10,
+  "specialty": "beauty"
+}
+    
+2024-05-14 13:42:25 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 10:42:25 AM +00:00
+    
+2024-05-14 13:42:25 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Center added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 13:43:15 [INF] [ServiceCenter.Application.Services.BranchService] []  Branch added successfully to the database
+    
+2024-05-14 13:43:15 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Branch responded 200 in 71.7643 ms
+    
+2024-05-14 13:43:15 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Branch,
+ Controller Name:Branch,
+ Client IP: ::1 at 5/14/2024 10:43:15 AM +00:00
+    
+2024-05-14 13:43:15 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "branchName": "Maadi",
+  "address": {
+    "city": "cairo",
+    "country": "egypt",
+    "postalCode": "12345"
+  },
+  "branchPhoneNumber": "01140812059",
+  "emailAddress": "maadi@gmail.com",
+  "centerId": 1,
+  "customerId": null 
+}
+    
+2024-05-14 13:43:15 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 10:43:15 AM +00:00
+    
+2024-05-14 13:43:15 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Branch added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 13:43:45 [INF] [ComplaintService] []  Complaint added successfully to the database
+    
+2024-05-14 13:43:45 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Complaint responded 200 in 57.6683 ms
+    
+2024-05-14 13:43:45 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 10:43:45 AM +00:00
+    
+2024-05-14 13:43:45 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "complaintDate": "2024-05-15",
+  "complaintDescription": "hhhhhhhhhhhhh",
+  "complaintCategory": "call center service",
+  "complaintStatus": "Pending"
+}
+    
+2024-05-14 13:43:45 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 10:43:45 AM +00:00
+    
+2024-05-14 13:43:45 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Complaint added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 13:45:16 [INF] [ServiceCenter.Application.Services.BranchService] []  Branch added successfully to the database
+    
+2024-05-14 13:45:16 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Branch responded 200 in 40.7591 ms
+    
+2024-05-14 13:45:16 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Branch,
+ Controller Name:Branch,
+ Client IP: ::1 at 5/14/2024 10:45:16 AM +00:00
+    
+2024-05-14 13:45:16 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "branchName": "nasr city",
+  "address": {
+    "city": "cairo",
+    "country": "egypt",
+    "postalCode": "12345"
+  },
+  "branchPhoneNumber": "01140812059",
+  "emailAddress": "nasrCity@gmail.com",
+  "centerId": 1,
+  "customerId": null 
+}
+    
+2024-05-14 13:45:16 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 10:45:16 AM +00:00
+    
+2024-05-14 13:45:16 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Branch added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 13:46:55 [ERR] [Microsoft.EntityFrameworkCore.Database.Command] []  Failed executing DbCommand (5ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (DbType = Int32), @p2='?' (Size = 4000), @p3='?' (DbType = Date), @p4='?' (Size = 256), @p5='?' (DbType = Boolean), @p6='?' (Size = 30) (DbType = AnsiString), @p7='?' (Size = 20) (DbType = AnsiString), @p8='?' (Size = 30) (DbType = AnsiString), @p9='?' (DbType = Boolean), @p10='?' (DbType = DateTimeOffset), @p11='?' (Size = 256), @p12='?' (Size = 256), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (DbType = Boolean), @p16='?' (Size = 4000), @p17='?' (DbType = Boolean), @p18='?' (Size = 256), @p19='?' (Size = 450), @p20='?' (DbType = Int32), @p21='?' (Size = 4000), @p22='?' (Size = 4000), @p23='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [ConcurrencyStamp], [DateOfBirth], [Email], [EmailConfirmed], [FirstName], [Gender], [LastName], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18);
+INSERT INTO [Customers] ([Id], [BranchId], [Address_City], [Address_Country], [Address_PostalCode])
+VALUES (@p19, @p20, @p21, @p22, @p23);
+    
+2024-05-14 13:46:55 [ERR] [Microsoft.EntityFrameworkCore.Update] []  An exception occurred in the database while saving changes for context type 'ServiceCenter.Infrastructure.BaseContext.ServiceCenterBaseDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BranchId', table 'ServiceCenter.dbo.Customers'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:662205e9-1123-4976-9a71-3166598064c1
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+    
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BranchId', table 'ServiceCenter.dbo.Customers'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:662205e9-1123-4976-9a71-3166598064c1
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2024-05-14 13:46:55 [ERR] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Auth/RegisterCustomer responded 500 in 388.9567 ms
+    
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BranchId', table 'ServiceCenter.dbo.Customers'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:662205e9-1123-4976-9a71-3166598064c1
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`9.CreateAsync(TUser user, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user, String password)
+   at ServiceCenter.Application.Services.AuthService.RegisterAsync(ApplicationUser user, String password) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 65
+   at ServiceCenter.Application.Services.AuthService.RegisterUserWithRoleAsync(ApplicationUser user, String password, String role) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 121
+   at ServiceCenter.Application.Services.AuthService.RegisterCustomerAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 149
+   at ServiceCenter.API.Controllers.AuthController.RegisterAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Controllers\AuthController.cs:line 25
+   at lambda_method7(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at ServiceCenter.API.Middleware.UserScopeMiddleware.InvokeAsync(HttpContext context, IUserContextService userContext) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Middleware\UserScopeMiddleware.cs:line 39
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-05-14 13:46:55 [ERR] [Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware] []  An unhandled exception has occurred while executing the request.
+    
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BranchId', table 'ServiceCenter.dbo.Customers'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:662205e9-1123-4976-9a71-3166598064c1
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`9.CreateAsync(TUser user, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user, String password)
+   at ServiceCenter.Application.Services.AuthService.RegisterAsync(ApplicationUser user, String password) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 65
+   at ServiceCenter.Application.Services.AuthService.RegisterUserWithRoleAsync(ApplicationUser user, String password, String role) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 121
+   at ServiceCenter.Application.Services.AuthService.RegisterCustomerAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 149
+   at ServiceCenter.API.Controllers.AuthController.RegisterAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Controllers\AuthController.cs:line 25
+   at lambda_method7(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at ServiceCenter.API.Middleware.UserScopeMiddleware.InvokeAsync(HttpContext context, IUserContextService userContext) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Middleware\UserScopeMiddleware.cs:line 39
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-05-14 13:46:55 [ERR] [ServiceCenter.API.ExceptionHandlers.GlobalExceptionHandler] []  Exception occurred: An error occurred while saving the entity changes. See the inner exception for details.
+    
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'BranchId', table 'ServiceCenter.dbo.Customers'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:662205e9-1123-4976-9a71-3166598064c1
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`9.CreateAsync(TUser user, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user, String password)
+   at ServiceCenter.Application.Services.AuthService.RegisterAsync(ApplicationUser user, String password) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 65
+   at ServiceCenter.Application.Services.AuthService.RegisterUserWithRoleAsync(ApplicationUser user, String password, String role) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 121
+   at ServiceCenter.Application.Services.AuthService.RegisterCustomerAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 149
+   at ServiceCenter.API.Controllers.AuthController.RegisterAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Controllers\AuthController.cs:line 25
+   at lambda_method7(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at ServiceCenter.API.Middleware.UserScopeMiddleware.InvokeAsync(HttpContext context, IUserContextService userContext) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Middleware\UserScopeMiddleware.cs:line 39
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-05-14 13:46:55 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Auth/RegisterCustomer,
+ Controller Name:,
+ Client IP: ::1 at 5/14/2024 10:46:55 AM +00:00
+    
+2024-05-14 13:46:55 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "customerEmail": "dodo@gmail.com",
+  "customerFirstName": "dodo",
+  "customerLastName": "ayman",
+  "customerPhoneNumber": "01140812059",
+  "userName": "dodoayman",
+  "password": "P@ssw0rd",
+  "dateOfBirth": "2024-05-13",
+  "gender": "female",
+  "address": {
+    "city": "cairo",
+    "country": "egypt",
+    "postalCode": "12345"
+  },
+   "branchId" : 1
+}
+    
+2024-05-14 13:46:55 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 500 at: 5/14/2024 10:46:55 AM +00:00
+    
+2024-05-14 13:46:55 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":500,"isSuccess":false,"successMessage":"","correlationId":"","errors":["Exception occurred: An error occurred while saving the entity changes. See the inner exception for details."],"validationErrors":[]}
+    
+2024-05-14 13:55:59 [INF] [ServiceCenter.Domain.Entities.ApplicationUser] []  Successfully registered a new user with username dodoayman
+    
+2024-05-14 13:55:59 [ERR] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Auth/RegisterCustomer responded 500 in 4283.9497 ms
+    
+System.InvalidOperationException: Role CUSTOMER does not exist.
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`9.AddToRoleAsync(TUser user, String normalizedRoleName, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.AddToRoleAsync(TUser user, String role)
+   at ServiceCenter.Application.Services.AuthService.AddUserToRoleAsync(String userId, String roleName) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 100
+   at ServiceCenter.Application.Services.AuthService.RegisterUserWithRoleAsync(ApplicationUser user, String password, String role) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 128
+   at ServiceCenter.Application.Services.AuthService.RegisterCustomerAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 149
+   at ServiceCenter.API.Controllers.AuthController.RegisterAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Controllers\AuthController.cs:line 25
+   at lambda_method7(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at ServiceCenter.API.Middleware.UserScopeMiddleware.InvokeAsync(HttpContext context, IUserContextService userContext) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Middleware\UserScopeMiddleware.cs:line 39
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-05-14 13:55:59 [ERR] [Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware] []  An unhandled exception has occurred while executing the request.
+    
+System.InvalidOperationException: Role CUSTOMER does not exist.
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`9.AddToRoleAsync(TUser user, String normalizedRoleName, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.AddToRoleAsync(TUser user, String role)
+   at ServiceCenter.Application.Services.AuthService.AddUserToRoleAsync(String userId, String roleName) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 100
+   at ServiceCenter.Application.Services.AuthService.RegisterUserWithRoleAsync(ApplicationUser user, String password, String role) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 128
+   at ServiceCenter.Application.Services.AuthService.RegisterCustomerAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 149
+   at ServiceCenter.API.Controllers.AuthController.RegisterAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Controllers\AuthController.cs:line 25
+   at lambda_method7(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at ServiceCenter.API.Middleware.UserScopeMiddleware.InvokeAsync(HttpContext context, IUserContextService userContext) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Middleware\UserScopeMiddleware.cs:line 39
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-05-14 13:55:59 [ERR] [ServiceCenter.API.ExceptionHandlers.GlobalExceptionHandler] []  Exception occurred: Role CUSTOMER does not exist.
+    
+System.InvalidOperationException: Role CUSTOMER does not exist.
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`9.AddToRoleAsync(TUser user, String normalizedRoleName, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.AddToRoleAsync(TUser user, String role)
+   at ServiceCenter.Application.Services.AuthService.AddUserToRoleAsync(String userId, String roleName) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 100
+   at ServiceCenter.Application.Services.AuthService.RegisterUserWithRoleAsync(ApplicationUser user, String password, String role) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 128
+   at ServiceCenter.Application.Services.AuthService.RegisterCustomerAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 149
+   at ServiceCenter.API.Controllers.AuthController.RegisterAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Controllers\AuthController.cs:line 25
+   at lambda_method7(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at ServiceCenter.API.Middleware.UserScopeMiddleware.InvokeAsync(HttpContext context, IUserContextService userContext) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Middleware\UserScopeMiddleware.cs:line 39
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-05-14 13:55:59 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Auth/RegisterCustomer,
+ Controller Name:,
+ Client IP: ::1 at 5/14/2024 10:55:59 AM +00:00
+    
+2024-05-14 13:55:59 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "customerEmail": "dodo@gmail.com",
+  "customerFirstName": "dodo",
+  "customerLastName": "ayman",
+  "customerPhoneNumber": "01140812059",
+  "userName": "dodoayman",
+  "password": "P@ssw0rd",
+  "dateOfBirth": "2024-05-13",
+  "gender": "female",
+  "address": {
+    "city": "cairo",
+    "country": "egypt",
+    "postalCode": "12345"
+  },
+   "branchId" : 1
+}
+    
+2024-05-14 13:55:59 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 500 at: 5/14/2024 10:55:59 AM +00:00
+    
+2024-05-14 13:55:59 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":500,"isSuccess":false,"successMessage":"","correlationId":"","errors":["Exception occurred: Role CUSTOMER does not exist."],"validationErrors":[]}
+    
+2024-05-14 13:56:41 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Auth/CreateInitialRoles responded 200 in 139.2557 ms
+    
+2024-05-14 13:56:41 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Auth/CreateInitialRoles,
+ Controller Name:Auth,
+ Client IP: ::1 at 5/14/2024 10:56:41 AM +00:00
+    
+2024-05-14 13:56:41 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 10:56:41 AM +00:00
+    
+2024-05-14 13:56:41 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Create roles successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 13:56:52 [ERR] [ServiceCenter.Domain.Entities.ApplicationUser] []  An error occured while creating user: Username 'dodoayman' is already taken.,
+    
+2024-05-14 13:56:52 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Auth/RegisterCustomer responded 200 in 140.3660 ms
+    
+2024-05-14 13:56:52 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Auth/RegisterCustomer,
+ Controller Name:Auth,
+ Client IP: ::1 at 5/14/2024 10:56:52 AM +00:00
+    
+2024-05-14 13:56:52 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "customerEmail": "dodo@gmail.com",
+  "customerFirstName": "dodo",
+  "customerLastName": "ayman",
+  "customerPhoneNumber": "01140812059",
+  "userName": "dodoayman",
+  "password": "P@ssw0rd",
+  "dateOfBirth": "2024-05-13",
+  "gender": "female",
+  "address": {
+    "city": "cairo",
+    "country": "egypt",
+    "postalCode": "12345"
+  },
+   "branchId" : 1
+}
+    
+2024-05-14 13:56:52 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 10:56:52 AM +00:00
+    
+2024-05-14 13:56:52 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":201,"isSuccess":false,"successMessage":"","correlationId":"","errors":["Username 'dodoayman' is already taken.,"],"validationErrors":[]}
+    
+2024-05-14 13:57:01 [INF] [ServiceCenter.Domain.Entities.ApplicationUser] []  Successfully registered a new user with username dodoayman10
+    
+2024-05-14 13:57:01 [INF] [ServiceCenter.Domain.Entities.ApplicationUser] []  Successfully assigned dodoayman10 to role Customer
+    
+2024-05-14 13:57:01 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Auth/RegisterCustomer responded 200 in 216.2797 ms
+    
+2024-05-14 13:57:01 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Auth/RegisterCustomer,
+ Controller Name:Auth,
+ Client IP: ::1 at 5/14/2024 10:57:01 AM +00:00
+    
+2024-05-14 13:57:01 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "customerEmail": "dodo@gmail.com",
+  "customerFirstName": "dodo",
+  "customerLastName": "ayman",
+  "customerPhoneNumber": "01140812059",
+  "userName": "dodoayman10",
+  "password": "P@ssw0rd",
+  "dateOfBirth": "2024-05-13",
+  "gender": "female",
+  "address": {
+    "city": "cairo",
+    "country": "egypt",
+    "postalCode": "12345"
+  },
+   "branchId" : 1
+}
+    
+2024-05-14 13:57:01 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 10:57:01 AM +00:00
+    
+2024-05-14 13:57:01 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Successfully created a new user dodoayman10 with role Customer","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 14:10:33 [INF] [ServiceCenter.Application.Services.ContactService] []  Contact added successfully to the database
+    
+2024-05-14 14:10:33 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Contact responded 200 in 2265.1454 ms
+    
+2024-05-14 14:10:33 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Contact,
+ Controller Name:Contact,
+ Client IP: ::1 at 5/14/2024 11:10:33 AM +00:00
+    
+2024-05-14 14:10:33 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "contactFirstName": "salma",
+  "contactLastName": "ayman",
+  "contactEmail": "salma@gamil.com",
+  "gender": "female",
+  "address": {
+    "city": "cairo",
+    "country": "egypt",
+    "postalCode": "12346"
+  }
+}
+    
+2024-05-14 14:10:33 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 11:10:33 AM +00:00
+    
+2024-05-14 14:10:33 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Contact added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 14:10:56 [INF] [ServiceCenter.Application.Services.ContactService] []  Fetching all Contacts. Total count: 1.
+    
+2024-05-14 14:10:56 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Contact responded 200 in 313.4083 ms
+    
+2024-05-14 14:10:56 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Contact,
+ Controller Name:Contact,
+ Client IP: ::1 at 5/14/2024 11:10:56 AM +00:00
+    
+2024-05-14 14:10:56 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 11:10:56 AM +00:00
+    
+2024-05-14 14:10:56 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"contactId":0,"firstName":"salma","lastName":"ayman","email":"salma@gamil.com","gender":"female","city":"cairo","country":"egypt","postalCode":"12346","status":"Oppurtienty"}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 14:11:22 [INF] [ServiceCenter.Application.Services.ContactService] []  Contact added successfully to the database
+    
+2024-05-14 14:11:22 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Contact responded 200 in 30.2396 ms
+    
+2024-05-14 14:11:22 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Contact,
+ Controller Name:Contact,
+ Client IP: ::1 at 5/14/2024 11:11:22 AM +00:00
+    
+2024-05-14 14:11:22 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "contactFirstName": "radwa",
+  "contactLastName": "ayman",
+  "contactEmail": "radwa@gamil.com",
+  "gender": "female",
+  "address": {
+    "city": "cairo",
+    "country": "egypt",
+    "postalCode": "12346"
+  }
+}
+    
+2024-05-14 14:11:22 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 11:11:22 AM +00:00
+    
+2024-05-14 14:11:22 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Contact added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 14:11:29 [INF] [ServiceCenter.Application.Services.ContactService] []  Fetching all Contacts. Total count: 2.
+    
+2024-05-14 14:11:29 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Contact responded 200 in 10.5706 ms
+    
+2024-05-14 14:11:29 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Contact,
+ Controller Name:Contact,
+ Client IP: ::1 at 5/14/2024 11:11:29 AM +00:00
+    
+2024-05-14 14:11:29 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 11:11:29 AM +00:00
+    
+2024-05-14 14:11:29 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"contactId":0,"firstName":"salma","lastName":"ayman","email":"salma@gamil.com","gender":"female","city":"cairo","country":"egypt","postalCode":"12346","status":"Oppurtienty"},{"contactId":0,"firstName":"radwa","lastName":"ayman","email":"radwa@gamil.com","gender":"female","city":"cairo","country":"egypt","postalCode":"12346","status":"Oppurtienty"}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 14:12:53 [INF] [ServiceCenter.Application.Services.ContactService] []  Successfully update order status to: Customer from: Oppurtienty
+    
+2024-05-14 14:12:53 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP PUT /api/Contact/contactId/2/status/Customer responded 200 in 211.3460 ms
+    
+2024-05-14 14:12:53 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Contact/contactId/2/status/Customer,
+ Controller Name:Contact,
+ Client IP: ::1 at 5/14/2024 11:12:53 AM +00:00
+    
+2024-05-14 14:12:53 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 11:12:53 AM +00:00
+    
+2024-05-14 14:12:53 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":{"contactId":0,"firstName":"radwa","lastName":"ayman","email":"radwa@gamil.com","gender":"female","city":"cairo","country":"egypt","postalCode":"12346","status":"Customer"},"status":200,"isSuccess":true,"successMessage":"Successfully updated contact","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 14:14:35 [INF] [ServiceCenter.Application.Services.ContactService] []  Fetching all Contacts. Total count: 2.
+    
+2024-05-14 14:14:35 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Contact responded 200 in 2124.9975 ms
+    
+2024-05-14 14:14:35 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Contact,
+ Controller Name:Contact,
+ Client IP: ::1 at 5/14/2024 11:14:35 AM +00:00
+    
+2024-05-14 14:14:35 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 11:14:35 AM +00:00
+    
+2024-05-14 14:14:35 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"contactId":0,"firstName":"salma","lastName":"ayman","email":"salma@gamil.com","gender":"female","city":"cairo","country":"egypt","postalCode":"12346","status":"Oppurtienty"},{"contactId":0,"firstName":"radwa","lastName":"ayman","email":"radwa@gamil.com","gender":"female","city":"cairo","country":"egypt","postalCode":"12346","status":"Customer"}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 14:15:34 [INF] [ServiceCenter.Application.Services.ContactService] []  Fetching all Contacts. Total count: 2.
+    
+2024-05-14 14:15:34 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Contact responded 200 in 2182.1035 ms
+    
+2024-05-14 14:15:34 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Contact,
+ Controller Name:Contact,
+ Client IP: ::1 at 5/14/2024 11:15:34 AM +00:00
+    
+2024-05-14 14:15:34 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 11:15:34 AM +00:00
+    
+2024-05-14 14:15:34 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"id":1,"firstName":"salma","lastName":"ayman","email":"salma@gamil.com","gender":"female","city":"cairo","country":"egypt","postalCode":"12346","status":"Oppurtienty"},{"id":2,"firstName":"radwa","lastName":"ayman","email":"radwa@gamil.com","gender":"female","city":"cairo","country":"egypt","postalCode":"12346","status":"Customer"}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 14:33:59 [INF] [ServiceCenter.Application.Services.CustomerService] []  Fetching all customer. Total count: 2.
+    
+2024-05-14 14:33:59 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Customer responded 200 in 2215.8158 ms
+    
+2024-05-14 14:33:59 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Customer,
+ Controller Name:Customer,
+ Client IP: ::1 at 5/14/2024 11:33:59 AM +00:00
+    
+2024-05-14 14:33:59 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 11:33:59 AM +00:00
+    
+2024-05-14 14:33:59 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"id":"98bca4bd-0bba-4397-9af8-5e5848e365ed","customerEmail":"dodo@gmail.com","customerFirstName":"dodo","customerLastName":"ayman","customerPhoneNumber":"01140812059","branchName":"Maadi"},{"id":"a6b966b4-dedf-414d-8643-ea2c6a526395","customerEmail":"dodo@gmail.com","customerFirstName":"dodo","customerLastName":"ayman","customerPhoneNumber":"01140812059","branchName":"Maadi"}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 14:39:41 [INF] [ServiceCenter.Application.Services.CustomerService] []  Fetching all customer. Total count: 2.
+    
+2024-05-14 14:39:41 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Customer responded 200 in 86.1839 ms
+    
+2024-05-14 14:39:41 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Customer,
+ Controller Name:Customer,
+ Client IP: ::1 at 5/14/2024 11:39:41 AM +00:00
+    
+2024-05-14 14:39:41 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 11:39:41 AM +00:00
+    
+2024-05-14 14:39:41 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"id":"98bca4bd-0bba-4397-9af8-5e5848e365ed","customerEmail":"dodo@gmail.com","customerFirstName":"dodo","customerLastName":"ayman","customerPhoneNumber":"01140812059","branchName":"Maadi"},{"id":"a6b966b4-dedf-414d-8643-ea2c6a526395","customerEmail":"dodo@gmail.com","customerFirstName":"dodo","customerLastName":"ayman","customerPhoneNumber":"01140812059","branchName":"Maadi"}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 15:43:07 [INF] [ServiceCenter.Application.Services.CustomerService] []  Fetching customer
+    
+2024-05-14 15:43:07 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Customer/a6b966b4-dedf-414d-8643-ea2c6a526395 responded 200 in 5763.0122 ms
+    
+2024-05-14 15:43:07 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Customer/a6b966b4-dedf-414d-8643-ea2c6a526395,
+ Controller Name:Customer,
+ Client IP: ::1 at 5/14/2024 12:43:07 PM +00:00
+    
+2024-05-14 15:43:07 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 12:43:07 PM +00:00
+    
+2024-05-14 15:43:07 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":{"branchName":"Maadi","userName":"dodoayman10","city":"cairo","country":"egypt","postalCode":"12345","id":"a6b966b4-dedf-414d-8643-ea2c6a526395","customerEmail":"dodo@gmail.com","customerFirstName":"dodo","customerLastName":"ayman","customerPhoneNumber":"01140812059"},"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 15:44:14 [INF] [ServiceCenter.Application.Services.CustomerService] []  Fetching customer
+    
+2024-05-14 15:44:14 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Customer/a6b966b4-dedf-414d-8643-ea2c6a526395 responded 200 in 90.7330 ms
+    
+2024-05-14 15:44:14 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Customer/a6b966b4-dedf-414d-8643-ea2c6a526395,
+ Controller Name:Customer,
+ Client IP: ::1 at 5/14/2024 12:44:14 PM +00:00
+    
+2024-05-14 15:44:14 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 12:44:14 PM +00:00
+    
+2024-05-14 15:44:14 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":{"branchName":"Maadi","userName":"dodoayman10","city":"cairo","country":"egypt","postalCode":"12345","id":"a6b966b4-dedf-414d-8643-ea2c6a526395","customerEmail":"dodo@gmail.com","customerFirstName":"dodo","customerLastName":"ayman","customerPhoneNumber":"01140812059"},"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 15:59:45 [ERR] [Microsoft.EntityFrameworkCore.Database.Command] []  Failed executing DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetRoles] (
+    [Id] nvarchar(450) NOT NULL,
+    [Name] nvarchar(256) NULL,
+    [NormalizedName] nvarchar(256) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+);
+    
+2024-05-14 16:31:02 [INF] [ServiceCenter.Application.Services.CenterService] []  Center added successfully to the database
+    
+2024-05-14 16:31:02 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Center responded 200 in 5505.4276 ms
+    
+2024-05-14 16:31:02 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Center,
+ Controller Name:Center,
+ Client IP: ::1 at 5/14/2024 1:31:02 PM +00:00
+    
+2024-05-14 16:31:02 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "centerName": "Beauty Center",
+  "openingHours": 10,
+  "specialty": "Beauty"
+}
+    
+2024-05-14 16:31:02 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 1:31:02 PM +00:00
+    
+2024-05-14 16:31:02 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Center added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 16:31:44 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Branch responded 400 in 55.5105 ms
+    
+2024-05-14 16:31:44 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Branch,
+ Controller Name:Branch,
+ Client IP: ::1 at 5/14/2024 1:31:44 PM +00:00
+    
+2024-05-14 16:31:44 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "branchName": "string",
+  "address": {
+    "city": "string",
+    "country": "string",
+    "postalCode": "string"
+  },
+  "branchPhoneNumber": "string",
+  "emailAddress": "string",
+  "centerId": 1,
+  "customerId": null
+}
+    
+2024-05-14 16:31:44 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 400 at: 5/14/2024 1:31:44 PM +00:00
+    
+2024-05-14 16:31:44 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":400,"isSuccess":false,"successMessage":"","correlationId":"","errors":[],"validationErrors":[{"identifier":null,"errorMessage":"The BranchPhoneNumber field is not a valid phone number.","errorCode":null,"severity":0}]}
+    
+2024-05-14 16:32:04 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Branch responded 400 in 31.3279 ms
+    
+2024-05-14 16:32:04 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Branch,
+ Controller Name:Branch,
+ Client IP: ::1 at 5/14/2024 1:32:04 PM +00:00
+    
+2024-05-14 16:32:04 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "branchName": "string",
+  "address": {
+    "city": "string",
+    "country": "string",
+    "postalCode": "string"
+  },
+  "branchPhoneNumber": "01140812059",
+  "emailAddress": "string",
+  "centerId": 1,
+  "customerId": null
+}
+    
+2024-05-14 16:32:04 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 400 at: 5/14/2024 1:32:04 PM +00:00
+    
+2024-05-14 16:32:04 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":400,"isSuccess":false,"successMessage":"","correlationId":"","errors":[],"validationErrors":[{"identifier":null,"errorMessage":"The EmailAddress field is not a valid e-mail address.","errorCode":null,"severity":0}]}
+    
+2024-05-14 16:32:30 [INF] [ServiceCenter.Application.Services.BranchService] []  Branch added successfully to the database
+    
+2024-05-14 16:32:30 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Branch responded 200 in 333.6791 ms
+    
+2024-05-14 16:32:30 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Branch,
+ Controller Name:Branch,
+ Client IP: ::1 at 5/14/2024 1:32:30 PM +00:00
+    
+2024-05-14 16:32:30 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "branchName": "string",
+  "address": {
+    "city": "string",
+    "country": "string",
+    "postalCode": "string"
+  },
+  "branchPhoneNumber": "01140812059",
+  "emailAddress": "radwa@gmail.com",
+  "centerId": 1,
+  "customerId": null
+}
+    
+2024-05-14 16:32:30 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 1:32:30 PM +00:00
+    
+2024-05-14 16:32:30 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Branch added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 16:33:37 [INF] [ServiceCenter.Domain.Entities.ApplicationUser] []  Successfully registered a new user with username dodoayman10
+    
+2024-05-14 16:33:38 [ERR] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Auth/RegisterCustomer responded 500 in 6717.5457 ms
+    
+System.InvalidOperationException: Role CUSTOMER does not exist.
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`9.AddToRoleAsync(TUser user, String normalizedRoleName, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.AddToRoleAsync(TUser user, String role)
+   at ServiceCenter.Application.Services.AuthService.AddUserToRoleAsync(String userId, String roleName) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 100
+   at ServiceCenter.Application.Services.AuthService.RegisterUserWithRoleAsync(ApplicationUser user, String password, String role) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 128
+   at ServiceCenter.Application.Services.AuthService.RegisterCustomerAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 149
+   at ServiceCenter.API.Controllers.AuthController.RegisterAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Controllers\AuthController.cs:line 25
+   at lambda_method390(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at ServiceCenter.API.Middleware.UserScopeMiddleware.InvokeAsync(HttpContext context, IUserContextService userContext) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Middleware\UserScopeMiddleware.cs:line 39
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2024-05-14 16:33:38 [ERR] [Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware] []  An unhandled exception has occurred while executing the request.
+    
+System.InvalidOperationException: Role CUSTOMER does not exist.
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`9.AddToRoleAsync(TUser user, String normalizedRoleName, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.AddToRoleAsync(TUser user, String role)
+   at ServiceCenter.Application.Services.AuthService.AddUserToRoleAsync(String userId, String roleName) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 100
+   at ServiceCenter.Application.Services.AuthService.RegisterUserWithRoleAsync(ApplicationUser user, String password, String role) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 128
+   at ServiceCenter.Application.Services.AuthService.RegisterCustomerAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 149
+   at ServiceCenter.API.Controllers.AuthController.RegisterAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Controllers\AuthController.cs:line 25
+   at lambda_method390(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at ServiceCenter.API.Middleware.UserScopeMiddleware.InvokeAsync(HttpContext context, IUserContextService userContext) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Middleware\UserScopeMiddleware.cs:line 39
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-05-14 16:33:38 [ERR] [ServiceCenter.API.ExceptionHandlers.GlobalExceptionHandler] []  Exception occurred: Role CUSTOMER does not exist.
+    
+System.InvalidOperationException: Role CUSTOMER does not exist.
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`9.AddToRoleAsync(TUser user, String normalizedRoleName, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.AddToRoleAsync(TUser user, String role)
+   at ServiceCenter.Application.Services.AuthService.AddUserToRoleAsync(String userId, String roleName) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 100
+   at ServiceCenter.Application.Services.AuthService.RegisterUserWithRoleAsync(ApplicationUser user, String password, String role) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 128
+   at ServiceCenter.Application.Services.AuthService.RegisterCustomerAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.Application\Services\AuthService.cs:line 149
+   at ServiceCenter.API.Controllers.AuthController.RegisterAsync(CustomerRequestDto customerRequestDto) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Controllers\AuthController.cs:line 25
+   at lambda_method390(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at ServiceCenter.API.Middleware.UserScopeMiddleware.InvokeAsync(HttpContext context, IUserContextService userContext) in D:\Backend\Project\ServiceCenter\ServiceCenter.API\Middleware\UserScopeMiddleware.cs:line 39
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2024-05-14 16:33:38 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Auth/RegisterCustomer,
+ Controller Name:,
+ Client IP: ::1 at 5/14/2024 1:33:38 PM +00:00
+    
+2024-05-14 16:33:38 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "customerEmail": "dodo@gmail.com",
+  "customerFirstName": "dodo",
+  "customerLastName": "ayman",
+  "customerPhoneNumber": "01140812059",
+  "userName": "dodoayman10",
+  "password": "P@ssw0rd",
+  "dateOfBirth": "2024-05-13",
+  "gender": "female",
+  "address": {
+    "city": "cairo",
+    "country": "egypt",
+    "postalCode": "12345"
+  },
+   "branchId" : 1
+}
+    
+2024-05-14 16:33:38 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 500 at: 5/14/2024 1:33:38 PM +00:00
+    
+2024-05-14 16:33:38 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":500,"isSuccess":false,"successMessage":"","correlationId":"","errors":["Exception occurred: Role CUSTOMER does not exist."],"validationErrors":[]}
+    
+2024-05-14 16:33:48 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Auth/CreateInitialRoles responded 200 in 207.2400 ms
+    
+2024-05-14 16:33:48 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Auth/CreateInitialRoles,
+ Controller Name:Auth,
+ Client IP: ::1 at 5/14/2024 1:33:48 PM +00:00
+    
+2024-05-14 16:33:48 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 1:33:48 PM +00:00
+    
+2024-05-14 16:33:48 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Create roles successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 16:34:00 [ERR] [ServiceCenter.Domain.Entities.ApplicationUser] []  An error occured while creating user: Username 'dodoayman10' is already taken.,
+    
+2024-05-14 16:34:00 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Auth/RegisterCustomer responded 200 in 707.3418 ms
+    
+2024-05-14 16:34:00 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Auth/RegisterCustomer,
+ Controller Name:Auth,
+ Client IP: ::1 at 5/14/2024 1:34:00 PM +00:00
+    
+2024-05-14 16:34:00 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "customerEmail": "dodo@gmail.com",
+  "customerFirstName": "dodo",
+  "customerLastName": "ayman",
+  "customerPhoneNumber": "01140812059",
+  "userName": "dodoayman10",
+  "password": "P@ssw0rd",
+  "dateOfBirth": "2024-05-13",
+  "gender": "female",
+  "address": {
+    "city": "cairo",
+    "country": "egypt",
+    "postalCode": "12345"
+  },
+   "branchId" : 1
+}
+    
+2024-05-14 16:34:00 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 1:34:00 PM +00:00
+    
+2024-05-14 16:34:00 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":201,"isSuccess":false,"successMessage":"","correlationId":"","errors":["Username 'dodoayman10' is already taken.,"],"validationErrors":[]}
+    
+2024-05-14 16:34:08 [INF] [ServiceCenter.Domain.Entities.ApplicationUser] []  Successfully registered a new user with username dodoayman
+    
+2024-05-14 16:34:08 [INF] [ServiceCenter.Domain.Entities.ApplicationUser] []  Successfully assigned dodoayman to role Customer
+    
+2024-05-14 16:34:08 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Auth/RegisterCustomer responded 200 in 746.7183 ms
+    
+2024-05-14 16:34:08 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Auth/RegisterCustomer,
+ Controller Name:Auth,
+ Client IP: ::1 at 5/14/2024 1:34:08 PM +00:00
+    
+2024-05-14 16:34:08 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "customerEmail": "dodo@gmail.com",
+  "customerFirstName": "dodo",
+  "customerLastName": "ayman",
+  "customerPhoneNumber": "01140812059",
+  "userName": "dodoayman",
+  "password": "P@ssw0rd",
+  "dateOfBirth": "2024-05-13",
+  "gender": "female",
+  "address": {
+    "city": "cairo",
+    "country": "egypt",
+    "postalCode": "12345"
+  },
+   "branchId" : 1
+}
+    
+2024-05-14 16:34:08 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 1:34:08 PM +00:00
+    
+2024-05-14 16:34:08 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Successfully created a new user dodoayman with role Customer","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 16:37:25 [INF] [ServiceCenter.Application.Services.CustomerService] []  Fetching all customer. Total count: 2.
+    
+2024-05-14 16:37:25 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Customer responded 200 in 88.1248 ms
+    
+2024-05-14 16:37:25 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Customer,
+ Controller Name:Customer,
+ Client IP: ::1 at 5/14/2024 1:37:25 PM +00:00
+    
+2024-05-14 16:37:25 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 1:37:25 PM +00:00
+    
+2024-05-14 16:37:25 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"id":"9efb186a-e155-44ff-beb7-877aef9c984f","customerEmail":"dodo@gmail.com","customerFirstName":"dodo","customerLastName":"ayman","customerPhoneNumber":"01140812059"},{"id":"da15d0ae-803f-4197-a0c6-ba81e17b35ea","customerEmail":"dodo@gmail.com","customerFirstName":"dodo","customerLastName":"ayman","customerPhoneNumber":"01140812059"}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 16:38:23 [INF] [ComplaintService] []  Complaint added successfully to the database
+    
+2024-05-14 16:38:23 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Complaint responded 200 in 48.4845 ms
+    
+2024-05-14 16:38:23 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 1:38:23 PM +00:00
+    
+2024-05-14 16:38:23 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "complaintDate": "2024-05-15",
+  "complaintDescription": "hhhhhhhhhhhhh",
+  "complaintCategory": "call center service",
+  "complaintStatus": "Pending",
+  "customerId" : "da15d0ae-803f-4197-a0c6-ba81e17b35ea"
+}
+    
+2024-05-14 16:38:23 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 1:38:23 PM +00:00
+    
+2024-05-14 16:38:23 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Complaint added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 16:38:40 [INF] [ComplaintService] []  Fetching all  Complaint. Total count: { Complaint}.
+    
+2024-05-14 16:38:40 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint responded 200 in 45.1729 ms
+    
+2024-05-14 16:38:40 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 1:38:40 PM +00:00
+    
+2024-05-14 16:38:40 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 1:38:40 PM +00:00
+    
+2024-05-14 16:38:40 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"id":1,"complaintDate":"2024-05-15","complaintDescription":"hhhhhhhhhhhhh","complaintCategory":"call center service","complaintStatus":"Pending"}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 16:48:26 [INF] [ServiceCenter.Domain.Entities.ApplicationUser] []  Successfully registered a new user with username salmaayman
+    
+2024-05-14 16:48:26 [INF] [ServiceCenter.Domain.Entities.ApplicationUser] []  Successfully assigned salmaayman to role Customer
+    
+2024-05-14 16:48:26 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Auth/RegisterCustomer responded 200 in 151.9354 ms
+    
+2024-05-14 16:48:26 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Auth/RegisterCustomer,
+ Controller Name:Auth,
+ Client IP: ::1 at 5/14/2024 1:48:26 PM +00:00
+    
+2024-05-14 16:48:26 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "customerEmail": "salma@gmail.com",
+  "customerFirstName": "salma",
+  "customerLastName": "ayman",
+  "customerPhoneNumber": "01140812059",
+  "userName": "salmaayman",
+  "password": "P@ssw0rd",
+  "dateOfBirth": "2024-05-13",
+  "gender": "female",
+  "address": {
+    "city": "cairo",
+    "country": "egypt",
+    "postalCode": "12345"
+  },
+   "branchId" : 1
+}
+    
+2024-05-14 16:48:26 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 1:48:26 PM +00:00
+    
+2024-05-14 16:48:26 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Successfully created a new user salmaayman with role Customer","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 17:00:43 [INF] [ServiceCenter.Application.Services.CustomerService] []  Fetching all customer. Total count: 3.
+    
+2024-05-14 17:00:43 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Customer responded 200 in 49.8806 ms
+    
+2024-05-14 17:00:43 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Customer,
+ Controller Name:Customer,
+ Client IP: ::1 at 5/14/2024 2:00:43 PM +00:00
+    
+2024-05-14 17:00:43 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 2:00:43 PM +00:00
+    
+2024-05-14 17:00:43 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"id":"4c9164d6-9d01-4a35-b884-e0482f9f47ff","customerEmail":"salma@gmail.com","customerFirstName":"salma","customerLastName":"ayman","customerPhoneNumber":"01140812059"},{"id":"9efb186a-e155-44ff-beb7-877aef9c984f","customerEmail":"dodo@gmail.com","customerFirstName":"dodo","customerLastName":"ayman","customerPhoneNumber":"01140812059"},{"id":"da15d0ae-803f-4197-a0c6-ba81e17b35ea","customerEmail":"dodo@gmail.com","customerFirstName":"dodo","customerLastName":"ayman","customerPhoneNumber":"01140812059"}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 17:17:10 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint/4c9164d6-9d01-4a35-b884-e0482f9f47ff responded 400 in 775.8591 ms
+    
+2024-05-14 17:17:10 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint/4c9164d6-9d01-4a35-b884-e0482f9f47ff,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 2:17:10 PM +00:00
+    
+2024-05-14 17:17:10 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 400 at: 5/14/2024 2:17:10 PM +00:00
+    
+2024-05-14 17:17:10 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":400,"isSuccess":false,"successMessage":"","correlationId":"","errors":[],"validationErrors":[{"identifier":null,"errorMessage":"The value '4c9164d6-9d01-4a35-b884-e0482f9f47ff' is not valid.","errorCode":null,"severity":0}]}
+    
+2024-05-14 17:18:03 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint/"4c9164d6-9d01-4a35-b884-e0482f9f47ff" responded 400 in 10.0018 ms
+    
+2024-05-14 17:18:03 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint/%224c9164d6-9d01-4a35-b884-e0482f9f47ff%22,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 2:18:03 PM +00:00
+    
+2024-05-14 17:18:03 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 400 at: 5/14/2024 2:18:03 PM +00:00
+    
+2024-05-14 17:18:03 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":400,"isSuccess":false,"successMessage":"","correlationId":"","errors":[],"validationErrors":[{"identifier":null,"errorMessage":"The value '\"4c9164d6-9d01-4a35-b884-e0482f9f47ff\"' is not valid.","errorCode":null,"severity":0}]}
+    
+2024-05-14 17:18:44 [INF] [ComplaintService] []  Fetching complaints. Total count: 0.
+    
+2024-05-14 17:18:44 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint/searchByComplaints/4c9164d6-9d01-4a35-b884-e0482f9f47ff responded 200 in 2989.2173 ms
+    
+2024-05-14 17:18:44 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint/searchByComplaints/4c9164d6-9d01-4a35-b884-e0482f9f47ff,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 2:18:44 PM +00:00
+    
+2024-05-14 17:18:44 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 2:18:44 PM +00:00
+    
+2024-05-14 17:18:44 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 17:22:18 [INF] [ComplaintService] []  Complaint added successfully to the database
+    
+2024-05-14 17:22:18 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Complaint responded 200 in 326.6428 ms
+    
+2024-05-14 17:22:18 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 2:22:18 PM +00:00
+    
+2024-05-14 17:22:18 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "complaintDate": "2024-05-14",
+  "complaintDescription": "hhhhhhhhhhhhh",
+  "complaintCategory": "call center service",
+  "complaintStatus": "Pending",
+  "customerId" : "4c9164d6-9d01-4a35-b884-e0482f9f47ff"
+}
+    
+2024-05-14 17:22:18 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 2:22:18 PM +00:00
+    
+2024-05-14 17:22:18 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Complaint added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 17:22:25 [INF] [ComplaintService] []  Fetching complaints. Total count: 1.
+    
+2024-05-14 17:22:25 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint/searchByComplaints/4c9164d6-9d01-4a35-b884-e0482f9f47ff responded 200 in 95.6083 ms
+    
+2024-05-14 17:22:25 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint/searchByComplaints/4c9164d6-9d01-4a35-b884-e0482f9f47ff,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 2:22:25 PM +00:00
+    
+2024-05-14 17:22:25 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 2:22:25 PM +00:00
+    
+2024-05-14 17:22:25 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"id":2,"complaintDate":"2024-05-14","complaintDescription":"hhhhhhhhhhhhh","complaintCategory":"call center service","complaintStatus":"Pending"}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 17:22:52 [INF] [ComplaintService] []  Complaint added successfully to the database
+    
+2024-05-14 17:22:52 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Complaint responded 200 in 17.9520 ms
+    
+2024-05-14 17:22:52 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 2:22:52 PM +00:00
+    
+2024-05-14 17:22:52 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "complaintDate": "2024-05-15",
+  "complaintDescription": "hhhhhhhhhhhhh",
+  "complaintCategory": "bad service",
+  "complaintStatus": "Pending",
+  "customerId" : "4c9164d6-9d01-4a35-b884-e0482f9f47ff"
+}
+    
+2024-05-14 17:22:52 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 2:22:52 PM +00:00
+    
+2024-05-14 17:22:52 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Complaint added successfully","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 17:22:58 [INF] [ComplaintService] []  Fetching complaints. Total count: 2.
+    
+2024-05-14 17:22:58 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP GET /api/Complaint/searchByComplaints/4c9164d6-9d01-4a35-b884-e0482f9f47ff responded 200 in 15.9209 ms
+    
+2024-05-14 17:22:58 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Complaint/searchByComplaints/4c9164d6-9d01-4a35-b884-e0482f9f47ff,
+ Controller Name:Complaint,
+ Client IP: ::1 at 5/14/2024 2:22:58 PM +00:00
+    
+2024-05-14 17:22:58 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 2:22:58 PM +00:00
+    
+2024-05-14 17:22:58 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":[{"id":2,"complaintDate":"2024-05-14","complaintDescription":"hhhhhhhhhhhhh","complaintCategory":"call center service","complaintStatus":"Pending"},{"id":3,"complaintDate":"2024-05-15","complaintDescription":"hhhhhhhhhhhhh","complaintCategory":"bad service","complaintStatus":"Pending"}],"status":200,"isSuccess":true,"successMessage":"","correlationId":"","errors":[],"validationErrors":[]}
+    
+2024-05-14 17:26:37 [INF] [ServiceCenter.Domain.Entities.ApplicationUser] []  Successfully registered a new user with username ahmedayman
+    
+2024-05-14 17:26:37 [INF] [ServiceCenter.Domain.Entities.ApplicationUser] []  Successfully assigned ahmedayman to role Customer
+    
+2024-05-14 17:26:37 [INF] [Serilog.AspNetCore.RequestLoggingMiddleware] []  HTTP POST /api/Auth/RegisterCustomer responded 200 in 1800.3013 ms
+    
+2024-05-14 17:26:37 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request:- Host:localhost:5031,Path:/api/Auth/RegisterCustomer,
+ Controller Name:Auth,
+ Client IP: ::1 at 5/14/2024 2:26:37 PM +00:00
+    
+2024-05-14 17:26:37 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Request Body: {
+  "customerEmail": "ahmed@gmail.com",
+  "customerFirstName": "ahmed",
+  "customerLastName": "ayman",
+  "customerPhoneNumber": "01140812059",
+  "userName": "ahmedayman",
+  "password": "P@ssw0rd",
+  "dateOfBirth": "2024-05-13",
+  "gender": "male",
+  "address": {
+    "city": "cairo",
+    "country": "egypt",
+    "postalCode": "12345"
+  },
+   "branchId" : 1
+}
+    
+2024-05-14 17:26:37 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response: 200 at: 5/14/2024 2:26:37 PM +00:00
+    
+2024-05-14 17:26:37 [INF] [ServiceCenter.API.Middleware.AuditLogMiddleware] []  Response Body: {"value":null,"status":200,"isSuccess":true,"successMessage":"Successfully created a new user ahmedayman with role Customer","correlationId":"","errors":[],"validationErrors":[]}
+    

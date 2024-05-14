@@ -36,9 +36,9 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
 	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<CustomerGetByIdResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<CustomerResponseDto>> GetCustomerById(string id)
+	public async Task<Result<CustomerGetByIdResponseDto>> GetCustomerById(string id)
 	{
 		return await _customerService.GetCustomerByIdAsync(id);
 	}
