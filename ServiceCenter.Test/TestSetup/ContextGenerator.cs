@@ -32,6 +32,7 @@ public class ContextGenerator
             Context.AddFeedback();
             Context.AddComplaint();
             Context.AddCenter();
+            Context.AddBranch();
             Context.SaveChanges();
         }
 
