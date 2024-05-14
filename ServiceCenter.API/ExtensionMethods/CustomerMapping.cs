@@ -16,11 +16,21 @@ public static class CustomerMapping
 			.ReverseMap();
 
 		map.CreateMap<Customer, CustomerResponseDto>()
-			.ForMember(dest=>dest.BranchName,src=>src.MapFrom(src=>src.Branch.BranchName))
 			.ForMember(dest => dest.CustomerFirstName, src => src.MapFrom(src => src.FirstName))
 			.ForMember(dest => dest.CustomerLastName, src => src.MapFrom(src => src.LastName))
 			.ForMember(dest => dest.CustomerEmail, src => src.MapFrom(src => src.Email))
 			.ForMember(dest => dest.CustomerPhoneNumber, src => src.MapFrom(src => src.PhoneNumber))
+			.ReverseMap();
+
+		map.CreateMap<Customer, CustomerGetByIdResponseDto>()
+			.ForMember(dest => dest.BranchName, src => src.MapFrom(src => src.Branch.BranchName))
+			.ForMember(dest => dest.CustomerFirstName, src => src.MapFrom(src => src.FirstName))
+			.ForMember(dest => dest.CustomerLastName, src => src.MapFrom(src => src.LastName))
+			.ForMember(dest => dest.CustomerEmail, src => src.MapFrom(src => src.Email))
+			.ForMember(dest => dest.CustomerPhoneNumber, src => src.MapFrom(src => src.PhoneNumber))
+			.ForMember(dest=> dest.City, src => src.MapFrom(src => src.Address.City))
+			.ForMember(dest => dest.Country, src => src.MapFrom(src => src.Address.Country))
+			.ForMember(dest => dest.PostalCode, src => src.MapFrom(src => src.Address.PostalCode))
 			.ReverseMap();
 	}
 }
