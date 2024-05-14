@@ -10,7 +10,7 @@ namespace ServiceCenter.Application.DTOS;
 public class ContractRequestDto
 {
     [Required]
-    public string Duration { get; set; } = "";
+    public DateOnly Duration { get; set; } 
     [Required]
     public int ServicePackageId { get; set; }
 }
