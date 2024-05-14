@@ -34,6 +34,9 @@ public class ContextGenerator
             Context.AddCenter();
             Context.AddBranch();
             Context.AddContact();
+            Context.AddContract();
+            Context.AddEmployee();
+            Context.AddOffer();
             Context.SaveChanges();
         }
 
