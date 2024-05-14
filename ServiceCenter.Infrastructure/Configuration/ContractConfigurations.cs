@@ -16,6 +16,7 @@ public class ContractConfigurations : IEntityTypeConfiguration<Contract>
     {
         builder.Property(p => p.Duration)
                .IsRequired();
+              
        
         
     }

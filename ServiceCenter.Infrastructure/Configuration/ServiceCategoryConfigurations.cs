@@ -14,9 +14,14 @@ public class ServiceCategoryConfigurations : IEntityTypeConfiguration<ServiceCat
     public void Configure(EntityTypeBuilder<ServiceCategory> builder)
     {
         builder.Property(T => T.ServiceCategoryName)
-            .IsRequired();
-        builder.Property(T=>T.ServiceCategoryDescription)
-            .IsRequired();
+               .IsRequired()
+               .HasColumnType("varchar")
+			   .HasMaxLength(50);
 
-    }
+		builder.Property(T=>T.ServiceCategoryDescription)
+              .IsRequired()
+              .HasColumnType("varchar")
+			  .HasMaxLength(50);
+
+	}
 }

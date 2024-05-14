@@ -14,10 +14,15 @@ public class ServicePackageConfiguration : IEntityTypeConfiguration<ServicePacka
     public void Configure(EntityTypeBuilder<ServicePackage> builder)
     {
         builder.Property(T => T.PackageName)
-            .IsRequired();
-        builder.Property(T => T.PackageDescription)
-           .IsRequired();
-        builder.Property(T => T.PackagePrice)
+            .IsRequired()
+            .HasColumnType("varchar")
+			.HasMaxLength(50);
+		builder.Property(T => T.PackageDescription)
+           .IsRequired()
+           .HasColumnType("varchar")
+		   .HasMaxLength(50);
+
+		builder.Property(T => T.PackagePrice)
           .IsRequired();
     }
 }

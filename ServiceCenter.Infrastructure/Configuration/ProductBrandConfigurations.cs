@@ -14,12 +14,21 @@ public class ProductBrandConfigurations : IEntityTypeConfiguration<ProductBrand>
     public void Configure(EntityTypeBuilder<ProductBrand> builder)
     {
         builder.Property(T => T.BrandName)
-                    .IsRequired();
+               .IsRequired()
+               .HasColumnType("varchar")
+               .HasMaxLength(50);
+
         builder.Property(T => T.BrandDescription)
-               .IsRequired();
+               .IsRequired()
+               .HasColumnType("varchar")
+               .HasMaxLength(100);
+
         builder.Property(T => T.CountryOfOrigin)
-            .IsRequired();
+              .IsRequired()
+			  .HasColumnType("varchar")
+			  .HasMaxLength(50); 
+
         builder.Property(T => T.FoundedYear)
-            .IsRequired();
+               .IsRequired();
     }
 }

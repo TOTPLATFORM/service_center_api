@@ -14,13 +14,21 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
     public void Configure(EntityTypeBuilder<Product> builder)
     {
         builder.Property(T => T.ProductName)
-               .IsRequired();
-        builder.Property(T => T.ProductDescription)
+               .IsRequired()
+               .HasColumnType("varchar")
+			   .HasMaxLength(50);
+
+		builder.Property(T => T.ProductDescription)
+              .IsRequired()
+              .HasColumnType("varchar")
+			  .HasMaxLength(50);
+
+		builder.Property(T => T.ProductPrice)
               .IsRequired();
-        builder.Property(T => T.ProductPrice)
-              .IsRequired();
+
         builder.Property(T => T.ProductCategoryId)
               .IsRequired();
+
         builder.Property(T => T.ProductBrandId)
               .IsRequired();
     }

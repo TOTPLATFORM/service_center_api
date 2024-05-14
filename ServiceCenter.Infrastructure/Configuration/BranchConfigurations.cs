@@ -15,13 +15,16 @@ public class BranchConfigurations : IEntityTypeConfiguration<Branch>
 	{
 		builder.Property(p => p.BranchName)
 		.IsRequired()
+		.HasColumnType("varchar")
 		.HasMaxLength(50);
 		builder.Property(p => p.BranchPhoneNumber)
 		.IsRequired()
+	    .HasColumnType("varchar")
 		.HasMaxLength(50);
 		
 		builder.Property(p => p.EmailAddress)
 		.IsRequired()
+		.HasColumnType("varchar")
 		.HasMaxLength(50);
 	
 	}

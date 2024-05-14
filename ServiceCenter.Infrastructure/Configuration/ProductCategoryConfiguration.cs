@@ -14,7 +14,10 @@ public class ProductCategoryConfiguration : IEntityTypeConfiguration<ProductCate
     public void Configure(EntityTypeBuilder<ProductCategory> builder)
     {
         builder.Property(T => T.CategoryName)
-         .IsRequired();
+               .IsRequired()
+               .HasColumnType("varchar")
+               .HasMaxLength(50);
+
         builder.Property(T => T.ReferenceNumber)
             .IsRequired();
     }

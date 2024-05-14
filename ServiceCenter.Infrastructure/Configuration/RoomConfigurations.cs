@@ -15,6 +15,7 @@ public class RoomConfigurations : IEntityTypeConfiguration<Room>
     {
         builder.Property(T => T.RoomNumber)
                .IsRequired();
+
         builder.Property(T => T.Availability)
               .IsRequired();
 

@@ -15,10 +15,12 @@ public class InventoryCongfigurations : IEntityTypeConfiguration<Inventory>
 	{
 		builder.Property(p => p.InventoryName)
 			.IsRequired()
+			.HasColumnType("varchar")
 			.HasMaxLength(50);
 
 		builder.Property(p => p.InventoryLocation)
 			.IsRequired()
+			.HasColumnType("varchar")
 			.HasMaxLength(250);
 
 		builder.Property(p => p.InventoryCapacity)

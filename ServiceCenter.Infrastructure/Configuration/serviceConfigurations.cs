@@ -15,17 +15,24 @@ public  class serviceConfigurations : IEntityTypeConfiguration<Service>
     public void Configure(EntityTypeBuilder<Service> builder)
     {
         builder.Property(T => T.ServiceName)
-            .IsRequired();
-        builder.Property(T => T.ServiceDescription)
-           .IsRequired();
-        builder.Property(T => T.ServicePrice)
-          .IsRequired();
+            .IsRequired()
+			.HasColumnType("varchar")
+			.HasMaxLength(50);
+
+		builder.Property(T => T.ServiceDescription)
+               .IsRequired()
+		       .HasColumnType("varchar")
+			   .HasMaxLength(50);
+
+		builder.Property(T => T.ServicePrice)
+               .IsRequired();
+
         builder.Property(T => T.Avaliable)
-		.IsRequired();
+		       .IsRequired();
 
 		builder.HasMany(s => s.ServicePackages)
-			.WithMany(sp => sp.Services)
-			.UsingEntity<Dictionary<string, object>>(
+			   .WithMany(sp => sp.Services)
+			   .UsingEntity<Dictionary<string, object>>(
 				"ServicePackageServices",
 				j => j.HasOne<ServicePackage>()
 					  .WithMany()

@@ -14,13 +14,21 @@ public class ItemConfigurations : IEntityTypeConfiguration<Item>
     public void Configure(EntityTypeBuilder<Item> builder)
     {
         builder.Property(T => T.ItemName)
-                .IsRequired();
+                .IsRequired()
+                .HasColumnType("varchar")
+                .HasMaxLength(50);
+
         builder.Property(T => T.ItemDescription)
-               .IsRequired();
+               .IsRequired()
+               .HasColumnType("varchar")
+               .HasMaxLength(100);
+
         builder.Property(T => T.ItemPrice)
             .IsRequired();
+
         builder.Property(T => T.ItemStock)
             .IsRequired();
+
         builder.Property(T => T.CategoryId)
             .IsRequired();
     }

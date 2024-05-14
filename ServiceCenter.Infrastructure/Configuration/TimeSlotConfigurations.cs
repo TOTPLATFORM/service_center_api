@@ -14,7 +14,9 @@ public class TimeSlotConfigurations : IEntityTypeConfiguration<TimeSlot>
 	public void Configure(EntityTypeBuilder<TimeSlot> builder)
 	{
 		builder.Property(T => T.Day)
-		  .IsRequired();
+		  .IsRequired()
+		  .HasColumnType("varchar")
+		  .HasMaxLength(10);
 
 	}
 }

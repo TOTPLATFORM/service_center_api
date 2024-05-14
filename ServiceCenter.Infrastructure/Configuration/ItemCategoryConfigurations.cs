@@ -15,7 +15,10 @@ public class ItemCategoryConfigurations : IEntityTypeConfiguration<ItemCategory>
     {
        
             builder.Property(T => T.CategoryName)
-                   .IsRequired();
+                   .IsRequired()
+                   .HasColumnType("varchar")
+                   .HasMaxLength(50);
+
            builder.Property(T => T.ReferenceNumber)
                   .IsRequired();
     }

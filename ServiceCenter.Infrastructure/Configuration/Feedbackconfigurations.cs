@@ -14,8 +14,16 @@ public class Feedbackconfigurations : IEntityTypeConfiguration<Feedback>
     public void Configure(EntityTypeBuilder<Feedback> builder)
     {
         builder.Property(T => T.FeedbackDescription)
-             .IsRequired();
-        builder.Property(T => T.FeedbackDate)
+             .IsRequired()
+			 .HasColumnType("varchar")
+             .HasMaxLength(100);
+
+        builder.Property(T => T.FeedbackCategory)
+            .IsRequired()
+            .HasColumnType("varchar")
+            .HasMaxLength(100);
+
+		builder.Property(T => T.FeedbackDate)
               .IsRequired();
         
     }

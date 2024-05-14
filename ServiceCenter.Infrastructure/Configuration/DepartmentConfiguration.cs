@@ -15,7 +15,8 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
 	{
 		builder.Property(p => p.DepartmentName)
 		.IsRequired()
-		.HasMaxLength(50);
+		.HasMaxLength(50)
+		.HasColumnType("varchar");
 
 	}
 }

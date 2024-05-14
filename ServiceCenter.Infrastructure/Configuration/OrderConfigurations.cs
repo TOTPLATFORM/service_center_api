@@ -15,11 +15,14 @@ public class OrderConfigurations : IEntityTypeConfiguration<Order>
     {
         builder.Property(p => p.From)
                .IsRequired()
+               .HasColumnType("varchar")
               .HasMaxLength(50);
+
         builder.Property(p => p.OrderArrivalDate)
                .IsRequired();
+
         builder.Property(p => p.OrderDate)
-       .IsRequired();
+              .IsRequired();
 
     }
 }

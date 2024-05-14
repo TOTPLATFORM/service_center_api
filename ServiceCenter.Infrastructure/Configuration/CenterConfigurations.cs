@@ -15,6 +15,7 @@ public class CenterConfigurations : IEntityTypeConfiguration<Center>
 	{
 		builder.Property(p => p.CenterName)
 			.IsRequired()
+			.HasColumnType("varchar")
 			.HasMaxLength(50);
 
 		builder.Property(p => p.OpeningHours)
@@ -22,7 +23,9 @@ public class CenterConfigurations : IEntityTypeConfiguration<Center>
 
 		builder.Property(p => p.Specialty)
 			.IsRequired()
-			.HasMaxLength(100);
+			.HasMaxLength(100)
+		    .HasColumnType("varchar")
+;
 
 	}
 
