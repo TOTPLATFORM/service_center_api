@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class edit : Migration
+    public partial class ChangeInConfig1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -60,9 +60,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CenterName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CenterName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     OpeningHours = table.Column<int>(type: "int", nullable: false),
-                    Specialty = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Specialty = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -74,13 +74,37 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Contacts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContactFirstName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    ContactLastName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    ContactEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<string>(type: "varchar(6)", maxLength: 6, nullable: false),
+                    Address_City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contacts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Inventories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    InventoryName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    InventoryLocation = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    InventoryName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    InventoryLocation = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
                     InventoryCapacity = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -98,7 +122,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    From = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    From = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     OrderStatus = table.Column<int>(type: "int", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OrderArrivalDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -118,9 +142,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BrandName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BrandDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CountryOfOrigin = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BrandName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    BrandDescription = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    CountryOfOrigin = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     FoundedYear = table.Column<DateOnly>(type: "date", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -138,7 +162,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     ReferenceNumber = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -174,8 +198,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ServiceCategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ServiceCategoryDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ServiceCategoryName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    ServiceCategoryDescription = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -192,8 +216,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PackageName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PackageDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PackageName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    PackageDescription = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     PackagePrice = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -334,12 +358,12 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BranchName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    BranchName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     Address_City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address_Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address_PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BranchPhoneNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    EmailAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    BranchPhoneNumber = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    EmailAddress = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     CenterId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -363,7 +387,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DepartmentName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    DepartmentName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     CenterId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -441,7 +465,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     ReferenceNumber = table.Column<int>(type: "int", nullable: false),
                     InventoryId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -493,7 +517,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Duration = table.Column<DateOnly>(type: "date", nullable: false),
                     ServicePackageId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -517,8 +541,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    ProductDescription = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     ProductPrice = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductCategoryId = table.Column<int>(type: "int", nullable: false),
                     ProductBrandId = table.Column<int>(type: "int", nullable: false),
@@ -635,8 +659,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ItemName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    ItemDescription = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     ItemStock = table.Column<int>(type: "int", nullable: false),
                     ItemPrice = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
@@ -662,8 +686,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OfferName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    OfferDescription = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    OfferName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    OfferDescription = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false),
                     EndDate = table.Column<DateOnly>(type: "date", nullable: false),
                     Discount = table.Column<int>(type: "int", nullable: false),
@@ -691,6 +715,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Day = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -717,10 +742,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ComplaintDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    ComplaintDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ComplaintCategory = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ComplaintDescription = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    ComplaintCategory = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     ComplaintStatus = table.Column<int>(type: "int", nullable: false),
-                    AssignedTo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -744,8 +768,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FeedbackDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    FeedbackDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FeedbackCategory = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FeedbackDescription = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    FeedbackCategory = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -794,8 +818,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ServiceName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ServiceDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ServiceName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    ServiceDescription = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     ServicePrice = table.Column<int>(type: "int", nullable: false),
                     Avaliable = table.Column<int>(type: "int", nullable: false),
                     ServiceCategoryId = table.Column<int>(type: "int", nullable: false),
@@ -827,7 +851,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Day = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Day = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
                     ManagerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -1250,6 +1274,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Complaints");
+
+            migrationBuilder.DropTable(
+                name: "Contacts");
 
             migrationBuilder.DropTable(
                 name: "Contracts");
