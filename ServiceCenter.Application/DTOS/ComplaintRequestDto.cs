@@ -17,8 +17,6 @@ public class ComplaintRequestDto
     [Required]
     public string ComplaintCategory { get; set; } = "";
     [Required]
-    public Status ComplaintStatus { get; set; }
-    [Required]
-    public string AssignedTo { get; set; } = "";
-    public string? CustomerId { get; set; } = default;
+    public Status ComplaintStatus { get; set; } = Status.Pending;
+
 }

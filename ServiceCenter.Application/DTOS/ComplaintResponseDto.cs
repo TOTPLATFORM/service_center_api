@@ -14,6 +14,5 @@ public class ComplaintResponseDto
     public string ComplaintDescription { get; set; } = "";
     public string ComplaintCategory { get; set; } = "";
     public Status ComplaintStatus { get; set; }
-    public string AssignedTo { get; set; } = "";
-    public string? CustomerName { get; set; } = default;
+    
 }
