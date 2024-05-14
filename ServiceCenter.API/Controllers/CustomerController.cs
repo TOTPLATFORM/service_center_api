@@ -42,4 +42,56 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	{
 		return await _customerService.GetCustomerByIdAsync(id);
 	}
+	/// <summary>
+	/// get  customer by id in the system.
+	/// </summary>
+	///<param name="id">id of customer.</param>
+	///<param name="customerRequestDto">customer dto.</param>
+	/// <remarks>
+	/// Access is limited to users with the "Admin" role.
+	/// </remarks>
+	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+	[HttpPut("{id}")]
+	//[Authorize(Roles = "Admin")]
+	[ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result<CustomerResponseDto>> UpdateCustomer(string id, CustomerRequestDto customerRequestDto)
+	{
+		return await _customerService.UpdateCustomerAsync(id, customerRequestDto);
+	}
+	/// <summary>
+	/// search  customer by text in the system.
+	/// </summary>
+	///<param name="text">id</param>
+	/// <remarks>
+	/// Access is limited to users with the "Admin" role.
+	/// </remarks>
+	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+	[HttpGet("search/{text}")]
+	//[Authorize(Roles = "Admin")]
+	[ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result<List<CustomerResponseDto>>> SerachCustomerByText(string text)
+	{
+		return await _customerService.SearchCustomerByTextAsync(text);
+	}
+
+	/// <summary>
+	/// delete  customer by id from the system.
+	/// </summary>
+	///<param name="id">id</param>
+	/// <remarks>
+	/// Access is limited to users with the "Admin" role.
+	/// </remarks>
+	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+	[HttpDelete]
+	//[Authorize(Roles = "Admin")]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result> DeleteCustomerAsycn(string id)
+	{
+		return await _customerService.DeleteCustomerAsync(id);
+	}
 }
