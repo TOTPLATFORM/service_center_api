@@ -94,7 +94,7 @@ public class ComplaintServiceTest
     {
         // Arrange
         CheckService();
-        var ComplaintRequestDto = new ComplaintRequestDto { ComplaintDescription = ComplaintDesc, ComplaintCategory = ComplaintCategory, ComplaintDate= DateOnly.Parse(ComplaintDate), CustomerId = customerId,AssignedTo=assigned ,ComplaintStatus=status };
+        var ComplaintRequestDto = new ComplaintRequestDto { ComplaintDescription = ComplaintDesc, ComplaintCategory = ComplaintCategory, ComplaintDate= DateOnly.Parse(ComplaintDate) ,ComplaintStatus=status };
 
         // Act
         var result = await _ComplaintService.AddComplaintAsync(ComplaintRequestDto);
@@ -139,7 +139,7 @@ public class ComplaintServiceTest
     {
         // Arrange
         CheckService();
-        var ComplaintRequestDto = new ComplaintRequestDto { ComplaintDescription = "ComplaintDesc", ComplaintCategory = "ComplaintCategory", ComplaintDate = DateOnly.Parse("7/11/2024"), CustomerId = "53ae72a7-589e-4f0b-81ed-4038169498" ,AssignedTo = "Dep2",
+        var ComplaintRequestDto = new ComplaintRequestDto { ComplaintDescription = "ComplaintDesc", ComplaintCategory = "ComplaintCategory", ComplaintDate = DateOnly.Parse("7/11/2024"),
             ComplaintStatus = Status.Cancelled,
         };
 
