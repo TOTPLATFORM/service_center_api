@@ -52,4 +52,12 @@ public interface IComplaintService : IApplicationService, IScopedService
     /// <param name="text">Complaint status</param>
     /// <returns>Complaint response dto </returns>
     public Task<Result<List<ComplaintResponseDto>>> SearchComplaintByTextAsync(Status text);
+
+	/// <summary>
+	/// function to search by Customer   that take  Customer id
+	/// </summary>
+	/// <param name="customerId">Customer  id</param>
+	/// <returns>Customer response dto </returns>
+	public Task<Result<List<ComplaintResponseDto>>> GetComplaintsByCustomerAsync(string customerId);
+
 }

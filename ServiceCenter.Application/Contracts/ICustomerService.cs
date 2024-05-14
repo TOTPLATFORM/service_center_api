@@ -16,4 +16,11 @@ public interface ICustomerService : IApplicationService, IScopedService
 	/// </summary>
 	/// <returns>list all customerResponseDto </returns>
 	public Task<Result<List<CustomerResponseDto>>> GetAllCustomersAsync();
+
+	/// <summary>
+	/// function to get customer by id that take  customer id
+	/// </summary>
+	/// <param name="id">customer id</param>
+	/// <returns>customer response dto</returns>
+	public Task<Result<CustomerGetByIdResponseDto>> GetCustomerByIdAsync(string id);
 }

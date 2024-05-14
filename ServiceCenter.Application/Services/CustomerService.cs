@@ -35,22 +35,24 @@ public class CustomerService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 		return Result.Success(customers);
 	}
 
-	/////<inheritdoc/>
-	//public async Task<Result<CustomerResponseDto>> GetCustomerByIdAsync(string Id)
-	//{
-	//	var customer = await _dbContext.Customers
-	//		.ProjectTo<CustomerResponseDto>(_mapper.ConfigurationProvider)
-	//		.FirstOrDefaultAsync(d => d.Id == Id);
+	///<inheritdoc/>
+	public async Task<Result<CustomerGetByIdResponseDto>> GetCustomerByIdAsync(string Id)
+	{
+		var customer = await _dbContext.Customers
+			.ProjectTo<CustomerGetByIdResponseDto>(_mapper.ConfigurationProvider)
+			.FirstOrDefaultAsync(d => d.Id == Id);
 
-	//	if (customer is null)
-	//	{
-	//		_logger.LogWarning("customer Id not found,Id {customerId}", Id);
-	//		return Result.NotFound(["customer not found"]);
-	//	}
-	//	_logger.LogInformation("Fetching customer");
+		if (customer is null)
+		{
+			_logger.LogWarning("customer Id not found,Id {customerId}", Id);
 
-	//	return Result.Success(customer);
-	//}
+			return Result.NotFound(["customer not found"]);
+		}
+
+		_logger.LogInformation("Fetching customer");
+
+		return Result.Success(customer);
+	}
 
 	/////<inheritdoc/>
 
