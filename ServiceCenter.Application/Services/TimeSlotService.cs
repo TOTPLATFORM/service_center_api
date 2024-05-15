@@ -121,20 +121,6 @@ public class TimeSlotService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 	public async Task<Result<List<TimeSlotResponseDto>>> SearchTimeSlotByTextAsync(string text)
 	{
 
-
-		//if (string.IsNullOrWhiteSpace(text))
-		//{
-		//	_logger.LogError("Search text cannot be empty", text);
-
-		//	return new Result.Invalid(new List<ValidationError>
-		//	{
-		//		new ValidationError
-		//		{
-		//			ErrorMessage = "Validation Errror : Search text cannot be empty"
-		//		}
-		//	});
-		//}
-
 		var Day = await _dbContext.TimeSlots
                        .ProjectTo<TimeSlotResponseDto>(_mapper.ConfigurationProvider)
 		               .Where(n => n.Day.Contains(text))

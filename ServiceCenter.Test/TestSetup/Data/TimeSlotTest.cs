@@ -18,16 +18,14 @@ public static class TimeSlotTest
             Id = 1,
             Day = "Monday",
             StartTime = new TimeOnly(02, 30, 10),
-            EndTime = new TimeOnly(03, 30, 12),
-            ManagerId = "53ae72a7-589e-4f0b-81ed-4038169498"
+            EndTime = new TimeOnly(03, 30, 12)
         },
         new TimeSlot
         {
             Id = 3,
             Day = "Sunday",
             StartTime = new TimeOnly(02, 30, 20),
-            EndTime = new TimeOnly(03, 30, 30) ,
-            ManagerId = "53ae72a7-589e-4f0b-81ed-4038169498"
+            EndTime = new TimeOnly(03, 30, 30) 
         }
         ); 
     }
