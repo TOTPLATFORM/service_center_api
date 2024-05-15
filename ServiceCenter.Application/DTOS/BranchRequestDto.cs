@@ -22,7 +22,4 @@ public class BranchRequestDto
     public string EmailAddress { get; set; } = "";
     [Required]
     public int CenterId { get; set; }
-    public string? CustomerId { get; set; } = default;
-    
-
 }

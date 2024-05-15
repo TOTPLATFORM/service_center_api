@@ -79,6 +79,23 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	}
 
 	/// <summary>
+	/// search  customers by branch in the system
+	/// </summary>
+	///<param name="branchId">branch id </param>
+	/// <remarks>
+	/// Access is limited to users with the "Admin" role.
+	/// </remarks>
+	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+	[HttpGet("searchByCustomers/{branchId}")]
+	//[Authorize(Roles = "Admin")]
+	[ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result<List<CustomerResponseDto>>> GetCustomersByBranch(int branchId)
+	{
+		return await _customerService.GetCustomersByBranchAsync(branchId);
+	}
+	/// <summary>
 	/// delete  customer by id from the system.
 	/// </summary>
 	///<param name="id">id</param>
