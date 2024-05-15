@@ -93,7 +93,7 @@ public class FeedbackServiceTest
     {
         // Arrange
         CheckService();
-        var feedbackRequestDto = new FeedbackRequestDto { FeedbackDescription= feedbackDesc, FeedbackCategory= feedbackCategory, FeedbackDate= DateOnly.Parse(feedbackDate) ,CustomerId= customerId };
+        var feedbackRequestDto = new FeedbackRequestDto { FeedbackDescription= feedbackDesc, FeedbackCategory= feedbackCategory, FeedbackDate= DateOnly.Parse(feedbackDate) };
 
         // Act
         var result = await _feedbackService.AddFeedbackAsync(feedbackRequestDto);
@@ -138,7 +138,7 @@ public class FeedbackServiceTest
     {
         // Arrange
         CheckService();
-        var feedbackRequestDto = new FeedbackRequestDto { FeedbackDescription = "feedbackDesc", FeedbackCategory = "feedbackCategory", FeedbackDate = DateOnly.Parse("7/11/2024"), CustomerId = "53ae72a7-589e-4f0b-81ed-4038169498" };
+        var feedbackRequestDto = new FeedbackRequestDto { FeedbackDescription = "feedbackDesc", FeedbackCategory = "feedbackCategory", FeedbackDate = DateOnly.Parse("7/11/2024") };
 
         // Act
         var result = await _feedbackService.UpdateFeedbackAsync(id, feedbackRequestDto);
