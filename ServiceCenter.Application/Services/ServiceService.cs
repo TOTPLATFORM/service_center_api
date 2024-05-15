@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Azure.Core.HttpHeader;
 
 namespace ServiceCenter.Application.Services;
 
@@ -22,8 +23,8 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 	private readonly ILogger<ServiceService> _logger = logger;
 	private readonly IUserContextService _userContext = userContext;
 
-	///<inheritdoc/>
-	public async Task<Result> AddServiceAsync(ServiceRequestDto ServiceRequestDto)
+    ///<inheritdoc/>
+    public async Task<Result> AddServiceAsync(ServiceRequestDto ServiceRequestDto)
 	{
 		var result = _mapper.Map<Service>(ServiceRequestDto);
 		if (result is null)
@@ -40,18 +41,11 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		}
 		result.CreatedBy = _userContext.Email;
 
-        if (ServiceRequestDto.ServicePcakageId > 0)
+        if (ServiceRequestDto.ServicePcakagesIds is not null)
         {
-            var servicePackage = await _dbContext.ServicePackages.FindAsync(ServiceRequestDto.ServicePcakageId);
+            var servicePackagesResult = await GetServicePackagesByIds(ServiceRequestDto.ServicePcakagesIds);
 
-            if (servicePackage is not null)
-            {
-                result.ServicePackages.Add(servicePackage);
-            }
-            else
-            {
-                _logger.LogWarning("ServicePackage with ID {ServicePackageId} not found.", ServiceRequestDto.ServicePcakageId);
-            }
+			result.ServicePackages = servicePackagesResult.Value;
         }
 
         _dbContext.Services.Add(result);
@@ -105,7 +99,13 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 			return Result.NotFound(["Service not found"]);
 		}
 
-		result.ModifiedBy = _userContext.Email;
+        if (ServiceRequestDto.ServicePcakagesIds is not null)
+        {
+            var servicePackagesResult = await GetServicePackagesByIds(ServiceRequestDto.ServicePcakagesIds);
+            result.ServicePackages = servicePackagesResult.Value;
+        }
+
+        result.ModifiedBy = _userContext.Email;
 
 		_mapper.Map(ServiceRequestDto, result);
 
@@ -155,4 +155,18 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		_logger.LogInformation("Fetching search Service by name . Total count: {Prouct}.", names.Count);
 		return Result.Success(names);
 	}
+
+    /// <summary>
+    /// function to get specific service packages by their service packages ids
+    /// </summary>
+    /// <param name="packagesIds">The ids of the service packages to retrieve</param>
+    /// <returns>Service response dto </returns>
+    public async Task<Result<List<ServicePackage>>> GetServicePackagesByIds(List<int> packagesIds)
+    {
+        var packages = await _dbContext.ServicePackages.Where(s => packagesIds.Contains(s.Id))
+            .ToListAsync();
+
+        _logger.LogInformation("Fetching Service packages by their ids . Total count: {Service}.", packages.Count);
+        return Result.Success(packages);
+    }
 }

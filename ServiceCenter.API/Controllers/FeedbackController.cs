@@ -96,12 +96,12 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpGet("searchByCustomerName/{text}")]
+    [HttpGet("searchByFeedbacks/{customerId}")]
     //[Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<FeedbackResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<FeedbackResponseDto>>> SearchByCustomer(string text)
+    public async Task<Result<List<FeedbackResponseDto>>> GetFeedbacksByCustomer(string customerId)
     {
-        return await _FeedbackService.GetAllFeedbacksForSpecificCustomer(text);
+        return await _FeedbackService.GetFeedbacksByCustomerAsync(customerId);
     }
 }

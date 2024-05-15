@@ -13,6 +13,5 @@ public class DepartmentRequestDto
     public string DepartmentName { get; set; } = "";
     [Required]
     public int CenterId { get; set; }
-    public string? EmployeeId { get; set; }
 
 }

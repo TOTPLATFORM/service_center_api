@@ -17,5 +17,5 @@ public class ServicePackageRequestDto
     [Required]
     [Range(10, int.MaxValue)]
     public int PackagePrice { get; set; }
-    public int ServiceId { get; set; } 
+    public List<int>? ServicesIds { get; set; } 
 }

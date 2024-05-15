@@ -9,9 +9,9 @@ namespace ServiceCenter.Application.DTOS;
 
 public class CustomerGetByIdResponseDto : CustomerResponseDto
 {
-	public ICollection<Appointment> Appointments { get; set; } = new HashSet<Appointment>();
-	public BranchResponseDto Branch { get; set; } = default;
-	public ICollection<ComplaintResponseDto> Complaints { get; set; } = new HashSet<ComplaintResponseDto>();
-	public ICollection<FeedbackResponseDto> Feedbacks { get; set; } = new HashSet<FeedbackResponseDto>();
-
+    public string BranchName { get; set; }
+    public string UserName { get; set; } = "";
+    public string City { get; set; } = "";
+    public string Country { get; set; } = "";
+    public string PostalCode { get; set; } = "";
 }

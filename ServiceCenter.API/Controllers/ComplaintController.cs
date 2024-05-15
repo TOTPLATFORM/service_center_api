@@ -91,4 +91,13 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     {
         return await _ComplaintService.DeleteComplaintAsync(id);
     }
+
+	[HttpGet("searchByComplaints/{customerId}")]
+	//[Authorize(Roles = "Admin")]
+	[ProducesResponseType(typeof(Result<ComplaintResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result<List<ComplaintResponseDto>>> GetComplaintsByCustomer(string customerId)
+	{
+		return await _ComplaintService.GetComplaintsByCustomerAsync(customerId);
+	}
 }

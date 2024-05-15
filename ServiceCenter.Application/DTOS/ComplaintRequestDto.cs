@@ -18,5 +18,7 @@ public class ComplaintRequestDto
     public string ComplaintCategory { get; set; } = "";
     [Required]
     public Status ComplaintStatus { get; set; } = Status.Pending;
+    [Required]
+    public string CustomerId { get; set; } = "";
 
 }
