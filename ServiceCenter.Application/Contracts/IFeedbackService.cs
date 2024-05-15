@@ -44,5 +44,5 @@ public interface IFeedbackService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">customer name </param>
     /// <returns>Feedback response dto </returns>
-    public Task<Result<List<FeedbackResponseDto>>> GetAllFeedbacksForSpecificCustomer(string customerName);
+    public Task<Result<List<FeedbackResponseDto>>> GetFeedbacksByCustomerAsync(string customerId);
 }
