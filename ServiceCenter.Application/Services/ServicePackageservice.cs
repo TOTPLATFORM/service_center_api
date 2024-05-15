@@ -39,6 +39,13 @@ public class ServicePackageService(ServiceCenterBaseDbContext dbContext, IMapper
     }
 });
         }
+
+        if (ServicePackageRequestDto.ServicesIds is not null)
+        {
+            var servicesResult = await GetServicesByIds(ServicePackageRequestDto.ServicesIds);
+            result.Services = servicesResult.Value;
+        }
+
         result.CreatedBy = _userContext.Email;
 
         _dbContext.ServicePackages.Add(result);
@@ -136,5 +143,19 @@ public class ServicePackageService(ServiceCenterBaseDbContext dbContext, IMapper
         .ToListAsync();
         _logger.LogInformation("Fetching search ServicePackage by name . Total count: {Prouct}.", names.Count);
         return Result.Success(names);
+    }
+
+    /// <summary>
+    /// function to get specific services by their services ids
+    /// </summary>
+    /// <param name="servicesIds">The ids of the services to retrieve</param>
+    /// <returns>Service response dto </returns>
+    public async Task<Result<List<Service>>> GetServicesByIds(List<int> servicesIds)
+    {
+        var services = await _dbContext.Services.Where(s => servicesIds.Contains(s.Id))
+            .ToListAsync();
+
+        _logger.LogInformation("Fetching Services by their ids . Total count: {Service}.", services.Count);
+        return Result.Success(services);
     }
 }
