@@ -37,6 +37,9 @@ public class ContextGenerator
             Context.AddContract();
             Context.AddEmployee();
             Context.AddOffer();
+            Context.AddSchedule();
+            Context.AddCustomer();
+            Context.AddAppointment();
             Context.SaveChanges();
         }
 
