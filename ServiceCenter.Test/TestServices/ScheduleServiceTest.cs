@@ -54,7 +54,7 @@ public class ScheduleServiceTest
         CheckService();
 
         // Act
-        var result = await _scheduleService.GetAllScheduleAsync();
+        var result = await _scheduleService.GetAllSchedulesAsync();
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -92,7 +92,7 @@ public class ScheduleServiceTest
     {
         // Arrange
         CheckService();
-        var scheduleRequestDto = new ScheduleRequestDto { TimeSlotId = 1 };
+        var scheduleRequestDto = new ScheduleRequestDto { TimeSlotId = 1,EmployeeId = "0d133c1a-804f-4548-8f7e-8c3f504844e0" };
 
         // Act
         var result = await _scheduleService.AddScheduleAsync(scheduleRequestDto);
@@ -131,13 +131,13 @@ public class ScheduleServiceTest
     /// </summary>
     /// <param name="id">schedule id</param>  
     [Theory, TestPriority(3)]
-    [InlineData(1, true)]
+    [InlineData(2, true)]
     [InlineData(30, false)]
     public async Task Updateschedule(int id, bool expectedResult)
     {
         // Arrange
         CheckService();
-        var scheduleRequestDto = new ScheduleRequestDto { TimeSlotId = 1,AppotimentId=2 };
+        var scheduleRequestDto = new ScheduleRequestDto { TimeSlotId = 3, EmployeeId = "0d133c1a-804f-4548-8f7e-8c3f504844e0" };
 
         // Act
         var result = await _scheduleService.UpdateScheduleAsync(id, scheduleRequestDto);
