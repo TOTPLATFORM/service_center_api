@@ -39,6 +39,13 @@ public interface ICustomerService : IApplicationService, IScopedService
 	public Task<Result<List<CustomerResponseDto>>> SearchCustomerByTextAsync(string text);
 
 	/// <summary>
+	/// asynchronously retrieves all customers By branch  by their unique identifier.
+	/// </summary>
+	/// <param name="branchId">the unique identifier of the branch to retrieve customers.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all customers by branch id operation.</returns>
+	public Task<Result<List<CustomerResponseDto>>> GetCustomersByBranchAsync(int branchId);
+
+	/// <summary>
 	/// function to delete Customer that take CustomerDto   
 	/// </summary>
 	/// <param name="id">customer id</param>

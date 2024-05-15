@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Castle.Core.Resource;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
@@ -120,6 +121,18 @@ public class CustomerService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 	}
 
 	///<inheritdoc/>
+	public async Task<Result<List<CustomerResponseDto>>> GetCustomersByBranchAsync(int branchId)
+	{
+		var customers = await _dbContext.Customers
+			  .Where(s => s.BranchId == branchId)
+			  .ProjectTo<CustomerResponseDto>(_mapper.ConfigurationProvider)
+			  .ToListAsync();
+
+		_logger.LogInformation("Fetching Customers. Total count: {Ceedbacks}.", customers.Count);
+
+		return Result.Success(customers);
+	}
+	///<inheritdoc/>
 
 	public async Task<Result> DeleteCustomerAsync(string id)
 	{
@@ -140,6 +153,7 @@ public class CustomerService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 
 		return Result.SuccessWithMessage("customer remove successfully ");
 	}
+
 }
 
 
