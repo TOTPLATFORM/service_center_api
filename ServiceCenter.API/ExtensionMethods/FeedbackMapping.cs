@@ -10,7 +10,6 @@ public static  class FeedbackMapping
     {
         map.CreateMap<FeedbackRequestDto, Feedback>().ReverseMap();
         map.CreateMap<Feedback, FeedbackResponseDto>()
-           .ForMember(dest => dest.CustomerName, src => src.MapFrom(src => src.Customer.FirstName))
             .ReverseMap();
     }
 }
