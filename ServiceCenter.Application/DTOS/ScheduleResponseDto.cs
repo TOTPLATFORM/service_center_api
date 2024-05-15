@@ -9,8 +9,8 @@ namespace ServiceCenter.Application.DTOS;
 public class ScheduleResponseDto
 {
     public int Id { get; set; }
-    public string? EmployeeName { get; set; }
-
-    public int? TimeSlotId { get; set; }
-    public int? AppotimentId { get; set; }
+    public string EmployeeName { get; set; } = "";
+    public TimeOnly StartTime { get; set; }
+    public TimeOnly EndTime { get; set; }
+    public string Day { get; set; } = "";
 }
