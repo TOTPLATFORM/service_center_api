@@ -26,24 +26,24 @@ public class AuthController(IAuthService authService) : BaseController
 	}
 
 	/// <summary>
-	/// action for login a user that take login request dto.
+	/// Logs a user into the system.
 	/// </summary>
-	/// <param name="loginModel">The login model.</param>
-	/// <returns>result representing of the login successfully.</returns>
-	//[HttpPost("Login")]
-	//[ProducesResponseType(typeof(Result<LoginResponseDto>), StatusCodes.Status200OK)]
-	//[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	//public async Task<Result<LoginResponseDto>> LoginAsync(LoginRequestDto loginModel)
-	//{
-	//    var result = await _authService.Login(loginModel);
+	/// <param name="loginModel">The data transfer object containing login credentials.</param>
+	/// <returns>The result indicating the success of the login.</returns>
+	[HttpPost("Login")]
+	[ProducesResponseType(typeof(Result<LoginResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result<LoginResponseDto>> Login(LoginRequestDto loginModel)
+	{
+		var result = await _authService.LoginAsync(loginModel);
 
-	//    if (!result.IsSuccess)
-	//    {
-	//        return result;
-	//    }
+		if (!result.IsSuccess)
+		{
+			return result;
+		}
 
-	//    return result;
-	//}
+		return result;
+	}
 
 	/// <summary>
 	/// action add a user to a specific role.
