@@ -40,6 +40,7 @@ public class ContextGenerator
             Context.AddSchedule();
             Context.AddCustomer();
             Context.AddAppointment();
+            Context.AddProductBrand();
             Context.SaveChanges();
         }
 
