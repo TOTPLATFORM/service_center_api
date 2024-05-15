@@ -21,118 +21,125 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
     private readonly IMapper _mapper = mapper;
     private readonly ILogger<ScheduleService> _logger = logger;
     private readonly IUserContextService _userContext = userContext;
-
-    ///<inheritdoc/>
-    public async Task<Result> AddScheduleAsync(ScheduleRequestDto ScheduleRequestDto)
+    /// <inheritdoc/>
+    public async Task<Result> AddScheduleAsync(ScheduleRequestDto scheduleRequestDto)
     {
-        var result = _mapper.Map<Schedule>(ScheduleRequestDto);
-        if (result is null)
+        var schedule = _mapper.Map<Schedule>(scheduleRequestDto);
+        var employee = _dbContext.Employees.FirstOrDefault(C => C.Id == scheduleRequestDto.EmployeeId);
+        var timeSlot = _dbContext.TimeSlots.FirstOrDefault(C => C.Id == scheduleRequestDto.TimeSlotId);
+
+        if (employee is null || timeSlot is null)
         {
-            _logger.LogError("Failed to map ScheduleRequestDto to Schedule. ScheduleRequestDto: {@ScheduleRequestDto}", ScheduleRequestDto);
-            return Result.Invalid(new List<ValidationError>
-    {
-        new ValidationError
-        {
-            ErrorMessage = "Validation Errror"
+            _logger.LogInformation("employee or timeSlot not found");
+            return Result.Error("schedule added failed to the database");
         }
-    });
-        }
-        result.CreatedBy = _userContext.Email;
+        schedule.CreatedBy = _userContext.Email;
+        schedule.Employee = employee;
+        schedule.TimeSlot = timeSlot;
 
-        _dbContext.Schedules.Add(result);
-
-        await _dbContext.SaveChangesAsync();
-        _logger.LogInformation("Schedule added successfully to the database");
-        return Result.SuccessWithMessage("Schedule added successfully");
-    }
-    ///<inheritdoc/>
-    public async Task<Result<List<ScheduleResponseDto>>> GetAllScheduleAsync()
-    {
-        var result = await _dbContext.Schedules
-             .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
-             .ToListAsync();
-
-        _logger.LogInformation("Fetching all  Schedule. Total count: { Schedule}.", result.Count);
-
-        return Result.Success(result);
-    }
-    ///<inheritdoc/>
-    public async Task<Result<ScheduleResponseDto>> GetScheduleByIdAsync(int id)
-    {
-        var result = await _dbContext.Schedules
-            .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(p => p.Id == id);
-
-        if (result is null)
-        {
-            _logger.LogWarning("Schedule Id not found,Id {ScheduleId}", id);
-
-            return Result.NotFound(["Schedule not found"]);
-        }
-
-        _logger.LogInformation("Fetching Schedule");
-
-        return Result.Success(result);
-    }
-    ///<inheritdoc/>
-    public async Task<Result<ScheduleResponseDto>> UpdateScheduleAsync(int id, ScheduleRequestDto ScheduleRequestDto)
-    {
-        var result = await _dbContext.Schedules.FindAsync(id);
-
-        if (result is null)
-        {
-            _logger.LogWarning("Schedule Id not found,Id {ScheduleId}", id);
-            return Result.NotFound(["Schedule not found"]);
-        }
-
-        result.ModifiedBy = _userContext.Email;
-
-        _mapper.Map(ScheduleRequestDto, result);
-
+        _dbContext.Schedules.Add(schedule);
         await _dbContext.SaveChangesAsync();
 
-        var ScheduleResponse = _mapper.Map<ScheduleResponseDto>(result);
-        if (ScheduleResponse is null)
-        {
-            _logger.LogError("Failed to map ScheduleRequestDto to ScheduleResponseDto. ScheduleRequestDto: {@ScheduleRequestDto}", ScheduleResponse);
-
-            return Result.Invalid(new List<ValidationError>
-        {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-        });
-        }
-
-        _logger.LogInformation("Updated Schedule , Id {Id}", id);
-
-        return Result.Success(ScheduleResponse);
+        _logger.LogInformation("schedule added successfully to the database");
+        return Result.SuccessWithMessage("schedule added successfully");
     }
-    ///<inheritdoc/>
+    /// <inheritdoc/>
     public async Task<Result> DeleteScheduleAsync(int id)
     {
-        var Schedule = await _dbContext.Schedules.FindAsync(id);
+        var schedule = await _dbContext.Schedules.FindAsync(id);
 
-        if (Schedule is null)
+        if (schedule is null)
         {
-            _logger.LogWarning("Schedule Invaild Id ,Id {ScheduleId}", id);
-            return Result.NotFound(["Schedule Invaild Id"]);
+            _logger.LogWarning($"schedule  with id {id} was not found while attempting to delete");
+            return Result.NotFound(["The schedule  is not found"]);
         }
 
-        _dbContext.Schedules.Remove(Schedule);
+        _dbContext.Schedules.Remove(schedule);
         await _dbContext.SaveChangesAsync();
-        _logger.LogInformation("Schedule removed successfully in the database");
-        return Result.SuccessWithMessage("Schedule removed successfully");
-    }
-    public async Task<Result<List<ScheduleResponseDto>>> GetAllSchedulesForSpecificEmployee(string employeeId)
-    {
-        var Schedules = await _dbContext.Schedules
-              .Where(s => s.Employee.Id == employeeId)
-              .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
-              .ToListAsync();
 
-        _logger.LogInformation("Fetching Schedules. Total count: {Schedules}.", Schedules.Count);
-        return Result.Success(Schedules);
+        _logger.LogInformation($"Successfully removed schedule  {schedule}");
+        return Result.SuccessWithMessage("schedule  removed successfully");
+    }
+    /// <inheritdoc/>
+    public async Task<Result<List<ScheduleResponseDto>>> GetScheduleByEmployeeAsync(string id)
+    {
+        var scheduleForAgentResponseDto = await _dbContext.Schedules.Where(A => A.Employee.Id == id)
+            .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        _logger.LogInformation("Fetching all schedule for specific agent . Total count: {agent}.", scheduleForAgentResponseDto.Count);
+
+        return Result.Success(scheduleForAgentResponseDto);
+    }
+    /// <inheritdoc/>
+    public async Task<Result<List<ScheduleResponseDto>>> GetAllSchedulesAsync()
+    {
+        var scheduleResponseDto = await _dbContext.Schedules
+            .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        _logger.LogInformation("Fetching all schedule . Total count: {schedule}.", scheduleResponseDto.Count);
+
+        return Result.Success(scheduleResponseDto);
+    }
+
+    /// <inheritdoc/>
+    public async Task<Result<ScheduleGetByIdResponseDto>> GetScheduleByIdAsync(int id)
+    {
+        var scheduleResponseDto = await _dbContext.Schedules
+            .ProjectTo<ScheduleGetByIdResponseDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+        if (scheduleResponseDto is null)
+        {
+            _logger.LogWarning("schedule  Id not found,Id {id}", id);
+            return Result.NotFound(["The schedule  is not found"]);
+        }
+
+        _logger.LogInformation("Fetched schedule  details");
+        return Result.Success(scheduleResponseDto);
+    }
+    /// <inheritdoc/>
+    public async Task<Result<List<ScheduleResponseDto>>> SearchSchedulesByTextAsync(string text)
+    {
+        var scheduleResponseDto = await _dbContext.Schedules
+            .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
+            .Where(d => d.EmployeeName.Contains(text) || d.Day.Contains(text))
+            .ToListAsync();
+
+        _logger.LogInformation("Searching schedule . Total count: {schedule}.", scheduleResponseDto.Count);
+
+        return Result.Success(scheduleResponseDto);
+    }
+
+    /// <inheritdoc/>
+    public async Task<Result<ScheduleResponseDto>> UpdateScheduleAsync(int id, ScheduleRequestDto scheduleRequestDto)
+    {
+        var schedule = await _dbContext.Schedules.FindAsync(id);
+        var employee = _dbContext.Employees.FirstOrDefault(C => C.Id == scheduleRequestDto.EmployeeId);
+        var timeSlot = _dbContext.TimeSlots.FirstOrDefault(C => C.Id == scheduleRequestDto.TimeSlotId);
+
+        if (employee is null || timeSlot is null)
+        {
+            _logger.LogInformation("employee or timeSlot not found");
+            return Result.Error("schedule added failed to the database");
+        }
+
+        if (schedule is null)
+        {
+            _logger.LogWarning("schedule  Id not found,Id {id}", id);
+            return Result.NotFound(["The schedule  is not found"]);
+        }
+        schedule.CreatedBy = _userContext.Email;
+        schedule.Employee = employee;
+        schedule.TimeSlot = timeSlot;
+        schedule.ModifiedBy = _userContext.Email;
+
+        await _dbContext.SaveChangesAsync();
+
+        var updatedSchedule = _mapper.Map<ScheduleResponseDto>(schedule);
+
+        _logger.LogInformation("schedule  updated successfully");
+        return Result.Success(updatedSchedule, "schedule  updated successfully");
     }
 }
