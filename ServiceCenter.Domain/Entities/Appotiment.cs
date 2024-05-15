@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Domain.Entities;
 
-public class Appointment : Time
+public class Appointment : AuditableEntity
 {
-	public DateOnly Date { get; set; }
-	public string Day { get; set; } = "";
-    public string CustomerId { get; set; } = default;
-	public virtual Customer Customer { get; set; } = default;
+    public virtual Schedule Schedule { get; set; }
+    public virtual Customer Customer { get; set; }
 
 
 
