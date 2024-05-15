@@ -9,8 +9,8 @@ namespace ServiceCenter.Application.DTOS;
 
 public class ScheduleRequestDto
 {
-
-    public string? EmployeeId { get; set; } = default;
-    public int? TimeSlotId { get; set; } = default;
-    public int? AppotimentId { get; set;} = default;
+    [Required]
+    public string EmployeeId { get; set; } = "";
+    [Required]
+    public int TimeSlotId { get; set; }
 }
