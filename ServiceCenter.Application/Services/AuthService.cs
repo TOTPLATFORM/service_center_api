@@ -198,11 +198,25 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
     /// <returns>The result of the registration attempt.</returns>
     public async Task<Result> RegisterSalesAsync(SalesRequestDto salesDto)
     {
-        string role = "Employee";
+        string role = "Sales";
 
         var sales = _mapper.Map<Sales>(salesDto);
 
         return await RegisterUserWithRoleAsync(sales, salesDto.Password, role);
+    }
+
+    /// <summary>
+    /// Registers a new vendor with vendor role.
+    /// </summary>
+    /// <param name="salesDto">The Dto of the vendor.</param>
+    /// <returns>The result of the registration attempt.</returns>
+    public async Task<Result> RegisterVendorAsync(VendorRequestDto vendorDto)
+    {
+        string role = "Vendor";
+
+        var vendor = _mapper.Map<Vendor>(vendorDto);
+
+        return await RegisterUserWithRoleAsync(vendor, vendorDto.Password, role);
     }
 
     /// <summary>
@@ -283,7 +297,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
 
     public async Task InitializeRoles()
     {
-        var roles = new List<string> {"Manager", "Employee","Customer","Sales"};
+        var roles = new List<string> {"Manager", "Employee","Customer","Sales","Vendor"};
 
         foreach (var role in roles)
         {
