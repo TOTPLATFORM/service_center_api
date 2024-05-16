@@ -63,5 +63,6 @@ public class ServiceCenterBaseDbContext : IdentityDbContext<ApplicationUser>
 	public DbSet<CustomerService> CustomerServices { get; set; }
 	public DbSet<RatingCustomer> RatingCustomers { get; set; }
 	public DbSet<RatingService> RatingServices { get; set; }
+	public DbSet<Overview> Overviews { get; set; }
 
 }
