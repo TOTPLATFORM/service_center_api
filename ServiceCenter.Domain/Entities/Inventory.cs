@@ -9,5 +9,5 @@ public class Inventory : AuditableEntity
 	public int InventoryCapacity { get; set; }
 	public virtual ICollection<ItemCategory> Categories { get; set; } = new HashSet<ItemCategory>();
 	public string ManagerId { get; set; } = "";
-	public Manager Manager { get; set; } = default;
+	public virtual Manager Manager { get; set; } = default;
 }
