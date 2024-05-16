@@ -54,11 +54,13 @@ public class MappingProfiles : Profile
 
         this.AddOfferMapping();
 
-        this.AddAppointmentMapping(); //Not finished yet
+        this.AddAppointmentMapping(); 
 
         this.AddContactMapping();
 
         this.AddCustomerMapping();
+
+        this.AddCampaginMapping();
 	}
 
 }
