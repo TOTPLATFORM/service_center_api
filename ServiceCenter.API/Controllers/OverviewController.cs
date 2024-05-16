@@ -2,6 +2,7 @@
 using ServiceCenter.Application.Overviews;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Core.Result;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ServiceCenter.API.Controllers;
 
@@ -18,7 +19,7 @@ public class OverviewController(IOverviewService OverviewService) : BaseControll
     /// </remarks>
     /// <returns>result for Overview  added successfully.</returns>
     [HttpPost]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddOverview(OverviewRequestDto OverviewDto)
@@ -35,7 +36,7 @@ public class OverviewController(IOverviewService OverviewService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<List<OverviewResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<OverviewResponseDto>>> GetAllOverview()
@@ -51,7 +52,7 @@ public class OverviewController(IOverviewService OverviewService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<OverviewResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<OverviewResponseDto>> GetOverviewById(int id)
@@ -67,7 +68,7 @@ public class OverviewController(IOverviewService OverviewService) : BaseControll
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<OverviewResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<OverviewResponseDto>> UpdateOverview(int id, OverviewRequestDto OverviewRequestDto)
@@ -83,7 +84,7 @@ public class OverviewController(IOverviewService OverviewService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> DeleteOverviewAsycn(int id)
