@@ -15,6 +15,6 @@ public class Overview : AuditableEntity
     public Status Status { get; set; }
     public DateTime DueDate { get; set; }
 
-    public int SalesId { get; set; }
+    public required string SalesId { get; set; }
     public virtual Sales Sales { get; set; } = default;
 }
