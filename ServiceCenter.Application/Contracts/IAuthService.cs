@@ -18,6 +18,7 @@ public interface IAuthService: IApplicationService, IScopedService
     //Task<Result> RegisterLaboratoristAsync(LaboratoriestRequestDto laboratoristDto);
     //Task<Result> RegisterNurseAsync(NurseRequestDto nurseDto);
     Task<Result> RegisterEmployeeAsync(EmployeeRequestDto employeeRequestDto);
+    Task<Result> RegisterSalesAsync(SalesRequestDto salesDto);
     Task<Result> AddUserToRoleAsync(string userId, string roleName);
     Task InitializeRoles();
     Task CreateManagerAccount();
