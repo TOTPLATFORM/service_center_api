@@ -9,5 +9,5 @@ namespace ServiceCenter.Domain.Entities;
 public class Sales : ApplicationUser
 {
     public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
-    
+    public virtual ICollection<Overview>? Overviews { get; set; } = new HashSet<Overview>();
 }
