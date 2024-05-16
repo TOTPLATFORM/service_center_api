@@ -59,6 +59,8 @@ public class MappingProfiles : Profile
         this.AddContactMapping();
 
         this.AddCustomerMapping();
+
+        this.AddRatingServiceMapping();
 	}
 
 }
