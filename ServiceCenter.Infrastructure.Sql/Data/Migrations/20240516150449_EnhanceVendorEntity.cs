@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initialcreating : Migration
+    public partial class EnhanceVendorEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -418,7 +418,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    VendorName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     VendorType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactPerson = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContractStartDate = table.Column<DateOnly>(type: "date", nullable: false),
@@ -462,6 +461,33 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         name: "FK_Contracts_ServicePackages_ServicePackageId",
                         column: x => x.ServicePackageId,
                         principalTable: "ServicePackages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Overviews",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Task = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Priority = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SalesId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Overviews", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Overviews_Sales_SalesId",
+                        column: x => x.SalesId,
+                        principalTable: "Sales",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1136,6 +1162,11 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Overviews_SalesId",
+                table: "Overviews",
+                column: "SalesId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_ProductBrandId",
                 table: "Products",
                 column: "ProductBrandId");
@@ -1245,6 +1276,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Offers");
+
+            migrationBuilder.DropTable(
+                name: "Overviews");
 
             migrationBuilder.DropTable(
                 name: "RatingServices");

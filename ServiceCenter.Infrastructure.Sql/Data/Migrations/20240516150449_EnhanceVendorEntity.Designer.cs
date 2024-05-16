@@ -12,8 +12,8 @@ using ServiceCenter.Infrastructure.BaseContext;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
-    [Migration("20240516095531_initial creating")]
-    partial class initialcreating
+    [Migration("20240516150449_EnhanceVendorEntity")]
+    partial class EnhanceVendorEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -898,6 +898,53 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Overview", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SalesId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Task")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SalesId");
+
+                    b.ToTable("Overviews");
+                });
+
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -1415,10 +1462,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.Property<DateOnly>("ContractStartDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("VendorName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("VendorType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1722,6 +1765,17 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Overview", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Sales", "Sales")
+                        .WithMany("Overviews")
+                        .HasForeignKey("SalesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sales");
+                });
+
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Product", b =>
                 {
                     b.HasOne("ServiceCenter.Domain.Entities.ProductBrand", "ProductBrand")
@@ -2017,6 +2071,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Sales", b =>
                 {
+                    b.Navigation("Overviews");
+
                     b.Navigation("Products");
                 });
 #pragma warning restore 612, 618

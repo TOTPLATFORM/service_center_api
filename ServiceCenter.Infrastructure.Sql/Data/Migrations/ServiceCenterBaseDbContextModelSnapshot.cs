@@ -1459,10 +1459,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.Property<DateOnly>("ContractStartDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("VendorName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("VendorType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
