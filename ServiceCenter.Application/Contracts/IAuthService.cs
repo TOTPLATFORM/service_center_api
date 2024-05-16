@@ -60,16 +60,6 @@ public interface IAuthService: IApplicationService, IScopedService
 	/// <param name="roleName">the role name.</param>
 	/// <returns>the result of trying to add a user to role.</returns>
 	Task<Result> AddUserToRoleAsync(string userId, string roleName);
-    //Task<Result<LoginResponseDto>> Login(LoginRequestDto LoginRequestDto);
-    Task<Result> RegisterCustomerAsync(CustomerRequestDto customerRequestDto);
-    //Task<Result> RegisterDoctorAsync(DoctorRequestDto doctorDto);
-    //Task<Result> RegisterPharmacistAsync(PharmacistRequestDto pharmacistDto);
-    //Task<Result> RegisterLaboratoristAsync(LaboratoriestRequestDto laboratoristDto);
-    //Task<Result> RegisterNurseAsync(NurseRequestDto nurseDto);
-    Task<Result> RegisterEmployeeAsync(EmployeeRequestDto employeeRequestDto);
-    Task<Result> RegisterSalesAsync(SalesRequestDto salesDto);
-    Task<Result> RegisterVendorAsync(VendorRequestDto vendorDto);
-    Task<Result> AddUserToRoleAsync(string userId, string roleName);
     Task InitializeRoles();
     Task CreateManagerAccount();
 }
