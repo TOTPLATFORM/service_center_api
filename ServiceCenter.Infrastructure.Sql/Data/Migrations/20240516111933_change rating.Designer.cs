@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceCenter.Infrastructure.BaseContext;
 
@@ -11,9 +12,11 @@ using ServiceCenter.Infrastructure.BaseContext;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
-    partial class ServiceCenterBaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240516111933_change rating")]
+    partial class changerating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
