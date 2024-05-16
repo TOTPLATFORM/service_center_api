@@ -121,21 +121,6 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 	///<inheritdoc/>
 	public async Task<Result<List<InventoryResponseDto>>> SearchInventoryByTextAsync(string text)
 	{
-
-
-		//if (string.IsNullOrWhiteSpace(text))
-		//{
-		//	_logger.LogError("Search text cannot be empty", text);
-
-		//	return new Result.Invalid(new List<ValidationError>
-		//	{
-		//		new ValidationError
-		//		{
-		//			ErrorMessage = "Validation Errror : Search text cannot be empty"
-		//		}
-		//	});
-		//}
-
 		var name = await _dbContext.Inventories
 					   .ProjectTo<InventoryResponseDto>(_mapper.ConfigurationProvider)
 					   .Where(n => n.InventoryName.Contains(text))
