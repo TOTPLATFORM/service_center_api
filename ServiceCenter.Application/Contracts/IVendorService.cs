@@ -1,0 +1,55 @@
+﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Result;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ServiceCenter.Application.Contracts;
+
+public interface IVendorService : IApplicationService, IScopedService
+{
+    /// <summary>
+    /// function to add vendor that take vendorDto   
+    /// </summary>
+    /// <param name="vendorRequestDto">vendor request dto</param>
+    /// <returns>Vendor added successfully </returns>
+    public Task<Result> AddVendorAsync(VendorRequestDto vendorRequestDto);
+
+    /// <summary>
+    /// function to get all vendor 
+    /// </summary>
+    /// <returns>list all vendorResponseDto </returns>
+    public Task<Result<List<VendorResponseDto>>> GetAllVendorsAsync();
+
+    /// <summary>
+    /// function to get vendor by id that take  vendor id
+    /// </summary>
+    /// <param name="id">vendor id</param>
+    /// <returns>vendor response dto</returns>
+    public Task<Result<VendorResponseDto>> GetVendorByIdAsync(string id);
+
+    /// <summary>
+    /// function to update vendor that take VendorRequestDto   
+    /// </summary>
+    /// <param name="id">vendor id</param>
+    /// <param name="vendorRequestDto">vendor dto</param>
+    /// <returns>Updated Vendor </returns>
+    public Task<Result<VendorResponseDto>> UpdateVendorAsync(string id, VendorRequestDto vendorRequestDto);
+
+
+    /// <summary>
+    /// function to search vendor by text  that take text   
+    /// </summary>
+    /// <param name="text">text</param>
+    /// <returns>all vendores that contain this text </returns>
+    public Task<Result<List<VendorResponseDto>>> SearchVendorByTextAsync(string text);
+
+    /// <summary>
+    /// function to delete Vendor that take VendorDto   
+    /// </summary>
+    /// <param name="id">departmnet id</param>
+    /// <returns>Vendor removed successfully </returns>
+    public Task<Result> DeleteVendorAsync(string id);
+}
