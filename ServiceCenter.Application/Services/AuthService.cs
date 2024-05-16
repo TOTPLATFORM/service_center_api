@@ -26,41 +26,37 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
     private readonly JWT _jwt = jwt.Value;
     private readonly RoleManager<IdentityRole> _roleManager = roleManager;
 
-    /// <summary>
-    /// Logs a user in.
-    /// </summary>
-    /// <param name="LoginRequestDto">The login model.</param>
-    /// <returns>The result of the login attempt.</returns>
-    //public async Task<Result<LoginResponseDto>> Login(LoginRequestDto LoginRequestDto)
-    //{
-    //    var user = await _userManager.FindByNameAsync(LoginRequestDto.UserName);
+	/// <inheritdoc/>
+	public async Task<Result<LoginResponseDto>> LoginAsync(LoginRequestDto LoginRequestDto)
+	{
+		var user = await _userManager.FindByNameAsync(LoginRequestDto.UserName);
 
-    //    if (user is null || !await _userManager.CheckPasswordAsync(user, LoginRequestDto.Password))
-    //    {
-    //        _logger.LogWarning($"Invalid credentials entered for {LoginRequestDto.UserName}");
-    //        return Result.Error("Invalid credentials");
-    //    }
+		if (user is null || !await _userManager.CheckPasswordAsync(user, LoginRequestDto.Password))
+		{
+			_logger.LogWarning($"Invalid credentials entered for {LoginRequestDto.UserName}");
+			return Result.Error("Invalid credentials");
+		}
 
-    //    var roles = (List<string>)await _userManager.GetRolesAsync(user);
+		var roles = (List<string>)await _userManager.GetRolesAsync(user);
 
-    //    var token = GenerateJwtToken(user, roles);
+		var token = GenerateJwtToken(user, roles);
 
-    //    var loginResponseDto = _mapper.Map<LoginResponseDto>(user);
-    //    loginResponseDto.Roles = roles;
-    //    loginResponseDto.Token = token;
+		var loginResponseDto = _mapper.Map<LoginResponseDto>(user);
+		loginResponseDto.Roles = roles;
+		loginResponseDto.Token = token;
 
-    //    _logger.LogInformation($"Successfully generated claims for {user.UserName}");
-    //    _logger.LogInformation($"{user.UserName} successfully logged in");
-    //    return Result<LoginResponseDto>.Success(loginResponseDto);
-    //}
+		_logger.LogInformation($"Successfully generated claims for {user.UserName}");
+		_logger.LogInformation($"{user.UserName} successfully logged in");
+		return Result<LoginResponseDto>.Success(loginResponseDto);
+	}
 
-    /// <summary>
-    /// Registers a new user.
-    /// </summary>
-    /// <param name="user">The user to register.</param>
-    /// <param name="password">The user's entered password.</param>
-    /// <returns>The result of the registration attempt.</returns>
-    public async Task<Result<ApplicationUser>> RegisterAsync(ApplicationUser user, string password)
+	/// <summary>
+	/// Registers a new user.
+	/// </summary>
+	/// <param name="user">The user to register.</param>
+	/// <param name="password">The user's entered password.</param>
+	/// <returns>The result of the registration attempt.</returns>
+	public async Task<Result<ApplicationUser>> RegisterAsync(ApplicationUser user, string password)
     {
         var result = await _userManager.CreateAsync(user, password);
 
@@ -149,33 +145,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
         return await RegisterUserWithRoleAsync(customer, customerRequestDto.Password, role);
     }
 
-    /// <summary>
-    /// Registers a new doctor with doctor role.
-    /// </summary>
-    /// <param name="doctorDto">The Dto of the doctor.</param>
-    /// <returns>The result of the registration attempt.</returns>
-    //public async Task<Result> RegisterDoctorAsync(DoctorRequestDto doctorDto)
-    //{
-    //    string role = "Doctor";
-
-    //    var doctor = _mapper.Map<Doctor>(doctorDto);
-
-    //    return await RegisterUserWithRoleAsync(doctor, doctorDto.Password, role);
-    //}
-
-    /// <summary>
-    /// Registers a new laboratorist with laboratorist role.
-    /// </summary>
-    /// <param name="laboratoristDto">The Dto of the laboratorist.</param>
-    /// <returns>The result of the registration attempt.</returns>
-    //public async Task<Result> RegisterLaboratoristAsync(LaboratoriestRequestDto laboratoristDto)
-    //{
-    //    string role = "Laboratorist";
-
-    //    var laboratorist = _mapper.Map<Laboratorist>(laboratoristDto);
-
-    //    return await RegisterUserWithRoleAsync(laboratorist, laboratoristDto.Password, role);
-    //}
+    
 
     /// <summary>
     /// Registers a new employee with employee role.
@@ -192,7 +162,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
     }
 
     /// <summary>
-    /// Registers a new sales with sales role.
+    /// Registers a new sales with employee role.
     /// </summary>
     /// <param name="salesDto">The Dto of the sales.</param>
     /// <returns>The result of the registration attempt.</returns>
@@ -208,7 +178,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
     /// <summary>
     /// Registers a new vendor with vendor role.
     /// </summary>
-    /// <param name="salesDto">The Dto of the vendor.</param>
+    /// <param name="vendorDto">The Dto of the vendor.</param>
     /// <returns>The result of the registration attempt.</returns>
     public async Task<Result> RegisterVendorAsync(VendorRequestDto vendorDto)
     {
@@ -219,33 +189,6 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
         return await RegisterUserWithRoleAsync(vendor, vendorDto.Password, role);
     }
 
-    /// <summary>
-    /// Registers a new pharmacist with pharmacist role.
-    /// </summary>
-    /// <param name="pharmacistDto">The Dto of the pharmacist.</param>
-    /// <returns>The result of the registration attempt.</returns>
-    //public async Task<Result> RegisterPharmacistAsync(PharmacistRequestDto pharmacistDto)
-    //{
-    //    string role = "Pharmacist";
-
-    //    var pharmacist = _mapper.Map<Pharmacist>(pharmacistDto);
-
-    //    return await RegisterUserWithRoleAsync(pharmacist, pharmacistDto.Password, role);
-    //}
-
-    /// <summary>
-    /// Registers a new nurse with nurse role.
-    /// </summary>
-    /// <param name="nurseDto">The Dto of the nurse.</param>
-    /// <returns>The result of the registration attempt.</returns>
-    //public async Task<Result> RegisterNurseAsync(NurseRequestDto nurseDto)
-    //{
-    //    string role = "Nurse";
-
-    //    var nurse = _mapper.Map<Nurse>(nurseDto);
-
-    //    return await RegisterUserWithRoleAsync(nurse, nurseDto.Password, role);
-    //}
 
     /// <summary>
     /// Generates claims for a user.
@@ -297,7 +240,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
 
     public async Task InitializeRoles()
     {
-        var roles = new List<string> {"Manager", "Employee","Customer","Sales","Vendor"};
+        var roles = new List<string> {"Manager", "Employee","Customer","WarehouseManager","Sales","Vendor"};
 
         foreach (var role in roles)
         {
@@ -325,4 +268,8 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
         await _userManager.AddToRoleAsync(user, "Manager");
     }
 
+	public Task<Result> RegisterWarehouseManagerAsync(WareHouseManagerRequestDto wareHouseManagerRequestDto)
+	{
+		throw new NotImplementedException();
+	}
 }

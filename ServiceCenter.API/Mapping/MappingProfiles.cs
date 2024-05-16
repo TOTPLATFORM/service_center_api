@@ -64,6 +64,10 @@ public class MappingProfiles : Profile
 
         this.AddOverviewMapping();
 
+        this.AddAuthMapping();
+
+        this.AddRatingServiceMapping();
+
         this.AddVendorMapping();
 	}
 

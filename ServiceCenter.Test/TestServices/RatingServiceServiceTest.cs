@@ -6,7 +6,6 @@ using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
 using ServiceCenter.Test.TestPriority;
 using ServiceCenter.Test.TestSetup;
-using ServiceCenter.Test.TestSetup.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,64 +16,64 @@ namespace ServiceCenter.Test.TestServices;
 [TestCaseOrderer(
 ordererTypeName: "ServiceCenter.Test.TestPriority.PriorityOrderer",
 ordererAssemblyName: "ServiceCenter.Test")]
-public class FeedbackServiceTest
+public class RatingServiceServiceTest
 {
-    private static FeedbackService _feedbackService;
-    private string userEmail = "Mariamabdeeen@gmail.com";
-    private FeedbackService CreatefeedbackService()
+    private static RatingServiceService _ratingServiceService;
+    private string userEmail = "hagershaaban7@gmail.com";
+    private RatingServiceService CreateRatingServiceService()
     {
 
-        if (_feedbackService is null)
+        if (_ratingServiceService is null)
         {
             var dbContext = ContextGenerator.Generator();
 
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfiles>()).CreateMapper();
 
-            ILogger<FeedbackService> logger = new LoggerFactory().CreateLogger<FeedbackService>();
+            ILogger<RatingServiceService> logger = new LoggerFactory().CreateLogger<RatingServiceService>();
 
             IUserContextService userContext = new UserContextService();
 
-            _feedbackService = new FeedbackService(dbContext, mapper, logger, userContext);
+            _ratingServiceService = new RatingServiceService(dbContext, mapper, logger, userContext);
         }
 
-        return _feedbackService;
+        return _ratingServiceService;
     }
     private void CheckService()
     {
-        if (_feedbackService is null)
-            _feedbackService = CreatefeedbackService();
+        if (_ratingServiceService is null)
+            _ratingServiceService = CreateRatingServiceService();
     }
 
     /// <summary>
-    /// fuction to get all  feedbacks as a test case 
+    /// fuction to get all  rating services as a test case 
     /// </summary>
     [Fact, TestPriority(1)]
-    public async Task GetAllfeedback()
+    public async Task GetAllRatingService()
     {
         // Arrange
         CheckService();
 
         // Act
-        var result = await _feedbackService.GetAllFeedbackAsync();
+        var result = await _ratingServiceService.GetAllRatingServicesAsync();
 
         // Assert
         Assert.True(result.IsSuccess);
 
     }
     /// <summary>
-    /// fuction to get feedback by id as a test case 
+    /// fuction to get rating service by id as a test case 
     /// </summary>
-    /// <param name="id"> feedback id</param>
+    /// <param name="id"> RatingService id</param>
     [Theory, TestPriority(2)]
     [InlineData(1)]
     [InlineData(6)]
-    public async Task GetByIdfeedback(int id)
+    public async Task GetByIdRatingService(int id)
     {
         // Arrange
         CheckService();
 
         // Act
-        var result = await _feedbackService.GetFeedbackByIdAsync(id);
+        var result = await _ratingServiceService.GetRatingServiceByIdAsync(id);
 
         // Assert
         if (result.IsSuccess)
@@ -84,19 +83,19 @@ public class FeedbackServiceTest
 
     }
     /// <summary>
-    /// fuction to add feedback as a test case that take  timeslot id ,created by user name
+    /// fuction to add rating service as a test case that take  
     /// </summary>
 
     [Theory, TestPriority(0)]
-    [InlineData("Desc1", "Product", "7/11/2024")]
-    public async Task Addfeedback(string feedbackDesc, string feedbackCategory,string feedbackDate)
+    [InlineData(5,"dnsx64984795-5148947-5489")]
+    public async Task AddRatingService(int ratingValue , string customerId)
     {
         // Arrange
         CheckService();
-        var feedbackRequestDto = new FeedbackRequestDto { FeedbackDescription= feedbackDesc, FeedbackCategory= feedbackCategory, FeedbackDate= DateOnly.Parse(feedbackDate) };
+        var ratingServiceRequestDto = new RatingServiceRequestDto { RatingValue = ratingValue ,CustomerId= customerId };
 
         // Act
-        var result = await _feedbackService.AddFeedbackAsync(feedbackRequestDto);
+        var result = await _ratingServiceService.AddRatingServiceAsync(ratingServiceRequestDto);
 
         // Assert
         if (result.IsSuccess)
@@ -105,19 +104,19 @@ public class FeedbackServiceTest
             Assert.False(result.IsSuccess);
     }
     /// <summary>
-    /// fuction to remove feedback as a test case that take feedback id
+    /// fuction to remove rating service as a test case that take RatingService id
     /// </summary>
-    /// <param name="id"> feedback id</param>
+    /// <param name="id"> rating service id</param>
     [Theory, TestPriority(4)]
     [InlineData(1)]
     [InlineData(50)]
-    public async Task Removefeedback(int id)
+    public async Task RemoveRatingService(int id)
     {
         // Arrange
         CheckService();
 
         // Act
-        var result = await _feedbackService.DeleteFeedbackAsync(id);
+        var result = await _ratingServiceService.DeleteRatingServiceAsync(id);
 
         // Assert
         if (result.IsSuccess)
@@ -128,20 +127,20 @@ public class FeedbackServiceTest
     }
 
     /// <summary>
-    /// fuction to update feedback as a test case that take id Updated by user name,expected result
+    /// fuction to update rating service as a test case that take ,expected result
     /// </summary>
-    /// <param name="id">feedback id</param>  
+    /// <param name="id">rating service id</param>  
     [Theory, TestPriority(3)]
-    [InlineData(1, true)]
-    [InlineData(30, false)]
-    public async Task Updatefeedback(int id, bool expectedResult)
+    [InlineData(2, 5,1, "0d133c1a-804f-4548-8f7e-8c3f504561954", true)]
+    [InlineData(30, 5,1, "dnsx64984795-5148947-5489", false)]
+    public async Task UpdateRatingService(int id, int ratingValue,int serviceId, string customerId, bool expectedResult)
     {
         // Arrange
         CheckService();
-        var feedbackRequestDto = new FeedbackRequestDto { FeedbackDescription = "feedbackDesc", FeedbackCategory = "feedbackCategory", FeedbackDate = DateOnly.Parse("7/11/2024") };
+        var RatingServiceRequestDto = new RatingServiceRequestDto {RatingValue= ratingValue, ServiceId= serviceId, CustomerId = customerId };
 
         // Act
-        var result = await _feedbackService.UpdateFeedbackAsync(id, feedbackRequestDto);
+        var result = await _ratingServiceService.UpdateRatingServiceAsync(id, RatingServiceRequestDto);
 
         if (expectedResult)
         {

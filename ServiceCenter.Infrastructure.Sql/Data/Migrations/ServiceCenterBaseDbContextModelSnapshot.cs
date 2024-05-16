@@ -1101,9 +1101,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("RatingDate")
-                        .HasColumnType("date");
-
                     b.Property<int>("RatingValue")
                         .HasColumnType("int");
 
