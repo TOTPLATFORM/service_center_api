@@ -46,7 +46,6 @@ public class ServiceCenterBaseDbContext : IdentityDbContext<ApplicationUser>
 	public DbSet<ItemCategory> ItemCategories { get; set; }
 	public DbSet<Inventory> Inventories { get; set; }
 	public DbSet<ProductBrand> ProductBrands { get; set; }
-	public DbSet<Rating> Ratings { get; set; }
 	public DbSet<Sales> Sales { get; set; }
 	public DbSet<Vendor> Vendors { get; set; }
 	public DbSet<Service> Services { get; set; }
@@ -61,7 +60,6 @@ public class ServiceCenterBaseDbContext : IdentityDbContext<ApplicationUser>
 	public DbSet<Offer> Offers { get; set; }
     public DbSet<CenterService>  CenterServices { get; set; }
 	public DbSet<CustomerService> CustomerServices { get; set; }
-	public DbSet<RatingCustomer> RatingCustomers { get; set; }
 	public DbSet<RatingService> RatingServices { get; set; }
 	public DbSet<Overview> Overviews { get; set; }
 

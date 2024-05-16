@@ -1078,7 +1078,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.ToTable("ProductCategories");
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Rating", b =>
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.RatingService", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1093,6 +1093,10 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1103,55 +1107,15 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.Property<int>("RatingValue")
                         .HasColumnType("int");
 
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ratings");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.RatingCustomer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("RatingId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("CustomerId");
-
-                    b.HasIndex("RatingId");
-
-                    b.ToTable("RatingCustomers");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.RatingService", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("RatingId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RatingId");
 
                     b.HasIndex("ServiceId");
 
@@ -1838,30 +1802,11 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.Navigation("Sales");
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.RatingCustomer", b =>
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.RatingService", b =>
                 {
                     b.HasOne("ServiceCenter.Domain.Entities.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServiceCenter.Domain.Entities.Rating", "Rating")
-                        .WithMany()
-                        .HasForeignKey("RatingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Rating");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.RatingService", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Rating", "Rating")
-                        .WithMany()
-                        .HasForeignKey("RatingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1871,7 +1816,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Rating");
+                    b.Navigation("Customer");
 
                     b.Navigation("Service");
                 });

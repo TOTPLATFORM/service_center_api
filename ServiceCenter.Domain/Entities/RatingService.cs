@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Domain.Entities;
 
-public class RatingService : BaseEntity
+public class RatingService : Rating
 {
-    public int RatingId { get; set; }
     public int ServiceId { get; set; }
+    public string CustomerId { get; set; } = "";
     public virtual Service Service { get; set; } = default;
-    public virtual Rating Rating { get; set; } = default;
+    public virtual Customer Customer { get; set; } = default;
 }

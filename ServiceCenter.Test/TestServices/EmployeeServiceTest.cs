@@ -14,7 +14,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceCenter.Test.TestServices;
-
+[TestCaseOrderer(
+ordererTypeName: "ServiceCenter.Test.TestPriority.PriorityOrderer",
+ordererAssemblyName: "ServiceCenter.Test")]
 public class EmployeeServiceTest
 {
     private static EmployeeService _employeeService;
