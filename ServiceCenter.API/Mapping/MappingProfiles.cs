@@ -63,6 +63,8 @@ public class MappingProfiles : Profile
         this.AddSalesMapping();
 
         this.AddOverviewMapping();
+
+        this.AddAuthMapping();
 	}
 
 }
