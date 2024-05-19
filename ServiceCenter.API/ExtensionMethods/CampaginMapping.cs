@@ -11,5 +11,7 @@ public static class CampaginMapping
 		map.CreateMap<CampaginRequestDto, Campagin>();
 
 		map.CreateMap<Campagin, CampaginResponseDto>();
+
+		map.CreateMap<Campagin, CampaginGetByIdResposeDto>();
 	}
 }
