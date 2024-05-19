@@ -58,7 +58,7 @@ public class ContactController(IContactService contactService) : BaseController
 	//[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<ContactResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<ContactResponseDto>> UpdateContactStatusAsync(ContactStatus status, int id)
+	public async Task<Result<ContactResponseDto>> UpdateContactStatus(ContactStatus status, int id)
 	{
 		return await _contactService.UpdateContactStatusAsync(id, status);
 	}

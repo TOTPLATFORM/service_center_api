@@ -63,7 +63,7 @@ public class BranchController(IBranchService branchService) : BaseController
 	}
 
 	/// <summary>
-	/// get  branch by id in the system.
+	/// update  branch by id in the system.
 	/// </summary>
 	///<param name="id">id of branch.</param>
 	///<param name="branchRequestDto">branch dto.</param>
