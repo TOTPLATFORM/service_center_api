@@ -12,9 +12,5 @@ public class CampaginResponseDto
     public int Id { get; set; }
     public string CamapginName { get; set; } = "";
 	public string CampaginDescription { get; set; } = "";
-	public DateOnly StartDate { get; set; }
-	public DateOnly EndDate { get; set; }
-	public int Budget { get; set; }
-	public string Goals { get; set; } = "";
-	public string Status { get; set; } = "";
+	
 }
