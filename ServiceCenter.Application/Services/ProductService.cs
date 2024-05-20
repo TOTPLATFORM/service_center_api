@@ -135,7 +135,7 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         _logger.LogInformation("Fetching search Product by name . Total count: {Prouct}.", names.Count);
         return Result.Success(names);
     }
-
+    ///<inheritdoc/>
     public async  Task<Result<List<ProductResponseDto>>> GetAllProductsForSpecificProductCategory(string categoryname)
     {
         var products = await _dbContext.Products
@@ -146,7 +146,7 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         _logger.LogInformation("Fetching products. Total count: {products}.", products.Count);
         return Result.Success(products);
     }
-
+    ///<inheritdoc/>
     public async  Task<Result<List<ProductResponseDto>>> GetAllProductsForSpecificProductBrand(string brandName)
     {
         var products = await _dbContext.Products
@@ -157,4 +157,5 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         _logger.LogInformation("Fetching products. Total count: {products}.", products.Count);
         return Result.Success(products);
     }
+
 }
