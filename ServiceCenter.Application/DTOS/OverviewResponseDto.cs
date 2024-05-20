@@ -16,5 +16,5 @@ public class OverviewResponseDto
     public Status Status { get; set; }
     public DateTime DueDate { get; set; }
 
-    public virtual SalesResponseDto Sales { get; set; } = default;
+    public string SalesName { get; set; } = "";
 }
