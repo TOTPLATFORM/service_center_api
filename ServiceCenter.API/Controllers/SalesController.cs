@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Core.Result;
@@ -19,7 +20,7 @@ public class SalesController(ISalesService salesService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPost]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddSales(SalesRequestDto salesRequestDto)
@@ -35,9 +36,8 @@ public class SalesController(ISalesService salesService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<List<SalesResponseDto>>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<SalesResponseDto>>> GetAllSales()
     {
         return await _salesService.GetAllSalesAsync();
@@ -51,9 +51,9 @@ public class SalesController(ISalesService salesService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager,Sales")]
     [ProducesResponseType(typeof(Result<SalesResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<SalesResponseDto>> GetSalesById(string id)
     {
         return await _salesService.GetSalesByIdAsync(id);
@@ -70,7 +70,7 @@ public class SalesController(ISalesService salesService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager,Sales")]
     [ProducesResponseType(typeof(Result<SalesResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<SalesResponseDto>> UpdateSales(string id, SalesRequestDto salesRequestDto)
@@ -87,9 +87,9 @@ public class SalesController(ISalesService salesService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpGet("search/{text}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<SalesResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<List<SalesResponseDto>>> SerachSalesByText(string text)
     {
         return await _salesService.SearchSalesByTextAsync(text);
@@ -102,10 +102,10 @@ public class SalesController(ISalesService salesService) : BaseController
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpDelete]
-    //[Authorize(Roles = "Admin")]
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteSalesAsycn(string id)
     {
         return await _salesService.DeleteSalesAsync(id);

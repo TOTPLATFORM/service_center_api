@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Core.Result;
@@ -19,7 +20,7 @@ public class VendorController(IVendorService vendorService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPost]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddVendor(VendorRequestDto vendorRequestDto)
@@ -35,9 +36,8 @@ public class VendorController(IVendorService vendorService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<List<VendorResponseDto>>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<VendorResponseDto>>> GetAllVendor()
     {
         return await _vendorService.GetAllVendorsAsync();
@@ -51,9 +51,9 @@ public class VendorController(IVendorService vendorService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<VendorResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<VendorResponseDto>> GetVendorById(string id)
     {
         return await _vendorService.GetVendorByIdAsync(id);
@@ -70,7 +70,7 @@ public class VendorController(IVendorService vendorService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<VendorResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<VendorResponseDto>> UpdateVendor(string id, VendorRequestDto vendorRequestDto)
@@ -87,9 +87,9 @@ public class VendorController(IVendorService vendorService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpGet("search/{text}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<VendorResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<List<VendorResponseDto>>> SerachVendorByText(string text)
     {
         return await _vendorService.SearchVendorByTextAsync(text);
@@ -102,10 +102,10 @@ public class VendorController(IVendorService vendorService) : BaseController
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpDelete]
-    //[Authorize(Roles = "Admin")]
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteVendorAsycn(string id)
     {
         return await _vendorService.DeleteVendorAsync(id);

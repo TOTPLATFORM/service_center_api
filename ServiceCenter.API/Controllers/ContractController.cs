@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
@@ -20,7 +21,7 @@ public class ContractController(IContractService ContractService) : BaseControll
     /// </remarks>
     /// <returns>result for Contract  added successfully.</returns>
     [HttpPost]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddContract(ContractRequestDto ContractDto)
@@ -37,9 +38,8 @@ public class ContractController(IContractService ContractService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Employee,Manager,Customer")]
     [ProducesResponseType(typeof(Result<List<ContractResponseDto>>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<ContractResponseDto>>> GetAllContract()
     {
         return await _ContractService.GetAllContractAsync();
@@ -53,9 +53,9 @@ public class ContractController(IContractService ContractService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Employee,Manager,Customer")]
     [ProducesResponseType(typeof(Result<ContractResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<ContractResponseDto>> GetContractById(int id)
     {
         return await _ContractService.GetContractByIdAsync(id);
@@ -69,7 +69,7 @@ public class ContractController(IContractService ContractService) : BaseControll
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Employee,Manager")]
     [ProducesResponseType(typeof(Result<ContractResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ContractResponseDto>> UpdateContract(int id, ContractRequestDto ContractRequestDto)
@@ -84,8 +84,8 @@ public class ContractController(IContractService ContractService) : BaseControll
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpDelete]
-    //[Authorize(Roles = "Admin")]
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> DeleteContractAsycn(int id)

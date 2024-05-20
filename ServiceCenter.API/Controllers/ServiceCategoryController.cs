@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Core.Result;
@@ -15,7 +16,7 @@ public class ServiceCategoryController(IServiceCategoryService itemCategoryServi
     /// <param name="itemCategoryDto">ServiceCategory dto</param>
     /// <returns>result for ServiceCategory added successfully.</returns>
     [HttpPost]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddServiceCategory(ServiceCategoryRequestDto itemCategoryDto)
@@ -24,10 +25,9 @@ public class ServiceCategoryController(IServiceCategoryService itemCategoryServi
     }
 
     [HttpGet]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<List<ServiceCategoryResponseDto>>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<ServiceCategoryResponseDto>>> GetAllServiceCategorys()
+    public async Task<Result<List<ServiceCategoryResponseDto>>> GetAllServiceCategories()
     {
         return await _itemCategoryService.GetAllServiceCategoryAsync();
     }
@@ -36,15 +36,15 @@ public class ServiceCategoryController(IServiceCategoryService itemCategoryServi
     /// </summary>
     /// <returns>result of ServiceCategory response dto</returns>
     [HttpGet("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<ServiceCategoryResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<ServiceCategoryResponseDto>> GetServiceCategoryById(int id)
     {
         return await _itemCategoryService.GetServiceCategoryByIdAsync(id);
     }
     [HttpPut("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<ServiceCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ServiceCategoryResponseDto>> UpdateServiceCategory(int id, ServiceCategoryRequestDto itemCategoryDto)
@@ -56,11 +56,11 @@ public class ServiceCategoryController(IServiceCategoryService itemCategoryServi
     /// </summary>
     /// <param name="id">ServiceCategory id</param>
     /// <returns>result of ServiceCategory removed successfully </returns>
-    [HttpDelete]
-    //  [Authorize(Roles = "Admin")]
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result> DeleteServiceCategoryAsycn(int id)
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+    public async Task<Result> DeleteServiceCategory(int id)
     {
         return await _itemCategoryService.DeleteServiceCategoryAsync(id);
     }
@@ -71,9 +71,9 @@ public class ServiceCategoryController(IServiceCategoryService itemCategoryServi
     /// <param name="text">ServiceCategory name</param>
     /// <returns>ServiceCategory response dto </returns>
     [HttpGet("search/{text}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<ServiceCategoryResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<List<ServiceCategoryResponseDto>>> SearchServiceCategoryByText(string text)
     {
         return await _itemCategoryService.SearchServiceCategoryByTextAsync(text);

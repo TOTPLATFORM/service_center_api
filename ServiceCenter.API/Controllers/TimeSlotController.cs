@@ -17,17 +17,16 @@ public class TimeSlotController(ITimeSlotService timeSlotService) : BaseControll
 	/// <param name="timeSlotDto">time slot dto</param>
 	/// <returns>result for time slot added successfully.</returns>
 	[HttpPost]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> AddTimeSlot(TimeSlotRequestDto timeSlotDto)
 	{
 		return await _timeSlotService.AddTimeSlotAsync(timeSlotDto);
 	}
 	[HttpGet]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<List<TimeSlotResponseDto>>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<List<TimeSlotResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<List<TimeSlotResponseDto>>> GetAllTimeSlots()
 	{
 		return await _timeSlotService.GetAllTimeSlotAsync();
@@ -38,17 +37,17 @@ public class TimeSlotController(ITimeSlotService timeSlotService) : BaseControll
 	/// </summary>
 	/// <returns>result of time slot response dto</returns>
 	[HttpGet("{id}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<TimeSlotResponseDto>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<TimeSlotResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<TimeSlotResponseDto>> GetTimeSlotById(int id)
 	{
 		return await _timeSlotService.GetTimeSlotByIdAsync(id);
 	}
 
 	[HttpPut("{id}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<TimeSlotResponseDto>), StatusCodes.Status200OK)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<TimeSlotResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<TimeSlotResponseDto>> UpdateTimeSlot(int id, TimeSlotRequestDto timeSlotDto)
 	{
@@ -56,9 +55,9 @@ public class TimeSlotController(ITimeSlotService timeSlotService) : BaseControll
 	}
 
 	[HttpGet("search/{text}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<TimeSlotResponseDto>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<TimeSlotResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<List<TimeSlotResponseDto>>> SerachTimeSlotByText(string text)
 	{
 		return await _timeSlotService.SearchTimeSlotByTextAsync(text);
@@ -68,10 +67,10 @@ public class TimeSlotController(ITimeSlotService timeSlotService) : BaseControll
 	/// </summary>
 	/// <param name="Id">time slot id</param>
 	/// <returns>result of TimeSlot removed successfully </returns>
-	[HttpDelete]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	[HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result> DeleteTimeSlotAsycn(int id)
 	{
 		return await _timeSlotService.DeleteTimeSlotAsync(id);

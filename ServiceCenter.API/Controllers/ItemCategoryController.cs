@@ -19,7 +19,7 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     /// <param name="itemCategoryDto">ItemCategory dto</param>
     /// <returns>result for ItemCategory added successfully.</returns>
     [HttpPost]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "WarehouseManager,Vendor")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddItemCategory(ItemCategoryRequestDto itemCategoryDto)
@@ -28,9 +28,8 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     }
 
     [HttpGet]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "WarehouseManager,Vendor")]
     [ProducesResponseType(typeof(Result<List<ItemCategoryResponseDto>>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<ItemCategoryResponseDto>>> GetAllItemCategorys()
     {
         return await _itemCategoryService.GetAllItemCategoryAsync();
@@ -40,15 +39,15 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     /// </summary>
     /// <returns>result of ItemCategory response dto</returns>
     [HttpGet("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "WarehouseManager,Vendor")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<ItemCategoryResponseDto>> GetItemCategoryById(int id)
     {
         return await _itemCategoryService.GetItemCategoryByIdAsync(id);
     }
     [HttpPut("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "WarehouseManager,Vendor")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ItemCategoryResponseDto>> UpdateItemCategory(int id, ItemCategoryRequestDto itemCategoryDto)
@@ -60,11 +59,11 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     /// </summary>
     /// <param name="id">ItemCategory id</param>
     /// <returns>result of ItemCategory removed successfully </returns>
-    [HttpDelete]
-    //  [Authorize(Roles = "Admin")]
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "WarehouseManager,Vendor")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result> DeleteItemCategoryAsycn(int id)
+    public async Task<Result> DeleteItemCategory(int id)
     {
         return await _itemCategoryService.DeleteItemCategoryAsync(id);
     }
@@ -76,17 +75,17 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     /// <returns>ItemCategory response dto </returns>
 
     [HttpGet("search/{text}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "WarehouseManager,Vendor")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<List<ItemCategoryResponseDto>>> SearchItemCategoryByText(string text)
     {
         return await _itemCategoryService.SearchItemCategoryByTextAsync(text);
     }
     [HttpGet("searchByRelation/{text}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "WarehouseManager,Vendor")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<List<ItemCategoryResponseDto>>> SearchItemCategoryByRelation(string text)
     {
         return await _itemCategoryService.GetAllItemsCategoryForSpecificInventory (text);

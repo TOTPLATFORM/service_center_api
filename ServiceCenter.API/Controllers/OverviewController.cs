@@ -38,7 +38,6 @@ public class OverviewController(IOverviewService OverviewService) : BaseControll
     [HttpGet]
     [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<List<OverviewResponseDto>>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<OverviewResponseDto>>> GetAllOverview()
     {
         return await _OverviewService.GetAllOverviewAsync();
@@ -83,7 +82,7 @@ public class OverviewController(IOverviewService OverviewService) : BaseControll
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpDelete]
+    [HttpDelete("{id}")]
     [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]

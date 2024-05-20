@@ -119,16 +119,16 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 		return await _campaginService.SearchCampaginByTextAsync(text);
 	}
 
-	/// <summary>
-	/// delete  campagin by id from the system.
-	/// </summary>
-	///<param name="id">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Manager" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpDelete]
-	[Authorize(Roles = "Manager")]
+    /// <summary>
+    /// delete  campagin by id from the system.
+    /// </summary>
+    ///<param name="id">id</param>
+    /// <remarks>
+    /// Access is limited to users with the "Manager" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> DeleteCampaginAsycn(int id)

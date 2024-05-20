@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -21,7 +22,7 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPost]
-	//[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Manager")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> AddBranch(BranchRequestDto branchRequestDto)
@@ -38,9 +39,8 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-	//[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Manager,Customer")]
 	[ProducesResponseType(typeof(Result<List<BranchResponseDto>>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<List<BranchResponseDto>>> GetAllBranches()
 	{
 		return await _branchService.GetAllBranchesAsync();
@@ -54,7 +54,7 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
-	//[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Manager")]
 	[ProducesResponseType(typeof(Result<BranchResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<BranchResponseDto>> GetBranchById(int id)
@@ -73,7 +73,7 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPut("{id}")]
-	//[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Manager")]
 	[ProducesResponseType(typeof(Result<BranchResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<BranchResponseDto>> UpdateBranch(int id, BranchRequestDto branchRequestDto)
@@ -90,24 +90,24 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-	//[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Manager,Customer")]
 	[ProducesResponseType(typeof(Result<BranchResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<List<BranchResponseDto>>> SerachBranchByText(string text)
 	{
 		return await _branchService.SearchBranchByTextAsync(text);
 	}
-	/// <summary>
-	/// delete  branch by id from the system.
-	/// </summary>
-	///<param name="id">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpDelete]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    /// <summary>
+    /// delete  branch by id from the system.
+    /// </summary>
+    ///<param name="id">id</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> DeleteBranchAsycn(int id)
 	{

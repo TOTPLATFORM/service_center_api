@@ -20,10 +20,9 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <returns>result of list from order response dto.</returns>
 
     [HttpGet("{status}")]
-   // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Employee")]
     [ProducesResponseType(typeof(Result<List<OrderResponseDto>>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<OrderResponseDto>>> GetAllOrdersAsync(Status status)
+    public async Task<Result<List<OrderResponseDto>>> GetAllOrders(Status status)
     {
         return await _orderService.GetAllOrderAsync(status);
     }
@@ -35,10 +34,10 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <returns>result of order response dto </returns>
 
     [HttpGet("{id:int}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Employee")]
     [ProducesResponseType(typeof(Result<OrderResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<OrderResponseDto>> GetOrderByIdAsync(int id)
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+    public async Task<Result<OrderResponseDto>> GetOrderById(int id)
     {
         return await _orderService.GetOrderByIdAsync(id);
     }
@@ -50,10 +49,10 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <returns>result of the order added successfully</returns>
 
     [HttpPost]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Employee")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result> AddOrderAsync(OrderRequestDto orderDto)
+    public async Task<Result> AddOrder(OrderRequestDto orderDto)
     {
         return await _orderService.AddOrderAsync(orderDto);
     }
@@ -66,10 +65,10 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <returns>result of the order response dto after updated successfully</returns>
 
     [HttpPut("orderId/{id}/status/{status}")]
-  //  [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Employee")]
     [ProducesResponseType(typeof(Result<OrderResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<OrderResponseDto>> UpdateOrderStatusAsync(Status status, int id)
+    public async Task<Result<OrderResponseDto>> UpdateOrderStatus(Status status, int id)
     {
         return await _orderService.UpdateOrderStatusAsync(id,status);
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -21,8 +22,8 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPost]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> AddEmployee(EmployeeRequestDto employeeRequestDto)
 	{
@@ -37,9 +38,8 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<List<EmployeeResponseDto>>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<List<EmployeeResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<List<EmployeeResponseDto>>> GetAllEmployees()
 	{
 		return await _employeeService.GetAllEmployeesAsync();
@@ -53,9 +53,9 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<EmployeeResponseDto>> GetEmployeeById(string id)
 	{
 		return await _employeeService.GetEmployeeByIdAsync(id);
@@ -72,8 +72,8 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPut("{id}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status200OK)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<EmployeeResponseDto>> UpdateEmployee(string id, EmployeeRequestDto employeeRequestDto)
 	{
@@ -89,25 +89,25 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<List<EmployeeResponseDto>>> SerachEmployeeByText(string text)
 	{
 		return await _employeeService.SearchEmployeeByTextAsync(text);
 	}
-	/// <summary>
-	/// delete  employee by id from the system.
-	/// </summary>
-	///<param name="id">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpDelete]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    /// <summary>
+    /// delete  employee by id from the system.
+    /// </summary>
+    ///<param name="id">id</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result> DeleteEmployeeAsycn(string id)
 	{
 		return await _employeeService.DeleteEmployeeAsync(id);

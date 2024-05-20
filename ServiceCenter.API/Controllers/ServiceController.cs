@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -19,7 +20,7 @@ public class ServiceController(IServiceService ServiceService) : BaseController
     /// </remarks>
     /// <returns>result for Service  added successfully.</returns>
     [HttpPost]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager,Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddService(ServiceRequestDto ServiceDto)
@@ -34,9 +35,8 @@ public class ServiceController(IServiceService ServiceService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager,Customer")]
     [ProducesResponseType(typeof(Result<List<ServiceResponseDto>>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<ServiceResponseDto>>> GetAllService()
     {
         return await _ServiceService.GetAllServiceAsync();
@@ -50,9 +50,9 @@ public class ServiceController(IServiceService ServiceService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager,Customer")]
     [ProducesResponseType(typeof(Result<ServiceResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<ServiceGetByIdResponseDto>> GetServiceById(int id)
     {
         return await _ServiceService.GetServiceByIdAsync(id);
@@ -66,7 +66,7 @@ public class ServiceController(IServiceService ServiceService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager,Customer")]
     [ProducesResponseType(typeof(Result<ServiceResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ServiceResponseDto>> UpdateService(int id, ServiceRequestDto ServiceRequestDto)
@@ -81,10 +81,10 @@ public class ServiceController(IServiceService ServiceService) : BaseController
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpDelete]
-    //[Authorize(Roles = "Admin")]
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager,Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteServiceAsycn(int id)
     {
         return await _ServiceService.DeleteServiceAsync(id);
@@ -97,9 +97,9 @@ public class ServiceController(IServiceService ServiceService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpGet("search/{text}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager,Customer")]
     [ProducesResponseType(typeof(Result<ServiceResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<List<ServiceResponseDto>>> SearchServiceByText(string text)
     {
         return await _ServiceService.SearchServiceByTextAsync(text);

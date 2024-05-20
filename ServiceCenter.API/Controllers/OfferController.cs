@@ -1,4 +1,5 @@
 ﻿using HMSWithLayers.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -19,7 +20,7 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// <returns>result of the Offer added successfully</returns>
 
     [HttpPost]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddOfferAsync(OfferRequestDto OfferDto)
@@ -33,9 +34,8 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// <returns>result of list from Offer response dto.</returns>
 
     [HttpGet]
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<List<OfferResponseDto>>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<OfferResponseDto>>> GetAllOffersAsync()
     {
         return await _OfferService.GetAllOfferAsync();
@@ -47,9 +47,9 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// <returns>result of Offer response dto </returns>
 
     [HttpGet("{id:int}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<OfferResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<OfferResponseDto>> GetOfferByIdAsync(int id)
     {
         return await _OfferService.GetOfferByIdAsync(id);
@@ -63,7 +63,7 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<OfferResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<OfferResponseDto>> UpdateOffer(int id, OfferRequestDto OfferRequestDto)
@@ -78,10 +78,10 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpDelete]
-    //[Authorize(Roles = "Admin")]
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteOfferAsycn(int id)
     {
         return await _OfferService.DeleteOfferAsync(id);

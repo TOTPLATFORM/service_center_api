@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
@@ -18,7 +19,7 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     /// </remarks>
     /// <returns>result for Complaint  added successfully.</returns>
     [HttpPost]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddComplaint(ComplaintRequestDto ComplaintDto)
@@ -34,9 +35,8 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Customer,Manager")]
     [ProducesResponseType(typeof(Result<List<ComplaintResponseDto>>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<ComplaintResponseDto>>> GetAllComplaints()
     {
         return await _ComplaintService.GetAllComplaintsAsync();
@@ -51,7 +51,7 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Customer,Manager")]
     [ProducesResponseType(typeof(Result<ComplaintResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ComplaintResponseDto>> GetComplaintById(int id)
@@ -68,7 +68,7 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Customer,Manager")]
     [ProducesResponseType(typeof(Result<ComplaintResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ComplaintResponseDto>> UpdateComplaint(int id, ComplaintRequestDto ComplaintRequestDto)
@@ -83,8 +83,8 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpDelete]
-    //[Authorize(Roles = "Admin")]
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> DeleteComplaintAsycn(int id)
@@ -93,8 +93,8 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     }
 
 	[HttpGet("searchByComplaints/{customerId}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<ComplaintResponseDto>), StatusCodes.Status200OK)]
+    [Authorize(Roles = "Customer")]
+    [ProducesResponseType(typeof(Result<ComplaintResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<List<ComplaintResponseDto>>> GetComplaintsByCustomer(string customerId)
 	{

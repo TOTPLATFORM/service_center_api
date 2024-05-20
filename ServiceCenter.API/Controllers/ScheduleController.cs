@@ -21,7 +21,7 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     public async Task<Result> AddSchedule(ScheduleRequestDto scheduleRequestDto)
     {
@@ -34,7 +34,7 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all schedule for spicific agent.</returns>
     [HttpGet("SearchByEmployee/{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager,Employee")]
     [ProducesResponseType(typeof(Result<List<ScheduleResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<ScheduleResponseDto>>> GetAllscheduleForEmployee(string id)
     {
@@ -45,7 +45,7 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all schedule.</returns>
     [HttpGet]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<List<ScheduleResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<ScheduleResponseDto>>> GetAllschedule()
     {
@@ -58,9 +58,9 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// <param name="id">the unique identifier of the schedule .</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the schedule category details.</returns>
     [HttpGet("{id:int}")]
-    //[Authorize(Roles = "Admin,Agent")]
+    [Authorize(Roles = "Manager,Employee")]
     [ProducesResponseType(typeof(Result<ScheduleGetByIdResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result<ScheduleGetByIdResponseDto>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result<ScheduleGetByIdResponseDto>), StatusCodes.Status404NotFound)]
     public async Task<Result<ScheduleGetByIdResponseDto>> GetscheduleById(int id)
     {
         return await _scheduleService.GetScheduleByIdAsync(id);
@@ -72,7 +72,7 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// <param name="text">the search query text.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of schedule  that match the search criteria.</returns>
     [HttpGet("Search/{text}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<List<ScheduleResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<ScheduleResponseDto>>> SearchSchedule(string text)
     {
@@ -89,7 +89,7 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
     [HttpPut("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<ScheduleResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -107,7 +107,7 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteSchedule(int id)

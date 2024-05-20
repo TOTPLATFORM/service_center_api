@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -21,8 +22,8 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPost]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    [Authorize(Roles = "WarehouseManager")]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> AddInventory(InventoryRequestDto inventoryRequestDto)
 	{
@@ -37,9 +38,8 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<List<InventoryResponseDto>>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "WarehouseManager,Manager")]
+    [ProducesResponseType(typeof(Result<List<InventoryResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<List<InventoryResponseDto>>> GetAllInventories()
 	{
 		return await _inventoryService.GetAllInventoriesAsync();
@@ -53,9 +53,9 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<InventoryResponseDto>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "WarehouseManager,Manager")]
+    [ProducesResponseType(typeof(Result<InventoryResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<InventoryResponseDto>> GetInventoryById(int id)
 	{
 		return await _inventoryService.GetInventoryByIdAsync(id);
@@ -72,8 +72,8 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPut("{id}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<InventoryResponseDto>), StatusCodes.Status200OK)]
+    [Authorize(Roles = "WarehouseManager")]
+    [ProducesResponseType(typeof(Result<InventoryResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<InventoryResponseDto>> UpdateInventory(int id, InventoryRequestDto inventoryRequestDto )
 	{
@@ -89,24 +89,24 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<InventoryResponseDto>), StatusCodes.Status200OK)]
+    [Authorize(Roles = "WarehouseManager")]
+    [ProducesResponseType(typeof(Result<InventoryResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<List<InventoryResponseDto>>> SerachInventoryByText(string text)
 	{
 		return await _inventoryService.SearchInventoryByTextAsync(text);
 	}
-	/// <summary>
-	/// delete  inventory by id from the system.
-	/// </summary>
-	///<param name="id">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpDelete]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    /// <summary>
+    /// delete  inventory by id from the system.
+    /// </summary>
+    ///<param name="id">id</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "WarehouseManager")]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> DeleteInventoryAsycn(int id)
 	{

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -20,7 +21,7 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// </remarks>
     /// <returns>result for Feedback  added successfully.</returns>
     [HttpPost]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddFeedback(FeedbackRequestDto FeedbackDto)
@@ -35,9 +36,8 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Customer,Manager")]
     [ProducesResponseType(typeof(Result<List<FeedbackResponseDto>>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<FeedbackResponseDto>>> GetAllFeedback()
     {
         return await _FeedbackService.GetAllFeedbackAsync();
@@ -51,9 +51,9 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Customer,Manager")]
     [ProducesResponseType(typeof(Result<FeedbackResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<FeedbackResponseDto>> GetFeedbackById(int id)
     {
         return await _FeedbackService.GetFeedbackByIdAsync(id);
@@ -67,7 +67,7 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Customer,Manager")]
     [ProducesResponseType(typeof(Result<FeedbackResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<FeedbackResponseDto>> UpdateFeedback(int id, FeedbackRequestDto FeedbackRequestDto)
@@ -82,10 +82,10 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpDelete]
-    //[Authorize(Roles = "Admin")]
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Customer,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteFeedbackAsycn(int id)
     {
         return await _FeedbackService.DeleteFeedbackAsync(id);
@@ -97,9 +97,9 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("searchByFeedbacks/{customerId}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Customer,Manager")]
     [ProducesResponseType(typeof(Result<FeedbackResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<List<FeedbackResponseDto>>> GetFeedbacksByCustomer(string customerId)
     {
         return await _FeedbackService.GetFeedbacksByCustomerAsync(customerId);

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -18,9 +19,8 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<List<CustomerResponseDto>>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<List<CustomerResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<List<CustomerResponseDto>>> GetAllCustomers()
 	{
 		return await _customerService.GetAllCustomersAsync();
@@ -35,9 +35,9 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<CustomerGetByIdResponseDto>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<CustomerGetByIdResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<CustomerGetByIdResponseDto>> GetCustomerById(string id)
 	{
 		return await _customerService.GetCustomerByIdAsync(id);
@@ -53,8 +53,8 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPut("{id}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
+    [Authorize(Roles = "Manager,Customer")]
+    [ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<CustomerResponseDto>> UpdateCustomer(string id, CustomerRequestDto customerRequestDto)
 	{
@@ -70,8 +70,8 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
+    [Authorize(Roles = "Manager,Customer")]
+    [ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<List<CustomerResponseDto>>> SerachCustomerByText(string text)
 	{
@@ -88,26 +88,26 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("searchByCustomers/{branchId}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Manager,Customer")]
+    [ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<List<CustomerResponseDto>>> GetCustomersByBranch(int branchId)
 	{
 		return await _customerService.GetCustomersByBranchAsync(branchId);
 	}
-	/// <summary>
-	/// delete  customer by id from the system.
-	/// </summary>
-	///<param name="id">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpDelete]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result> DeleteCustomerAsycn(string id)
+    /// <summary>
+    /// delete  customer by id from the system.
+    /// </summary>
+    ///<param name="id">id</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+	public async Task<Result> DeleteCustomer(string id)
 	{
 		return await _customerService.DeleteCustomerAsync(id);
 	}

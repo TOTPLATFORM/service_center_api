@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -21,7 +22,7 @@ public class CenterController(ICenterService centerService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPost]
-	//[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Manager")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> AddCenter(CenterRequestDto centerRequestDto)
@@ -37,9 +38,8 @@ public class CenterController(ICenterService centerService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<List<CenterResponseDto>>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<List<CenterResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<List<CenterResponseDto>>> GetAllCenters()
 	{
 		return await _centerService.GetAllCentersAsync();
@@ -53,8 +53,8 @@ public class CenterController(ICenterService centerService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<CenterResponseDto>), StatusCodes.Status200OK)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<CenterResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<CenterResponseDto>> GetCenterById(int id)
 	{
@@ -72,8 +72,8 @@ public class CenterController(ICenterService centerService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPut("{id}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<CenterResponseDto>), StatusCodes.Status200OK)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<CenterResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<CenterResponseDto>> UpdateCenter(int id, CenterRequestDto centerRequestDto)
 	{
@@ -89,24 +89,24 @@ public class CenterController(ICenterService centerService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<CenterResponseDto>), StatusCodes.Status200OK)]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<CenterResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<List<CenterResponseDto>>> SerachCenterByText(string text)
 	{
 		return await _centerService.SearchCenterByTextAsync(text);
 	}
-	/// <summary>
-	/// delete  center by id from the system.
-	/// </summary>
-	///<param name="id">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpDelete]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    /// <summary>
+    /// delete  center by id from the system.
+    /// </summary>
+    ///<param name="id">id</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> DeleteCenterAsycn(int id)
 	{

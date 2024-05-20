@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -20,7 +21,7 @@ public class RatingServiceController(IRatingServiceService ratingServiceService)
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     public async Task<Result> AddRatingService(RatingServiceRequestDto ratingServiceRequestDto)
     {
@@ -33,7 +34,7 @@ public class RatingServiceController(IRatingServiceService ratingServiceService)
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all rating service for spicific customer.</returns>
     [HttpGet("SearchByCustomer/{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result<List<RatingServiceResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<RatingServiceResponseDto>>> GetsRatingServicesByCustomer(string id)
     {
@@ -44,7 +45,7 @@ public class RatingServiceController(IRatingServiceService ratingServiceService)
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all rating service for spicific service.</returns>
     [HttpGet("SearchByService/{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Customer,Manager")]
     [ProducesResponseType(typeof(Result<List<RatingServiceResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<RatingServiceResponseDto>>> GetRatingServicesByService(int id)
     {
@@ -55,7 +56,7 @@ public class RatingServiceController(IRatingServiceService ratingServiceService)
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all rating service.</returns>
     [HttpGet]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<List<RatingServiceResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<RatingServiceResponseDto>>> GetAllRatingService()
     {
@@ -68,9 +69,9 @@ public class RatingServiceController(IRatingServiceService ratingServiceService)
     /// <param name="id">the unique identifier of the rating service .</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the rating service details.</returns>
     [HttpGet("{id:int}")]
-    //[Authorize(Roles = "Admin,Agent,Client")]
+    [Authorize(Roles = "Customer,Manager")]
     [ProducesResponseType(typeof(Result<RatingServiceGetByIdResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result<RatingServiceGetByIdResponseDto>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Result<RatingServiceGetByIdResponseDto>), StatusCodes.Status404NotFound)]
     public async Task<Result<RatingServiceGetByIdResponseDto>> GetRatingServiceById(int id)
     {
         return await _ratingServiceService.GetRatingServiceByIdAsync(id);
@@ -86,7 +87,7 @@ public class RatingServiceController(IRatingServiceService ratingServiceService)
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
     [HttpPut("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result<RatingServiceResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -104,7 +105,7 @@ public class RatingServiceController(IRatingServiceService ratingServiceService)
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteRatingService(int id)
