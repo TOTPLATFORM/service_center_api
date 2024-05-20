@@ -10,7 +10,7 @@ namespace ServiceCenter.Application.DTOS;
 public class CampaginResponseDto
 {
     public int Id { get; set; }
-    public string CamapginName { get; set; } = "";
+    public string CampaginName { get; set; } = "";
 	public string CampaginDescription { get; set; } = "";
 	
 }

@@ -165,7 +165,7 @@ public class CampaginService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 	{
 		var campagins = await _dbContext.Campagins
 					   .ProjectTo<CampaginResponseDto>(_mapper.ConfigurationProvider)
-					   .Where(c => c.CamapginName.Contains(text) || c.CampaginDescription.Contains(text))
+					   .Where(c => c.CampaginDescription.Contains(text) || c.CampaginDescription.Contains(text))
 					   .ToListAsync();
 
 		_logger.LogInformation("Fetching search campagin by name . Total count: {campagin}.", campagins.Count);
