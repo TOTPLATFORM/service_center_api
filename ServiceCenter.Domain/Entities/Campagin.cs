@@ -10,7 +10,7 @@ namespace ServiceCenter.Domain.Entities;
 
 public class Campagin : AuditableEntity
 {
-    public string CamapginName { get; set; } = "";
+    public string CampaginName { get; set; } = "";
     public string CampaginDescription { get; set; } = "";
     public DateOnly StartDate { get; set; }
     public DateOnly EndDate { get; set; }
