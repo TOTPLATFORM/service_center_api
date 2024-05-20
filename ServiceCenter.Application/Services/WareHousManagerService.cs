@@ -100,7 +100,7 @@ public class WareHousManagerService(ServiceCenterBaseDbContext dbContext, IMappe
     public async Task<Result<WareHouseManagerResponseDto>> UpdateWareHouseManagerServiceAsync(string id, WareHouseManagerRequestDto wareHouseManagerRequestDto)
     {
         var wareHouseManagerResponseDto = await _dbContext.WareHouseManagers.FindAsync(id);
-        var inventoryResponseDto = await _dbContext.Inventories.FindAsync(id);
+        var inventoryResponseDto = await _dbContext.Inventories.FindAsync(wareHouseManagerRequestDto.InventoryId);
 
         if (wareHouseManagerResponseDto is null)
         {
