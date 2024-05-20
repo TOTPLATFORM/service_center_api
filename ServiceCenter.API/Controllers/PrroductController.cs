@@ -90,6 +90,7 @@ public class ProductController(IProductService productService) : BaseController
     {
         return await _productService.DeleteProductAsync(id);
     }
+
     /// </summary>
     ///<param name="text">id</param>
     /// <remarks>
@@ -105,20 +106,22 @@ public class ProductController(IProductService productService) : BaseController
     {
         return await _productService.SearchProductByTextAsync(text);
     }
-    [HttpGet("searchByProductCategory/{text}")]
+
+    [HttpGet("searchByProductCategory/{categoryId}")]
     [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<ProductResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<List<ProductResponseDto>>> SearchProductByProductCategory(string text)
+    public async Task<Result<List<ProductResponseDto>>> SearchProductByProductCategory(int categoryId)
     {
-        return await _productService.GetAllProductsForSpecificProductCategory(text);
+        return await _productService.GetProductsForProductCategoryAsync(categoryId);
     }
-    [HttpGet("searchByProductBrand/{text}")]
+
+    [HttpGet("searchByProductBrand/{brandId}")]
     [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<ProductResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<List<ProductResponseDto>>> SearchProductByProductBrand(string text)
+    public async Task<Result<List<ProductResponseDto>>> SearchProductByProductBrand(int brandId)
     {
-        return await _productService.GetAllProductsForSpecificProductBrand(text);
+        return await _productService.GetProductsForProductBrandAsync(brandId);
     }
 }

@@ -70,19 +70,37 @@ public class OfferController(IOfferService OfferService) : BaseController
     {
         return await _OfferService.UpdateOfferAsync(id, OfferRequestDto);
     }
-    /// <summary>
-    /// delete  Offer  by id from the system.
-    /// </summary>
-    ///<param name="id">id</param>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpDelete("{id}")]
+
+	/// <summary>
+	/// search  offer  by offfer name in the system.
+	/// </summary>
+	///<param name="text">offer name </param>
+	/// <remarks>
+	/// Access is limited to users with the "Manager" role.
+	/// </remarks>
+	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+	[HttpGet("search/{text}")]
+	[Authorize(Roles = "Manager")]
+	[ProducesResponseType(typeof(Result<OfferResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+	public async Task<Result<List<OfferResponseDto>>> SearchOfferByText(string text)
+	{
+		return await _OfferService.SearchOfferByTextAsync(text);
+	}
+	/// <summary>
+	/// delete  Offer  by id from the system.
+	/// </summary>
+	///<param name="id">id</param>
+	/// <remarks>
+	/// Access is limited to users with the "Admin" role.
+	/// </remarks>
+	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+	[HttpDelete("{id}")]
     [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result> DeleteOfferAsycn(int id)
+    public async Task<Result> DeleteOffer(int id)
     {
         return await _OfferService.DeleteOfferAsync(id);
     }

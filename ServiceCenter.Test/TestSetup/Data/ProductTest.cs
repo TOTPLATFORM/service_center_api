@@ -19,7 +19,7 @@ public static class ProductTest
             ProductBrandId= 1,
             ProductName="product1",
             ProductDescription="product is good",
-            ProductPrice= "20.6$",
+            ProductPrice= 20,
             ProductCategoryId= 1,
             SalesId= "js6549874965-544636"
         },
@@ -29,7 +29,7 @@ public static class ProductTest
             ProductBrandId = 1,
             ProductName = "product1",
             ProductDescription = "product is good",
-            ProductPrice = "20.6$",
+            ProductPrice = 20,
             ProductCategoryId = 1,
             SalesId = "js6549874965-544636"
         }

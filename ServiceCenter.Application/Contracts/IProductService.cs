@@ -51,12 +51,11 @@ public interface IProductService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">Product  name</param>
     /// <returns>Product response dto </returns>
-    public Task<Result<List<ProductResponseDto>>> GetAllProductsForSpecificProductCategory(string text);
+    public Task<Result<List<ProductResponseDto>>> GetProductsForProductCategoryAsync(int productId);
     /// <summary>
     /// function to search by Product   that take  Product name
     /// </summary>
     /// <param name="text">Product  name</param>
     /// <returns>Product response dto </returns>
-    public Task<Result<List<ProductResponseDto>>> GetAllProductsForSpecificProductBrand(string text);
-
+    public Task<Result<List<ProductResponseDto>>> GetProductsForProductBrandAsync(int brandId);
 }

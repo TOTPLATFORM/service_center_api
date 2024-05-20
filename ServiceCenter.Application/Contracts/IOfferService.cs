@@ -34,12 +34,21 @@ public interface IOfferService : IApplicationService, IScopedService
     /// <param name="OfferRequestDto">Offer dto</param>
     /// <returns>Updated Offer </returns>
     public Task<Result<OfferResponseDto>> UpdateOfferAsync(int id, OfferRequestDto OfferRequestDto);
-    /// <summary>
-    /// function to delete Offer  that take Offer  id   
-    /// </summary>
-    /// <param name="id">Offer  id</param>
-    /// <returns>Offer  removed successfully </returns>
-    public Task<Result> DeleteOfferAsync(int id);
+
+	/// <summary>
+	/// function to search by offer name  that take  offer name
+	/// </summary>
+	/// <param name="text">offer name</param>
+	/// <returns>offer response dto </returns>
+	public Task<Result<List<OfferResponseDto>>> SearchOfferByTextAsync(string text);
+
+	/// <summary>
+	/// function to delete Offer  that take Offer  id   
+	/// </summary>
+	/// <param name="id">Offer  id</param>
+	/// <returns>Offer  removed successfully </returns>
+	public Task<Result> DeleteOfferAsync(int id);
+
     /// <summary>
     /// asynchronously retrieves all products for spicific offer  in the system.
     /// </summary>

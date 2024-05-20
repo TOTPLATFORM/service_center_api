@@ -110,8 +110,22 @@ public class OfferService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
 
         return Result.Success(OfferResponse);
     }
-    ///<inheritdoc/>
-    public async Task<Result> DeleteOfferAsync(int id)
+
+	///<inheritdoc/>
+	public async Task<Result<List<OfferResponseDto>>> SearchOfferByTextAsync(string text)
+	{
+		var names = await _dbContext.Offers
+		.ProjectTo<OfferResponseDto>(_mapper.ConfigurationProvider)
+		.Where(n => n.OfferName.Contains(text) || n.OfferDescription.Contains(text))
+		.ToListAsync();
+
+		_logger.LogInformation("Fetching search Offer by name . Total count: {Offer}.", names.Count);
+
+		return Result.Success(names);
+	}
+
+	///<inheritdoc/>
+	public async Task<Result> DeleteOfferAsync(int id)
     {
         var Offer = await _dbContext.Offers.FindAsync(id);
 

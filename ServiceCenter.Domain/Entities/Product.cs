@@ -11,7 +11,7 @@ public class Product : AuditableEntity
 {
     public string ProductName { get; set; } = "";
     public string ProductDescription { get; set; } = "";
-    public string ProductPrice { get; set; } = "";
+    public int ProductPrice { get; set; } 
     public int ProductCategoryId { get; set; }
     public virtual ProductCategory ProductCategory { get; set; } = default;
 	public int ProductBrandId { get; set; }

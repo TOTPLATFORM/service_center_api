@@ -8,5 +8,5 @@ namespace ServiceCenter.Application.DTOS;
 
 public class ServiceGetByIdResponseDto : ServiceResponseDto
 {
-    public ICollection<TimeSlotResponseDto> TimeSlots { get; set; } = new HashSet<TimeSlotResponseDto>();
+    public ICollection<ScheduleResponseDto> Schedules { get; set; } = new HashSet<ScheduleResponseDto>();
 }

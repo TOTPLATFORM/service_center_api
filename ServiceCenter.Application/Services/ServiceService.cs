@@ -74,8 +74,9 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 			.ProjectTo<ServiceGetByIdResponseDto>(_mapper.ConfigurationProvider)
 			.FirstOrDefaultAsync(p => p.Id == id);
 
-		result.TimeSlots = await _dbContext.TimeSlots.ProjectTo<TimeSlotResponseDto>(_mapper.ConfigurationProvider)
-			.ToListAsync();
+		result.Schedules = await _dbContext.Schedules
+			                                .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
+			                                .ToListAsync();
 
 		if (result is null)
 		{

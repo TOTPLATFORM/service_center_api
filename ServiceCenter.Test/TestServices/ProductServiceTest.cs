@@ -54,8 +54,8 @@ public class ProductServiceTest
     /// <param name="productCategoryId">product category id</param>
     /// <param name="salesId">sales id</param>
     [Theory, TestPriority(0)]
-    [InlineData("Product1", "Product1 is good", "20.6$", 1,1, "js6549874965-54463651654")]
-    public async Task AddCenter(string productName, string productDescription, string productPrice, int productBrandId,int productCategoryId,string salesId)
+    [InlineData("Product1", "Product1 is good", 20, 1,1, "js6549874965-54463651654")]
+    public async Task AddCenter(string productName, string productDescription, int productPrice, int productBrandId,int productCategoryId,string salesId)
     {
         // Arrange
         CheckService();
@@ -120,9 +120,9 @@ public class ProductServiceTest
     /// <param name="productCategoryId">product category id</param>
     /// <param name="salesId">sales id</param>
     [Theory, TestPriority(3)]
-    [InlineData(1, "Product1", "Product1 is good", "20.6$", 1, 1, "js6549874965-54463651654", true)]
-    [InlineData(10, "Product1", "Product1 is good", "20.6$", 1, 1, "js6549874965-54463651654", false)]
-    public async Task UpdateCenter(int id, string productName, string productDescription, string productPrice, int productBrandId, int productCategoryId, string salesId, bool expectedResult)
+    [InlineData(1, "Product1", "Product1 is good", 20, 1, 1, "js6549874965-54463651654", true)]
+    [InlineData(10, "Product1", "Product1 is good", 20, 1, 1, "js6549874965-54463651654", false)]
+    public async Task UpdateCenter(int id, string productName, string productDescription, int productPrice, int productBrandId, int productCategoryId, string salesId, bool expectedResult)
     {
         //Arrange
         CheckService();

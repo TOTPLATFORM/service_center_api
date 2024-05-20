@@ -135,22 +135,22 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         _logger.LogInformation("Fetching search Product by name . Total count: {Prouct}.", names.Count);
         return Result.Success(names);
     }
-    ///<inheritdoc/>
-    public async  Task<Result<List<ProductResponseDto>>> GetAllProductsForSpecificProductCategory(string categoryname)
+
+    public async  Task<Result<List<ProductResponseDto>>> GetProductsForProductCategoryAsync(int categoryId)
     {
         var products = await _dbContext.Products
-              .Where(s => s.ProductCategory.CategoryName == categoryname)
+              .Where(s => s.ProductCategory.Id == categoryId)
               .ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider)
               .ToListAsync();
 
         _logger.LogInformation("Fetching products. Total count: {products}.", products.Count);
         return Result.Success(products);
     }
-    ///<inheritdoc/>
-    public async  Task<Result<List<ProductResponseDto>>> GetAllProductsForSpecificProductBrand(string brandName)
+
+    public async  Task<Result<List<ProductResponseDto>>> GetProductsForProductBrandAsync(int brandId)
     {
         var products = await _dbContext.Products
-              .Where(s => s.ProductBrand.BrandName == brandName)
+              .Where(s => s.ProductBrand.Id == brandId)
               .ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider)
               .ToListAsync();
 
