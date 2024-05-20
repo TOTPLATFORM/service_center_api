@@ -49,7 +49,7 @@ public class WareHousManagerController(IWareHousManagerService wareHousManager) 
     [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<WareHouseManagerResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result<WareHouseManagerResponseDto>), StatusCodes.Status400BadRequest)]
-    public async Task<Result<WareHouseManagerResponseDto>> GetAppointmentById(string id)
+    public async Task<Result<WareHouseManagerResponseDto>> GetWareHouseManagerById(string id)
     {
         return await _wareHousManager.GetWareHouseManagerServiceByIdAsync(id);
     }
@@ -68,7 +68,7 @@ public class WareHousManagerController(IWareHousManagerService wareHousManager) 
     [ProducesResponseType(typeof(Result<WareHouseManagerResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<WareHouseManagerResponseDto>> Updateappointment(string id, WareHouseManagerRequestDto wareHouseManagerRequest)
+    public async Task<Result<WareHouseManagerResponseDto>> UpdateWareHouseManager(string id, WareHouseManagerRequestDto wareHouseManagerRequest)
     {
         return await _wareHousManager.UpdateWareHouseManagerServiceAsync(id, wareHouseManagerRequest);
     }
