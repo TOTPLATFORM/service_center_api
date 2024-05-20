@@ -10,7 +10,7 @@ namespace ServiceCenter.Application.Contracts;
 /// <summary>
 /// provides an interface for warehouse-related services that manages warehouse data across the application. Inherits from IApplicationService and IScopedService.
 /// </summary>
-public interface IWareHousManagerService
+public interface IWareHousManagerService : IApplicationService , IScopedService
 {
     /// <summary>
     /// asynchronously adds a new warehouse to the database.
