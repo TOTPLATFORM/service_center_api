@@ -41,7 +41,6 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 			});
 		}
 		result.CreatedBy = _userContext.Email;
-
 		_dbContext.Inventories.Add(result);
 
 		await _dbContext.SaveChangesAsync();

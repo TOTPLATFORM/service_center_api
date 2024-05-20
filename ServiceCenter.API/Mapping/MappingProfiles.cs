@@ -71,6 +71,7 @@ public class MappingProfiles : Profile
         this.AddRatingServiceMapping();
 
         this.AddVendorMapping();
+        this.AddWareHouseManagerMapping();
 	}
 
 }

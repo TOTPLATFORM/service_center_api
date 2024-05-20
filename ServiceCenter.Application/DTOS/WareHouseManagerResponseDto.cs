@@ -8,7 +8,7 @@ namespace ServiceCenter.Application.DTOS;
 
 public class WareHouseManagerResponseDto
 {
-    public int Id { get; set; }
+    public string Id { get; set; }
     public string WareHouseManagerEmail { get; set; } = "";
     public string WareHouseManagerFirstName { get; set; } = "";
     public string WareHouseManagerLastName { get; set; } = "";
