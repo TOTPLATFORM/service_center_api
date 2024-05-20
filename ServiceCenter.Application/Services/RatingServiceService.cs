@@ -132,6 +132,7 @@ public class RatingServiceService(ServiceCenterBaseDbContext dbContext, IMapper 
             _logger.LogInformation("customer or service not found");
             return Result.Error("rating for service added failed to the database");
         }
+        rating= _mapper.Map(ratingServiceRequestDto, rating);
         rating.ModifiedBy = _userContext.Email;
         rating.Service = service;
         rating.Customer = customer;
