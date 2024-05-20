@@ -10,6 +10,7 @@ public static class OverviewMapping
     {
         map.CreateMap<OverviewRequestDto, Overview>();
 
-        map.CreateMap<Overview, OverviewResponseDto>();
+        map.CreateMap<Overview, OverviewResponseDto>()
+            .ForMember(dest=> dest.SalesName, src => src.MapFrom(src => src.Sales.FirstName + " " + src.Sales.LastName));
     }
 }
