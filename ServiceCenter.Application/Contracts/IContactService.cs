@@ -25,7 +25,7 @@ public interface IContactService : IApplicationService, IScopedService
 	public Task<Result<List<ContactResponseDto>>> GetAllContactsAsync();
 
 	/// <summary>
-	/// function to update contact that take contactRequestDto   
+	/// function to update contact that take contactStatus   
 	/// </summary>
 	/// <param name="id">contact id</param>
 	///   <param name="status">contact status</param>
