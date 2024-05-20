@@ -12,5 +12,5 @@ public class WareHouseManager : ApplicationUser
     public string PositionTitle { get; set; } = "";
     public DateOnly StartDate { get; set; }
 	public DateOnly EndtDate { get; set; }
- 
+    public virtual Inventory Inventory { get; set; }
 }
