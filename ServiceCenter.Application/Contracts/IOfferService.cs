@@ -40,5 +40,11 @@ public interface IOfferService : IApplicationService, IScopedService
     /// <param name="id">Offer  id</param>
     /// <returns>Offer  removed successfully </returns>
     public Task<Result> DeleteOfferAsync(int id);
+    /// <summary>
+    /// asynchronously retrieves all products for spicific offer  in the system.
+    /// </summary>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of products response DTOs.</returns>
+
+    public Task<Result<List<ProductResponseDto>>> GetProductsByOffer(int offerId);
 
 }

@@ -12,5 +12,7 @@ public static class OfferMapping
         map.CreateMap<Offer, OfferResponseDto>()
             .ForMember(dest=>dest.ProductName,src=>src.MapFrom(src=>src.Product.ProductName))
             .ReverseMap();
+
+        map.CreateMap<Offer, ProductResponseDto>();
     }
 }

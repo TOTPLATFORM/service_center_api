@@ -127,6 +127,15 @@ public class OfferService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
         return Result.SuccessWithMessage("Offer removed successfully");
     }
 
+    ///<inheritdoc/>
+    public async Task<Result<List<ProductResponseDto>>> GetProductsByOffer(int productId)
+    {
+        var products = await _dbContext.Offers
+            .Where(O => O.ProductId == productId)
+            .ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider).ToListAsync();
 
+        _logger.LogInformation("Fetching all  products. Total count: { product}.", products.Count);
+        return Result.Success(products);
+    }
 
 }

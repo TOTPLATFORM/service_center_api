@@ -86,4 +86,17 @@ public class OfferController(IOfferService OfferService) : BaseController
     {
         return await _OfferService.DeleteOfferAsync(id);
     }
+
+    /// <summary>
+    /// action for Get all  products based on the status that take status.
+    /// </summary>
+    /// <returns>result of list from products response dto.</returns>
+
+    [HttpGet("SearchByOffer/{offerId}")]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<List<ProductResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<List<ProductResponseDto>>> GetProductsByOffer(int offerId)
+    {
+        return await _OfferService.GetProductsByOffer(offerId);
+    }
 }
