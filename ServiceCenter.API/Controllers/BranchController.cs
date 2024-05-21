@@ -34,12 +34,8 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// <summary>
 	/// get all branches in the system.
 	/// </summary>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-	[Authorize(Roles = "Manager,Customer")]
 	[ProducesResponseType(typeof(Result<List<BranchResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<List<BranchResponseDto>>> GetAllBranches()
 	{
