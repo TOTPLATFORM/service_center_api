@@ -10,48 +10,48 @@ namespace ServiceCenter.Application.Contracts;
 
 public interface ICenterService : IApplicationService, IScopedService
 {
-	/// <summary>
-	/// function to add center that take center dto  
-	/// </summary>
-	/// <param name="CenterRequestDto">centerRequestDto</param>
-	/// <returns>Center added successfully </returns>
+    /// <summary>
+    /// asynchronously adds a new center to the database.
+    /// </summary>
+    /// <param name="centerRequestDto">the center data transfer object containing the details necessary for creation.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the center addition.</returns>
 	public Task<Result> AddCenterAsync(CenterRequestDto centerRequestDto);
 
-	/// <summary>
-	/// function to get all centers 
-	/// </summary>
-	/// <returns>list all centerResponseDto </returns>
+    /// <summary>
+    /// asynchronously retrieves all centers in the system.
+    /// </summary>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of center response DTOs.</returns>
 	public Task<Result<List<CenterResponseDto>>> GetAllCentersAsync();
 
-	/// <summary>
-	/// function to get center by id that take  center id
-	/// </summary>
-	/// <param name="id">center id</param>
-	/// <returns>center response dto</returns>
+    /// <summary>
+    /// asynchronously retrieves a center by their unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the center to retrieve.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the center response DTO.</returns>
 	public Task<Result<CenterResponseDto>> GetCenterByIdAsync(int id);
 
-	/// <summary>
-	/// function to update center that take CenterRequestDto   
-	/// </summary>
-	/// <param name="id">center id</param>
-	/// <param name="CenterRequestDto">center dto</param>
-	/// <returns>Updated Center </returns>
-	public Task<Result<CenterResponseDto>> UpdateCenterAsync(int id, CenterRequestDto CenterRequestDto);
+    /// <summary>
+    /// asynchronously updates the data of an existing center.
+    /// </summary>
+    /// <param name="id">the unique identifier of the center to update.</param>
+    /// <param name="centerRequestDto">the center data transfer object containing the updated details.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
+	public Task<Result<CenterResponseDto>> UpdateCenterAsync(int id, CenterRequestDto centerRequestDto);
 
 
-	/// <summary>
-	/// function to search inventory by text  that take text   
-	/// </summary>
-	/// <param name="text">text</param>
-	/// <returns>all centers that contain this text </returns>
+    /// <summary>
+    /// asynchronously searches for centers based on the provided text.
+    /// </summary>
+    /// <param name="text">the text to search within center data.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of center response DTOs that match the search criteria.</returns>
 	public Task<Result<List<CenterResponseDto>>> SearchCenterByTextAsync(string text);
 
 
 
-	/// <summary>
-	/// function to delete Center that take id   
-	/// </summary>
-	/// <param name="id">time slot id</param>
-	/// <returns>Center removed successfully </returns>
+    /// <summary>
+    /// asynchronously deletes a center from the system by their unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the center to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
 	public Task<Result> DeleteCenterAsync(int id);
 }
