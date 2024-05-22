@@ -36,7 +36,6 @@ public class ProductController(IProductService productService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<List<ProductResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<ProductResponseDto>>> GetAllProduct()
     {
@@ -51,7 +50,6 @@ public class ProductController(IProductService productService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<ProductResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<ProductResponseDto>> GetProductById(int id)
