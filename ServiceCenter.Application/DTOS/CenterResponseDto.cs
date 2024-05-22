@@ -15,5 +15,5 @@ public class CenterResponseDto
 	public string Specialty { get; set; } = "";
 	public virtual ICollection<BranchResponseDto> branches { get; set; } = new HashSet<BranchResponseDto>();
 	public virtual ICollection<DepartmentResponseDto> Departments { get; set; } = new HashSet<DepartmentResponseDto>();
-	public virtual ICollection<Room> Rooms { get; set; } = new HashSet<Room>();
+	public virtual ICollection<RoomResponseDto> Rooms { get; set; } = new HashSet<RoomResponseDto>();
 }
