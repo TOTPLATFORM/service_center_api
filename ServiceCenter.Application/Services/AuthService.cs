@@ -268,8 +268,12 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
         await _userManager.AddToRoleAsync(user, "Manager");
     }
 
-	public Task<Result> RegisterWarehouseManagerAsync(WareHouseManagerRequestDto wareHouseManagerRequestDto)
+	public async Task<Result> RegisterWarehouseManagerAsync(WareHouseManagerRequestDto wareHouseManagerRequestDto)
 	{
-		throw new NotImplementedException();
+		string role = "WarehouseManager";
+
+		var wareHouseManager = _mapper.Map<WareHouseManager>(wareHouseManagerRequestDto);
+
+		return await RegisterUserWithRoleAsync(wareHouseManager, wareHouseManagerRequestDto.Password, role);
 	}
 }

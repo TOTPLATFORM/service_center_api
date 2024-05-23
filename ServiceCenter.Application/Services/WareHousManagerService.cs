@@ -15,14 +15,16 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Services;
 
-public class WareHousManagerService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<WareHousManagerService> logger, IUserContextService userContext) : IWareHousManagerService
+public class WareHousManagerService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<WareHousManagerService> logger, IUserContextService userContext, IAuthService authService) : IWareHousManagerService
 {
     private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
     private readonly IMapper _mapper = mapper;
     private readonly ILogger<WareHousManagerService> _logger = logger;
     private readonly IUserContextService _userContext = userContext;
-    ///<inheritdoc/>
-    public async Task<Result> AddWareHouseManagerServiceAsync(WareHouseManagerRequestDto wareHouseManagerRequestDto)
+	private readonly IAuthService _authService = authService;
+
+	///<inheritdoc/>
+	public async Task<Result> AddWareHouseManagerServiceAsync(WareHouseManagerRequestDto wareHouseManagerRequestDto)
     {
         var wareHouseManager = _mapper.Map<WareHouseManager>(wareHouseManagerRequestDto);
         var inventory = _dbContext.Inventories.FirstOrDefault(C => C.Id == wareHouseManagerRequestDto.InventoryId);
@@ -30,16 +32,24 @@ public class WareHousManagerService(ServiceCenterBaseDbContext dbContext, IMappe
         if (inventory is null)
         {
             _logger.LogInformation("inventory  not found");
-            return Result.Error("wareHouseManager added failed to the database");
         }
-        wareHouseManager.Inventory = inventory;
+        else
+        {
+			wareHouseManager.Inventory = inventory;
+		}
 
-        _dbContext.WareHouseManagers.Add(wareHouseManager);
+        var warehouseMangerAdded = await _authService.RegisterWarehouseManagerAsync(wareHouseManagerRequestDto);
         await _dbContext.SaveChangesAsync();
 
-        _logger.LogInformation("wareHouseManager added successfully to the database");
-        return Result.SuccessWithMessage("wareHouseManager added successfully");
-    }
+		if (!warehouseMangerAdded.IsSuccess)
+		{
+			return Result.Error(warehouseMangerAdded.Errors.FirstOrDefault());
+		}
+
+		_logger.LogInformation("WareHouseManager added successfully in the database");
+
+		return Result.SuccessWithMessage("WareHouseManager added successfully");
+	}
     ///<inheritdoc/>
     public async Task<Result> DeleteWareHouseManagerServiceAsync(string id)
     {
