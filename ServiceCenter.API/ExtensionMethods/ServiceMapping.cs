@@ -14,6 +14,8 @@ public static  class ServiceMapping
         map.CreateMap<Service, ServiceResponseDto>()
 		   .ForMember(dest => dest.ServiceCategoryName, src => src.MapFrom(src => src.ServiceCategory.ServiceCategoryName))
            .ForMember(dest => dest.EmployeeName, src => src.MapFrom(src => src.Employee.FirstName))
+            .ForMember(dest => dest.EmployeeId, src => src.MapFrom(src => src.Employee.Id))
+             .ForMember(dest => dest.ServiceCategoryId, src => src.MapFrom(src => src.ServiceCategory.Id))
            .ReverseMap();
 
         map.CreateMap<Service,ServiceGetByIdResponseDto>()

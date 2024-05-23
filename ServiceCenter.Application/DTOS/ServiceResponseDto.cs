@@ -17,4 +17,7 @@ public class ServiceResponseDto
     public string ServiceCategoryName { get; set; } = "";
 	public ICollection<ServicePackageResponseDto> ServicePackages { get; set; } = new HashSet<ServicePackageResponseDto>();
 	public string EmployeeName { get; set; } = "";
+    public string? EmployeeId { get; set; }
+    public int ServiceCategoryId { get; set; }
+
 }
