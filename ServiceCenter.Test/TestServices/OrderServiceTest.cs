@@ -64,14 +64,13 @@ public class OrderServiceTest
     /// </summary>
     /// <param name="from">Order from</param>
     /// <param name="status">Order status</param>
-    /// <param name="date">Order date</param>
     [Theory, TestPriority(0)]
-    [InlineData("Supplier C", "2024-03-14", Status.Pending)]
-    public async Task AddOrder(string from, string date, Status status)
+    [InlineData("Supplier C",  Status.Pending)]
+    public async Task AddOrder(string from, Status status)
     {
         // Arrange
         CheckService();
-        var OrderRequestDto = new OrderRequestDto { From = from, OrderArrivalDate = DateTime.Parse(date), OrderStatus = status, ItemOrders = orders };
+        var OrderRequestDto = new OrderRequestDto { From = from, OrderStatus = status, ItemOrders = orders };
         // Act
         var result = await _orderService.AddOrderAsync(OrderRequestDto);
 
