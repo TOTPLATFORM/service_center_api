@@ -1486,7 +1486,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.Property<DateOnly>("EndtDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("InventoryId")
+                    b.Property<int?>("InventoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("PositionTitle")
@@ -1980,9 +1980,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     b.HasOne("ServiceCenter.Domain.Entities.Inventory", "Inventory")
                         .WithMany()
-                        .HasForeignKey("InventoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InventoryId");
 
                     b.Navigation("Inventory");
                 });
