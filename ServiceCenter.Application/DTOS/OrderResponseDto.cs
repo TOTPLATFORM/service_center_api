@@ -11,7 +11,18 @@ public class OrderResponseDto
     public int Id { get; set; }
     public string From { get; set; } = "";
     public Status OrderStatus { get; set; }
-    public DateTime OrderDate { get; set; }
-    public DateTime OrderArrivalDate { get; set; }
-    public ICollection<ItemOrderResponseDto> ItemOrders { get; set; }
+
+	private DateTime _orderDate;
+
+	public DateTime OrderDate
+	{
+		get => _orderDate;
+		set
+		{
+			_orderDate = value;
+			OrderArrivalDate = _orderDate.AddDays(2); 
+		}
+	}
+	public DateTime OrderArrivalDate { get; set; }
+	public ICollection<ItemOrderResponseDto> ItemOrders { get; set; }
 }

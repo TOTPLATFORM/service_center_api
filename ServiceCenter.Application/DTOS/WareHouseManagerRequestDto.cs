@@ -28,6 +28,5 @@ public class WareHouseManagerRequestDto
     public DateOnly StartDate { get; set; }
     [Required]
     public DateOnly EndtDate { get; set; }
-    [Required]
-    public int InventoryId { get; set; }
+    public int? InventoryId { get; set; }
 }
