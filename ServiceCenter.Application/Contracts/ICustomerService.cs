@@ -11,31 +11,31 @@ namespace ServiceCenter.Application.Contracts;
 public interface ICustomerService : IApplicationService, IScopedService
 {
 
-	/// <summary>
-	/// function to get all customers 
-	/// </summary>
-	/// <returns>list all customerResponseDto </returns>
+    /// <summary>
+    /// asynchronously retrieves all customers in the system.
+    /// </summary>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of customer response DTOs.</returns>
 	public Task<Result<List<CustomerResponseDto>>> GetAllCustomersAsync();
 
-	/// <summary>
-	/// function to get customer by id that take  customer id
-	/// </summary>
-	/// <param name="id">customer id</param>
-	/// <returns>customer response dto</returns>
+    /// <summary>
+    /// asynchronously retrieves a customer by their unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the customer to retrieve.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the customer response DTO.</returns>
 	public Task<Result<CustomerGetByIdResponseDto>> GetCustomerByIdAsync(string id);
-	
-	/// <summary>
-	/// function to update customer that take CustomerRequestDto   
-	/// </summary>
-	/// <param name="id">customer id</param>
-	/// <param name="customerRequestDto">customer dto</param>
-	/// <returns>Updated Customer </returns>
-	public Task<Result<CustomerResponseDto>> UpdateCustomerAsync(string id, CustomerRequestDto customerRequestDto);
-	/// <summary>
-	/// function to search customer by text  that take text   
-	/// </summary>
-	/// <param name="text">text</param>
-	/// <returns>all customeres that contain this text </returns>
+
+    /// <summary>
+    /// asynchronously updates the data of an existing customer.
+    /// </summary>
+    /// <param name="id">the unique identifier of the customer to update.</param>
+    /// <param name="customerRequestDto">the customer data transfer object containing the updated details.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
+    public Task<Result<CustomerResponseDto>> UpdateCustomerAsync(string id, CustomerRequestDto customerRequestDto);
+    /// <summary>
+    /// asynchronously searches for customers based on the provided text.
+    /// </summary>
+    /// <param name="text">the text to search within customer data.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of customer response DTOs that match the search criteria.</returns>
 	public Task<Result<List<CustomerResponseDto>>> SearchCustomerByTextAsync(string text);
 
 	/// <summary>
@@ -45,11 +45,11 @@ public interface ICustomerService : IApplicationService, IScopedService
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all customers by branch id operation.</returns>
 	public Task<Result<List<CustomerResponseDto>>> GetCustomersByBranchAsync(int branchId);
 
-	/// <summary>
-	/// function to delete Customer that take CustomerDto   
-	/// </summary>
-	/// <param name="id">customer id</param>
-	/// <returns>Customer removed successfully </returns>
+    /// <summary>
+    /// asynchronously deletes a customer from the system by their unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the customer to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
 	public Task<Result> DeleteCustomerAsync(string id);
 
 

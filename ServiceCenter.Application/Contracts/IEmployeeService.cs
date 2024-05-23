@@ -10,46 +10,46 @@ namespace ServiceCenter.Application.Contracts;
 
 public interface IEmployeeService : IApplicationService, IScopedService
 {
-	/// <summary>
-	/// function to add employee that take employeeDto   
-	/// </summary>
-	/// <param name="employeeRequestDto">employee request dto</param>
-	/// <returns>Employee added successfully </returns>
+    /// <summary>
+    /// asynchronously adds a new employee to the database.
+    /// </summary>
+    /// <param name="employeeRequestDto">the employee data transfer object containing the details necessary for creation.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the employee addition.</returns>
 	public Task<Result> AddEmployeeAsync(EmployeeRequestDto employeeRequestDto);
 
-	/// <summary>
-	/// function to get all employees 
-	/// </summary>
-	/// <returns>list all employeeResponseDto </returns>
+    /// <summary>
+    /// asynchronously retrieves all employees in the system.
+    /// </summary>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of employee response DTOs.</returns>
 	public Task<Result<List<EmployeeResponseDto>>> GetAllEmployeesAsync();
 
-	/// <summary>
-	/// function to get employee by id that take  employee id
-	/// </summary>
-	/// <param name="id">employee id</param>
-	/// <returns>employee response dto</returns>
+    /// <summary>
+    /// asynchronously retrieves a employee by their unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the employee to retrieve.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the employee response DTO.</returns>
 	public Task<Result<EmployeeResponseDto>> GetEmployeeByIdAsync(string id);
 
-	/// <summary>
-	/// function to update employee that take EmployeeRequestDto   
-	/// </summary>
-	/// <param name="id">employee id</param>
-	/// <param name="employeeRequestDto">employee dto</param>
-	/// <returns>Updated Employee </returns>
+    /// <summary>
+    /// asynchronously updates the data of an existing employee.
+    /// </summary>
+    /// <param name="id">the unique identifier of the employee to update.</param>
+    /// <param name="employeeRequestDto">the employee data transfer object containing the updated details.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
 	public Task<Result<EmployeeResponseDto>> UpdateEmployeeAsync(string id, EmployeeRequestDto employeeRequestDto);
 
 
-	/// <summary>
-	/// function to search employee by text  that take text   
-	/// </summary>
-	/// <param name="text">text</param>
-	/// <returns>all employeees that contain this text </returns>
+    /// <summary>
+    /// asynchronously searches for employees based on the provided text.
+    /// </summary>
+    /// <param name="text">the text to search within employee data.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of employee response DTOs that match the search criteria.</returns>
 	public Task<Result<List<EmployeeResponseDto>>> SearchEmployeeByTextAsync(string text);
 
-	/// <summary>
-	/// function to delete Employee that take EmployeeDto   
-	/// </summary>
-	/// <param name="id">departmnet id</param>
-	/// <returns>Employee removed successfully </returns>
+    /// <summary>
+    /// asynchronously deletes a employee from the system by their unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the employee to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
 	public Task<Result> DeleteEmployeeAsync(string id);
 }

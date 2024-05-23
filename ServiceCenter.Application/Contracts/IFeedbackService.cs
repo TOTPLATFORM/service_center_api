@@ -11,38 +11,39 @@ namespace ServiceCenter.Application.Contracts;
 public interface IFeedbackService : IApplicationService, IScopedService
 {
     /// <summary>
-    /// function to add  Feedback  that take  FeedbackDto   
+    /// asynchronously adds a new feedback to the database.
     /// </summary>
-    /// <param name="FeedbackRequestDto">Feedback  request dto</param>
-    /// <returns> Feedback  added successfully </returns>
+    /// <param name="feedbackRequestDto">the feedback data transfer object containing the details necessary for creation.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the feedback addition.</returns>
     public Task<Result> AddFeedbackAsync(FeedbackRequestDto FeedbackRequestDto);
     /// <summary>
-    /// function to get all Feedback  
+    /// asynchronously retrieves all feedbacks in the system.
     /// </summary>
-    /// <returns>list all Feedback  response dto </returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of feedback response DTOs.</returns>
     public Task<Result<List<FeedbackResponseDto>>> GetAllFeedbackAsync();
     /// <summary>
-    /// function to get  Feedback  by id that take   Feedback id
+    /// asynchronously retrieves a feedback by their unique identifier.
     /// </summary>
-    /// <param name="id"> Feedback  id</param>
-    /// <returns> Feedback  response dto</returns>
+    /// <param name="id">the unique identifier of the feedback to retrieve.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the feedback response DTO.</returns>
     public Task<Result<FeedbackResponseDto>> GetFeedbackByIdAsync(int id);
     /// <summary>
-    /// function to update Feedback  that take FeedbackRequestDto   
+    /// asynchronously updates the data of an existing feedback.
     /// </summary>
-    /// <param name="id">Feedback id</param>
-    /// <param name="FeedbackRequestDto">Feedback dto</param>
-    /// <returns>Updated Feedback </returns>
+    /// <param name="id">the unique identifier of the feedback to update.</param>
+    /// <param name="feedbackRequestDto">the feedback data transfer object containing the updated details.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
     public Task<Result<FeedbackResponseDto>> UpdateFeedbackAsync(int id, FeedbackRequestDto FeedbackRequestDto);
     /// <summary>
-    /// function to delete Feedback  that take Feedback  id   
+    /// asynchronously deletes a feedback from the system by their unique identifier.
     /// </summary>
-    /// <param name="id">Feedback  id</param>
-    /// <returns>Feedback  removed successfully </returns>
+    /// <param name="id">the unique identifier of the feedback to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
     public Task<Result> DeleteFeedbackAsync(int id);
-    /// function to search by customer name  that take  Feedbacks
+    /// <summary>
+    /// asynchronously retrieves feedbacks by customer unique identifier.
     /// </summary>
-    /// <param name="text">customer name </param>
-    /// <returns>Feedback response dto </returns>
+    /// <param name="customerId">the unique identifier of the customer to retrieve its feedbacks.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all feedbacks by customer id operation.</returns>
     public Task<Result<List<FeedbackResponseDto>>> GetFeedbacksByCustomerAsync(string customerId);
 }

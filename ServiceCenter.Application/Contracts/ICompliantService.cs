@@ -12,52 +12,52 @@ namespace ServiceCenter.Application.Contracts;
 public interface IComplaintService : IApplicationService, IScopedService
 {
     /// <summary>
-    /// function to add  Complaint  that take  ComplaintDto   
+    /// asynchronously adds a new complaint to the database.
     /// </summary>
-    /// <param name="ComplaintRequestDto">Complaint  request dto</param>
-    /// <returns> Complaint  added successfully </returns>
+    /// <param name="complaintRequestDto">the complaint data transfer object containing the details necessary for creation.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the complaint addition.</returns>
     public Task<Result> AddComplaintAsync(ComplaintRequestDto ComplaintRequestDto);
 
     /// <summary>
-    /// function to get all Complaint  
+    /// asynchronously retrieves all complaints in the system.
     /// </summary>
-    /// <returns>list all Complaint  response dto </returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of complaint response DTOs.</returns>
     public Task<Result<List<ComplaintResponseDto>>> GetAllComplaintsAsync();
 
     /// <summary>
-    /// function to get Complaint by id that take Complaint id
+    /// asynchronously retrieves a complaint by their unique identifier.
     /// </summary>
-    /// <param name="id"> Complaint id</param>
-    /// <returns> Complaint  response dto</returns>
+    /// <param name="id">the unique identifier of the complaint to retrieve.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the complaint response DTO.</returns>
     public Task<Result<ComplaintResponseDto>> GetComplaintByIdAsync(int id);
 
     /// <summary>
-    /// function to update Complaint that take ComplaintRequestDto   
+    /// asynchronously updates the data of an existing complaint.
     /// </summary>
-    /// <param name="id">Complaint id</param>
-    /// <param name="ComplaintRequestDto">Complaint dto</param>
-    /// <returns>Updated Complaint </returns>
+    /// <param name="id">the unique identifier of the complaint to update.</param>
+    /// <param name="complaintRequestDto">the complaint data transfer object containing the updated details.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
     public Task<Result<ComplaintResponseDto>> UpdateComplaintAsync(int id, ComplaintRequestDto ComplaintRequestDto);
 
     /// <summary>
-    /// function to delete Complaint  that take Complaint  id   
+    /// asynchronously deletes a complaint from the system by their unique identifier.
     /// </summary>
-    /// <param name="id">Complaint  id</param>
-    /// <returns>Complaint  removed successfully </returns>
+    /// <param name="id">the unique identifier of the complaint to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
     public Task<Result> DeleteComplaintAsync(int id);
 
     /// <summary>
-    /// function to search by Complaint status  that take  Complaint status
+    /// asynchronously searches for complaints based on the provided text.
     /// </summary>
-    /// <param name="text">Complaint status</param>
-    /// <returns>Complaint response dto </returns>
+    /// <param name="text">the text to search within complaint data.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of complaint response DTOs that match the search criteria.</returns>
     public Task<Result<List<ComplaintResponseDto>>> SearchComplaintByTextAsync(Status text);
 
-	/// <summary>
-	/// function to search by Customer   that take  Customer id
-	/// </summary>
-	/// <param name="customerId">Customer  id</param>
-	/// <returns>Customer response dto </returns>
+    /// <summary>
+    /// asynchronously retrieves complaints by customer unique identifier.
+    /// </summary>
+    /// <param name="customerId">the unique identifier of the customer to retrieve its complaints.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all complaints by customer id operation.</returns>
 	public Task<Result<List<ComplaintResponseDto>>> GetComplaintsByCustomerAsync(string customerId);
 
 }

@@ -10,52 +10,52 @@ namespace ServiceCenter.Application.Contracts;
 
 public interface IDepartmentService : IApplicationService, IScopedService
 {
-	/// <summary>
-	/// function to add department that take departmentDto   
-	/// </summary>
-	/// <param name="departmentRequestDto">department request dto</param>
-	/// <returns>Department added successfully </returns>
+    /// <summary>
+    /// asynchronously adds a new department to the database.
+    /// </summary>
+    /// <param name="departmentRequestDto">the department data transfer object containing the details necessary for creation.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the department addition.</returns>
 	public Task<Result> AddDepartmentAsync(DepartmentRequestDto departmentRequestDto);
 
-	/// <summary>
-	/// function to get all departments 
-	/// </summary>
-	/// <returns>list all departmentResponseDto </returns>
+    /// <summary>
+    /// asynchronously retrieves all departments in the system.
+    /// </summary>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of department response DTOs.</returns>
 	public Task<Result<List<DepartmentResponseDto>>> GetAllDepartmentsAsync();
 
-	/// <summary>
-	/// function to get department by id that take  department id
-	/// </summary>
-	/// <param name="id">department id</param>
-	/// <returns>department response dto</returns>
+    /// <summary>
+    /// asynchronously retrieves a department by their unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the department to retrieve.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the department response DTO.</returns>
 	public Task<Result<DepartmentResponseDto>> GetDepartmentByIdAsync(int id);
 
-	/// <summary>
-	/// function to update department that take DepartmentRequestDto   
-	/// </summary>
-	/// <param name="id">department id</param>
-	/// <param name="departmentRequestDto">department dto</param>
-	/// <returns>Updated Department </returns>
+    /// <summary>
+    /// asynchronously updates the data of an existing department.
+    /// </summary>
+    /// <param name="id">the unique identifier of the department to update.</param>
+    /// <param name="departmentRequestDto">the department data transfer object containing the updated details.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
 	public Task<Result<DepartmentResponseDto>> UpdateDepartmentAsync(int id, DepartmentRequestDto departmentRequestDto);
 
 
-	/// <summary>
-	/// function to search department by text  that take text   
-	/// </summary>
-	/// <param name="text">text</param>
-	/// <returns>all departmentes that contain this text </returns>
+    /// <summary>
+    /// asynchronously searches for departments based on the provided text.
+    /// </summary>
+    /// <param name="text">the text to search within department data.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of department response DTOs that match the search criteria.</returns>
 	public Task<Result<List<DepartmentResponseDto>>> SearchDepartmentByTextAsync(string text);
 
-	/// <summary>
-	/// function to search department by text  that take text   
-	/// </summary>
-	/// <param name="text">text</param>
-	/// <returns>all departmentes that contain this text </returns>
+    /// <summary>
+    /// asynchronously retrieves employees by department unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the department to retrieve its employees.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all employees by department id operation.</returns>
 	public Task<Result<List<DepartmentResponseDto>>> GetAllEmployeesForSpecificDepartmentAsync(int id);
-	/// <summary>
-	/// function to delete Department that take DepartmentDto   
-	/// </summary>
-	/// <param name="id">departmnet id</param>
-	/// <returns>Department removed successfully </returns>
+    /// <summary>
+    /// asynchronously deletes a department from the system by their unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the department to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
 	public Task<Result> DeleteDepartmentAsync(int id);
 }

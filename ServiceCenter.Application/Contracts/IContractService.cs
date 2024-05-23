@@ -11,35 +11,35 @@ namespace ServiceCenter.Application.Contracts;
 public interface IContractService : IApplicationService, IScopedService
 {
     /// <summary>
-    /// function to add Contract that take ContractDto   
+    /// asynchronously adds a new contract to the database.
     /// </summary>
-    /// <param name="ContractRequestDto">Contract request dto</param>
-    /// <returns> Contract  added successfully </returns>
-    public Task<Result> AddContractAsync(ContractRequestDto ContractRequestDto);
+    /// <param name="contractRequestDto">the contract data transfer object containing the details necessary for creation.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the contract addition.</returns>
+    public Task<Result> AddContractAsync(ContractRequestDto contractRequestDto);
 
     /// <summary>
-    /// function to get all Contract  
+    /// asynchronously retrieves all contracts in the system.
     /// </summary>
-    /// <returns>list all Contract  response dto </returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of contract response DTOs.</returns>
     public Task<Result<List<ContractResponseDto>>> GetAllContractAsync();
     /// <summary>
-    /// function to get  Contract  by id that take   Contract id
+    /// asynchronously retrieves a contract by their unique identifier.
     /// </summary>
-    /// <param name="id"> Contract  id</param>
-    /// <returns> Contract  response dto</returns>
+    /// <param name="id">the unique identifier of the contract to retrieve.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the contract response DTO.</returns>
     public Task<Result<ContractResponseDto>> GetContractByIdAsync(int id);
 
     /// <summary>
-    /// function to update Contract  that take ContractRequestDto   
+    /// asynchronously updates the data of an existing contract.
     /// </summary>
-    /// <param name="id">Contract id</param>
-    /// <param name="ContractRequestDto">Contract dto</param>
-    /// <returns>Updated Contract </returns>
-    public Task<Result<ContractResponseDto>> UpdateContractAsync(int id, ContractRequestDto ContractRequestDto);
+    /// <param name="id">the unique identifier of the contract to update.</param>
+    /// <param name="contractRequestDto">the contract data transfer object containing the updated details.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
+    public Task<Result<ContractResponseDto>> UpdateContractAsync(int id, ContractRequestDto contractRequestDto);
     /// <summary>
-    /// function to delete Contract  that take Contract  id   
+    /// asynchronously deletes a contract from the system by their unique identifier.
     /// </summary>
-    /// <param name="id">Contract  id</param>
-    /// <returns>Contract  removed successfully </returns>
+    /// <param name="id">the unique identifier of the contract to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
     public Task<Result> DeleteContractAsync(int id);
 }
