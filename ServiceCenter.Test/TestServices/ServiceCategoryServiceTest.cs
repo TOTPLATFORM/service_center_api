@@ -64,5 +64,21 @@ public class ServiceCategoryServiceTest
         else
             Assert.False(result.IsSuccess);
     }
+    /// <summary>
+    /// fuction to get all  product categories as a test case 
+    /// </summary>
+    [Fact, TestPriority(1)]
+    public async Task GetAllServiceCategory()
+    {
+        // Arrange
+        CheckService();
+
+        // Act
+        var result = await _productCategoryService.GetAllServiceCategoryAsync();
+
+        // Assert
+        Assert.True(result.IsSuccess);
+
+    }
 }
 
