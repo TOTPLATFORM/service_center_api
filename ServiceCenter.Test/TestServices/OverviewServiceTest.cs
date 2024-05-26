@@ -103,4 +103,27 @@ public class OverviewServiceTest
         else
             Assert.False(result.IsSuccess);
     }
+    /// <summary>
+    /// fuction to remove overview as a test case that take overview id
+    /// </summary>
+    /// <param name="id"> overview id</param>
+    [Theory, TestPriority(4)]
+    [InlineData(1)]
+    [InlineData(50)]
+    public async Task Removeoverview(int id)
+    {
+        // Arrange
+        CheckService();
+
+        // Act
+        var result = await _overviewService.DeleteOverviewAsync(id);
+
+        // Assert
+        if (result.IsSuccess)
+            Assert.True(result.IsSuccess);
+        else
+            Assert.False(result.IsSuccess);
+
+    }
+
 }
