@@ -18,12 +18,12 @@ ordererTypeName: "ServiceCenter.Test.TestPriority.PriorityOrderer",
 ordererAssemblyName: "ServiceCenter.Test")]
 public class ServiceCategoryServiceTest
 {
-    private static ServiceCategoryService _productCategoryService;
+    private static ServiceCategoryService _serviceCategoryService;
     private string userEmail = "mariamabdeeen@gmail.com";
     private ServiceCategoryService CreateServiceCategoryService()
     {
 
-        if (_productCategoryService is null)
+        if (_serviceCategoryService is null)
         {
             var dbContext = ContextGenerator.Generator();
 
@@ -33,18 +33,18 @@ public class ServiceCategoryServiceTest
 
             IUserContextService userContext = new UserContextService();
 
-            _productCategoryService = new ServiceCategoryService(dbContext, mapper, logger, userContext);
+            _serviceCategoryService = new ServiceCategoryService(dbContext, mapper, logger, userContext);
         }
 
-        return _productCategoryService;
+        return _serviceCategoryService;
     }
     private void CheckService()
     {
-        if (_productCategoryService is null)
-            _productCategoryService = CreateServiceCategoryService();
+        if (_serviceCategoryService is null)
+            _serviceCategoryService = CreateServiceCategoryService();
     }
     /// <summary>
-    /// fuction to add product category as a test case that take category number ,service category description
+    /// fuction to add service category as a test case that take category number ,service category description
     /// </summary>
     /// <param name="categoryName">category number</param>
     /// <param name="serviceCategoryDescription"> service category description</param>
@@ -54,9 +54,9 @@ public class ServiceCategoryServiceTest
     {
         // Arrange
         CheckService();
-        var productCategoryRequestDto = new ServiceCategoryRequestDto { ServiceCategoryName = categoryName, ServiceCategoryDescription = serviceCategoryDescription };
+        var serviceCategoryRequestDto = new ServiceCategoryRequestDto { ServiceCategoryName = categoryName, ServiceCategoryDescription = serviceCategoryDescription };
         // Act
-        var result = await _productCategoryService.AddServiceCategoryAsync(productCategoryRequestDto);
+        var result = await _serviceCategoryService.AddServiceCategoryAsync(serviceCategoryRequestDto);
 
         // Assert
         if (result.IsSuccess)
@@ -65,7 +65,7 @@ public class ServiceCategoryServiceTest
             Assert.False(result.IsSuccess);
     }
     /// <summary>
-    /// fuction to get all  product categories as a test case 
+    /// fuction to get all  service categories as a test case 
     /// </summary>
     [Fact, TestPriority(1)]
     public async Task GetAllServiceCategory()
@@ -74,16 +74,16 @@ public class ServiceCategoryServiceTest
         CheckService();
 
         // Act
-        var result = await _productCategoryService.GetAllServiceCategoryAsync();
+        var result = await _serviceCategoryService.GetAllServiceCategoryAsync();
 
         // Assert
         Assert.True(result.IsSuccess);
 
     }
     /// <summary>
-    /// fuction to get product category by id as a test case 
+    /// fuction to get service category by id as a test case 
     /// </summary>
-    /// <param name="id">product category id </param>
+    /// <param name="id">service category id </param>
     [Theory, TestPriority(2)]
     [InlineData(1)]
     [InlineData(6)]
@@ -93,7 +93,7 @@ public class ServiceCategoryServiceTest
         CheckService();
 
         // Act
-        var result = await _productCategoryService.GetServiceCategoryByIdAsync(id);
+        var result = await _serviceCategoryService.GetServiceCategoryByIdAsync(id);
 
         // Assert
         if (result.IsSuccess)
@@ -103,7 +103,7 @@ public class ServiceCategoryServiceTest
 
     }
     /// <summary>
-    /// fuction to update product category as a test case that take   category number,service category description
+    /// fuction to update service category as a test case that take   category number,service category description
     /// </summary>
     /// <param name="categoryName">category number</param>
     /// <param name="serviceCategoryDescription"> service category description </param>
@@ -115,10 +115,10 @@ public class ServiceCategoryServiceTest
     {
         //Arrange
         CheckService();
-        var productCategoryRequestDto = new ServiceCategoryRequestDto { ServiceCategoryName = categoryName, ServiceCategoryDescription = serviceCategoryDescription };
+        var serviceCategoryRequestDto = new ServiceCategoryRequestDto { ServiceCategoryName = categoryName, ServiceCategoryDescription = serviceCategoryDescription };
 
         // Act
-        var result = await _productCategoryService.UpdateServiceCategoryAsync(id, productCategoryRequestDto);
+        var result = await _serviceCategoryService.UpdateServiceCategoryAsync(id, serviceCategoryRequestDto);
         // Assert
         if (expectedResult)
         {
@@ -128,6 +128,28 @@ public class ServiceCategoryServiceTest
         {
             Assert.False(result.IsSuccess); // Expecting unsuccessful update
         }
+    }
+    /// <summary>
+    /// fuction to remove service category as a test case that take service category id
+    /// </summary>
+    /// <param name="id">service category id </param>
+    [Theory, TestPriority(4)]
+    [InlineData(2)]
+    [InlineData(50)]
+    public async Task RemoveServiceCategory(int id)
+    {
+        // Arrange
+        CheckService();
+
+        // Act
+        var result = await _serviceCategoryService.DeleteServiceCategoryAsync(id);
+
+        // Assert
+        if (result.IsSuccess)
+            Assert.True(result.IsSuccess);
+        else
+            Assert.False(result.IsSuccess);
+
     }
 }
 
