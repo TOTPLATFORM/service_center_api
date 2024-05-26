@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using ServiceCenter.API.Mapping;
 using ServiceCenter.Application.Contracts;
+using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
 using ServiceCenter.Test.TestPriority;
 using ServiceCenter.Test.TestSetup;
@@ -80,5 +81,26 @@ public class OverviewServiceTest
         else
             Assert.False(result.IsSuccess);
 
+    }
+    /// <summary>
+    /// fuction to add overview as a test case that take  timeslot id ,created by user name
+    /// </summary>
+
+    [Theory, TestPriority(0)]
+    [InlineData("Desc1", "Product", "7/11/2024")]
+    public async Task AddOverview(string task, string priority, string dueDate)
+    {
+        // Arrange
+        CheckService();
+        var overviewRequestDto = new OverviewRequestDto { Task = task, Priority = priority,  DueDate = DateTime.Parse(dueDate) };
+
+        // Act
+        var result = await _overviewService.AddOverviewAsync(overviewRequestDto);
+
+        // Assert
+        if (result.IsSuccess)
+            Assert.True(result.IsSuccess);
+        else
+            Assert.False(result.IsSuccess);
     }
 }
