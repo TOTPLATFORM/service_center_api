@@ -43,6 +43,7 @@ public class ContextGenerator
             Context.AddProductBrand();
             Context.AddRatingService();
             Context.AddCampagin();
+            Context.AddOverview();
             Context.SaveChanges();
         }
 
