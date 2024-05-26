@@ -96,6 +96,29 @@ public  class CampaginServiceTest
 
     }
 
+    /// <summary>
+    /// fuction to get campagin by id as a test case 
+    /// </summary>
+    /// <param name="id">campagin id </param>
+    [Theory, TestPriority(2)]
+    [InlineData(1)]
+    [InlineData(10)]
+    public async Task GetByIdCampagin(int id)
+    {
+        // Arrange
+        CheckService();
+
+        // Act
+        var result = await _campaginService.GetCampaginByIdAsync(id);
+
+        // Assert
+        if (result.IsSuccess)
+            Assert.True(result.IsSuccess);
+        else
+            Assert.False(result.IsSuccess);
+
+    }
+
 
 
 }
