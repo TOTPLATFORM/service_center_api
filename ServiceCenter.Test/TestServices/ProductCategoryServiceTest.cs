@@ -112,7 +112,7 @@ public class ProductCategoryServiceTest
     [Theory, TestPriority(3)]
     [InlineData(1, "ProductCategory1", 3, true)]
     [InlineData(10, "ProductCategory1",4, false)]
-    public async Task UpdateCenter(int id, string categoryName,int referenceNumber, bool expectedResult)
+    public async Task UpdateProductCategory(int id, string categoryName,int referenceNumber, bool expectedResult)
     {
         //Arrange
         CheckService();
@@ -129,5 +129,27 @@ public class ProductCategoryServiceTest
         {
             Assert.False(result.IsSuccess); // Expecting unsuccessful update
         }
+    }
+    /// <summary>
+    /// fuction to remove product category as a test case that take product category id
+    /// </summary>
+    /// <param name="id">product category id </param>
+    [Theory, TestPriority(4)]
+    [InlineData(2)]
+    [InlineData(50)]
+    public async Task RemoveProductCategory(int id)
+    {
+        // Arrange
+        CheckService();
+
+        // Act
+        var result = await _productCategoryService.DeleteProductCategoryAsync(id);
+
+        // Assert
+        if (result.IsSuccess)
+            Assert.True(result.IsSuccess);
+        else
+            Assert.False(result.IsSuccess);
+
     }
 }
