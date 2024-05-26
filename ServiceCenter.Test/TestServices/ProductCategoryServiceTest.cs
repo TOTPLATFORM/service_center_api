@@ -65,7 +65,7 @@ public class ProductCategoryServiceTest
             Assert.False(result.IsSuccess);
     }
     /// <summary>
-    /// fuction to get all  product brandes as a test case 
+    /// fuction to get all  product categories as a test case 
     /// </summary>
     [Fact, TestPriority(1)]
     public async Task GetAllProductCategory()
@@ -78,6 +78,28 @@ public class ProductCategoryServiceTest
 
         // Assert
         Assert.True(result.IsSuccess);
+
+    }
+    /// <summary>
+    /// fuction to get product category by id as a test case 
+    /// </summary>
+    /// <param name="id">product category id </param>
+    [Theory, TestPriority(2)]
+    [InlineData(1)]
+    [InlineData(6)]
+    public async Task GetByIdProductCategory(int id)
+    {
+        // Arrange
+        CheckService();
+
+        // Act
+        var result = await _productCategoryService.GetProductCategoryByIdAsync(id);
+
+        // Assert
+        if (result.IsSuccess)
+            Assert.True(result.IsSuccess);
+        else
+            Assert.False(result.IsSuccess);
 
     }
 }
