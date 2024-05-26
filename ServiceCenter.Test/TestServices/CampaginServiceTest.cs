@@ -118,7 +118,40 @@ public  class CampaginServiceTest
             Assert.False(result.IsSuccess);
 
     }
+    /// <summary>
+    /// fuction to add Campagin as a test case that take  
+    /// </summary>
+    /// <param name="goals">goals of campagin</param>
+    /// <param name="endDate">End Date</param>
+    /// <param name="startDate">start Date</param>
+    /// <param name="CampaginName">campagin name</param>
+    /// <param name="CampaginDescription">campagin description</param>
+    /// <param name="budget">budget</param>
+    [Theory, TestPriority(0)]
+    [InlineData(3,2, "2000/12/30", "2000/12/30", "A", "B", "Goal1",CampaginStatus.Active,true)]
+    [InlineData(9, 2, "2000/12/30", "2000/12/30", "j", "t", "Goal3", CampaginStatus.Cancelled, false)]
+    public async Task UpdateCampagin(int id,int budget, string endDate, string startDate, string CampaginName, string CampaginDescription, string goals,CampaginStatus status, bool expectedResult)
+    {
+        // Arrange
+        CheckService();
+        var CampaginRequestDto = new CampaginRequestDto
+        {
+            Goals = goals,
+            EndDate = DateOnly.Parse(endDate),
+            StartDate = DateOnly.Parse(startDate),
+            CampaginName = CampaginName,
+            CampaginDescription = CampaginDescription,
+            Budget = budget
+        };
+        // Act
+        var result = await _campaginService.AddCampaginAsync(CampaginRequestDto);
 
+        // Assert
+        if (result.IsSuccess)
+            Assert.True(result.IsSuccess);
+        else
+            Assert.False(result.IsSuccess);
+    }
 
 
 }
