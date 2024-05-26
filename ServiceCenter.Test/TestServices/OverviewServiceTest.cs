@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
 using ServiceCenter.API.Mapping;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -87,12 +88,12 @@ public class OverviewServiceTest
     /// </summary>
 
     [Theory, TestPriority(0)]
-    [InlineData("Desc1", "Product", "7/11/2024")]
-    public async Task AddOverview(string task, string priority, string dueDate)
+    [InlineData("Desc1", "Product", "7/11/2024", "53ae72a7-589e-4f0b-81ed-40381")]
+    public async Task AddOverview(string task, string priority, string dueDate,string salesId)
     {
         // Arrange
         CheckService();
-        var overviewRequestDto = new OverviewRequestDto { Task = task, Priority = priority,  DueDate = DateTime.Parse(dueDate) };
+        var overviewRequestDto = new OverviewRequestDto { Task = task, Priority = priority,  DueDate = DateTime.Parse(dueDate) ,SalesId=salesId};
 
         // Act
         var result = await _overviewService.AddOverviewAsync(overviewRequestDto);
@@ -124,6 +125,31 @@ public class OverviewServiceTest
         else
             Assert.False(result.IsSuccess);
 
+    }
+    /// <summary>
+    /// fuction to update overview as a test case that take id Updated by user name,expected result
+    /// </summary>
+    /// <param name="id">overview id</param>  
+    [Theory, TestPriority(3)]
+    [InlineData(1, true)]
+    [InlineData(30, false)]
+    public async Task Updateoverview(int id, bool expectedResult)
+    {
+        // Arrange
+        CheckService();
+        var overviewRequestDto = new OverviewRequestDto { Task = "task", Priority = "priority", DueDate = DateTime.Parse("7/11/2024"),SalesId = "53ae72a7-589e-4f0b-81ed-40381" };
+
+        // Act
+        var result = await _overviewService.UpdateOverviewAsync(id, overviewRequestDto);
+
+        if (expectedResult)
+        {
+            Assert.True(result.IsSuccess); // Expecting successful update
+        }
+        else
+        {
+            Assert.False(result.IsSuccess); // Expecting unsuccessful update
+        }
     }
 
 }
