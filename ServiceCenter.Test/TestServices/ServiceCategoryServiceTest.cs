@@ -102,5 +102,32 @@ public class ServiceCategoryServiceTest
             Assert.False(result.IsSuccess);
 
     }
+    /// <summary>
+    /// fuction to update product category as a test case that take   category number,service category description
+    /// </summary>
+    /// <param name="categoryName">category number</param>
+    /// <param name="serviceCategoryDescription"> service category description </param>
+    /// <param name="expectedResult">expected result</param>
+    [Theory, TestPriority(3)]
+    [InlineData(1, "ServiceCategory1", "Desc1", true)]
+    [InlineData(10, "ServiceCategory1", "Desc2", false)]
+    public async Task UpdateServiceCategory(int id, string categoryName, string serviceCategoryDescription, bool expectedResult)
+    {
+        //Arrange
+        CheckService();
+        var productCategoryRequestDto = new ServiceCategoryRequestDto { ServiceCategoryName = categoryName, ServiceCategoryDescription = serviceCategoryDescription };
+
+        // Act
+        var result = await _productCategoryService.UpdateServiceCategoryAsync(id, productCategoryRequestDto);
+        // Assert
+        if (expectedResult)
+        {
+            Assert.True(result.IsSuccess); // Expecting successful update
+        }
+        else
+        {
+            Assert.False(result.IsSuccess); // Expecting unsuccessful update
+        }
+    }
 }
 
