@@ -80,5 +80,27 @@ public class ServiceCategoryServiceTest
         Assert.True(result.IsSuccess);
 
     }
+    /// <summary>
+    /// fuction to get product category by id as a test case 
+    /// </summary>
+    /// <param name="id">product category id </param>
+    [Theory, TestPriority(2)]
+    [InlineData(1)]
+    [InlineData(6)]
+    public async Task GetByIdServiceCategory(int id)
+    {
+        // Arrange
+        CheckService();
+
+        // Act
+        var result = await _productCategoryService.GetServiceCategoryByIdAsync(id);
+
+        // Assert
+        if (result.IsSuccess)
+            Assert.True(result.IsSuccess);
+        else
+            Assert.False(result.IsSuccess);
+
+    }
 }
 
