@@ -45,6 +45,7 @@ public class ContextGenerator
             Context.AddCampagin();
             Context.AddOverview();
             Context.AddProductCategory();
+            Context.AddServiceCategory();
             Context.SaveChanges();
         }
 
