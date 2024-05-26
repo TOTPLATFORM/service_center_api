@@ -49,7 +49,7 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <returns>result of the order added successfully</returns>
 
     [HttpPost]
-    [Authorize(Roles = "Employee")]
+    [Authorize(Roles = "Employee,Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddOrder(OrderRequestDto orderDto)
