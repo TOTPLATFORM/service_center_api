@@ -79,6 +79,23 @@ public  class CampaginServiceTest
         else
             Assert.False(result.IsSuccess);
     }
+    /// <summary>
+    /// fuction to get all  Campagines as a test case 
+    /// </summary>
+    [Fact, TestPriority(1)]
+    public async Task GetAllCampagin()
+    {
+        // Arrange
+        CheckService();
+
+        // Act
+        var result = await _campaginService.GetAllCampaginsAsync();
+
+        // Assert
+        Assert.True(result.IsSuccess);
+
+    }
+
 
 
 }
