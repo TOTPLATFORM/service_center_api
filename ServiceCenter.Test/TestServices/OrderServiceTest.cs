@@ -71,7 +71,7 @@ public class OrderServiceTest
     {
         // Arrange
         CheckService();
-        var OrderRequestDto = new OrderRequestDto { From = from, OrderArrivalDate = DateTime.Parse(date), OrderStatus = status, ItemOrders = orders };
+        var OrderRequestDto = new OrderRequestDto { From = from,  OrderStatus = status, ItemOrders = orders };
         // Act
         var result = await _orderService.AddOrderAsync(OrderRequestDto);
 
