@@ -22,7 +22,6 @@ public class ServicePackageController(IServicePackageService ServicePackageServi
     /// </remarks>
     /// <returns>result for ServicePackage  added successfully.</returns>
     [HttpPost]
-    //[Authorize(Roles = "Manager,Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddServicePackage(ServicePackageRequestDto ServicePackageDto)
@@ -37,7 +36,6 @@ public class ServicePackageController(IServicePackageService ServicePackageServi
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    //[Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<List<ServicePackageResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<ServicePackageResponseDto>>> GetAllServicePackage()
     {
