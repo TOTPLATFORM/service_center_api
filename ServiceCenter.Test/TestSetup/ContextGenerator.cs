@@ -44,6 +44,7 @@ public class ContextGenerator
             Context.AddRatingService();
             Context.AddCampagin();
             Context.AddOverview();
+            Context.AddProductCategory();
             Context.SaveChanges();
         }
 

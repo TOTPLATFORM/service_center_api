@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.API.Mapping;
 using ServiceCenter.Application.Contracts;
@@ -101,5 +102,32 @@ public class ProductCategoryServiceTest
         else
             Assert.False(result.IsSuccess);
 
+    }
+    /// <summary>
+    /// fuction to update product category as a test case that take   category number,category description,country of origin,founded year
+    /// </summary>
+    /// <param name="categoryName">category number</param>
+    /// <param name="referenceNumber"> Reference Number</param>
+    /// <param name="expectedResult">expected result</param>
+    [Theory, TestPriority(3)]
+    [InlineData(1, "ProductCategory1", 3, true)]
+    [InlineData(10, "ProductCategory1",4, false)]
+    public async Task UpdateCenter(int id, string categoryName,int referenceNumber, bool expectedResult)
+    {
+        //Arrange
+        CheckService();
+        var productCategoryRequestDto = new ProductCategoryRequestDto { CategoryName = categoryName, ReferenceNumber=referenceNumber };
+
+        // Act
+        var result = await _productCategoryService.UpdateProductCategoryAsync(id, productCategoryRequestDto);
+        // Assert
+        if (expectedResult)
+        {
+            Assert.True(result.IsSuccess); // Expecting successful update
+        }
+        else
+        {
+            Assert.False(result.IsSuccess); // Expecting unsuccessful update
+        }
     }
 }
