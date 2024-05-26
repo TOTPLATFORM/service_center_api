@@ -19,7 +19,7 @@ public static class ComplaintTest
             Id = 1,
             ComplaintCategory = "cat1",
             ComplaintDescription = "Desc1",
-            ComplaintStatus =Status.Approved,
+            ComplaintStatus = Status.Approved,
             ComplaintDate = DateOnly.Parse("3/11/2024"),
         },
         new Complaint

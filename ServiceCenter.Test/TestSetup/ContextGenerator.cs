@@ -42,6 +42,9 @@ public class ContextGenerator
             Context.AddAppointment();
             Context.AddProductBrand();
             Context.AddRatingService();
+            Context.AddCampagin();
+            Context.AddOverview();
+            Context.AddProductCategory();
             Context.SaveChanges();
         }
 

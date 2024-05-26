@@ -119,7 +119,7 @@ public class OfferServiceTest
     }
 
     /// <summary>
-    /// fuction to update Offer as a test case that take   Center id , Center number , Center avaliability , center id  
+    /// fuction to update Offer as a test case that take   offer id , offer number , offer avaliability , center id  
     /// </summary>
     /// <param name="discount">discount number</param>
     /// <param name="endDate">End Date</param>
@@ -131,7 +131,7 @@ public class OfferServiceTest
     [Theory, TestPriority(3)]
     [InlineData(1, 20, "2000/12/30", "2000/12/30", "offer1", "offer is done", 1, true)]
     [InlineData(20, 20, "2000/12/30", "2000/12/30", "offer1", "offer is done", 1, false)]
-    public async Task UpdateCenter(int id, int discount, string endDate, string startDate, string OfferName, string OfferDescription, int ProductId, bool expectedResult)
+    public async Task Updateoffer(int id, int discount, string endDate, string startDate, string OfferName, string OfferDescription, int ProductId, bool expectedResult)
     {
         //Arrange
         CheckService();
