@@ -59,4 +59,26 @@ public class OverviewServiceTest
         Assert.True(result.IsSuccess);
 
     }
+    /// <summary>
+    /// fuction to get overview by id as a test case 
+    /// </summary>
+    /// <param name="id"> overview id</param>
+    [Theory, TestPriority(2)]
+    [InlineData(1)]
+    [InlineData(6)]
+    public async Task GetByIdoverview(int id)
+    {
+        // Arrange
+        CheckService();
+
+        // Act
+        var result = await _overviewService.GetOverviewByIdAsync(id);
+
+        // Assert
+        if (result.IsSuccess)
+            Assert.True(result.IsSuccess);
+        else
+            Assert.False(result.IsSuccess);
+
+    }
 }
