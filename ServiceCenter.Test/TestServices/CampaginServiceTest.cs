@@ -119,7 +119,7 @@ public  class CampaginServiceTest
 
     }
     /// <summary>
-    /// fuction to add Campagin as a test case that take  
+    /// fuction to update Campagin as a test case that take  
     /// </summary>
     /// <param name="goals">goals of campagin</param>
     /// <param name="endDate">End Date</param>
@@ -141,10 +141,11 @@ public  class CampaginServiceTest
             StartDate = DateOnly.Parse(startDate),
             CampaginName = CampaginName,
             CampaginDescription = CampaginDescription,
-            Budget = budget
+            Budget = budget,
+            Status=status,
         };
         // Act
-        var result = await _campaginService.AddCampaginAsync(CampaginRequestDto);
+        var result = await _campaginService.UpdateCampaginAsync(id,CampaginRequestDto);
 
         // Assert
         if (result.IsSuccess)
@@ -152,6 +153,50 @@ public  class CampaginServiceTest
         else
             Assert.False(result.IsSuccess);
     }
+    /// <summary>
+    /// fuction to update campagin as a test case that take  campagin id , campagin name , campagin descreiption , campagin dosage and campagin id and expected result
+    /// </summary>
+    /// <param name="from">campagin from</param>
+    /// <param name="status">campagin status</param>
+    [Theory, TestPriority(3)]
+    [InlineData(3, CampaginStatus.Active, true)]
+    [InlineData(10, CampaginStatus.Completed, false)]
+    public async Task UpdateCampaginStatus(int id, CampaginStatus status, bool expectedResult)
+    {
+        //Arrange
+        CheckService();
+        // Act
+        var result = await _campaginService.UpdateCampaginStatusAsync(id, status);
+        // Assert
+        if (expectedResult)
+        {
+            Assert.True(result.IsSuccess); // Expecting successful update
+        }
+        else
+        {
+            Assert.False(result.IsSuccess); // Expecting unsuccessful update
+        }
+    }
+    /// <summary>
+    /// fuction to remove campagin as a test case that take campagin id
+    /// </summary>
+    /// <param name="id">campagin id </param>
+    [Theory, TestPriority(4)]
+    [InlineData(2)]
+    [InlineData(30)]
+    public async Task RemoveCampagin(int id)
+    {
+        // Arrange
+        CheckService();
 
+        // Act
+        var result = await _campaginService.DeleteCampaginAsync(id);
 
+        // Assert
+        if (result.IsSuccess)
+            Assert.True(result.IsSuccess);
+        else
+            Assert.False(result.IsSuccess);
+
+    }
 }
