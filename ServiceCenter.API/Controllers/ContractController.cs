@@ -35,7 +35,7 @@ public class ContractController(IContractService ContractService) : BaseControll
     /// </summary>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
-    /// </remarks>
+    /// </remarks> 
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
     [Authorize(Roles = "Employee,Manager,Customer")]

@@ -19,7 +19,7 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<List<CustomerResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<List<CustomerResponseDto>>> GetAllCustomers()
 	{
@@ -35,7 +35,7 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<CustomerGetByIdResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<CustomerGetByIdResponseDto>> GetCustomerById(string id)
@@ -53,7 +53,7 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPut("{id}")]
-    [Authorize(Roles = "Manager,Customer")]
+    [Authorize(Roles = "Admin,Manager,Customer")]
     [ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<CustomerResponseDto>> UpdateCustomer(string id, CustomerRequestDto customerRequestDto)
@@ -70,7 +70,7 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-    [Authorize(Roles = "Manager,Customer")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<List<CustomerResponseDto>>> SerachCustomerByText(string text)
@@ -88,7 +88,7 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("searchByCustomers/{branchId}")]
-    [Authorize(Roles = "Manager,Customer")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<List<CustomerResponseDto>>> GetCustomersByBranch(int branchId)
@@ -104,7 +104,7 @@ public class CustomerController(ICustomerService customerService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result> DeleteCustomer(string id)

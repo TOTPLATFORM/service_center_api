@@ -22,7 +22,7 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPost]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> AddEmployee(EmployeeRequestDto employeeRequestDto)
@@ -38,7 +38,7 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<List<EmployeeResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<List<EmployeeResponseDto>>> GetAllEmployees()
 	{
@@ -53,7 +53,7 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<EmployeeResponseDto>> GetEmployeeById(string id)
@@ -72,7 +72,7 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPut("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager,Employee")]
     [ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<EmployeeResponseDto>> UpdateEmployee(string id, EmployeeRequestDto employeeRequestDto)
@@ -89,7 +89,7 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<List<EmployeeResponseDto>>> SerachEmployeeByText(string text)
@@ -105,7 +105,7 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result> DeleteEmployeeAsycn(string id)

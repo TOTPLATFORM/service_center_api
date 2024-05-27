@@ -22,7 +22,7 @@ public class BranchController(IBranchService branchService) : BaseController
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPost]
-	[Authorize(Roles = "Manager")]
+	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> AddBranch(BranchRequestDto branchRequestDto)
@@ -50,7 +50,7 @@ public class BranchController(IBranchService branchService) : BaseController
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-	[Authorize(Roles = "Manager")]
+	//[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<BranchResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<BranchResponseDto>> GetBranchById(int id)
@@ -69,7 +69,7 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPut("{id}")]
-	[Authorize(Roles = "Manager")]
+	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<BranchResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<BranchResponseDto>> UpdateBranch(int id, BranchRequestDto branchRequestDto)
@@ -86,7 +86,7 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-	[Authorize(Roles = "Manager,Customer")]
+	//[Authorize(Roles = "Admin,Manager,Customer")]
 	[ProducesResponseType(typeof(Result<BranchResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<List<BranchResponseDto>>> SerachBranchByText(string text)
@@ -102,7 +102,7 @@ public class BranchController(IBranchService branchService) : BaseController
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> DeleteBranchAsycn(int id)

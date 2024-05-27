@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿  using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -21,7 +21,7 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
 	/// </remarks>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpPost]
-	//[Authorize(Roles = "Customer,Manager,Employee")]
+	[Authorize(Roles = "Admin,Customer,Manager,Employee")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	public async Task<Result> AddAppointment(AppointmentRequestDto appointmentRequestDto)
 	{
@@ -34,7 +34,7 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
 	/// </summary>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all appointment for spicific employee.</returns>
 	[HttpGet("SearchByEmployee/{id}")]
-	//[Authorize(Roles = "Customer,Manager,Employee")]
+	[Authorize(Roles = "Admin,Customer,Manager,Employee")]
 	[ProducesResponseType(typeof(Result<List<AppointmentResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<List<AppointmentResponseDto>>> GetAllappointmentForEmployee(string id)
 	{
@@ -45,7 +45,7 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
 	/// </summary>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all appointment for spicific customer.</returns>
 	[HttpGet("SearchByCustomer/{id}")]
-	//[Authorize(Roles = "Customer,Manager,Employee")]
+	[Authorize(Roles = "Admin,Customer,Manager,Employee")]
 	[ProducesResponseType(typeof(Result<List<AppointmentResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<List<AppointmentResponseDto>>> GetAllappointmentForCustomer(string id)
 	{
@@ -69,7 +69,7 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
 	/// <param name="id">the unique identifier of the appointment .</param>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the appointment category details.</returns>
 	[HttpGet("{id:int}")]
-	//[Authorize(Roles = "Customer,Manager,Employee")]
+	[Authorize(Roles = "Admin,Customer,Manager,Employee")]
 	[ProducesResponseType(typeof(Result<AppointmentResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result<AppointmentResponseDto>), StatusCodes.Status400BadRequest)]
 	public async Task<Result<AppointmentResponseDto>> GetAppointmentById(int id)
@@ -87,7 +87,7 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
 	/// </remarks>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 	[HttpPut("{id}")]
-	//[Authorize(Roles = "Customer,Manager,Employee")]
+	[Authorize(Roles = "Admin,Customer,Manager,Employee")]
 	[ProducesResponseType(typeof(Result<AppointmentResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -105,8 +105,8 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
 	/// </remarks>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
 	[HttpDelete("{id}")]
-	//[Authorize(Roles = "Customer,Manager,Employee")]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    [Authorize(Roles = "Admin,Customer,Manager,Employee")]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result> DeleteAppointment(int id)
 	{

@@ -22,7 +22,7 @@ public class CenterController(ICenterService centerService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPost]
-	[Authorize(Roles = "Manager")]
+	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> AddCenter(CenterRequestDto centerRequestDto)
@@ -38,7 +38,7 @@ public class CenterController(ICenterService centerService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<CenterResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<List<CenterResponseDto>>> GetAllCenters()
 	{
@@ -53,7 +53,7 @@ public class CenterController(ICenterService centerService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<CenterResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<CenterResponseDto>> GetCenterById(int id)
@@ -72,7 +72,7 @@ public class CenterController(ICenterService centerService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPut("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<CenterResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<CenterResponseDto>> UpdateCenter(int id, CenterRequestDto centerRequestDto)
@@ -89,7 +89,7 @@ public class CenterController(ICenterService centerService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<CenterResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<List<CenterResponseDto>>> SerachCenterByText(string text)
@@ -105,7 +105,7 @@ public class CenterController(ICenterService centerService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> DeleteCenterAsycn(int id)

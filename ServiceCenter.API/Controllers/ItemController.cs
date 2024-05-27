@@ -18,7 +18,7 @@ public class ItemController(IItemService itemService) : BaseController {
     /// <param name="itemDto">item dto</param>
     /// <returns>result for item added successfully.</returns>
     [HttpPost]
-    [Authorize(Roles = "WarehouseManager,Vendor")]
+    [Authorize(Roles = "WarehouseManager,Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddItem(ItemRequestDto itemDto)
@@ -27,7 +27,7 @@ public class ItemController(IItemService itemService) : BaseController {
     }
 
     [HttpGet]
-    [Authorize(Roles = "WarehouseManager,Vendor")]
+    [Authorize(Roles = "Manager,WarehouseManager,Admin")]
     [ProducesResponseType(typeof(Result<List<ItemResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<ItemResponseDto>>> GetAllItems()
     {
@@ -38,7 +38,7 @@ public class ItemController(IItemService itemService) : BaseController {
     /// </summary>
     /// <returns>result of item response dto</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "WarehouseManager,Vendor")]
+    [Authorize(Roles = "WarehouseManager,Admin")]
     [ProducesResponseType(typeof(Result<ItemResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<ItemResponseDto>> GetItemById(int id)
@@ -46,7 +46,7 @@ public class ItemController(IItemService itemService) : BaseController {
         return await _ItemService.GetItemByIdAsync(id);
     }
     [HttpPut("{id}")]
-    [Authorize(Roles = "WarehouseManager,Vendor")]
+    [Authorize(Roles = "WarehouseManager,Admin")]
     [ProducesResponseType(typeof(Result<ItemResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ItemResponseDto>> UpdateItem(int id, ItemRequestDto itemDto)
@@ -59,7 +59,7 @@ public class ItemController(IItemService itemService) : BaseController {
     /// <param name="id">item id</param>
     /// <returns>result of item removed successfully </returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "WarehouseManager,Vendor")]
+    [Authorize(Roles = "WarehouseManager,Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteItem(int id)
@@ -74,7 +74,7 @@ public class ItemController(IItemService itemService) : BaseController {
     /// <returns>Item response dto </returns>
 
     [HttpGet("search/{text}")]
-    [Authorize(Roles = "WarehouseManager,Vendor")]
+    [Authorize(Roles = "WarehouseManager,Admin")]
     [ProducesResponseType(typeof(Result<ItemResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<ItemResponseDto>>> SearchItemByText(string text)

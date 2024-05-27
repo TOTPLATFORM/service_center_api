@@ -36,7 +36,7 @@ public class OverviewController(IOverviewService OverviewService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<List<OverviewResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<OverviewResponseDto>>> GetAllOverview()
     {

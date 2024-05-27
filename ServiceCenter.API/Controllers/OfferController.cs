@@ -20,7 +20,7 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// <returns>result of the Offer added successfully</returns>
 
     [HttpPost]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddOfferAsync(OfferRequestDto OfferDto)
@@ -34,7 +34,7 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// <returns>result of list from Offer response dto.</returns>
 
     [HttpGet]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Customer,Admin,Manager")]
     [ProducesResponseType(typeof(Result<List<OfferResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<OfferResponseDto>>> GetAllOffersAsync()
     {
@@ -63,7 +63,7 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<OfferResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<OfferResponseDto>> UpdateOffer(int id, OfferRequestDto OfferRequestDto)
@@ -81,7 +81,7 @@ public class OfferController(IOfferService OfferService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-	[Authorize(Roles = "Manager")]
+	//[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<OfferResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<List<OfferResponseDto>>> SearchOfferByText(string text)
@@ -97,7 +97,7 @@ public class OfferController(IOfferService OfferService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpDelete("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteOffer(int id)
@@ -111,7 +111,7 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// <returns>result of list from products response dto.</returns>
 
     [HttpGet("SearchByOffer/{offerId}")]
-    [Authorize(Roles = "Manager")]
+    //[Authorize(Roles = "Customer,Admin,Manager")]
     [ProducesResponseType(typeof(Result<List<ProductResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<ProductResponseDto>>> GetProductsByOffer(int offerId)
     {

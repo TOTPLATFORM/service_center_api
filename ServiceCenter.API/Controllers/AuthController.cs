@@ -85,5 +85,18 @@ public class AuthController(IAuthService authService) : BaseController
 
         return Result.SuccessWithMessage("Create manager account successfully");
     }
+    /// <summary>
+    /// action for add an admin account.
+    /// </summary>
+    /// <returns>result representing the adding admin successfully.</returns>
+    [HttpPost("CreateAdminAccount")]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result> CreateAdminAccount()
+    {
+        await _authService.CreateAdminAccount();
+
+        return Result.SuccessWithMessage("Create admin account successfully");
+    }
 }
 
