@@ -240,7 +240,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
 
     public async Task InitializeRoles()
     {
-        var roles = new List<string> {"Manager", "Employee","Customer","WarehouseManager","Sales","Vendor"};
+        var roles = new List<string> {"Manager", "Employee","Customer","WarehouseManager","Sales","Vendor","Admin"};
 
         foreach (var role in roles)
         {
@@ -251,6 +251,22 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
         }
     }
 
+    public async Task CreateAdminAccount()
+    {
+        var user = new ApplicationUser
+        {
+            FirstName = "Service",
+            LastName = "Center",
+            DateOfBirth = DateOnly.MaxValue,
+            Email = "center133@gmail.com",
+            Gender = "Male",
+            UserName = "Admin"
+        };
+
+        await _userManager.CreateAsync(user, "P@ssw0rd");
+
+        await _userManager.AddToRoleAsync(user, "Admin");
+    }
     public async Task CreateManagerAccount()
     {
         var user = new ApplicationUser
@@ -260,7 +276,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
             DateOfBirth = DateOnly.MaxValue,
             Email = "center133@gmail.com",
             Gender = "Male",
-            UserName = "manager"
+            UserName = "Manager"
         };
 
         await _userManager.CreateAsync(user, "P@ssw0rd");
@@ -268,7 +284,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
         await _userManager.AddToRoleAsync(user, "Manager");
     }
 
-	public async Task<Result> RegisterWarehouseManagerAsync(WareHouseManagerRequestDto wareHouseManagerRequestDto)
+    public async Task<Result> RegisterWarehouseManagerAsync(WareHouseManagerRequestDto wareHouseManagerRequestDto)
 	{
 		string role = "WarehouseManager";
 
@@ -276,4 +292,5 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
 
 		return await RegisterUserWithRoleAsync(wareHouseManager, wareHouseManagerRequestDto.Password, role);
 	}
+   
 }

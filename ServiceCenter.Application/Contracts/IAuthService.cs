@@ -62,4 +62,5 @@ public interface IAuthService: IApplicationService, IScopedService
 	Task<Result> AddUserToRoleAsync(string userId, string roleName);
     Task InitializeRoles();
     Task CreateManagerAccount();
+	Task CreateAdminAccount();
 }
