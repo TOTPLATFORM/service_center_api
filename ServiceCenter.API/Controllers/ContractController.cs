@@ -21,7 +21,7 @@ public class ContractController(IContractService ContractService) : BaseControll
     /// </remarks>
     /// <returns>result for Contract  added successfully.</returns>
     [HttpPost]
-    [Authorize(Roles = "Customer")]
+    [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddContract(ContractRequestDto ContractDto)
@@ -38,7 +38,7 @@ public class ContractController(IContractService ContractService) : BaseControll
     /// </remarks> 
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    [Authorize(Roles = "Employee,Manager,Customer")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<List<ContractResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<ContractResponseDto>>> GetAllContract()
     {
@@ -53,7 +53,7 @@ public class ContractController(IContractService ContractService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "Employee,Manager,Customer")]
+    [Authorize(Roles = "Employee,Manager,Admin")]
     [ProducesResponseType(typeof(Result<ContractResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<ContractResponseDto>> GetContractById(int id)

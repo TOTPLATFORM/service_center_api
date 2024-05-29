@@ -21,7 +21,7 @@ public class WareHousManagerController(IWareHousManagerService wareHousManager) 
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     public async Task<Result> AddWareHouseManager(WareHouseManagerRequestDto wareHouseManagerRequest)
     {
@@ -33,7 +33,7 @@ public class WareHousManagerController(IWareHousManagerService wareHousManager) 
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all warehouse manager.</returns>
     [HttpGet]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<List<WareHouseManagerResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<WareHouseManagerResponseDto>>> GetAllWareHouseManager()
     {
@@ -46,7 +46,7 @@ public class WareHousManagerController(IWareHousManagerService wareHousManager) 
     /// <param name="id">the unique identifier of the warehouse manager .</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the warehouse manager category details.</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<WareHouseManagerResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result<WareHouseManagerResponseDto>), StatusCodes.Status400BadRequest)]
     public async Task<Result<WareHouseManagerResponseDto>> GetWareHouseManagerById(string id)
@@ -64,7 +64,7 @@ public class WareHousManagerController(IWareHousManagerService wareHousManager) 
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
     [HttpPut("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<WareHouseManagerResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -82,7 +82,7 @@ public class WareHousManagerController(IWareHousManagerService wareHousManager) 
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteWareHouseManager(string id)
@@ -100,10 +100,10 @@ public class WareHousManagerController(IWareHousManagerService wareHousManager) 
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpGet("search/{text}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<WareHouseManagerResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<WareHouseManagerResponseDto>>> SerachBranchByText(string text)
+    public async Task<Result<List<WareHouseManagerResponseDto>>> SerachWarehouseManagerByText(string text)
     {
         return await _wareHousManager.SearchWareHouseManagerByTextAsync(text);
     }

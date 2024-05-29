@@ -34,7 +34,7 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// <returns>result of list from Offer response dto.</returns>
 
     [HttpGet]
-    [Authorize(Roles = "Customer,Admin,Manager")]
+   // [Authorize(Roles = "Customer,Admin,Manager")]
     [ProducesResponseType(typeof(Result<List<OfferResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<OfferResponseDto>>> GetAllOffersAsync()
     {
@@ -47,7 +47,7 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// <returns>result of Offer response dto </returns>
 
     [HttpGet("{id:int}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<OfferResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<OfferResponseDto>> GetOfferByIdAsync(int id)

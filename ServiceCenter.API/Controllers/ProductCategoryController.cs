@@ -22,7 +22,7 @@ public class ProductCategoryController (IProductCategoryService productCategoryS
     /// </remarks>
     /// <returns>result for product category added successfully.</returns>
     [HttpPost]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddProductCategory(ProductCategoryRequestDto productCategoryDto)
@@ -37,7 +37,7 @@ public class ProductCategoryController (IProductCategoryService productCategoryS
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    [Authorize(Roles = "Manager")]
+   // [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<List<ProductCategoryResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<ProductCategoryResponseDto>>> GetAllProductCategories()
     {
@@ -52,7 +52,7 @@ public class ProductCategoryController (IProductCategoryService productCategoryS
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "Manager")]
+   // [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<ProductCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<ProductCategoryResponseDto>> GetProductCategoryById(int id)
@@ -70,7 +70,7 @@ public class ProductCategoryController (IProductCategoryService productCategoryS
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,WarehouseManager,Admin")]
     [ProducesResponseType(typeof(Result<ProductCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ProductCategoryResponseDto>> UpdateProductCategory(int id, ProductCategoryRequestDto ProductCategoryRequestDto)
@@ -86,7 +86,7 @@ public class ProductCategoryController (IProductCategoryService productCategoryS
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,Admin ,WarehouseManager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteProductCategory(int id)
@@ -101,7 +101,7 @@ public class ProductCategoryController (IProductCategoryService productCategoryS
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpGet("search/{text}")]
-    [Authorize(Roles = "Manager")]
+    //[Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<ProductCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<ProductCategoryResponseDto>>> SearchProductCategoryByText(string text)

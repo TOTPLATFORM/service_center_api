@@ -292,5 +292,12 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
 
 		return await RegisterUserWithRoleAsync(wareHouseManager, wareHouseManagerRequestDto.Password, role);
 	}
-   
+    //public async Task<Result> RegisterServiceProviderAsync(WareHouseManagerRequestDto wareHouseManagerRequestDto)
+    //{
+    //    string role = "ServiceProvider";
+
+    //    var wareHouseManager = _mapper.Map<WareHouseManager>(wareHouseManagerRequestDto);
+
+    //    return await RegisterUserWithRoleAsync(wareHouseManager, wareHouseManagerRequestDto.Password, role);
+    //}
 }

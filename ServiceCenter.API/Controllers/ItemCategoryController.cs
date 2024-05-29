@@ -28,7 +28,7 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     }
 
     [HttpGet]
-    [Authorize(Roles = "WarehouseManager,Admin")]
+    [Authorize(Roles = "WarehouseManager,Admin,Manager,ServiceProvider")]
     [ProducesResponseType(typeof(Result<List<ItemCategoryResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<ItemCategoryResponseDto>>> GetAllItemCategorys()
     {
@@ -39,7 +39,7 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     /// </summary>
     /// <returns>result of ItemCategory response dto</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "WarehouseManager,Admin")]
+    [Authorize(Roles = "WarehouseManager,Admin,Manager")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<ItemCategoryResponseDto>> GetItemCategoryById(int id)
@@ -47,7 +47,7 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
         return await _itemCategoryService.GetItemCategoryByIdAsync(id);
     }
     [HttpPut("{id}")]
-    [Authorize(Roles = "WarehouseManager,Admin")]
+    [Authorize(Roles = "WarehouseManager,Admin,Manager")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ItemCategoryResponseDto>> UpdateItemCategory(int id, ItemCategoryRequestDto itemCategoryDto)
@@ -60,7 +60,7 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     /// <param name="id">ItemCategory id</param>
     /// <returns>result of ItemCategory removed successfully </returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "WarehouseManager,Admin")]
+    [Authorize(Roles = "WarehouseManager,Admin,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> DeleteItemCategory(int id)
@@ -75,7 +75,7 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     /// <returns>ItemCategory response dto </returns>
 
     [HttpGet("search/{text}")]
-    [Authorize(Roles = "WarehouseManager,Admin")]
+    [Authorize(Roles = "WarehouseManager,Admin,Manager,ServiceProvider")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<List<ItemCategoryResponseDto>>> SearchItemCategoryByText(string text)

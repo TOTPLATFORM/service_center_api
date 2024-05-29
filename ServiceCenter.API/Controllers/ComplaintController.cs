@@ -35,7 +35,7 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    [Authorize(Roles = "Customer,Manager")]
+    [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<List<ComplaintResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<ComplaintResponseDto>>> GetAllComplaints()
     {
@@ -51,7 +51,7 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "Customer,Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<ComplaintResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ComplaintResponseDto>> GetComplaintById(int id)
@@ -93,7 +93,7 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     }
 
 	[HttpGet("searchByComplaints/{customerId}")]
-    [Authorize(Roles = "Customer")]
+    [Authorize(Roles = "Customer,Admin,Manager")]
     [ProducesResponseType(typeof(Result<ComplaintResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<List<ComplaintResponseDto>>> GetComplaintsByCustomer(string customerId)

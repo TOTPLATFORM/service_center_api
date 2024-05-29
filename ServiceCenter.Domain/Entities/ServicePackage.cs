@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Domain.Entities;
 
-public class ServicePackage : AuditableEntity
+public class   : AuditableEntity
 {
 	public string PackageName { get; set; } = "";
 	public string PackageDescription { get; set; } = "";

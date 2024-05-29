@@ -19,7 +19,7 @@ public class OverviewController(IOverviewService OverviewService) : BaseControll
     /// </remarks>
     /// <returns>result for Overview  added successfully.</returns>
     [HttpPost]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Sales")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddOverview(OverviewRequestDto OverviewDto)
@@ -51,7 +51,7 @@ public class OverviewController(IOverviewService OverviewService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<OverviewResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<OverviewResponseDto>> GetOverviewById(int id)
@@ -67,7 +67,7 @@ public class OverviewController(IOverviewService OverviewService) : BaseControll
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,Admin,Sales")]
     [ProducesResponseType(typeof(Result<OverviewResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<OverviewResponseDto>> UpdateOverview(int id, OverviewRequestDto OverviewRequestDto)
@@ -83,7 +83,7 @@ public class OverviewController(IOverviewService OverviewService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,Admin,Sales")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> DeleteOverviewAsycn(int id)

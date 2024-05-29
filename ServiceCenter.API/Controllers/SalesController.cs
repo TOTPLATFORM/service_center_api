@@ -20,7 +20,7 @@ public class SalesController(ISalesService salesService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPost]
-    [Authorize(Roles = "Manager")]
+  [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddSales(SalesRequestDto salesRequestDto)
@@ -36,7 +36,7 @@ public class SalesController(ISalesService salesService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    [Authorize(Roles = "Manager")]
+  [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<List<SalesResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<SalesResponseDto>>> GetAllSales()
     {
@@ -87,7 +87,7 @@ public class SalesController(ISalesService salesService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpGet("search/{text}")]
-    [Authorize(Roles = "Manager")]
+  [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<SalesResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<List<SalesResponseDto>>> SerachSalesByText(string text)
@@ -103,7 +103,7 @@ public class SalesController(ISalesService salesService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager")]
+  [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteSalesAsycn(string id)
