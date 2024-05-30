@@ -18,7 +18,5 @@ public class ProductCategoryConfiguration : IEntityTypeConfiguration<ProductCate
                .HasColumnType("varchar")
                .HasMaxLength(50);
 
-        builder.Property(T => T.ReferenceNumber)
-            .IsRequired();
     }
 }
