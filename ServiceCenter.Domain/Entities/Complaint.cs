@@ -12,7 +12,7 @@ public class Complaint : AuditableEntity
 {
     public DateOnly ComplaintDate { get; set; }
     public string ComplaintDescription { get; set; } = "";
-    public string ComplaintCategory { get; set; } = "";
+    public ComplaintType ComplaintCategory { get; set; } 
     public Status ComplaintStatus { get; set; }
 
 

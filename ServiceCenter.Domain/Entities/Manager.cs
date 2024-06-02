@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Domain.Entities;
 
-public class Manager:ApplicationUser
+public class Manager:Employee
 {
 
     public virtual ICollection<Report?> Reports { get; set; } = new HashSet<Report>();

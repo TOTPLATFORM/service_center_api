@@ -16,6 +16,6 @@ public class Branch : AuditableEntity
    
     public virtual ICollection<Complaint?> Complaints { get; set; } = new HashSet<Complaint>();
 
-    public virtual Manager Manager { get; set; } = default;
-    public virtual Inventory Inventory { get; set; } = default;
+    public virtual Manager? Manager { get; set; } = default;
+    public virtual Inventory? Inventory { get; set; } = default;
 }

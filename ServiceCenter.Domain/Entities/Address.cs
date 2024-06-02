@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ServiceCenter.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace ServiceCenter.Domain.Entities;
 [Owned]
 public class Address 
 {
-	public string City { get; set; } = "";
-   // public string Country { get; set; } = "Egypt";
+	public City City { get; set; } 
+    public Country Country { get; set; } = Country.Egypt;
 	public string PostalCode { get; set; } = "";
 
 

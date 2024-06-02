@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Core.Entities;
+using ServiceCenter.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ public class Feedback : AuditableEntity
 {
     public DateOnly FeedbackDate { get; set; }
     public string FeedbackDescription { get; set; } = "";
-    public string FeedbackCategory { get; set; } = "";
+    public FeedbackType FeedbackCategory { get; set; } 
 
     public virtual Contact? Contact { get; set; } = default;
     public virtual Service Service { get; set; } = default;

@@ -12,7 +12,7 @@ public class Report : AuditableEntity
 {
     public string Task { get; set; } = "";
     public string Priority { get; set; } = "";
-    public Status Status { get; set; }
+    public ReportStatus Status { get; set; }
     public DateTime DueDate { get; set; }
 
      public virtual Manager? Manager { get; set; } = default;
