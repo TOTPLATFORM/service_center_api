@@ -13,5 +13,5 @@ public class RatingServiceGetByIdResponseDto
     public int RatingValue { get; set; }
     public DateTime CreatedDate { get; set; }
     public  ServiceGetByIdResponseDto Service { get; set; } = default;
-    public  CustomerGetByIdResponseDto Customer { get; set; } = default;
+   // public  CustomerGetByIdResponseDto Customer { get; set; } = default;
 }

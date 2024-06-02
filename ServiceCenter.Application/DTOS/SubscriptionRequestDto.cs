@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class RoomRequestDto
+public class SubscriptionRequestDto
 {
     [Required]
-    public int RoomNumber { get; set; }
+    public DateOnly Duration { get; set; } 
     [Required]
-    public bool Availability { get; set; }
-    [Required]
-    public int CenterId { get; set; }
+    public int ServicePackageId { get; set; }
 }

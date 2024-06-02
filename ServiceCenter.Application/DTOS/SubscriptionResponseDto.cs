@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class ContractResponseDto
+public class SubscriptionResponseDto
 {
     public int Id { get; set; }
     public DateOnly Duration { get; set; } 

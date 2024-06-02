@@ -20,6 +20,6 @@ public class BranchRequestDto
     [Required]
     [EmailAddress]
     public string EmailAddress { get; set; } = "";
-    [Required]
-    public int CenterId { get; set; }
+    public string? ManagerId { get; set; }
+    public int? InventoryId { get; set; }
 }

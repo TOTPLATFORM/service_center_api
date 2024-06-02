@@ -16,5 +16,5 @@ public class SalesResponseDto
     public string SalesPhoneNumber { get; set; } = "";
     public string UserName { get; set; } = "";
     public virtual ICollection<ProductResponseDto> Products { get; set; }
-    public virtual ICollection<OverviewResponseDto> Overviews { get; set; }
+    public virtual ICollection<ReportResponseDto> Overviews { get; set; }
 }

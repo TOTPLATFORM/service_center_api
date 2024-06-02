@@ -11,7 +11,6 @@ public class DepartmentRequestDto
 {
     [Required]
     public string DepartmentName { get; set; } = "";
-    [Required]
-    public int CenterId { get; set; }
+    public ICollection<string> EmployessId { get; set; }
 
 }

@@ -20,5 +20,5 @@ public class ManagerResponseDto
     public int WorkingHours { get; set; }
     public int Experience { get; set; }
     public string DepartmentName { get; set; }
-    public virtual ICollection<TimeSlotResponseDto> TimeSlots { get; set; }
+   // public virtual ICollection<TimeSlotResponseDto> TimeSlots { get; set; }
 }
