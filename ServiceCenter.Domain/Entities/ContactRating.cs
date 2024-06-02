@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Domain.Entities;
 
-public class Rating : AuditableEntity
+public class ContactRating:AuditableEntity
 {
-    public int RatingValue { get; set; }
-    public ICollection<ContactRating> CustomerRatings { get; set; }
+    public int ContactId { get; set; }
+    public Contact Contact  { get; set; }
 
+    public int RatingId { get; set; }
+    public Rating Rating { get; set; }
 }

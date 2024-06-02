@@ -14,8 +14,9 @@ public class Product : AuditableEntity
     public int ProductPrice { get; set; } 
     public int ProductCategoryId { get; set; }
     public virtual ProductCategory ProductCategory { get; set; } = default;
-	public int ProductBrandId { get; set; }
-    public virtual ProductBrand ProductBrand { get; set; } = default;
-    public string? SalesId { get; set; } = default;
-    public virtual Sales Sales { get; set; } = default;
+    public virtual ICollection<Feedback?> Feedbacks { get; set; } = new HashSet<Feedback>();
+
+    //public string? SalesId { get; set; } = default;
+    //public virtual Sales Sales { get; set; } = default;
+
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Domain.Entities;
 
-public class Overview : AuditableEntity
+public class Report : AuditableEntity
 {
     public string Task { get; set; } = "";
     public string Priority { get; set; } = "";
@@ -16,5 +16,9 @@ public class Overview : AuditableEntity
     public DateTime DueDate { get; set; }
 
     public required string SalesId { get; set; }
-    public virtual Sales Sales { get; set; } = default;
+     public virtual Sales Sales { get; set; } = default;
+    public  string? ManagerId { get; set; }
+    public virtual Manager Manager { get; set; } = default;
+    public string ContactId { get; set; } = default;
+    public virtual Contact Contact { get; set; } = default;
 }

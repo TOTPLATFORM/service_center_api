@@ -14,10 +14,14 @@ public class Service : AuditableEntity
     public string ServiceDescription { get; set; } = "";
     public int ServicePrice { get; set; }
     public Status Avaliable { get; set; }
-	public int ServiceCategoryId { get; set; }
+    public int CenterId { get; set; }
+    public virtual Center Center { get; set; } = default;
+    public int ServiceCategoryId { get; set; }
     public virtual ServiceCategory ServiceCategory { get; set; } = default;
     public virtual List<ServicePackage> ServicePackages { get; set; } = new List<ServicePackage>();
-    public string? EmployeeId { get; set; } 
-    public virtual Employee Employee { get; set; } = default;
+
+   // public virtual ICollection<ServiceProviderService> ServiceProviderServices { get; set; }
+    public virtual ICollection<Item> Item { get; set; }=new HashSet<Item>();
+    public virtual ICollection<Feedback?> Feedbacks { get; set; } = new HashSet<Feedback>();
 
 }

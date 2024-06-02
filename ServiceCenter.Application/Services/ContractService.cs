@@ -24,7 +24,7 @@ public class ContractService(ServiceCenterBaseDbContext dbContext, IMapper mappe
     ///<inheritdoc/>
     public async Task<Result> AddContractAsync(ContractRequestDto ContractRequestDto)
     {
-        var result = _mapper.Map<Contract>(ContractRequestDto);
+        var result = _mapper.Map<Subscription>(ContractRequestDto);
         if (result is null)
         {
             _logger.LogError("Failed to map ContractRequestDto to Contract. ContractRequestDto: {@ContractRequestDto}", ContractRequestDto);

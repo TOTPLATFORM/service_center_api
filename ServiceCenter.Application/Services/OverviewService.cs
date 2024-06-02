@@ -22,7 +22,7 @@ public class OverviewService(ServiceCenterBaseDbContext dbContext, IMapper mappe
     public async Task<Result> AddOverviewAsync(OverviewRequestDto OverviewRequestDto)
     {
         var sales = await _dbContext.Users.OfType<Sales>().FirstOrDefaultAsync(s => s.Id == OverviewRequestDto.SalesId);
-        var result = _mapper.Map<Overview>(OverviewRequestDto);
+        var result = _mapper.Map<Report>(OverviewRequestDto);
         if (result is null)
         {
             _logger.LogError("Failed to map OverviewRequestDto to Overview. OverviewRequestDto: {@OverviewRequestDto}", OverviewRequestDto);

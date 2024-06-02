@@ -14,7 +14,7 @@ public static  class OverviewTest
     public static void AddOverview(this ServiceCenterBaseDbContext context)
     {
         context.Overviews.AddRange(
-        new Overview
+        new Report
         {
             Id = 1,
             Task = "task1",
@@ -23,7 +23,7 @@ public static  class OverviewTest
             DueDate = DateTime.Parse("3/11/2024"),
             SalesId= "53ae72a7-589e-4f0b-81ed-40381"
         },
-        new Overview
+        new Report
         {
             Id = 2,
             Task = "task2",

@@ -8,9 +8,9 @@ public static class OverviewMapping
 {
     public static void AddOverviewMapping(this MappingProfiles map)
     {
-        map.CreateMap<OverviewRequestDto, Overview>();
+        map.CreateMap<OverviewRequestDto, Report>();
 
-        map.CreateMap<Overview, OverviewResponseDto>()
+        map.CreateMap<Report, OverviewResponseDto>()
             .ForMember(dest=> dest.SalesName, src => src.MapFrom(src => src.Sales.FirstName + " " + src.Sales.LastName));
     }
 }

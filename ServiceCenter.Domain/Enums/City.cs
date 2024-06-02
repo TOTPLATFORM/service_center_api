@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 namespace ServiceCenter.Domain.Enums;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
-public enum ContactStatus
+public enum City
 {
-	
-    Opportunity,
-    Lead,
-    Cancelled,
-	Customer
+    Cairo,
+    Giza,
+    Monufia,
+    Alexandria,
+    Sharqia,
+    Beheira,
 }

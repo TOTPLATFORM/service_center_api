@@ -13,6 +13,7 @@ public class ProductBrand : AuditableEntity
     public string BrandDescription { get; set; } = "";
     public string CountryOfOrigin { get; set; } = "";
     public DateOnly FoundedYear { get; set; }
-    public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
+    //public ICollection<InventoryProductBrand> InventoryProductBrands { get; set; }
+    //public ICollection<ProductCategory> ProductCategories { get; set; }
 
 }

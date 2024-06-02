@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Domain.Entities;
     
-public class Contract : AuditableEntity
+public class Subscription : AuditableEntity
 {
     public  DateOnly Duration { get; set; } 
     public int ServicePackageId { get; set; }

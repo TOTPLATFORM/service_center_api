@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Domain.Entities;
 
-public class Sales : ApplicationUser
+public class Sales : Employee
 {
-    public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
-    public virtual ICollection<Overview>? Overviews { get; set; } = new HashSet<Overview>();
+    public int CenterId { get; set; }
+    public virtual Center Center { get; set; } = default;
+    public virtual ICollection<Product?> Products { get; set; } = new HashSet<Product>();
+  public virtual ICollection<Report?>Reports { get; set; } = new HashSet<Report>();
 }
+

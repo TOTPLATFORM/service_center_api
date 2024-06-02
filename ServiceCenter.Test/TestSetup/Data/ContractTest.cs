@@ -13,13 +13,13 @@ public static class ContractTest
     public static void AddContract(this ServiceCenterBaseDbContext context)
     {
         context.Contracts.AddRange(
-        new Contract
+        new Subscription
         {
             Id = 1,
             Duration= DateOnly.Parse("3/11/2024"),
             ServicePackageId=1
         },
-        new Contract
+        new Subscription
         {
             Id = 2,
             Duration = DateOnly.Parse("3/11/2024"),
