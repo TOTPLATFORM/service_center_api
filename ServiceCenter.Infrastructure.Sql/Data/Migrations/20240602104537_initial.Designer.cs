@@ -9,11 +9,11 @@ using ServiceCenter.Infrastructure.BaseContext;
 
 #nullable disable
 
-namespace ServiceCenter.Infrastructure.Sql.Migrations
+namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
-    [Migration("20240523130537_updateInInventoryEntity")]
-    partial class updateInInventoryEntity
+    [Migration("20240602104537_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,6 +27,51 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ContactRating", b =>
+                {
+                    b.Property<string>("ContactId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("RatingsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ContactId", "RatingsId");
+
+                    b.HasIndex("RatingsId");
+
+                    b.ToTable("ContactRating");
+                });
+
+            modelBuilder.Entity("InventoryItemCategory", b =>
+                {
+                    b.Property<int>("InventoriesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemCategoriesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("InventoriesId", "ItemCategoriesId");
+
+                    b.HasIndex("ItemCategoriesId");
+
+                    b.ToTable("InventoryItemCategory");
+                });
+
+            modelBuilder.Entity("InventoryProductBrand", b =>
+                {
+                    b.Property<int>("InventoriesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductBrandsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("InventoriesId", "ProductBrandsId");
+
+                    b.HasIndex("ProductBrandsId");
+
+                    b.ToTable("InventoryProductBrand");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -161,6 +206,21 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ProductBrandProductCategory", b =>
+                {
+                    b.Property<int>("ProductBrandsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductCategoriesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductBrandsId", "ProductCategoriesId");
+
+                    b.HasIndex("ProductCategoriesId");
+
+                    b.ToTable("ProductBrandProductCategory");
+                });
+
             modelBuilder.Entity("ServiceCenter.Domain.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -261,14 +321,11 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ScheduleId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedDate")
@@ -276,9 +333,7 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("ScheduleId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Appointments");
                 });
@@ -301,7 +356,7 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar");
 
-                    b.Property<int>("CenterId")
+                    b.Property<int?>("CenterId")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -316,6 +371,10 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar");
 
+                    b.Property<string>("ManagerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -326,6 +385,8 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CenterId");
+
+                    b.HasIndex("ManagerId");
 
                     b.ToTable("Branches");
                 });
@@ -349,6 +410,9 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CenterId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -362,6 +426,9 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.Property<string>("Goals")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ManagerId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
@@ -377,6 +444,10 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CenterId");
+
+                    b.HasIndex("ManagerId");
 
                     b.ToTable("Campagins");
                 });
@@ -421,29 +492,6 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.ToTable("Centers");
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.CenterService", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CenterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CenterId");
-
-                    b.HasIndex("ServiceId");
-
-                    b.ToTable("CenterServices");
-                });
-
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Complaint", b =>
                 {
                     b.Property<int>("Id")
@@ -451,6 +499,9 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BranchId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ComplaintCategory")
                         .IsRequired()
@@ -468,16 +519,15 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.Property<int>("ComplaintStatus")
                         .HasColumnType("int");
 
+                    b.Property<string>("ContactId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
@@ -488,117 +538,11 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("ContactId");
 
                     b.ToTable("Complaints");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Contact", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ContactEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactFirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar");
-
-                    b.Property<string>("ContactLastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasMaxLength(6)
-                        .HasColumnType("varchar");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Contacts");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Contract", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateOnly>("Duration")
-                        .HasColumnType("date");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ServicePackageId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ServicePackageId");
-
-                    b.ToTable("Contracts");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.CustomerService", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("ServiceId");
-
-                    b.ToTable("CustomerServices");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Department", b =>
@@ -609,7 +553,7 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CenterId")
+                    b.Property<int?>("CenterId")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -646,15 +590,15 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ContactId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FeedbackCategory")
                         .IsRequired()
@@ -673,12 +617,22 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("Feedbacks");
                 });
@@ -690,6 +644,9 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -720,6 +677,9 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BranchId")
+                        .IsUnique();
+
                     b.ToTable("Inventories");
                 });
 
@@ -731,15 +691,15 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("ItemCategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ItemDescription")
                         .IsRequired()
@@ -761,12 +721,17 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ServiceId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("ItemCategoryId");
+
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("Items");
                 });
@@ -791,64 +756,16 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("InventoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ReferenceNumber")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("InventoryId");
 
                     b.ToTable("ItemCategories");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.ItemOrder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("ItemOrder");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Offer", b =>
@@ -889,6 +806,9 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
                     b.Property<DateOnly>("StartDate")
                         .HasColumnType("date");
 
@@ -898,6 +818,8 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("Offers");
                 });
@@ -943,53 +865,6 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Overview", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Priority")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SalesId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Task")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SalesId");
-
-                    b.ToTable("Overviews");
-                });
-
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -1009,10 +884,7 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductBrandId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductCategoryId")
+                    b.Property<int?>("ProductCategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("ProductDescription")
@@ -1035,8 +907,6 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductBrandId");
 
                     b.HasIndex("ProductCategoryId");
 
@@ -1114,9 +984,6 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReferenceNumber")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -1125,7 +992,7 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.ToTable("ProductCategories");
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.RatingService", b =>
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Rating", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1140,68 +1007,75 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CustomerId")
+                    b.Property<string>("ModifiedBy")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RatingValue")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rating");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Report", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContactId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ManagerId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RatingValue")
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SalesId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
+                    b.Property<string>("Task")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("ContactId");
 
-                    b.HasIndex("ServiceId");
+                    b.HasIndex("ManagerId");
 
-                    b.ToTable("RatingServices");
-                });
+                    b.HasIndex("SalesId");
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Room", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Availability")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("CenterId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RoomNumber")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CenterId");
-
-                    b.ToTable("Rooms");
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Schedule", b =>
@@ -1219,24 +1093,25 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("EmployeeId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<TimeOnly>("EndTime")
+                        .HasColumnType("time");
 
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TimeSlotId")
-                        .HasColumnType("int");
+                    b.Property<string>("ServiceProviderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<TimeOnly>("StartTime")
+                        .HasColumnType("time");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("TimeSlotId");
+                    b.HasIndex("ServiceProviderId");
 
                     b.ToTable("Schedules");
                 });
@@ -1252,15 +1127,15 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.Property<int>("Avaliable")
                         .HasColumnType("int");
 
+                    b.Property<int>("CenterId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("EmployeeId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
@@ -1287,7 +1162,7 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("CenterId");
 
                     b.HasIndex("ServiceCategoryId");
 
@@ -1371,7 +1246,7 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.ToTable("ServicePackages");
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.TimeSlot", b =>
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Subscription", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1386,27 +1261,61 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Day")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar");
-
-                    b.Property<TimeOnly>("EndTime")
-                        .HasColumnType("time");
+                    b.Property<DateOnly>("Duration")
+                        .HasColumnType("date");
 
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeOnly>("StartTime")
-                        .HasColumnType("time");
+                    b.Property<int>("ServicePackageId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TimeSlots");
+                    b.HasIndex("ServicePackageId");
+
+                    b.ToTable("Subscriptions");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Transaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("InventoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("VendorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InventoryId");
+
+                    b.HasIndex("VendorId");
+
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("ServicePackageServices", b =>
@@ -1424,24 +1333,36 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.ToTable("ServicePackageServices");
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Customer", b =>
+            modelBuilder.Entity("ServiceServiceProvider", b =>
+                {
+                    b.Property<string>("ServiceProvidersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ServicesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ServiceProvidersId", "ServicesId");
+
+                    b.HasIndex("ServicesId");
+
+                    b.ToTable("ServiceServiceProvider");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Contact", b =>
                 {
                     b.HasBaseType("ServiceCenter.Domain.Entities.ApplicationUser");
 
-                    b.Property<int?>("BranchId")
-                        .IsRequired()
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasIndex("BranchId");
-
-                    b.ToTable("Customers");
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Employee", b =>
                 {
                     b.HasBaseType("ServiceCenter.Domain.Entities.ApplicationUser");
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.HasIndex("DepartmentId");
@@ -1449,18 +1370,18 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Sales", b =>
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Manager", b =>
                 {
                     b.HasBaseType("ServiceCenter.Domain.Entities.ApplicationUser");
 
-                    b.ToTable("Sales");
+                    b.ToTable("Manager");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Vendor", b =>
                 {
                     b.HasBaseType("ServiceCenter.Domain.Entities.ApplicationUser");
 
-                    b.Property<int>("CenterId")
+                    b.Property<int?>("CenterId")
                         .HasColumnType("int");
 
                     b.Property<string>("ContactPerson")
@@ -1482,9 +1403,28 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.ToTable("Vendors");
                 });
 
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Sales", b =>
+                {
+                    b.HasBaseType("ServiceCenter.Domain.Entities.Employee");
+
+                    b.Property<int?>("CenterId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("CenterId");
+
+                    b.ToTable("Sales");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.ServiceProvider", b =>
+                {
+                    b.HasBaseType("ServiceCenter.Domain.Entities.Employee");
+
+                    b.ToTable("ServiceProvider");
+                });
+
             modelBuilder.Entity("ServiceCenter.Domain.Entities.WareHouseManager", b =>
                 {
-                    b.HasBaseType("ServiceCenter.Domain.Entities.ApplicationUser");
+                    b.HasBaseType("ServiceCenter.Domain.Entities.Employee");
 
                     b.Property<DateOnly>("EndtDate")
                         .HasColumnType("date");
@@ -1502,6 +1442,51 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.HasIndex("InventoryId");
 
                     b.ToTable("WareHouseManagers");
+                });
+
+            modelBuilder.Entity("ContactRating", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Contact", null)
+                        .WithMany()
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServiceCenter.Domain.Entities.Rating", null)
+                        .WithMany()
+                        .HasForeignKey("RatingsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("InventoryItemCategory", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Inventory", null)
+                        .WithMany()
+                        .HasForeignKey("InventoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServiceCenter.Domain.Entities.ItemCategory", null)
+                        .WithMany()
+                        .HasForeignKey("ItemCategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("InventoryProductBrand", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Inventory", null)
+                        .WithMany()
+                        .HasForeignKey("InventoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServiceCenter.Domain.Entities.ProductBrand", null)
+                        .WithMany()
+                        .HasForeignKey("ProductBrandsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1555,28 +1540,41 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Appointment", b =>
+            modelBuilder.Entity("ProductBrandProductCategory", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Customer", "Customer")
-                        .WithMany("Appointments")
-                        .HasForeignKey("CustomerId");
-
-                    b.HasOne("ServiceCenter.Domain.Entities.Schedule", "Schedule")
+                    b.HasOne("ServiceCenter.Domain.Entities.ProductBrand", null)
                         .WithMany()
-                        .HasForeignKey("ScheduleId")
+                        .HasForeignKey("ProductBrandsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.HasOne("ServiceCenter.Domain.Entities.ProductCategory", null)
+                        .WithMany()
+                        .HasForeignKey("ProductCategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.Navigation("Schedule");
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Appointment", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Branch", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Center", "Center")
-                        .WithMany("branches")
-                        .HasForeignKey("CenterId")
+                    b.HasOne("ServiceCenter.Domain.Entities.Center", null)
+                        .WithMany("Branches")
+                        .HasForeignKey("CenterId");
+
+                    b.HasOne("ServiceCenter.Domain.Entities.Manager", "Manager")
+                        .WithMany()
+                        .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1586,10 +1584,6 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                                 .HasColumnType("int");
 
                             b1.Property<string>("City")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Country")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
@@ -1608,14 +1602,88 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.Navigation("Address")
                         .IsRequired();
 
-                    b.Navigation("Center");
+                    b.Navigation("Manager");
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.CenterService", b =>
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Campagin", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Center", "Center")
+                    b.HasOne("ServiceCenter.Domain.Entities.Center", null)
+                        .WithMany("Campagins")
+                        .HasForeignKey("CenterId");
+
+                    b.HasOne("ServiceCenter.Domain.Entities.Manager", null)
+                        .WithMany("Campagins")
+                        .HasForeignKey("ManagerId");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Complaint", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Branch", null)
+                        .WithMany("Complaints")
+                        .HasForeignKey("BranchId");
+
+                    b.HasOne("ServiceCenter.Domain.Entities.Contact", null)
+                        .WithMany("Complaints")
+                        .HasForeignKey("ContactId");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Department", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Center", null)
+                        .WithMany("Departments")
+                        .HasForeignKey("CenterId");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Feedback", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Contact", "Contact")
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("ServiceCenter.Domain.Entities.Product", "Product")
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("ServiceCenter.Domain.Entities.Service", "Service")
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contact");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Inventory", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Branch", "Branch")
+                        .WithOne("Inventory")
+                        .HasForeignKey("ServiceCenter.Domain.Entities.Inventory", "BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Item", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.ItemCategory", null)
+                        .WithMany("Items")
+                        .HasForeignKey("ItemCategoryId");
+
+                    b.HasOne("ServiceCenter.Domain.Entities.Service", null)
+                        .WithMany("Item")
+                        .HasForeignKey("ServiceId");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Offer", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("CenterId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1625,34 +1693,135 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Center");
+                    b.Navigation("Product");
 
                     b.Navigation("Service");
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Complaint", b =>
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Product", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Customer", "Customer")
-                        .WithMany("Complaints")
-                        .HasForeignKey("CustomerId")
+                    b.HasOne("ServiceCenter.Domain.Entities.ProductCategory", null)
+                        .WithMany("Products")
+                        .HasForeignKey("ProductCategoryId");
+
+                    b.HasOne("ServiceCenter.Domain.Entities.Sales", "Sales")
+                        .WithMany("Products")
+                        .HasForeignKey("SalesId");
+
+                    b.Navigation("Sales");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Report", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Contact", "Contact")
+                        .WithMany()
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("ServiceCenter.Domain.Entities.Manager", "Manager")
+                        .WithMany("Reports")
+                        .HasForeignKey("ManagerId");
+
+                    b.HasOne("ServiceCenter.Domain.Entities.Sales", null)
+                        .WithMany("Reports")
+                        .HasForeignKey("SalesId");
+
+                    b.Navigation("Contact");
+
+                    b.Navigation("Manager");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Schedule", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.ServiceProvider", null)
+                        .WithMany("Schedules")
+                        .HasForeignKey("ServiceProviderId");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Service", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Center", "Center")
+                        .WithMany("Services")
+                        .HasForeignKey("CenterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.HasOne("ServiceCenter.Domain.Entities.ServiceCategory", "ServiceCategory")
+                        .WithMany("Services")
+                        .HasForeignKey("ServiceCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Center");
+
+                    b.Navigation("ServiceCategory");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Subscription", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.ServicePackage", "ServicePackage")
+                        .WithMany()
+                        .HasForeignKey("ServicePackageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ServicePackage");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Transaction", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Inventory", null)
+                        .WithMany("Transactions")
+                        .HasForeignKey("InventoryId");
+
+                    b.HasOne("ServiceCenter.Domain.Entities.Vendor", null)
+                        .WithMany("Transactions")
+                        .HasForeignKey("VendorId");
+                });
+
+            modelBuilder.Entity("ServicePackageServices", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Service", null)
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServiceCenter.Domain.Entities.ServicePackage", null)
+                        .WithMany()
+                        .HasForeignKey("ServicePackageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ServiceServiceProvider", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.ServiceProvider", null)
+                        .WithMany()
+                        .HasForeignKey("ServiceProvidersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServiceCenter.Domain.Entities.Service", null)
+                        .WithMany()
+                        .HasForeignKey("ServicesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Contact", b =>
                 {
+                    b.HasOne("ServiceCenter.Domain.Entities.ApplicationUser", null)
+                        .WithOne()
+                        .HasForeignKey("ServiceCenter.Domain.Entities.Contact", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.OwnsOne("ServiceCenter.Domain.Entities.Address", "Address", b1 =>
                         {
-                            b1.Property<int>("ContactId")
-                                .HasColumnType("int");
+                            b1.Property<string>("ContactId")
+                                .HasColumnType("nvarchar(450)");
 
                             b1.Property<string>("City")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Country")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
@@ -1672,310 +1841,66 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Contract", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.ServicePackage", "ServicePackage")
-                        .WithMany()
-                        .HasForeignKey("ServicePackageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ServicePackage");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.CustomerService", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServiceCenter.Domain.Entities.Service", "Service")
-                        .WithMany()
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Service");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Department", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Center", "Center")
-                        .WithMany("Departments")
-                        .HasForeignKey("CenterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Center");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Feedback", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Customer", "Customer")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("CustomerId");
-
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Item", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.ItemCategory", "Category")
-                        .WithMany("Items")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.ItemCategory", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Inventory", "Inventory")
-                        .WithMany("Categories")
-                        .HasForeignKey("InventoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Inventory");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.ItemOrder", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Item", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServiceCenter.Domain.Entities.Order", null)
-                        .WithMany("ItemOrders")
-                        .HasForeignKey("OrderId");
-
-                    b.Navigation("Item");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Offer", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Overview", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Sales", "Sales")
-                        .WithMany("Overviews")
-                        .HasForeignKey("SalesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Sales");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Product", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.ProductBrand", "ProductBrand")
-                        .WithMany("Products")
-                        .HasForeignKey("ProductBrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServiceCenter.Domain.Entities.ProductCategory", "ProductCategory")
-                        .WithMany("Products")
-                        .HasForeignKey("ProductCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServiceCenter.Domain.Entities.Sales", "Sales")
-                        .WithMany("Products")
-                        .HasForeignKey("SalesId");
-
-                    b.Navigation("ProductBrand");
-
-                    b.Navigation("ProductCategory");
-
-                    b.Navigation("Sales");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.RatingService", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServiceCenter.Domain.Entities.Service", "Service")
-                        .WithMany()
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Service");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Room", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Center", "Center")
-                        .WithMany("Rooms")
-                        .HasForeignKey("CenterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Center");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Schedule", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId");
-
-                    b.HasOne("ServiceCenter.Domain.Entities.TimeSlot", "TimeSlot")
-                        .WithMany()
-                        .HasForeignKey("TimeSlotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("TimeSlot");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Service", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Employee", "Employee")
-                        .WithMany("Services")
-                        .HasForeignKey("EmployeeId");
-
-                    b.HasOne("ServiceCenter.Domain.Entities.ServiceCategory", "ServiceCategory")
-                        .WithMany("Services")
-                        .HasForeignKey("ServiceCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("ServiceCategory");
-                });
-
-            modelBuilder.Entity("ServicePackageServices", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Service", null)
-                        .WithMany()
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServiceCenter.Domain.Entities.ServicePackage", null)
-                        .WithMany()
-                        .HasForeignKey("ServicePackageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Customer", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Branch", "Branch")
-                        .WithMany("Customers")
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServiceCenter.Domain.Entities.ApplicationUser", null)
-                        .WithOne()
-                        .HasForeignKey("ServiceCenter.Domain.Entities.Customer", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("ServiceCenter.Domain.Entities.Address", "Address", b1 =>
-                        {
-                            b1.Property<string>("CustomerId")
-                                .HasColumnType("nvarchar(450)");
-
-                            b1.Property<string>("City")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Country")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("PostalCode")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("CustomerId");
-
-                            b1.ToTable("Customers");
-
-                            b1.WithOwner()
-                                .HasForeignKey("CustomerId");
-                        });
-
-                    b.Navigation("Address")
-                        .IsRequired();
-
-                    b.Navigation("Branch");
-                });
-
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Employee", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Department", "Department")
+                    b.HasOne("ServiceCenter.Domain.Entities.Department", null)
                         .WithMany("Employees")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.HasOne("ServiceCenter.Domain.Entities.ApplicationUser", null)
                         .WithOne()
                         .HasForeignKey("ServiceCenter.Domain.Entities.Employee", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Sales", b =>
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Manager", b =>
                 {
                     b.HasOne("ServiceCenter.Domain.Entities.ApplicationUser", null)
                         .WithOne()
-                        .HasForeignKey("ServiceCenter.Domain.Entities.Sales", "Id")
+                        .HasForeignKey("ServiceCenter.Domain.Entities.Manager", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Vendor", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Center", "Center")
-                        .WithMany()
-                        .HasForeignKey("CenterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("ServiceCenter.Domain.Entities.Center", null)
+                        .WithMany("Vendors")
+                        .HasForeignKey("CenterId");
 
                     b.HasOne("ServiceCenter.Domain.Entities.ApplicationUser", null)
                         .WithOne()
                         .HasForeignKey("ServiceCenter.Domain.Entities.Vendor", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.Navigation("Center");
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Sales", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Center", null)
+                        .WithMany("Sales")
+                        .HasForeignKey("CenterId");
+
+                    b.HasOne("ServiceCenter.Domain.Entities.Employee", null)
+                        .WithOne()
+                        .HasForeignKey("ServiceCenter.Domain.Entities.Sales", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.ServiceProvider", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Employee", null)
+                        .WithOne()
+                        .HasForeignKey("ServiceCenter.Domain.Entities.ServiceProvider", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.WareHouseManager", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("ServiceCenter.Domain.Entities.Employee", null)
                         .WithOne()
                         .HasForeignKey("ServiceCenter.Domain.Entities.WareHouseManager", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1990,16 +1915,25 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Branch", b =>
                 {
-                    b.Navigation("Customers");
+                    b.Navigation("Complaints");
+
+                    b.Navigation("Inventory")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Center", b =>
                 {
+                    b.Navigation("Branches");
+
+                    b.Navigation("Campagins");
+
                     b.Navigation("Departments");
 
-                    b.Navigation("Rooms");
+                    b.Navigation("Sales");
 
-                    b.Navigation("branches");
+                    b.Navigation("Services");
+
+                    b.Navigation("Vendors");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Department", b =>
@@ -2009,7 +1943,7 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Inventory", b =>
                 {
-                    b.Navigation("Categories");
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.ItemCategory", b =>
@@ -2017,14 +1951,9 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Order", b =>
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Product", b =>
                 {
-                    b.Navigation("ItemOrders");
-                });
-
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.ProductBrand", b =>
-                {
-                    b.Navigation("Products");
+                    b.Navigation("Feedbacks");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.ProductCategory", b =>
@@ -2032,30 +1961,47 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Service", b =>
+                {
+                    b.Navigation("Feedbacks");
+
+                    b.Navigation("Item");
+                });
+
             modelBuilder.Entity("ServiceCenter.Domain.Entities.ServiceCategory", b =>
                 {
                     b.Navigation("Services");
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Customer", b =>
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Contact", b =>
                 {
-                    b.Navigation("Appointments");
-
                     b.Navigation("Complaints");
 
                     b.Navigation("Feedbacks");
                 });
 
-            modelBuilder.Entity("ServiceCenter.Domain.Entities.Employee", b =>
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Manager", b =>
                 {
-                    b.Navigation("Services");
+                    b.Navigation("Campagins");
+
+                    b.Navigation("Reports");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.Vendor", b =>
+                {
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Sales", b =>
                 {
-                    b.Navigation("Overviews");
-
                     b.Navigation("Products");
+
+                    b.Navigation("Reports");
+                });
+
+            modelBuilder.Entity("ServiceCenter.Domain.Entities.ServiceProvider", b =>
+                {
+                    b.Navigation("Schedules");
                 });
 #pragma warning restore 612, 618
         }
