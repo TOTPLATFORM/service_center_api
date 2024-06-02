@@ -11,7 +11,4 @@ public class Schedule :  AuditableEntity
 {
     public TimeOnly StartTime { get; set; }
     public TimeOnly EndTime { get; set; }
-    public virtual ServiceProvider ServiceProvider  { get; set; }
-    public string ServiceProviderId { get; set; } = default;
-
 }

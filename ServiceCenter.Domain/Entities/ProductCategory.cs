@@ -10,9 +10,7 @@ namespace ServiceCenter.Domain.Entities;
 public class ProductCategory : AuditableEntity
 {
     public string CategoryName { get; set; } = "";
-    //  public int ReferenceNumber { get; set; }
-    //public int ProductBrandId { get; set; }
-    //public virtual ProductBrand ProductBrand { get; set; }
+   public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
+    public virtual ICollection<ProductBrand> ProductBrands { get; set; } = new HashSet<ProductBrand>();
 
-      public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
 }

@@ -18,10 +18,10 @@ public class Service : AuditableEntity
     public virtual Center Center { get; set; } = default;
     public int ServiceCategoryId { get; set; }
     public virtual ServiceCategory ServiceCategory { get; set; } = default;
-    public virtual List<ServicePackage> ServicePackages { get; set; } = new List<ServicePackage>();
+    public virtual ICollection<ServicePackage> ServicePackages { get; set; } = new HashSet<ServicePackage>();
+    public virtual ICollection<ServiceProvider> ServiceProviders { get; set; } = new HashSet<ServiceProvider>();
 
-   // public virtual ICollection<ServiceProviderService> ServiceProviderServices { get; set; }
     public virtual ICollection<Item> Item { get; set; }=new HashSet<Item>();
-    public virtual ICollection<Feedback?> Feedbacks { get; set; } = new HashSet<Feedback>();
+    public virtual ICollection<Feedback?> Feedbacks { get; set; } = new HashSet<Feedback?>();
 
 }

@@ -14,8 +14,6 @@ public class Complaint : AuditableEntity
     public string ComplaintDescription { get; set; } = "";
     public string ComplaintCategory { get; set; } = "";
     public Status ComplaintStatus { get; set; }
-    public string ContactId { get; set; } = "";
-    public  virtual Contact Contact  { get; set; } = default;
-    public int BranchId { get; set; }
-    public virtual Branch Branch { get; set; } = default;
+
+
 }

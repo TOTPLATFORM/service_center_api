@@ -14,8 +14,6 @@ public class Offer: AuditableEntity
     public DateOnly StartDate { get; set; }
     public DateOnly EndDate { get; set; }
     public int Discount { get; set; }
-    public int ProductId { get; set; }
     public virtual Product Product { get; set; } = default;
-    public int ServiceId { get; set; }
-    public virtual Service Service { get; set; } = default;
+     public virtual Service Service { get; set; } = default;
 }

@@ -14,5 +14,5 @@ public class Order : AuditableEntity
 	public Status OrderStatus { get; set; }
 	public DateTime OrderDate { get; set; } = DateTime.Now;
 	public DateTime OrderArrivalDate { get; set; }
-	public virtual ICollection<ItemOrder> ItemOrders { get; set; } = new HashSet<ItemOrder>();
+
 }

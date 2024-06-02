@@ -8,9 +8,7 @@ namespace ServiceCenter.Domain.Entities;
 
 public class Sales : Employee
 {
-    public int CenterId { get; set; }
-    public virtual Center Center { get; set; } = default;
-    public virtual ICollection<Product?> Products { get; set; } = new HashSet<Product>();
+   public virtual ICollection<Product?> Products { get; set; } = new HashSet<Product>();
   public virtual ICollection<Report?>Reports { get; set; } = new HashSet<Report>();
 }
 

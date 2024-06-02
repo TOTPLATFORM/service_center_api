@@ -13,8 +13,5 @@ public class Item : AuditableEntity
 	public string ItemDescription { get; set; } = "";
 	public int ItemStock { get; set; }
 	public int ItemPrice { get; set; }
-	public int CategoryId { get; set; }
-	public virtual ItemCategory Category { get; set; } = default;
-    public int ServiceId { get; set; }
-    public virtual Service Service  { get; set; } = default;
+
 }

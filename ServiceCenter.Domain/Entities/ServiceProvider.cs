@@ -8,6 +8,6 @@ namespace ServiceCenter.Domain.Entities;
 
 public class ServiceProvider:Employee
 {
-    public virtual ICollection<ServiceProviderService> ServiceProviderServices { get; set; }
+    public virtual ICollection<Service> Services { get; set; }
     public virtual ICollection<Schedule> Schedules { get; set; }
 }

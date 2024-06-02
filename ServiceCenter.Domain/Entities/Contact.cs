@@ -18,7 +18,6 @@ public class Contact : ApplicationUser
     public ContactStatus Status { get; set; } = ContactStatus.Opportunity;
     public virtual ICollection<Complaint> Complaints { get; set; } = new HashSet<Complaint>();
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new HashSet<Feedback>();
-    public virtual Report Report  { get; set; }
-    public ICollection<ContactRating> CustomerRatings { get; set; }
+    public virtual ICollection<Rating> Ratings { get; set; } = new HashSet<Rating>();
 
 }
