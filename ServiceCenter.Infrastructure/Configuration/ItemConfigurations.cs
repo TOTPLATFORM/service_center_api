@@ -29,7 +29,5 @@ public class ItemConfigurations : IEntityTypeConfiguration<Item>
         builder.Property(T => T.ItemStock)
             .IsRequired();
 
-        builder.Property(T => T.CategoryId)
-            .IsRequired();
     }
 }

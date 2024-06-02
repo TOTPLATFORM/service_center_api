@@ -26,10 +26,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 		builder.Property(T => T.ProductPrice)
               .IsRequired();
 
-        builder.Property(T => T.ProductCategoryId)
-              .IsRequired();
+   
 
-        builder.Property(T => T.ProductBrandId)
-              .IsRequired();
+      
     }
 }

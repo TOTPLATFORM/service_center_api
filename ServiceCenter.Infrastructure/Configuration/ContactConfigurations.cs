@@ -13,12 +13,12 @@ public class ContactConfigurations :IEntityTypeConfiguration<Contact>
 {
 	public void Configure(EntityTypeBuilder<Contact> builder)
 	{
-		builder.Property(p => p.ContactFirstName)
+		builder.Property(p => p.FirstName)
 		.HasColumnType("varchar")
 		.IsRequired()
 		.HasMaxLength(50);
 
-		builder.Property(p => p.ContactLastName)
+		builder.Property(p => p.LastName)
 		.HasColumnType("varchar")
 		.IsRequired()
 		.HasMaxLength(50);
