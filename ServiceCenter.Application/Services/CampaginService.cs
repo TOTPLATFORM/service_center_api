@@ -46,7 +46,7 @@ public class CampaginService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 		_dbContext.Campagins.Add(result);
 
 		var contactsToUpdate = await _dbContext.Contacts
-										   .Where(c => c.Status == ContactStatus.Oppurtienty)
+										   .Where(c => c.Status == ContactStatus.Opportunity)
 										   .ToListAsync();
 
 		foreach (var contact in contactsToUpdate)

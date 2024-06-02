@@ -30,7 +30,7 @@ public interface IAuthService: IApplicationService, IScopedService
 	/// </summary>
 	/// <param name="customerRequestDto">the Dto of the customer.</param>
 	/// <returns>the result of the registration attempt.</returns>
-	Task<Result> RegisterCustomerAsync(CustomerRequestDto customerRequestDto);
+	//Task<Result> RegisterCustomerAsync(CustomerRequestDto customerRequestDto);
 
 	/// <summary>
 	/// registers a new warehouse manager with warehouse manager role.

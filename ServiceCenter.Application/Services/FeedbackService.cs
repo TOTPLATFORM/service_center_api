@@ -129,7 +129,7 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
     public async Task<Result<List<FeedbackResponseDto>>> GetFeedbacksByCustomerAsync(string customerId)
     {
         var Feedbacks = await _dbContext.Feedbacks
-              .Where(s => s.CustomerId == customerId)
+              .Where(s => s.ContactId == customerId)
               .ProjectTo<FeedbackResponseDto>(_mapper.ConfigurationProvider)
               .ToListAsync();
 

@@ -15,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.Extensions.Options;
+using ServiceCenter.Domain.Enums;
 
 namespace ServiceCenter.Application.Services;
 
@@ -136,14 +137,14 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
 	/// </summary>
 	/// <param name="customerRequestDto">The Dto of the customer.</param>
 	/// <returns>The result of the registration attempt.</returns>
-	public async Task<Result> RegisterCustomerAsync(CustomerRequestDto customerRequestDto)
-    {
-        string role = "Customer";
+	//public async Task<Result> RegisterCustomerAsync(ContactRequestDto contactRequestDto)
+ //   {
+ //       string role = "Customer";
 
-        var customer = _mapper.Map<Customer>(customerRequestDto);
+ //       var customer = _mapper.Map<Contact>(contactRequestDto);
 
-        return await RegisterUserWithRoleAsync(customer, customerRequestDto.Password, role);
-    }
+ //       return await RegisterUserWithRoleAsync(customer, contactRequestDto.Password, role);
+ //   }
 
     
 
@@ -259,7 +260,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
             LastName = "Center",
             DateOfBirth = DateOnly.MaxValue,
             Email = "center133@gmail.com",
-            Gender = "Male",
+            Gender = Gender.Male,
             UserName = "Admin"
         };
 
@@ -275,7 +276,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
             LastName = "Center",
             DateOfBirth = DateOnly.MaxValue,
             Email = "center133@gmail.com",
-            Gender = "Male",
+            Gender = Gender.Male,
             UserName = "Manager"
         };
 

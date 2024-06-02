@@ -26,16 +26,15 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
     {
         var schedule = _mapper.Map<Schedule>(scheduleRequestDto);
         var employee = _dbContext.Employees.FirstOrDefault(C => C.Id == scheduleRequestDto.EmployeeId);
-        var timeSlot = _dbContext.TimeSlots.FirstOrDefault(C => C.Id == scheduleRequestDto.TimeSlotId);
 
-        if (employee is null || timeSlot is null)
+        if (employee is null)
         {
-            _logger.LogInformation("employee or timeSlot not found");
+            _logger.LogInformation("serviceProvider not found");
             return Result.Error("schedule added failed to the database");
         }
         schedule.CreatedBy = _userContext.Email;
-        schedule.Employee = employee;
-        schedule.TimeSlot = timeSlot;
+        schedule.ServiceProvider = employee;
+     
 
         _dbContext.Schedules.Add(schedule);
         await _dbContext.SaveChangesAsync();
@@ -63,7 +62,7 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
     /// <inheritdoc/>
     public async Task<Result<List<ScheduleResponseDto>>> GetScheduleByEmployeeAsync(string id)
     {
-        var scheduleForAgentResponseDto = await _dbContext.Schedules.Where(A => A.Employee.Id == id)
+        var scheduleForAgentResponseDto = await _dbContext.Schedules.Where(A => A.ServiceProvider.Id == id)
             .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
 
@@ -117,9 +116,8 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
     {
         var schedule = await _dbContext.Schedules.FindAsync(id);
         var employee = _dbContext.Employees.FirstOrDefault(C => C.Id == scheduleRequestDto.EmployeeId);
-        var timeSlot = _dbContext.TimeSlots.FirstOrDefault(C => C.Id == scheduleRequestDto.TimeSlotId);
 
-        if (employee is null || timeSlot is null)
+        if (employee is null)
         {
             _logger.LogInformation("employee or timeSlot not found");
             return Result.Error("schedule added failed to the database");
@@ -131,8 +129,7 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
             return Result.NotFound(["The schedule  is not found"]);
         }
         schedule.CreatedBy = _userContext.Email;
-        schedule.Employee = employee;
-        schedule.TimeSlot = timeSlot;
+        schedule.ServiceProvider = employee;
         schedule.ModifiedBy = _userContext.Email;
 
         await _dbContext.SaveChangesAsync();
