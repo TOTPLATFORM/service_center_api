@@ -29,17 +29,12 @@ public class ServiceCenterBaseDbContext : IdentityDbContext<ApplicationUser>
 
         base.OnModelCreating(builder);
     }
-
-    public DbSet<TimeSlot> TimeSlots { get; set; }
     public DbSet<Schedule> Schedules { get; set; }
 	public DbSet<Appointment> Appointments { get; set; }
 	public DbSet<Product> Products { get; set; }
 	public DbSet<ProductCategory> ProductCategories { get; set; }
 	public DbSet<Branch> Branches { get; set; }
-	public DbSet<Center> Centers { get; set; }
-	public DbSet<Room> Rooms { get; set; }
 	public DbSet<Complaint> Complaints { get; set; }
-	public DbSet<Customer> Customers { get; set; }
 	public DbSet<Feedback> Feedbacks { get; set; }
 	public DbSet<Order> Orders { get; set; }
 	public DbSet<Item> Items { get; set; }
@@ -51,16 +46,16 @@ public class ServiceCenterBaseDbContext : IdentityDbContext<ApplicationUser>
 	public DbSet<Service> Services { get; set; }
 	public DbSet<ServiceCategory> ServiceCategories { get; set; }
 	public DbSet<ServicePackage> ServicePackages { get; set; }
-	public DbSet<Subscription> Contracts { get; set; }
+	public DbSet<Subscription> Subscriptions { get; set; }
 	public DbSet<Department> Departments { get; set; }
 	public DbSet<Employee> Employees { get; set; }
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<WareHouseManager> WareHouseManagers { get; set; }
 	public DbSet<Offer> Offers { get; set; }
     public DbSet<Campagin> Campagins { get; set; }
-    public DbSet<CenterService>  CenterServices { get; set; }
-	public DbSet<CustomerService> CustomerServices { get; set; }
-	public DbSet<RatingService> RatingServices { get; set; }
-	public DbSet<Report> Overviews { get; set; }
+	public DbSet<Report> Reports { get; set; }
+	public DbSet<Center>Centers { get; set; }
+
+    public DbSet<Transaction> Transactions { get; set; }
 
 }
