@@ -6,14 +6,10 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ServiceCenter.Domain.Enums;
-
 [JsonConverter(typeof(JsonStringEnumConverter))]
-public enum City
+public enum ComplaintType
 {
-    Cairo,
-    Giza,
-    Monufia,
-    Alexandria,
-    Sharqia,
-    Beheira
+    Employee,
+    Branch
 }
+

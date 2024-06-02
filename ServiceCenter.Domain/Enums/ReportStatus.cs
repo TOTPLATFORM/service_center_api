@@ -8,12 +8,9 @@ using System.Threading.Tasks;
 namespace ServiceCenter.Domain.Enums;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
-public enum City
+public enum ReportStatus
 {
-    Cairo,
-    Giza,
-    Monufia,
-    Alexandria,
-    Sharqia,
-    Beheira
+  Good,
+  Bad
+
 }

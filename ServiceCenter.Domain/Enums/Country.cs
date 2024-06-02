@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Domain.Enums;
 
+
 [JsonConverter(typeof(JsonStringEnumConverter))]
-public enum City
+public enum Country
 {
-    Cairo,
-    Giza,
-    Monufia,
-    Alexandria,
-    Sharqia,
-    Beheira
+    Egypt,
+    Bahrain,
+    Canada,
+    China,
+    France
 }
