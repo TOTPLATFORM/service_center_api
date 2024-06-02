@@ -27,18 +27,17 @@ public class ContextGenerator
             Context.AddItemCategory();
             Context.AddInventory();
             Context.AddDepartment();
-            Context.AddRoom();
-            Context.AddTimeSlot();
+         
             Context.AddFeedback();
             Context.AddComplaint();
             Context.AddCenter();
             Context.AddBranch();
             Context.AddContact();
-            Context.AddContract();
+            Context.AddSubscription();
             Context.AddEmployee();
             Context.AddOffer();
             Context.AddSchedule();
-            Context.AddCustomer();
+     
             Context.AddAppointment();
             Context.AddProductBrand();
             Context.AddRatingService();

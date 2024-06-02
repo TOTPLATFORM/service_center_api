@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.API.Mapping;
-using ServiceCenter.Application.Contracts;
+using ServiceCenter.Application.Subscriptions;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
 using ServiceCenter.Test.TestPriority;
@@ -11,16 +11,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ServiceCenter.Application.Contracts;
 
 namespace ServiceCenter.Test.TestServices;
 [TestCaseOrderer(
 ordererTypeName: "ServiceCenter.Test.TestPriority.PriorityOrderer",
 ordererAssemblyName: "ServiceCenter.Test")]
-public class ContractServiceTest
+public class SubscriptionServiceTest
 {
-    private static ContractService _contractService;
+    private static SubscriptionService _contractService;
     private string userEmail = "mariamabdeeen@gmail.com";
-    private ContractService CreateContractService()
+    private SubscriptionService CreateSubscriptionService()
     {
 
         if (_contractService is null)
@@ -29,11 +30,11 @@ public class ContractServiceTest
 
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfiles>()).CreateMapper();
 
-            ILogger<ContractService> logger = new LoggerFactory().CreateLogger<ContractService>();
+            ILogger<SubscriptionService> logger = new LoggerFactory().CreateLogger<SubscriptionService>();
 
             IUserContextService userContext = new UserContextService();
 
-            _contractService = new ContractService(dbContext, mapper, logger, userContext);
+            _contractService = new SubscriptionService(dbContext, mapper, logger, userContext);
         }
 
         return _contractService;
@@ -41,7 +42,7 @@ public class ContractServiceTest
     private void CheckService()
     {
         if (_contractService is null)
-            _contractService = CreateContractService();
+            _contractService = CreateSubscriptionService();
     }
 
     /// <summary>
@@ -52,13 +53,13 @@ public class ContractServiceTest
     /// <param name="centerId">Center Type id</param>
     [Theory, TestPriority(0)]
     [InlineData("2000/12/30",1)]
-    public async Task AddContract(string duration, int servicePackageId)
+    public async Task AddSubscription(string duration, int servicePackageId)
     {
         // Arrange
         CheckService();
-        var ContractRequestDto = new ContractRequestDto { Duration = DateOnly.Parse(duration),ServicePackageId= servicePackageId };
+        var SubscriptionRequestDto = new SubscriptionRequestDto { Duration = DateOnly.Parse(duration),ServicePackageId= servicePackageId };
         // Act
-        var result = await _contractService.AddContractAsync(ContractRequestDto);
+        var result = await _contractService.AddSubscriptionAsync(SubscriptionRequestDto);
 
         // Assert
         if (result.IsSuccess)
@@ -68,16 +69,16 @@ public class ContractServiceTest
     }
 
     /// <summary>
-    /// fuction to get all  Contractes as a test case 
+    /// fuction to get all  Subscriptiones as a test case 
     /// </summary>
     [Fact, TestPriority(1)]
-    public async Task GetAllContract()
+    public async Task GetAllSubscription()
     {
         // Arrange
         CheckService();
 
         // Act
-        var result = await _contractService.GetAllContractAsync();
+        var result = await _contractService.GetAllSubscriptionAsync();
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -85,9 +86,9 @@ public class ContractServiceTest
     }
 
     /// <summary>
-    /// fuction to get Contract by id as a test case 
+    /// fuction to get Subscription by id as a test case 
     /// </summary>
-    /// <param name="id">Contract id </param>
+    /// <param name="id">Subscription id </param>
     [Theory, TestPriority(2)]
     [InlineData(1)]
     [InlineData(6)]
@@ -97,7 +98,7 @@ public class ContractServiceTest
         CheckService();
 
         // Act
-        var result = await _contractService.GetContractByIdAsync(id);
+        var result = await _contractService.GetSubscriptionByIdAsync(id);
 
         // Assert
         if (result.IsSuccess)
@@ -108,7 +109,7 @@ public class ContractServiceTest
     }
 
     /// <summary>
-    /// fuction to update Contract as a test case that take   Center id , Center number , Center avaliability , center id  
+    /// fuction to update Subscription as a test case that take   Center id , Center number , Center avaliability , center id  
     /// </summary>
     /// <param name="CenterNumber">Center number</param>
     /// <param name="CenterAvaliabitlity">Center availability</param>
@@ -121,10 +122,10 @@ public class ContractServiceTest
     {
         //Arrange
         CheckService();
-        var ContractRequestDto = new ContractRequestDto { Duration = DateOnly.Parse(duration), ServicePackageId = servicePackageId };
+        var SubscriptionRequestDto = new SubscriptionRequestDto { Duration = DateOnly.Parse(duration), ServicePackageId = servicePackageId };
 
         // Act
-        var result = await _contractService.UpdateContractAsync(id, ContractRequestDto);
+        var result = await _contractService.UpdateSubscriptionAsync(id, SubscriptionRequestDto);
         // Assert
         if (expectedResult)
         {
@@ -137,19 +138,19 @@ public class ContractServiceTest
     }
 
     /// <summary>
-    /// fuction to remove Contract as a test case that take Contract id
+    /// fuction to remove Subscription as a test case that take Subscription id
     /// </summary>
-    /// <param name="id">Contract id </param>
+    /// <param name="id">Subscription id </param>
     [Theory, TestPriority(4)]
     [InlineData(2)]
     [InlineData(50)]
-    public async Task RemoveContract(int id)
+    public async Task RemoveSubscription(int id)
     {
         // Arrange
         CheckService();
 
         // Act
-        var result = await _contractService.DeleteContractAsync(id);
+        var result = await _contractService.DeleteSubscriptionAsync(id);
 
         // Assert
         if (result.IsSuccess)

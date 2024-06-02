@@ -93,7 +93,7 @@ public class OverviewServiceTest
     {
         // Arrange
         CheckService();
-        var overviewRequestDto = new OverviewRequestDto { Task = task, Priority = priority,  DueDate = DateTime.Parse(dueDate) ,SalesId=salesId};
+        var overviewRequestDto = new ReportRequestDto { Task = task, Priority = priority,  DueDate = DateTime.Parse(dueDate) ,SalesId=salesId};
 
         // Act
         var result = await _overviewService.AddOverviewAsync(overviewRequestDto);
@@ -137,7 +137,7 @@ public class OverviewServiceTest
     {
         // Arrange
         CheckService();
-        var overviewRequestDto = new OverviewRequestDto { Task = "task", Priority = "priority", DueDate = DateTime.Parse("7/11/2024"),SalesId = "53ae72a7-589e-4f0b-81ed-40381" };
+        var overviewRequestDto = new ReportRequestDto { Task = "task", Priority = "priority", DueDate = DateTime.Parse("7/11/2024"),SalesId = "53ae72a7-589e-4f0b-81ed-40381" };
 
         // Act
         var result = await _overviewService.UpdateOverviewAsync(id, overviewRequestDto);

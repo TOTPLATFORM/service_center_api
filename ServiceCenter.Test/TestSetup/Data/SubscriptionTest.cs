@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Test.TestSetup.Data;
 
-public static class ContractTest
+public static class SubscriptionTest
 {
-    public static void AddContract(this ServiceCenterBaseDbContext context)
+    public static void AddSubscription(this ServiceCenterBaseDbContext context)
     {
-        context.Contracts.AddRange(
+        context.Subscriptions.AddRange(
         new Subscription
         {
             Id = 1,
