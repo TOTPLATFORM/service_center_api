@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ServiceCenter.Application.Contracts;
+using ServiceCenter.Application.Subscriptions;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
 using ServiceCenter.Core.Result;
@@ -8,30 +8,30 @@ using ServiceCenter.Core.Result;
 namespace ServiceCenter.API.Controllers;
 
 
-public class ContractController(IContractService ContractService) : BaseController
+public class SubscriptionController(ISubscriptionService SubscriptionService) : BaseController
 {
-    private readonly IContractService _ContractService = ContractService;
+    private readonly ISubscriptionService _SubscriptionService = SubscriptionService;
 
     /// <summary>
-    /// action for add Contract action that take Contract dto   
+    /// action for add Subscription action that take Subscription dto   
     /// </summary>
-    /// <param name="ContractDto">Contract dto</param>
+    /// <param name="SubscriptionDto">Subscription dto</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>result for Contract  added successfully.</returns>
+    /// <returns>result for Subscription  added successfully.</returns>
     [HttpPost]
     [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result> AddContract(ContractRequestDto ContractDto)
+    public async Task<Result> AddSubscription(SubscriptionRequestDto SubscriptionDto)
     {
-        return await _ContractService.AddContractAsync(ContractDto);
+        return await _SubscriptionService.AddSubscriptionAsync(SubscriptionDto);
     }
 
 
     /// <summary>
-    /// get all Contract in the system.
+    /// get all Subscription in the system.
     /// </summary>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
@@ -39,30 +39,30 @@ public class ContractController(IContractService ContractService) : BaseControll
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
-    [ProducesResponseType(typeof(Result<List<ContractResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<List<ContractResponseDto>>> GetAllContract()
+    [ProducesResponseType(typeof(Result<List<SubscriptionResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<List<SubscriptionResponseDto>>> GetAllSubscription()
     {
-        return await _ContractService.GetAllContractAsync();
+        return await _SubscriptionService.GetAllSubscriptionAsync();
     }
     /// <summary>
-    /// get Contract by id in the system.
+    /// get Subscription by id in the system.
     /// </summary>
-    ///<param name="id">id of Contract.</param>
+    ///<param name="id">id of Subscription.</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
     [Authorize(Roles = "Employee,Manager,Admin")]
-    [ProducesResponseType(typeof(Result<ContractResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<SubscriptionResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<ContractResponseDto>> GetContractById(int id)
+    public async Task<Result<SubscriptionResponseDto>> GetSubscriptionById(int id)
     {
-        return await _ContractService.GetContractByIdAsync(id);
+        return await _SubscriptionService.GetSubscriptionByIdAsync(id);
     }
     /// </summary>
-    ///<param name="id">id of Contract.</param>
-    ///<param name="ContractRequestDto">Contract dto.</param>
+    ///<param name="id">id of Subscription.</param>
+    ///<param name="SubscriptionRequestDto">Subscription dto.</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
@@ -70,14 +70,14 @@ public class ContractController(IContractService ContractService) : BaseControll
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Employee,Manager")]
-    [ProducesResponseType(typeof(Result<ContractResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<SubscriptionResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<ContractResponseDto>> UpdateContract(int id, ContractRequestDto ContractRequestDto)
+    public async Task<Result<SubscriptionResponseDto>> UpdateSubscription(int id, SubscriptionRequestDto SubscriptionRequestDto)
     {
-        return await _ContractService.UpdateContractAsync(id, ContractRequestDto);
+        return await _SubscriptionService.UpdateSubscriptionAsync(id, SubscriptionRequestDto);
     }
     /// <summary>
-    /// delete  Contract  by id from the system.
+    /// delete  Subscription  by id from the system.
     /// </summary>
     ///<param name="id">id</param>
     /// <remarks>
@@ -88,9 +88,9 @@ public class ContractController(IContractService ContractService) : BaseControll
     [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result> DeleteContractAsycn(int id)
+    public async Task<Result> DeleteSubscriptionAsycn(int id)
     {
-        return await _ContractService.DeleteContractAsync(id);
+        return await _SubscriptionService.DeleteSubscriptionAsync(id);
     }
 
 }

@@ -1,35 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ServiceCenter.Application.Overviews;
+using ServiceCenter.Application.Reports;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Core.Result;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ServiceCenter.API.Controllers;
 
-public class OverviewController(IOverviewService OverviewService) : BaseController
+public class ReportController(IReportService ReportService) : BaseController
 {
-    private readonly IOverviewService _OverviewService = OverviewService;
+    private readonly IReportService _ReportService = ReportService;
 
     /// <summary>
-    /// action for add Overview action that take Overview dto   
+    /// action for add Report action that take Report dto   
     /// </summary>
-    /// <param name="OverviewDto">Overview dto</param>
+    /// <param name="ReportDto">Report dto</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>result for Overview  added successfully.</returns>
+    /// <returns>result for Report  added successfully.</returns>
     [HttpPost]
     [Authorize(Roles = "Sales")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result> AddOverview(OverviewRequestDto OverviewDto)
+    public async Task<Result> AddReport(ReportRequestDto ReportDto)
     {
-        return await _OverviewService.AddOverviewAsync(OverviewDto);
+        return await _ReportService.AddReportAsync(ReportDto);
     }
 
 
     /// <summary>
-    /// get all Overview in the system.
+    /// get all Report in the system.
     /// </summary>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
@@ -37,30 +37,30 @@ public class OverviewController(IOverviewService OverviewService) : BaseControll
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
-    [ProducesResponseType(typeof(Result<List<OverviewResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<List<OverviewResponseDto>>> GetAllOverview()
+    [ProducesResponseType(typeof(Result<List<ReportResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<List<ReportResponseDto>>> GetAllReport()
     {
-        return await _OverviewService.GetAllOverviewAsync();
+        return await _ReportService.GetAllReportAsync();
     }
     /// <summary>
-    /// get Overview by id in the system.
+    /// get Report by id in the system.
     /// </summary>
-    ///<param name="id">id of Overview.</param>
+    ///<param name="id">id of Report.</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin,Manager")]
-    [ProducesResponseType(typeof(Result<OverviewResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<ReportResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<OverviewResponseDto>> GetOverviewById(int id)
+    public async Task<Result<ReportResponseDto>> GetReportById(int id)
     {
-        return await _OverviewService.GetOverviewByIdAsync(id);
+        return await _ReportService.GetReportByIdAsync(id);
     }
     /// </summary>
-    ///<param name="id">id of Overview.</param>
-    ///<param name="OverviewRequestDto">Overview dto.</param>
+    ///<param name="id">id of Report.</param>
+    ///<param name="ReportRequestDto">Report dto.</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
@@ -68,14 +68,14 @@ public class OverviewController(IOverviewService OverviewService) : BaseControll
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Manager,Admin,Sales")]
-    [ProducesResponseType(typeof(Result<OverviewResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<ReportResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<OverviewResponseDto>> UpdateOverview(int id, OverviewRequestDto OverviewRequestDto)
+    public async Task<Result<ReportResponseDto>> UpdateReport(int id, ReportRequestDto ReportRequestDto)
     {
-        return await _OverviewService.UpdateOverviewAsync(id, OverviewRequestDto);
+        return await _ReportService.UpdateReportAsync(id, ReportRequestDto);
     }
     /// <summary>
-    /// delete  Overview  by id from the system.
+    /// delete  Report  by id from the system.
     /// </summary>
     ///<param name="id">id</param>
     /// <remarks>
@@ -86,9 +86,9 @@ public class OverviewController(IOverviewService OverviewService) : BaseControll
     [Authorize(Roles = "Manager,Admin,Sales")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result> DeleteOverviewAsycn(int id)
+    public async Task<Result> DeleteReportAsycn(int id)
     {
-        return await _OverviewService.DeleteOverviewAsync(id);
+        return await _ReportService.DeleteReportAsync(id);
     }
 
 }
