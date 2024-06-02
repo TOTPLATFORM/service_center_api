@@ -13,7 +13,6 @@ public static class DepartmentMapping
 
 		map.CreateMap<Department, DepartmentResponseDto>()
 			.ForMember(dest => dest.Employees, src => src.MapFrom(src => src.Employees))
-			.ForMember(dest => dest.CenterName, src => src.MapFrom(src => src.Center.CenterName))
 			.ReverseMap();
 	}
 }

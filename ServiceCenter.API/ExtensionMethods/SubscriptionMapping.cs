@@ -4,12 +4,12 @@ using ServiceCenter.Domain.Entities;
 
 namespace ServiceCenter.API.ExtensionMethods;
 
-public static class ContractMapping
+public static class SubscriptionMapping
 {
-    public static void AddContractMapping(this MappingProfiles map)
+    public static void AddSubscriptionMapping(this MappingProfiles map)
     {
-        map.CreateMap<ContractRequestDto, Subscription>().ReverseMap();
-        map.CreateMap<Subscription, ContractResponseDto>()
+        map.CreateMap<SubscriptionRequestDto, Subscription>().ReverseMap();
+        map.CreateMap<Subscription, SubscriptionResponseDto>()
            .ForMember(dest => dest.PackageName, src => src.MapFrom(src => src.ServicePackage.PackageName))
             .ReverseMap();
     }

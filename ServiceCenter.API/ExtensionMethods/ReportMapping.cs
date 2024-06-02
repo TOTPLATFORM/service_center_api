@@ -4,13 +4,13 @@ using ServiceCenter.Domain.Entities;
 
 namespace ServiceCenter.API.ExtensionMethods;
 
-public static class OverviewMapping
+public static class ReportMapping
 {
-    public static void AddOverviewMapping(this MappingProfiles map)
+    public static void AddReportMapping(this MappingProfiles map)
     {
-        map.CreateMap<OverviewRequestDto, Report>();
+        map.CreateMap<ReportRequestDto, Report>();
 
-        map.CreateMap<Report, OverviewResponseDto>()
+        map.CreateMap<Report, ReportResponseDto>()
             .ForMember(dest=> dest.SalesName, src => src.MapFrom(src => src.Sales.FirstName + " " + src.Sales.LastName));
     }
 }

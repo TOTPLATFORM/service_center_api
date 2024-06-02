@@ -9,10 +9,11 @@ public static class BranchMapping
 	public static void AddBranchMapping(this MappingProfiles map)
 	{
 		map.CreateMap<BranchRequestDto, Branch>()
-			.ReverseMap();
+            .ForMember(dest => dest.Manager.Id, src => src.MapFrom(src => src.ManagerId))
+            .ForMember(dest => dest.Inventory.Id, src => src.MapFrom(src => src.InventoryId))
+            .ReverseMap();
 
 		map.CreateMap<Branch, BranchResponseDto>()
-			.ForMember(dest=>dest.CenterName,src=>src.MapFrom(src=>src.Center.CenterName))
 		    .ForMember(dest => dest.Country, src => src.MapFrom(src => src.Address.Country))
 			.ForMember(dest => dest.PostalCode, src => src.MapFrom(src => src.Address.PostalCode))
 			.ForMember(dest => dest.City, src => src.MapFrom(src => src.Address.City))
