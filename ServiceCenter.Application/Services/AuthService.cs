@@ -21,14 +21,14 @@ namespace ServiceCenter.Application.Services;
 
 public class AuthService(UserManager<ApplicationUser> userManager, ILogger<ApplicationUser> logger, IMapper mapper, IOptions<JWT> jwt, RoleManager<IdentityRole> roleManager = null) : IAuthService
 {
-    private readonly UserManager<ApplicationUser> _userManager = userManager;
-    private readonly ILogger<ApplicationUser> _logger = logger;
-    private readonly IMapper _mapper = mapper;
-    private readonly JWT _jwt = jwt.Value;
-    private readonly RoleManager<IdentityRole> _roleManager = roleManager;
+	private readonly UserManager<ApplicationUser> _userManager = userManager;
+	private readonly ILogger<ApplicationUser> _logger = logger;
+	private readonly IMapper _mapper = mapper;
+	private readonly JWT _jwt = jwt.Value;
+	private readonly RoleManager<IdentityRole> _roleManager = roleManager;
 
 	/// <inheritdoc/>
-	public async Task<Result<LoginResponseDto>> LoginAsync(LoginRequestDto LoginRequestDto)
+	public async Task<Result<LoginResponseDto>> Login(LoginRequestDto LoginRequestDto)
 	{
 		var user = await _userManager.FindByNameAsync(LoginRequestDto.UserName);
 
@@ -51,254 +51,241 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
 		return Result<LoginResponseDto>.Success(loginResponseDto);
 	}
 
-	/// <summary>
-	/// Registers a new user.
-	/// </summary>
-	/// <param name="user">The user to register.</param>
-	/// <param name="password">The user's entered password.</param>
-	/// <returns>The result of the registration attempt.</returns>
+	/// <inheritdoc/>
 	public async Task<Result<ApplicationUser>> RegisterAsync(ApplicationUser user, string password)
-    {
-        var result = await _userManager.CreateAsync(user, password);
+	{
+		var result = await _userManager.CreateAsync(user, password);
 
-        if (!result.Succeeded)
-        {
-            var errors = string.Empty;
+		if (!result.Succeeded)
+		{
+			var errors = FormatErrorMessage(result);
 
-            foreach (var error in result.Errors)
-            {
-                errors += $"{error.Description},";
-            }
+			_logger.LogError($"An error occured while creating user: {errors}");
+			return Result.Error(errors);
+		}
 
-            _logger.LogError($"An error occured while creating user: {errors}");
-            return Result.Error(errors);
-        }
+		_logger.LogInformation($"Successfully registered a new user with username {user.UserName}");
+		return Result.Success(user);
+	}
 
-        _logger.LogInformation($"Successfully registered a new user with username {user.UserName}");
-        return Result.Success(user);
-    }
+	/// <inheritdoc/>
+	public async Task<Result> UpdateUserAsync(ApplicationUser user)
+	{
+		var result = await _userManager.UpdateAsync(user);
 
-    /// <summary>
-    /// Adds a user to specific role.
-    /// </summary>
-    /// <param name="userId">The user ID.</param>
-    /// <param name="roleName">The role name.</param>
-    /// <returns>The result of trying to add a user to role.</returns>
-    public async Task<Result> AddUserToRoleAsync(string userId, string roleName)
-    {
-        var user = await _userManager.FindByIdAsync(userId);
+		if (!result.Succeeded)
+		{
+			var errors = FormatErrorMessage(result);
 
-        if (user is null)
-        {
-            _logger.LogError($"Unable to find user with id {userId} to assign {roleName} role");
-            return Result.NotFound(["The user is not found"]);
-        }
+			_logger.LogError($"An error occured while updating user with username:{user.UserName}, errors: {errors}");
+			return Result.Error(errors);
+		}
 
-        var result = await _userManager.AddToRoleAsync(user, roleName);
+		_logger.LogInformation($"Successfully update user with username {user.UserName}");
+		return Result.SuccessWithMessage("Successfully updated the user.");
+	}
 
-        if (!result.Succeeded)
-        {
-            _logger.LogError($"Invalid role name {roleName} while assigning {user.UserName} to the role");
-            return Result.Error(["Invalid role name"]);
-        }
+	/// <inheritdoc/>
+	public async Task<Result> ChangePasswordAsync(ChangePasswordRequestDto changePasswordRequest)
+	{
+		var user = await _userManager.FindByIdAsync(changePasswordRequest.UserId);
 
-        _logger.LogInformation($"Successfully assigned {user.UserName} to role {roleName}");
-        return Result.SuccessWithMessage($"Successfully assigned {user.FirstName} {user.LastName} to role {roleName}");
-    }
+		if (user is null)
+		{
+			_logger.LogError($"Unable to find user with id {changePasswordRequest.UserId}");
+			return Result.NotFound(["The user is not found"]);
+		}
 
-    /// <summary>
-    /// Registers a user and assign role.
-    /// </summary>
-    /// <param name="user">The user to register.</param>
-    /// <param name="password">The user's entered password.</param>
-    /// <param name="role">The role to assig for the user</param>
-    /// <returns>The result of the registration attempt.</returns>
-    public async Task<Result> RegisterUserWithRoleAsync(ApplicationUser user, string password, string role)
-    {
-        var registerResult = await RegisterAsync(user, password);
+		var result = await _userManager.ChangePasswordAsync(user, changePasswordRequest.CurrentPassword, changePasswordRequest.NewPassword);
 
-        if (!registerResult.IsSuccess)
-        {
-            return Result.Error(registerResult.Errors.SingleOrDefault());
-        }
+		if (!result.Succeeded)
+		{
+			var errors = FormatErrorMessage(result);
 
-        var addRoleResult = await AddUserToRoleAsync(registerResult.Value.Id, role);
+			_logger.LogError($"An error occured while change the password for the user with username:{user.UserName}, errors: {errors}");
+			return Result.Error(errors);
+		}
 
-        if (!addRoleResult.IsSuccess)
-        {
-            return addRoleResult;
-        }
+		_logger.LogInformation($"Successfully changed password for the user with username {user.UserName}");
+		return Result.SuccessWithMessage("Successfully changed user password.");
+	}
 
-        return Result.SuccessWithMessage($"Successfully created a new user {registerResult.Value.UserName} with role {role}");
-    }
+	/// <inheritdoc/>
+	public async Task<Result> AddUserToRoleAsync(string userId, string roleName)
+	{
+		var user = await _userManager.FindByIdAsync(userId);
+
+		if (user is null)
+		{
+			_logger.LogError($"Unable to find user with id {userId} to assign {roleName} role");
+			return Result.NotFound(["The user is not found"]);
+		}
+
+		var result = await _userManager.AddToRoleAsync(user, roleName);
+
+		if (!result.Succeeded)
+		{
+			_logger.LogError($"Invalid role name {roleName} while assigning {user.UserName} to the role");
+			return Result.Error(["Invalid role name"]);
+		}
+
+		_logger.LogInformation($"Successfully assigned {user.UserName} to role {roleName}");
+		return Result.SuccessWithMessage($"Successfully assigned {user.FirstName + " " + user.LastName} to role {roleName}");
+	}
+
+	/// <inheritdoc/>
+	public async Task<Result> RegisterUserWithRoleAsync(ApplicationUser user, string password, string role)
+	{
+		var registerResult = await RegisterAsync(user, password);
+
+		if (!registerResult.IsSuccess)
+		{
+			return Result.Error(registerResult.Errors.SingleOrDefault());
+		}
+
+		var addRoleResult = await AddUserToRoleAsync(registerResult.Value.Id, role);
+
+		if (!addRoleResult.IsSuccess)
+		{
+			return addRoleResult;
+		}
+
+		return Result.SuccessWithMessage($"Successfully created a new user {registerResult.Value.UserName} with role {role}");
+	}
+
+	/// <inheritdoc/>
+	public async Task<Result> DeleteUserAsync(string userId)
+	{
+		var user = await _userManager.FindByIdAsync(userId);
+
+		if (user is null)
+		{
+			_logger.LogError($"Unable to find user with id {userId} to delete");
+			return Result.NotFound(["The user is not found"]);
+		}
+
+		var result = await _userManager.DeleteAsync(user);
+
+		if (!result.Succeeded)
+		{
+			var errors = FormatErrorMessage(result);
+
+			_logger.LogError($"An error occured while deleting the user with username:{user.UserName}, errors: {errors}");
+			return Result.Error(errors);
+		}
+
+		_logger.LogInformation($"Successfully delete user {user.UserName}");
+		return Result.SuccessWithMessage($"Successfully delete {user.FirstName + " " + user.LastName}, username: {user.UserName}");
+	}
+
+	/// <inheritdoc/>
+	public async Task CreateRoles(List<string> roles)
+	{
+		foreach (var role in roles)
+		{
+			if (!await _roleManager.RoleExistsAsync(role))
+			{
+				await _roleManager.CreateAsync(new IdentityRole { Name = role });
+			}
+		}
+	}
+
+	/// <inheritdoc/>
+	public async Task CreateAdminAccount()
+	{
+		var user = new ApplicationUser
+		{
+			FirstName = "AdminName",
+			DateOfBirth = DateOnly.MaxValue,
+			Email = "admin123@gmail.com",
+			Gender = Gender.Male,
+			UserName = "admin",
+			PhoneNumber = "01140812059",
+		};
+
+		await _userManager.CreateAsync(user, "Admin123!");
+
+		await _userManager.AddToRoleAsync(user, "Admin");
+	}
 
 	/// <summary>
-	/// Registers a new customer with customer role.
+	/// Generates claims for a user.
 	/// </summary>
-	/// <param name="customerRequestDto">The Dto of the customer.</param>
-	/// <returns>The result of the registration attempt.</returns>
-	//public async Task<Result> RegisterCustomerAsync(ContactRequestDto contactRequestDto)
- //   {
- //       string role = "Customer";
-
- //       var customer = _mapper.Map<Contact>(contactRequestDto);
-
- //       return await RegisterUserWithRoleAsync(customer, contactRequestDto.Password, role);
- //   }
-
-    
-
-    /// <summary>
-    /// Registers a new employee with employee role.
-    /// </summary>
-    /// <param name="employeeDto">The Dto of the employee.</param>
-    /// <returns>The result of the registration attempt.</returns>
-    public async Task<Result> RegisterEmployeeAsync(EmployeeRequestDto employeeDto)
-    {
-        string role = "Employee";
-
-        var employee = _mapper.Map<Employee>(employeeDto);
-
-        return await RegisterUserWithRoleAsync(employee, employeeDto.Password, role);
-    }
-
-    /// <summary>
-    /// Registers a new sales with employee role.
-    /// </summary>
-    /// <param name="salesDto">The Dto of the sales.</param>
-    /// <returns>The result of the registration attempt.</returns>
-    public async Task<Result> RegisterSalesAsync(SalesRequestDto salesDto)
-    {
-        string role = "Sales";
-
-        var sales = _mapper.Map<Sales>(salesDto);
-
-        return await RegisterUserWithRoleAsync(sales, salesDto.Password, role);
-    }
-
-    /// <summary>
-    /// Registers a new vendor with vendor role.
-    /// </summary>
-    /// <param name="vendorDto">The Dto of the vendor.</param>
-    /// <returns>The result of the registration attempt.</returns>
-    public async Task<Result> RegisterVendorAsync(VendorRequestDto vendorDto)
-    {
-        string role = "Vendor";
-
-        var vendor = _mapper.Map<Vendor>(vendorDto);
-
-        return await RegisterUserWithRoleAsync(vendor, vendorDto.Password, role);
-    }
-
-
-    /// <summary>
-    /// Generates claims for a user.
-    /// </summary>
-    /// <param name="user">The user.</param>
-    /// <param name="roles">The roles.</param>
-    /// <returns>The claims identity.</returns>
-    public List<Claim> GenerateClaims(ApplicationUser user, List<string> roles)
-    {
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
-            new Claim(ClaimTypes.Email, user.Email)
-        };
-
-        foreach (var role in roles)
-        {
-            claims.Add(new Claim(ClaimTypes.Role, role));
-        }
-
-        return claims;
-    }
-
-    /// <summary>
-    /// generates jwt token for a specific user
-    /// </summary>
-    /// <param name="user">the user to generate jwt token for</param>
-    /// <param name="roles">the user's roles</param>
-    /// <returns>the jwt security token</returns>
-    public string GenerateJwtToken(ApplicationUser user, List<string> roles)
-    {
-        var claims = GenerateClaims(user, roles);
-
-        var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt.Key));
-        var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
-
-        var jwtSecurityToken = new JwtSecurityToken(
-        issuer: _jwt.Issuer,
-            audience: _jwt.Audience,
-            claims: claims,
-            expires: DateTime.Now.AddDays(_jwt.DurationInDays),
-            signingCredentials: signingCredentials);
-
-        var token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-
-        return token;
-    }
-
-    public async Task InitializeRoles()
-    {
-        var roles = new List<string> {"Manager", "Employee","Customer","WarehouseManager","Sales","Vendor","Admin"};
-
-        foreach (var role in roles)
-        {
-            if (!await _roleManager.RoleExistsAsync(role))
-            {
-                await _roleManager.CreateAsync(new IdentityRole { Name = role });
-            }
-        }
-    }
-
-    public async Task CreateAdminAccount()
-    {
-        var user = new ApplicationUser
-        {
-            FirstName = "Service",
-            LastName = "Center",
-            DateOfBirth = DateOnly.MaxValue,
-            Email = "center133@gmail.com",
-            Gender = Gender.Male,
-            UserName = "Admin"
-        };
-
-        await _userManager.CreateAsync(user, "P@ssw0rd");
-
-        await _userManager.AddToRoleAsync(user, "Admin");
-    }
-    public async Task CreateManagerAccount()
-    {
-        var user = new ApplicationUser
-        {
-            FirstName = "Service",
-            LastName = "Center",
-            DateOfBirth = DateOnly.MaxValue,
-            Email = "center133@gmail.com",
-            Gender = Gender.Male,
-            UserName = "Manager"
-        };
-
-        await _userManager.CreateAsync(user, "P@ssw0rd");
-
-        await _userManager.AddToRoleAsync(user, "Manager");
-    }
-
-    public async Task<Result> RegisterWarehouseManagerAsync(WareHouseManagerRequestDto wareHouseManagerRequestDto)
+	/// <param name="user">The user.</param>
+	/// <param name="roles">The roles.</param>
+	/// <returns>The claims identity.</returns>
+	public List<Claim> GenerateClaims(ApplicationUser user, List<string> roles)
 	{
-		string role = "WarehouseManager";
+		var claims = new List<Claim>
+		{
+			new Claim(ClaimTypes.NameIdentifier, user.Id),
+			new Claim(ClaimTypes.Name, user.FirstName+" "+user.LastName ),
+			new Claim(ClaimTypes.Email, user.Email)
+		};
 
-		var wareHouseManager = _mapper.Map<WareHouseManager>(wareHouseManagerRequestDto);
+		foreach (var role in roles)
+		{
+			claims.Add(new Claim(ClaimTypes.Role, role));
+		}
 
-		return await RegisterUserWithRoleAsync(wareHouseManager, wareHouseManagerRequestDto.Password, role);
+		return claims;
 	}
-    //public async Task<Result> RegisterServiceProviderAsync(WareHouseManagerRequestDto wareHouseManagerRequestDto)
-    //{
-    //    string role = "ServiceProvider";
 
-    //    var wareHouseManager = _mapper.Map<WareHouseManager>(wareHouseManagerRequestDto);
+	/// <summary>
+	/// generates jwt token for a specific user
+	/// </summary>
+	/// <param name="user">the user to generate jwt token for</param>
+	/// <param name="roles">the user's roles</param>
+	/// <returns>the jwt security token</returns>
+	public string GenerateJwtToken(ApplicationUser user, List<string> roles)
+	{
+		var claims = GenerateClaims(user, roles);
 
-    //    return await RegisterUserWithRoleAsync(wareHouseManager, wareHouseManagerRequestDto.Password, role);
-    //}
+		var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt.Key));
+		var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+
+		var jwtSecurityToken = new JwtSecurityToken(
+		issuer: _jwt.Issuer,
+			audience: _jwt.Audience,
+			claims: claims,
+			expires: DateTime.Now.AddDays(_jwt.DurationInDays),
+			signingCredentials: signingCredentials);
+
+		var token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+
+		return token;
+	}
+
+	/// <summary>
+	/// Formats the error messages from an <see cref="IdentityResult"/> into a single string.
+	/// </summary>
+	/// <param name="result">The <see cref="IdentityResult"/> containing the errors to format.</param>
+	/// <returns>A string containing all error descriptions separated by commas.</returns>
+	private string FormatErrorMessage(IdentityResult result)
+	{
+		var errors = string.Empty;
+
+		foreach (var error in result.Errors)
+		{
+			errors += $"{error.Description},";
+		}
+
+		return errors;
+	}
+
+	public async Task<Result<BaseUserResponseDto>> GetUserAsync(string userId)
+	{
+		var user = await _userManager.FindByIdAsync(userId);
+
+		if (user is null)
+		{
+			_logger.LogError($"Unable to find user with id {userId} to delete");
+			return Result.NotFound(["The user is not found"]);
+		}
+
+		var userResponseDto = _mapper.Map<BaseUserResponseDto>(user);
+
+		_logger.LogInformation($"Successfully retrieved user {user.UserName}");
+		return Result.Success(userResponseDto);
+	}
 }

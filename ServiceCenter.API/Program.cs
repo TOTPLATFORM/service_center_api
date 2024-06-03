@@ -63,8 +63,6 @@ public class Program
 
 		builder.Services.AddCenterServices(builder.Configuration);
 
-		builder.Services.AddScoped(typeof(ITimeSlotService), typeof(TimeSlotService));
-
 		builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 				   .AddEntityFrameworkStores<ServiceCenterBaseDbContext>();
 

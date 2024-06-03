@@ -18,9 +18,8 @@ public class ServiceRequestDto
     [Required]
     public int ServicePrice { get; set; }
     [Required]
-    public Status Avaliable { get; set; }
+    public Status Avaliable { get; set; } = Status.Pending;
     [Required]
     public int ServiceCategoryId { get; set; }
-    public List<int>? ServicePcakagesId { get; set; }
     public string? EmployeeId { get; set; } = "";
 }

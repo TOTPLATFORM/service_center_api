@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -29,7 +30,7 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		var result = _mapper.Map<Service>(ServiceRequestDto);
 		if (result is null)
 		{
-			_logger.LogError("Failed to map DepartmentRequestDto to Department. DepartmentRequestDto: {@DepartmentRequestDto}", ServiceRequestDto);
+			_logger.LogError("Failed to map ServiceRequestDto to Service. ServiceRequestDto: {@ServiceRequestDto}", ServiceRequestDto);
 
 			return Result.Invalid(new List<ValidationError>
 			{
@@ -40,13 +41,6 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 			});
 		}
 		result.CreatedBy = _userContext.Email;
-
-        if (ServiceRequestDto.ServicePcakagesIds is not null)
-        {
-            var servicePackagesResult = await GetServicePackagesByIds(ServiceRequestDto.ServicePcakagesIds);
-
-			result.ServicePackages = servicePackagesResult.Value;
-        }
 
         _dbContext.Services.Add(result);
 
@@ -99,12 +93,6 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 			_logger.LogWarning("Service Id not found,Id {ServiceId}", id);
 			return Result.NotFound(["Service not found"]);
 		}
-
-        if (ServiceRequestDto.ServicePcakagesIds is not null)
-        {
-            var servicePackagesResult = await GetServicePackagesByIds(ServiceRequestDto.ServicePcakagesIds);
-            result.ServicePackages = servicePackagesResult.Value;
-        }
 
         result.ModifiedBy = _userContext.Email;
 
@@ -170,4 +158,51 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         _logger.LogInformation("Fetching Service packages by their ids . Total count: {Service}.", packages.Count);
         return Result.Success(packages);
     }
+
+	public async Task<Result<List<ServiceResponseDto>>> AssignServiceToPackagesAsync(int serviceId, int servicePackageId)
+	{
+		var service = await _dbContext.Services.FindAsync(serviceId);
+
+		if (service is null)
+		{
+			_logger.LogWarning("ServiceId Id not found,Id {id}", serviceId);
+
+			return Result.NotFound(["The Facility is not found"]);
+		}
+
+		var package = await _dbContext.ServicePackages.FindAsync(servicePackageId);
+
+		if (package is null)
+		{
+			_logger.LogWarning("Property Id not found,Id {id}", servicePackageId);
+
+			return Result.NotFound(["The Property is not found"]);
+		}
+
+		service.ServicePackages.Add(package);
+		await _dbContext.SaveChangesAsync();
+
+		_logger.LogInformation("Successfully assigned service to package");
+
+		return Result.SuccessWithMessage("Service added successfully to Package");
+
+	}
+
+	public async  Task<Result<List<ServiceResponseDto>>> GetServicesByPackageAsync(int servicePackageId)
+	{
+		var pacakge = await _dbContext.ServicePackages.FindAsync(servicePackageId);
+
+		if (pacakge is null)
+		{
+			_logger.LogWarning("ServicePackageId Id not found,Id {id}", servicePackageId);
+			return Result.NotFound(["The package is not found"]);
+		}
+
+		var services = _mapper.Map<List<ServiceResponseDto>>(pacakge.Services);
+
+		_logger.LogInformation($"Successfully retrieved services  by their package id");
+		return Result.Success(services);
+
+	}
+
 }

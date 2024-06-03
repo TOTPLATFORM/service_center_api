@@ -1,4 +1,4 @@
-﻿using ServiceCenter.Domain.Entities;
+﻿ using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
 using System;
 using System.Collections.Generic;
