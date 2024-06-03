@@ -40,7 +40,7 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet]
-	[Authorize(Roles = "Admin,Manager,Sales")]
+	//[Authorize(Roles = "Admin,Manager,Sales")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<List<CampaginResponseDto>>> GetAllCampagins()
@@ -58,7 +58,7 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("{id}")]
-	[Authorize(Roles = "Admin,Manager,Sales")]
+	//[Authorize(Roles = "Admin,Manager,Sales")]
 	[ProducesResponseType(typeof(Result< CampaginGetByIdResposeDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<CampaginGetByIdResposeDto>> GetCampaginById(int id)
@@ -111,7 +111,7 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-	[Authorize(Roles = "Admin,Manager,Sales")]
+	//[Authorize(Roles = "Admin,Manager,Sales")]
 	[ProducesResponseType(typeof(Result<CampaginResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<List<CampaginResponseDto>>> SerachCampaginByText(string text)

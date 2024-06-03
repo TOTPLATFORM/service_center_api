@@ -60,7 +60,7 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	{
 		return await _employeeService.GetEmployeeByIdAsync(id);
 	}
-
+	////////////////////Edit////////////////
 	/// <summary>
 	/// get  employee by id in the system.
 	/// </summary>
@@ -79,6 +79,7 @@ public class EmployeeController(IEmployeeService employeeService) : BaseControll
 	{
 		return await _employeeService.UpdateEmployeeAsync(id, employeeRequestDto);
 	}
+	///////////////////Edit///////////////////////
 	/// <summary>
 	/// search  employee by text in the system.
 	/// </summary>

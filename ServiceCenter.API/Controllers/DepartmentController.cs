@@ -21,7 +21,7 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPost]
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> AddDepartment(DepartmentRequestDto departmentRequestDto)
@@ -72,7 +72,7 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPut("{id}")]
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<DepartmentResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<DepartmentResponseDto>> UpdateDepartment(int id, DepartmentRequestDto departmentRequestDto)
@@ -125,7 +125,7 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result> DeleteDepartment(int id)

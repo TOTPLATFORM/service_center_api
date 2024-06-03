@@ -22,7 +22,7 @@ public class BranchController(IBranchService branchService) : BaseController
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPost]
-	[Authorize(Roles = "Admin,Manager")]
+	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> AddBranch(BranchRequestDto branchRequestDto)
@@ -69,7 +69,7 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPut("{id}")]
-	[Authorize(Roles = "Admin,Manager")]
+	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<BranchResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<BranchResponseDto>> UpdateBranch(int id, BranchRequestDto branchRequestDto)
@@ -98,11 +98,11 @@ public class BranchController(IBranchService branchService) : BaseController
     /// </summary>
     ///<param name="id">id</param>
     /// <remarks>
-    /// access is limited to users with the "manager" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> DeleteBranchAsycn(int id)
