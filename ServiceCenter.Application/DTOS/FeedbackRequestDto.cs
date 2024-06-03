@@ -17,4 +17,6 @@ public class FeedbackRequestDto
     public string FeedbackCategory { get; set; } = "";
     [Required]
     public string ContactId { get; set; } = "";
+    public int ProductId  { get; set; }
+    public int ServiceId { get; set; }
 }

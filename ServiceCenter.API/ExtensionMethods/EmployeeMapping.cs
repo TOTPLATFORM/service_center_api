@@ -13,7 +13,8 @@ public static class EmployeeMapping
 			.ForMember(dest => dest.LastName, src => src.MapFrom(src => src.EmployeeLastName))
 			.ForMember(dest=>dest.PhoneNumber,src=>src.MapFrom(src => src.EmployeePhoneNumber))	
 			.ForMember(dest=>dest.Email,src=>src.MapFrom(src=>src.EmployeeEmail))
-			.ReverseMap();
+                .ForMember(dest => dest.Department.Id, src => src.MapFrom(src => src.DepartmentId))
+            .ReverseMap();
 
 		map.CreateMap<Employee, EmployeeResponseDto>()
 			.ForMember(dest => dest.EmployeeFirstName, src => src.MapFrom(src => src.FirstName))

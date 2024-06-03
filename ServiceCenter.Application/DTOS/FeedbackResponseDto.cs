@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceCenter.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,7 @@ public class FeedbackResponseDto
     public string FeedbackDescription { get; set; } = "";
     public string FeedbackCategory { get; set; } = "";
     public string ContactName { get; set; } = "";
+    public  ServiceResponseDto? Service { get; set; } = default;
+    public  ProductResponseDto? Product { get; set; } = default;
 
 }
