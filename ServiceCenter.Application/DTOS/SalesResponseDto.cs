@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Domain.Entities;
+using ServiceCenter.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,8 @@ public class SalesResponseDto
     public string SalesFirstName { get; set; } = "";
     public string SalesLastName { get; set; } = "";
     public string SalesPhoneNumber { get; set; } = "";
+    public Gender Gender { get; set; }
     public string UserName { get; set; } = "";
-    public virtual ICollection<ProductResponseDto> Products { get; set; }
-    public virtual ICollection<ReportResponseDto> Overviews { get; set; }
+    public  ICollection<ProductResponseDto> Products { get; set; }
+    public  ICollection<ReportResponseDto> Overviews { get; set; }
 }

@@ -12,7 +12,6 @@ public static class InventoryMapping
 			.ReverseMap();
 
 		map.CreateMap<Inventory, InventoryResponseDto>()
-			//.ForMember(dest=>dest.ca,src=>src.MapFrom(src=>src.))
-			.ReverseMap();
+		   	.ReverseMap();
 	}
 }

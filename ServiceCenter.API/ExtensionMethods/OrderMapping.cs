@@ -14,15 +14,7 @@ public static class OrderMapping
         map.CreateMap<Order, OrderResponseDto>()
             .ReverseMap();
 
-        map.CreateMap<ItemOrderRequestDto, ItemOrder>()
-            .ReverseMap();
-
-        map.CreateMap<ItemOrder, ItemOrderResponseDto>()    
-            .ReverseMap();
-
-        map.CreateMap<ItemCategory,ItemCategoryResponseDto>()
-            .ForMember(dest=>dest.InventoryName,src=>src.MapFrom(src=>src.Inventory.InventoryName)) 
-            .ReverseMap();
+       
 
     }
 }

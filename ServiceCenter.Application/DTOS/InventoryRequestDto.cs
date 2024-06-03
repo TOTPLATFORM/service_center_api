@@ -16,5 +16,6 @@ public class InventoryRequestDto
     [Required]
     public int InventoryCapacity { get; set; }
     [Required]
-    public string WareHouseManagerId { get; set; } = "";
+    public int BranchId { get; set; }
+
 }

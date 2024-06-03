@@ -13,6 +13,7 @@ public static class SalesMapping
             .ForMember(dest => dest.LastName, src => src.MapFrom(src => src.SalesLastName))
             .ForMember(dest => dest.PhoneNumber, src => src.MapFrom(src => src.SalesPhoneNumber))
             .ForMember(dest => dest.Email, src => src.MapFrom(src => src.SalesEmail))
+            .ForMember(dest => dest.Center.Id, src => src.MapFrom(src => src.CenterId))
             .ReverseMap();
 
         map.CreateMap<Sales, SalesResponseDto>()

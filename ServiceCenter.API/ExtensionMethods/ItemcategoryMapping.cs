@@ -12,7 +12,6 @@ public static class ItemcategoryMapping
             .ReverseMap();
 
         map.CreateMap< ItemCategory,  ItemCategoryResponseDto>()
-            .ForMember(dest=>dest.InventoryName,src=>src.MapFrom(src=>src.Inventory.InventoryName))
             .ReverseMap();
     }
 }

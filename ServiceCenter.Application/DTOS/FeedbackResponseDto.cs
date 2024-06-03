@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Domain.Entities;
+using ServiceCenter.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ public class FeedbackResponseDto
     public int Id { get; set; }
     public DateOnly FeedbackDate { get; set; }
     public string FeedbackDescription { get; set; } = "";
-    public string FeedbackCategory { get; set; } = "";
+    public Category FeedbackCategory { get; set; }
     public string ContactName { get; set; } = "";
     public  ServiceResponseDto? Service { get; set; } = default;
     public  ProductResponseDto? Product { get; set; } = default;

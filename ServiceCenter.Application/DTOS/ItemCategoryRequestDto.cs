@@ -10,10 +10,6 @@ public class ItemCategoryRequestDto
 {
     [Required]
     public string CategoryName { get; set; } = "";
-    [Required]
-    [Range(1, int.MaxValue)]
-    public int ReferenceNumber { get; set; }
-    [Required]
-    public int InventoryId { get; set; }
+ 
 }
 

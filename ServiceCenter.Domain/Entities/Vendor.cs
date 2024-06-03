@@ -14,6 +14,7 @@ namespace ServiceCenter.Domain.Entities
         public string ContactPerson { get; set; } = "";
         public DateOnly ContractStartDate { get; set; }
         public DateOnly ContractEndDate { get; set; }
+        public virtual Center Center { get; set; }
         public virtual ICollection<Transaction?> Transactions { get; set; } = new HashSet<Transaction>();
     }
 }
