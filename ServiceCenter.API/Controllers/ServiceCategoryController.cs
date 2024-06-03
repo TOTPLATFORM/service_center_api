@@ -16,16 +16,15 @@ public class ServiceCategoryController(IServiceCategoryService itemCategoryServi
     /// <param name="itemCategoryDto">ServiceCategory dto</param>
     /// <returns>result for ServiceCategory added successfully.</returns>
     [HttpPost]
-    [Authorize(Roles = "Manager,Admin")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result> AddServiceCategory(ServiceCategoryRequestDto itemCategoryDto)
+    public async Task<Result> AddServiceCategory(ServiceCategoryRequestDto  serviceCategoryRequestDto)
     {
-        return await _itemCategoryService.AddServiceCategoryAsync(itemCategoryDto);
+        return await _itemCategoryService.AddServiceCategoryAsync(serviceCategoryRequestDto);
     }
 
     [HttpGet]
-    //[Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<List<ServiceCategoryResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<List<ServiceCategoryResponseDto>>> GetAllServiceCategories()
     {
@@ -36,7 +35,7 @@ public class ServiceCategoryController(IServiceCategoryService itemCategoryServi
     /// </summary>
     /// <returns>result of ServiceCategory response dto</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "Manager,Admin")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<ServiceCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<ServiceCategoryResponseDto>> GetServiceCategoryById(int id)
@@ -44,7 +43,7 @@ public class ServiceCategoryController(IServiceCategoryService itemCategoryServi
         return await _itemCategoryService.GetServiceCategoryByIdAsync(id);
     }
     [HttpPut("{id}")]
-    [Authorize(Roles = "Manager,Admin")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<ServiceCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ServiceCategoryResponseDto>> UpdateServiceCategory(int id, ServiceCategoryRequestDto itemCategoryDto)
@@ -57,7 +56,7 @@ public class ServiceCategoryController(IServiceCategoryService itemCategoryServi
     /// <param name="id">ServiceCategory id</param>
     /// <returns>result of ServiceCategory removed successfully </returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager,Admin")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteServiceCategory(int id)
@@ -71,7 +70,6 @@ public class ServiceCategoryController(IServiceCategoryService itemCategoryServi
     /// <param name="text">ServiceCategory name</param>
     /// <returns>ServiceCategory response dto </returns>
     [HttpGet("search/{text}")]
-    //[Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<ServiceCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<List<ServiceCategoryResponseDto>>> SearchServiceCategoryByText(string text)

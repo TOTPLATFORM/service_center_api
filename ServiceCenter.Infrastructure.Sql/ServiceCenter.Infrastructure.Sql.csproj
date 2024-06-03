@@ -7,12 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ServiceCenter.Infrastructure\ServiceCenter.Infrastructure.csproj" />
+    <Compile Remove="Migrations\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Migrations\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\ServiceCenter.Infrastructure\ServiceCenter.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

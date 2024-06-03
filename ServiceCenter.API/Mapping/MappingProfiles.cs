@@ -8,7 +8,7 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-      
+
 
         //this.AddProductBrandMapping();
 
@@ -20,13 +20,13 @@ public class MappingProfiles : Profile
 
         //this.AddItemCategoryMapping();
 
-        //this.AddServiceCategoryMapping();
+        this.AddServiceCategoryMapping();
 
-        //this.AddCenterMapping();
-        
+        this.AddCenterMapping();
+
         //this.AddProductCategoryMapping();
 
-        this.AddProductMapping();
+        //this.AddProductMapping();
 
         //this.AddItemMapping();
 
@@ -36,7 +36,7 @@ public class MappingProfiles : Profile
 
         //this.AddItemCategoryMapping();
 
-        this.AddBranchMapping();
+        //this.AddBranchMapping();
 
         //this.AddDepartmentMapping();
 
@@ -48,7 +48,7 @@ public class MappingProfiles : Profile
 
         //this.AddScheduleMapping();
 
-        //this.AddServiceMapping();
+        this.AddServiceMapping();
 
         //this.AddSubscriptionMapping();
 
@@ -58,7 +58,7 @@ public class MappingProfiles : Profile
 
         //this.AddContactMapping();
 
-       
+
 
         //this.AddCampaginMapping();
 

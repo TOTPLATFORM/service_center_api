@@ -21,5 +21,6 @@ public class ServiceRequestDto
     public Status Avaliable { get; set; } = Status.Pending;
     [Required]
     public int ServiceCategoryId { get; set; }
-    public string? EmployeeId { get; set; } = "";
+    [Required]
+    public int CenterId { get; set; }
 }

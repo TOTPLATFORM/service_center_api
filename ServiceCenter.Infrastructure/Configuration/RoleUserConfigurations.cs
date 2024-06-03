@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Infrastructure.Configuration;
 
-public class RoleUserConfigurations : IEntityTypeConfiguration<IdentityUser>
+public class RoleUserConfigurations : IEntityTypeConfiguration<IdentityRole>
 {
-	public void Configure(EntityTypeBuilder<IdentityUser> builder)
+	public void Configure(EntityTypeBuilder<IdentityRole> builder)
 	{
 		builder.HasData(new IdentityRole { Name = "Admin", NormalizedName = "Admin".ToUpper() },
 		   new IdentityRole { Name = "Customer", NormalizedName = "Customer".ToUpper() },
