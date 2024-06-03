@@ -18,7 +18,7 @@ public class ServiceRequestDto
     [Required]
     public int ServicePrice { get; set; }
     [Required]
-    public Status Avaliable { get; set; } = Status.Pending;
+    public Status Avaliable { get; set; }
     [Required]
     public int ServiceCategoryId { get; set; }
     [Required]
