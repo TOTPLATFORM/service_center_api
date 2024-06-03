@@ -21,4 +21,7 @@ public class ReportRequestDto
     public DateTime DueDate { get; set; }
     [Required]
     public string SalesId { get; set; } = default;
+    [Required]
+    public string ContactId { get; set; } = default;
+    public string ManagerId { get; set; } = default;
 }

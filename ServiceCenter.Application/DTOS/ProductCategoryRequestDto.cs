@@ -11,6 +11,7 @@ public class ProductCategoryRequestDto
 {
     [Required]
     public string CategoryName { get; set; } = "";
+    
     [Required]
-    public int ReferenceNumber { get; set; }
+    public List<int> ProductBrandsId { get; set; }
 }

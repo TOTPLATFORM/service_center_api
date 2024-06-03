@@ -8,9 +8,14 @@ public static class ReportMapping
 {
     public static void AddReportMapping(this MappingProfiles map)
     {
-        map.CreateMap<ReportRequestDto, Report>();
+        map.CreateMap<ReportRequestDto, Report>()
+            .ForMember(dest => dest.Manager.Id, src => src.MapFrom(src => src.ManagerId))
+            .ForMember(dest => dest.Contact.Id, src => src.MapFrom(src => src.ContactId))
+            .ForMember(dest => dest.Sales.Id, src => src.MapFrom(src => src.SalesId))
+            .ReverseMap();
 
         map.CreateMap<Report, ReportResponseDto>()
-            .ForMember(dest=> dest.SalesName, src => src.MapFrom(src => src.Sales.FirstName + " " + src.Sales.LastName));
+            .ReverseMap();
+;
     }
 }

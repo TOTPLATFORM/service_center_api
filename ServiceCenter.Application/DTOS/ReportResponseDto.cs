@@ -16,5 +16,8 @@ public class ReportResponseDto
     public Status Status { get; set; }
     public DateTime DueDate { get; set; }
 
-    public string SalesName { get; set; } = "";
+    public  ContactResponseDto Contact { get; set; } = default;
+
+    public  SalesResponseDto Sales { get; set; } = default;
+    public  ManagerResponseDto? Manager { get; set; } = default;
 }

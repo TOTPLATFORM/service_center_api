@@ -17,4 +17,5 @@ public class Report : AuditableEntity
 
      public virtual Manager? Manager { get; set; } = default;
     public virtual Contact Contact { get; set; } = default;
+    public virtual Sales Sales { get; set; } = default;
 }

@@ -14,7 +14,7 @@ public class Feedback : AuditableEntity
     public string FeedbackDescription { get; set; } = "";
     public FeedbackType FeedbackCategory { get; set; } 
 
-    public virtual Contact? Contact { get; set; } = default;
-    public virtual Service Service { get; set; } = default;
+    public virtual Contact Contact { get; set; } = default;
+    public virtual Service? Service { get; set; } = default;
     public virtual Product? Product { get; set; } = default;
 }

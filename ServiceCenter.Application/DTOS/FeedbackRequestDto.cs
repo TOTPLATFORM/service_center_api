@@ -15,4 +15,6 @@ public class FeedbackRequestDto
     public string FeedbackDescription { get; set; } = "";
     [Required]
     public string FeedbackCategory { get; set; } = "";
+    [Required]
+    public string ContactId { get; set; } = "";
 }

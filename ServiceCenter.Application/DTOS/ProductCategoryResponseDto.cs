@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceCenter.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,6 @@ public class ProductCategoryResponseDto
 {
     public int Id { get; set; }
     public string CategoryName { get; set; } = "";
-    public int ReferenceNumber { get; set; }
+    public  ICollection<ProductResponseDto> Products { get; set; } = new HashSet<ProductResponseDto>();
+    public  ICollection<ProductBrandResponseDto> ProductBrands { get; set; } = new HashSet<ProductBrandResponseDto>();
 }

@@ -12,4 +12,6 @@ public class FeedbackResponseDto
     public DateOnly FeedbackDate { get; set; }
     public string FeedbackDescription { get; set; } = "";
     public string FeedbackCategory { get; set; } = "";
+    public string ContactName { get; set; } = "";
+
 }

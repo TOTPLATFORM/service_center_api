@@ -21,6 +21,6 @@ public class ServiceRequestDto
     public Status Avaliable { get; set; }
     [Required]
     public int ServiceCategoryId { get; set; }
-    public List<int>? ServicePcakagesIds { get; set; }
+    public List<int>? ServicePcakagesId { get; set; }
     public string? EmployeeId { get; set; } = "";
 }
