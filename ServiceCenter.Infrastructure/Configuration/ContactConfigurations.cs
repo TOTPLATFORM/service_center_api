@@ -23,9 +23,7 @@ public class ContactConfigurations :IEntityTypeConfiguration<Contact>
 		.IsRequired()
 		.HasMaxLength(50);
 
-		builder.Property(p => p.Gender)
-			.HasColumnType("varchar")
-			.HasMaxLength(6);
+		builder.Property(p => p.Gender).IsRequired();
 
 	}
 }

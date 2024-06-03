@@ -25,9 +25,7 @@ public class UserConfigurations : IEntityTypeConfiguration<ApplicationUser>
             .HasColumnType("varchar")
             .HasMaxLength(30);
 
-        builder.Property(T => T.Gender)
-            .HasColumnType("varchar")
-            .HasMaxLength(20);
+        builder.Property(T => T.Gender);
 
         builder.Property(T => T.DateOfBirth)
                .IsRequired();

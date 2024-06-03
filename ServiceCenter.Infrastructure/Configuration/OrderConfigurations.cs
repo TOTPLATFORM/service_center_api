@@ -23,6 +23,8 @@ public class OrderConfigurations : IEntityTypeConfiguration<Order>
 
         builder.Property(p => p.OrderDate)
               .IsRequired();
+        builder.Property(p => p.OrderStatus)
+          .IsRequired();
 
     }
 }

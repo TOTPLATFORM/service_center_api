@@ -24,9 +24,7 @@ public class ProductBrandConfigurations : IEntityTypeConfiguration<ProductBrand>
                .HasMaxLength(100);
 
         builder.Property(T => T.CountryOfOrigin)
-              .IsRequired()
-			  .HasColumnType("varchar")
-			  .HasMaxLength(50); 
+              .IsRequired(); 
 
         builder.Property(T => T.FoundedYear)
                .IsRequired();

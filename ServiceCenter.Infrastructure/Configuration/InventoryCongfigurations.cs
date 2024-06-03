@@ -25,6 +25,8 @@ public class InventoryCongfigurations : IEntityTypeConfiguration<Inventory>
 
 		builder.Property(p => p.InventoryCapacity)
 			.IsRequired();
-	}
+        builder.Property(p => p.BranchId)
+            .IsRequired();
+    }
 
 }

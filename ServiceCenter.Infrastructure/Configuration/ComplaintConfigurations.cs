@@ -13,19 +13,17 @@ public class ComplaintConfigurations : IEntityTypeConfiguration<Complaint>
     {
         builder.Property(T => T.CreatedDate)
                .IsRequired();
-      
+
         builder.Property(T => T.ComplaintStatus)
-              .IsRequired()
+              .IsRequired();
 ;
 		builder.Property(T => T.ComplaintDescription)
               .IsRequired()
 			  .HasColumnType("varchar")
 			  .HasMaxLength(100);
 
-        builder.Property(T=>T.ComplaintCategory)
-            .IsRequired()
-            .HasMaxLength(100)
-            .HasColumnType("varchar");
+        builder.Property(T => T.ComplaintCategory)
+            .IsRequired(); ;
 
     }
 }

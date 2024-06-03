@@ -21,8 +21,6 @@ public class EmployeeConfigurations : IEntityTypeConfiguration<Employee>
 			.HasColumnType("varchar")
 			.HasMaxLength(30);
 
-		builder.Property(T => T.Gender)
-			.HasColumnType("varchar")
-			.HasMaxLength(6);
+		builder.Property(T => T.Gender).IsRequired();
 	}
 }

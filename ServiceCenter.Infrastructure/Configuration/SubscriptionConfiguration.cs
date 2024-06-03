@@ -10,14 +10,16 @@ using ServiceCenter.Domain.Entities;
 namespace ServiceCenter.Infrastructure.Configuration;
 
 
-public class ContractConfigurations : IEntityTypeConfiguration<Subscription>
+public class SubscriptionConfiguration : IEntityTypeConfiguration<Subscription>
 {
     public void Configure(EntityTypeBuilder<Subscription> builder)
     {
         builder.Property(p => p.Duration)
                .IsRequired();
-              
-       
-        
+
+        //builder.Property(p => p.ServicePackage)
+        //        .IsRequired();
+
+
     }
 }
