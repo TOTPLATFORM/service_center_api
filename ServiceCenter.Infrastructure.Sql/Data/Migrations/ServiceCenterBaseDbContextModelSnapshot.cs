@@ -99,37 +99,37 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "59c3088e-99d6-4c3e-84c6-57bf9640c794",
+                            Id = "07a57aee-6dea-4921-a40b-7a9ee68392d2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "5c83f3cf-344b-4de8-be58-13f297d56821",
+                            Id = "a33c7ef7-0576-46b6-89c7-51a829775818",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "23f17829-f8a2-4e95-a888-7b1141b9026a",
+                            Id = "4511207e-064d-423c-aa2e-219519972712",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "31b95a82-ee49-44b3-b574-10dab181f1cf",
+                            Id = "b8c27f82-d371-4092-b91a-4c44af184195",
                             Name = "Sales",
                             NormalizedName = "SALES"
                         },
                         new
                         {
-                            Id = "e42576c7-5cc7-4ebf-8eed-6647fc23152f",
+                            Id = "45cee4d4-aed9-4ccf-9455-84bb66d14dd5",
                             Name = "WarehouseManager",
                             NormalizedName = "WAREHOUSEMANAGER"
                         },
                         new
                         {
-                            Id = "4745518e-4ff1-44c8-aa48-8912c9ef27f2",
+                            Id = "23301982-5163-4d3a-93f1-747e6fd54dd8",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });

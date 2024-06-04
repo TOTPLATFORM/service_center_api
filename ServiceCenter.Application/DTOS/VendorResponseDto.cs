@@ -17,5 +17,4 @@ public class VendorResponseDto
     public DateOnly ContractStartDate { get; set; }
     public DateOnly ContractEndDate { get; set; }
     public int CenterId { get; set; } 
-    public  ICollection<TransactionResponseDto?> Transactions { get; set; } = new HashSet<TransactionResponseDto>();
 }

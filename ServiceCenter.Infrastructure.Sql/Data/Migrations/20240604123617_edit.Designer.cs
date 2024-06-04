@@ -12,8 +12,8 @@ using ServiceCenter.Infrastructure.BaseContext;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
-    [Migration("20240603152456_EditDb1")]
-    partial class EditDb1
+    [Migration("20240604123617_edit")]
+    partial class edit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,37 +102,37 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d69686ea-c454-4b1d-8984-c21f662c508f",
+                            Id = "07a57aee-6dea-4921-a40b-7a9ee68392d2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "99f7f577-e649-4ff9-99cb-32863596337a",
+                            Id = "a33c7ef7-0576-46b6-89c7-51a829775818",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "221d225d-b1db-4f8d-8b9e-9ccc65aef98a",
+                            Id = "4511207e-064d-423c-aa2e-219519972712",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "995d26cb-4d3d-4610-9b68-205167832655",
+                            Id = "b8c27f82-d371-4092-b91a-4c44af184195",
                             Name = "Sales",
                             NormalizedName = "SALES"
                         },
                         new
                         {
-                            Id = "ecb19858-df64-4c9d-8815-07b514c84c79",
+                            Id = "45cee4d4-aed9-4ccf-9455-84bb66d14dd5",
                             Name = "WarehouseManager",
                             NormalizedName = "WAREHOUSEMANAGER"
                         },
                         new
                         {
-                            Id = "6f127a35-0482-4634-a259-c008c6caa052",
+                            Id = "23301982-5163-4d3a-93f1-747e6fd54dd8",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -286,10 +286,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("varchar");
 
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar");
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -724,15 +722,15 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("ItemCategoryId")
-                        .HasColumnType("int");
 
                     b.Property<string>("ItemDescription")
                         .IsRequired()
@@ -754,7 +752,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ServiceId")
+                    b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedDate")
@@ -762,7 +760,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemCategoryId");
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("ServiceId");
 
@@ -825,6 +823,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OfferCategory")
+                        .HasColumnType("int");
 
                     b.Property<string>("OfferDescription")
                         .IsRequired()
@@ -1041,6 +1042,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("RatingDate")
+                        .HasColumnType("date");
 
                     b.Property<int>("RatingValue")
                         .HasColumnType("int");
@@ -1327,10 +1331,23 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("InventoryId")
+                    b.Property<int>("InventoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TransactionType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -1338,6 +1355,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("VendorId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -1393,7 +1411,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     b.HasBaseType("ServiceCenter.Domain.Entities.ApplicationUser");
 
-                    b.Property<int?>("DepartmentId")
+                    b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.HasIndex("DepartmentId");
@@ -1405,22 +1423,14 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     b.HasBaseType("ServiceCenter.Domain.Entities.ApplicationUser");
 
-                    b.Property<int?>("CenterId")
+                    b.Property<int>("CenterId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ContactPerson")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateOnly>("ContractEndDate")
                         .HasColumnType("date");
 
                     b.Property<DateOnly>("ContractStartDate")
                         .HasColumnType("date");
-
-                    b.Property<string>("VendorType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasIndex("CenterId");
 
@@ -1438,7 +1448,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     b.HasBaseType("ServiceCenter.Domain.Entities.Employee");
 
-                    b.Property<int?>("CenterId")
+                    b.Property<int>("CenterId")
                         .HasColumnType("int");
 
                     b.HasIndex("CenterId");
@@ -1699,13 +1709,21 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Item", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.ItemCategory", null)
+                    b.HasOne("ServiceCenter.Domain.Entities.ItemCategory", "Category")
                         .WithMany("Items")
-                        .HasForeignKey("ItemCategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("ServiceCenter.Domain.Entities.Service", null)
+                    b.HasOne("ServiceCenter.Domain.Entities.Service", "Service")
                         .WithMany("Item")
-                        .HasForeignKey("ServiceId");
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Offer", b =>
@@ -1800,13 +1818,21 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Transaction", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Inventory", null)
+                    b.HasOne("ServiceCenter.Domain.Entities.Inventory", "Inventory")
                         .WithMany("Transactions")
-                        .HasForeignKey("InventoryId");
+                        .HasForeignKey("InventoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("ServiceCenter.Domain.Entities.Vendor", null)
+                    b.HasOne("ServiceCenter.Domain.Entities.Vendor", "Vendor")
                         .WithMany("Transactions")
-                        .HasForeignKey("VendorId");
+                        .HasForeignKey("VendorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Inventory");
+
+                    b.Navigation("Vendor");
                 });
 
             modelBuilder.Entity("ServiceServicePackage", b =>
@@ -1876,28 +1902,36 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Employee", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Department", null)
+                    b.HasOne("ServiceCenter.Domain.Entities.Department", "Department")
                         .WithMany("Employees")
-                        .HasForeignKey("DepartmentId");
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ServiceCenter.Domain.Entities.ApplicationUser", null)
                         .WithOne()
                         .HasForeignKey("ServiceCenter.Domain.Entities.Employee", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Vendor", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Center", null)
+                    b.HasOne("ServiceCenter.Domain.Entities.Center", "Center")
                         .WithMany("Vendors")
-                        .HasForeignKey("CenterId");
+                        .HasForeignKey("CenterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ServiceCenter.Domain.Entities.ApplicationUser", null)
                         .WithOne()
                         .HasForeignKey("ServiceCenter.Domain.Entities.Vendor", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Center");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Manager", b =>
@@ -1911,15 +1945,19 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Sales", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Center", null)
+                    b.HasOne("ServiceCenter.Domain.Entities.Center", "Center")
                         .WithMany("Sales")
-                        .HasForeignKey("CenterId");
+                        .HasForeignKey("CenterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ServiceCenter.Domain.Entities.Employee", null)
                         .WithOne()
                         .HasForeignKey("ServiceCenter.Domain.Entities.Sales", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Center");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.ServiceProvider", b =>

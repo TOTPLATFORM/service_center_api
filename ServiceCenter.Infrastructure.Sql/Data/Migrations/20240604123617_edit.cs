@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class EditDb1 : Migration
+    public partial class edit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,7 +35,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     FirstName = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
                     LastName = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
                     DateOfBirth = table.Column<DateOnly>(type: "date", nullable: false),
-                    Gender = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -156,6 +156,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RatingValue = table.Column<int>(type: "int", nullable: false),
+                    RatingDate = table.Column<DateOnly>(type: "date", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -358,11 +359,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    VendorType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactPerson = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContractStartDate = table.Column<DateOnly>(type: "date", nullable: false),
                     ContractEndDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    CenterId = table.Column<int>(type: "int", nullable: true)
+                    CenterId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -377,7 +376,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         name: "FK_Vendors_Centers_CenterId",
                         column: x => x.CenterId,
                         principalTable: "Centers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -514,7 +514,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: true)
+                    DepartmentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -529,7 +529,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         name: "FK_Employees_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -542,8 +543,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     ItemDescription = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     ItemStock = table.Column<int>(type: "int", nullable: false),
                     ItemPrice = table.Column<int>(type: "int", nullable: false),
-                    ItemCategoryId = table.Column<int>(type: "int", nullable: true),
-                    ServiceId = table.Column<int>(type: "int", nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    ServiceId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -553,15 +554,17 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     table.PrimaryKey("PK_Items", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Items_ItemCategories_ItemCategoryId",
-                        column: x => x.ItemCategoryId,
+                        name: "FK_Items_ItemCategories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "ItemCategories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Items_Services_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "Services",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -610,7 +613,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CenterId = table.Column<int>(type: "int", nullable: true)
+                    CenterId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -619,7 +622,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         name: "FK_Sales_Centers_CenterId",
                         column: x => x.CenterId,
                         principalTable: "Centers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Sales_Employees_Id",
                         column: x => x.Id,
@@ -937,6 +941,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false),
                     EndDate = table.Column<DateOnly>(type: "date", nullable: false),
                     Discount = table.Column<int>(type: "int", nullable: false),
+                    OfferCategory = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     ServiceId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -1015,8 +1020,12 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    InventoryId = table.Column<int>(type: "int", nullable: true),
-                    VendorId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TransactionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    InventoryId = table.Column<int>(type: "int", nullable: false),
+                    VendorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -1029,12 +1038,14 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         name: "FK_Transactions_Inventories_InventoryId",
                         column: x => x.InventoryId,
                         principalTable: "Inventories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Transactions_Vendors_VendorId",
                         column: x => x.VendorId,
                         principalTable: "Vendors",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1068,12 +1079,12 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "221d225d-b1db-4f8d-8b9e-9ccc65aef98a", null, "Employee", "EMPLOYEE" },
-                    { "6f127a35-0482-4634-a259-c008c6caa052", null, "Manager", "MANAGER" },
-                    { "995d26cb-4d3d-4610-9b68-205167832655", null, "Sales", "SALES" },
-                    { "99f7f577-e649-4ff9-99cb-32863596337a", null, "Customer", "CUSTOMER" },
-                    { "d69686ea-c454-4b1d-8984-c21f662c508f", null, "Admin", "ADMIN" },
-                    { "ecb19858-df64-4c9d-8815-07b514c84c79", null, "WarehouseManager", "WAREHOUSEMANAGER" }
+                    { "07a57aee-6dea-4921-a40b-7a9ee68392d2", null, "Admin", "ADMIN" },
+                    { "23301982-5163-4d3a-93f1-747e6fd54dd8", null, "Manager", "MANAGER" },
+                    { "4511207e-064d-423c-aa2e-219519972712", null, "Employee", "EMPLOYEE" },
+                    { "45cee4d4-aed9-4ccf-9455-84bb66d14dd5", null, "WarehouseManager", "WAREHOUSEMANAGER" },
+                    { "a33c7ef7-0576-46b6-89c7-51a829775818", null, "Customer", "CUSTOMER" },
+                    { "b8c27f82-d371-4092-b91a-4c44af184195", null, "Sales", "SALES" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -1197,9 +1208,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 column: "ProductBrandsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_ItemCategoryId",
+                name: "IX_Items_CategoryId",
                 table: "Items",
-                column: "ItemCategoryId");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_ServiceId",

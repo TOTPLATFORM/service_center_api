@@ -70,7 +70,6 @@ public class MappingProfiles : Profile
 
         //this.AddWareHouseManagerMapping();
 
-        this.AddTransactionMapping();
 
 
     }
