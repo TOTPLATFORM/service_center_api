@@ -9,17 +9,8 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class ContactRequestDto
+public class ContactRequestDto : BaseUserRequestDto
 {
-	[Required]
-	public string ContactFirstName { get; set; } = "";
-	[Required]
-	public string ContactLastName { get; set; } = "";
-	[Required]
-	[EmailAddress]
-	public string ContactEmail { get; set; } = "";
-	[Required]
-	public string Gender { get; set; } = "";
 	public Address Address { get; set; } = default;
     [Required]
     public ContactStatus Status { get; set; }

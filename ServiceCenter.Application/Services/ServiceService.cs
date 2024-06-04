@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
@@ -23,13 +24,13 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 	private readonly ILogger<ServiceService> _logger = logger;
 	private readonly IUserContextService _userContext = userContext;
 
-    ///<inheritdoc/>
-    public async Task<Result> AddServiceAsync(ServiceRequestDto ServiceRequestDto)
+	///<inheritdoc/>
+	public async Task<Result> AddServiceAsync(ServiceRequestDto ServiceRequestDto)
 	{
 		var result = _mapper.Map<Service>(ServiceRequestDto);
 		if (result is null)
 		{
-			_logger.LogError("Failed to map DepartmentRequestDto to Department. DepartmentRequestDto: {@DepartmentRequestDto}", ServiceRequestDto);
+			_logger.LogError("Failed to map ServiceRequestDto to Service. ServiceRequestDto: {@ServiceRequestDto}", ServiceRequestDto);
 
 			return Result.Invalid(new List<ValidationError>
 			{
@@ -41,14 +42,7 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		}
 		result.CreatedBy = _userContext.Email;
 
-        if (ServiceRequestDto.ServicePcakagesIds is not null)
-        {
-            var servicePackagesResult = await GetServicePackagesByIds(ServiceRequestDto.ServicePcakagesIds);
-
-			result.ServicePackages = servicePackagesResult.Value;
-        }
-
-        _dbContext.Services.Add(result);
+		_dbContext.Services.Add(result);
 
 		await _dbContext.SaveChangesAsync();
 
@@ -68,15 +62,11 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		return Result.Success(result);
 	}
 	///<inheritdoc/>
-	public async Task<Result<ServiceGetByIdResponseDto>> GetServiceByIdAsync(int id)
+	public async Task<Result<ServiceResponseDto>> GetServiceByIdAsync(int id)
 	{
 		var result = await _dbContext.Services
-			.ProjectTo<ServiceGetByIdResponseDto>(_mapper.ConfigurationProvider)
+			.ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
 			.FirstOrDefaultAsync(p => p.Id == id);
-
-		result.Schedules = await _dbContext.Schedules
-			                                .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
-			                                .ToListAsync();
 
 		if (result is null)
 		{
@@ -100,13 +90,7 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 			return Result.NotFound(["Service not found"]);
 		}
 
-        if (ServiceRequestDto.ServicePcakagesIds is not null)
-        {
-            var servicePackagesResult = await GetServicePackagesByIds(ServiceRequestDto.ServicePcakagesIds);
-            result.ServicePackages = servicePackagesResult.Value;
-        }
-
-        result.ModifiedBy = _userContext.Email;
+		result.ModifiedBy = _userContext.Email;
 
 		_mapper.Map(ServiceRequestDto, result);
 
@@ -157,17 +141,64 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		return Result.Success(names);
 	}
 
-    /// <summary>
-    /// function to get specific service packages by their service packages ids
-    /// </summary>
-    /// <param name="packagesIds">The ids of the service packages to retrieve</param>
-    /// <returns>Service response dto </returns>
-    public async Task<Result<List<ServicePackage>>> GetServicePackagesByIds(List<int> packagesIds)
-    {
-        var packages = await _dbContext.ServicePackages.Where(s => packagesIds.Contains(s.Id))
-            .ToListAsync();
+	/// <summary>
+	/// function to get specific service packages by their service packages ids
+	/// </summary>
+	/// <param name="packagesIds">The ids of the service packages to retrieve</param>
+	/// <returns>Service response dto </returns>
+	public async Task<Result<List<ServicePackage>>> GetServicePackagesByIds(List<int> packagesIds)
+	{
+		var packages = await _dbContext.ServicePackages.Where(s => packagesIds.Contains(s.Id))
+			.ToListAsync();
 
-        _logger.LogInformation("Fetching Service packages by their ids . Total count: {Service}.", packages.Count);
-        return Result.Success(packages);
-    }
+		_logger.LogInformation("Fetching Service packages by their ids . Total count: {Service}.", packages.Count);
+		return Result.Success(packages);
+	}
+
+	public async Task<Result<List<ServiceResponseDto>>> AssignServiceToPackagesAsync(int serviceId, int servicePackageId)
+	{
+		var service = await _dbContext.Services.FindAsync(serviceId);
+
+		if (service is null)
+		{
+			_logger.LogWarning("ServiceId Id not found,Id {id}", serviceId);
+
+			return Result.NotFound(["The Facility is not found"]);
+		}
+
+		var package = await _dbContext.ServicePackages.FindAsync(servicePackageId);
+
+		if (package is null)
+		{
+			_logger.LogWarning("Property Id not found,Id {id}", servicePackageId);
+
+			return Result.NotFound(["The Property is not found"]);
+		}
+
+		service.ServicePackages.Add(package);
+		await _dbContext.SaveChangesAsync();
+
+		_logger.LogInformation("Successfully assigned service to package");
+
+		return Result.SuccessWithMessage("Service added successfully to Package");
+
+	}
+
+	public async Task<Result<List<ServiceResponseDto>>> GetServicesByPackageAsync(int servicePackageId)
+	{
+		var pacakge = await _dbContext.ServicePackages.FindAsync(servicePackageId);
+
+		if (pacakge is null)
+		{
+			_logger.LogWarning("ServicePackageId Id not found,Id {id}", servicePackageId);
+			return Result.NotFound(["The package is not found"]);
+		}
+
+		var services = _mapper.Map<List<ServiceResponseDto>>(pacakge.Services);
+
+		_logger.LogInformation($"Successfully retrieved services  by their package id");
+		return Result.Success(services);
+
+	}
+
 }

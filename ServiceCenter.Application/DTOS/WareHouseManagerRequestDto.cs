@@ -7,21 +7,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class WareHouseManagerRequestDto
+public class WareHouseManagerRequestDto : BaseUserRequestDto
 {
-    [Required]
-    public string WareHouseManagerEmail { get; set; } = "";
-    [Required]
-    public string WareHouseManagerFirstName { get; set; } = "";
-    [Required]
-    public string WareHouseManagerLastName { get; set; } = "";
-    [Required]
-    public string WareHouseManagerPhoneNumber { get; set; } = "";
-    [Required]
-    public string UserName { get; set; } = "";
-    public string Password { get; set; } = "";
-    public DateOnly DateOfBirth { get; set; }
-    public string Gender { get; set; } = "";
+    
     [Required]
     public string PositionTitle { get; set; } = "";
     [Required]

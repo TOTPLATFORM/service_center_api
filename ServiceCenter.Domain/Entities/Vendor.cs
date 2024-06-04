@@ -6,15 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceCenter.Domain.Entities
-{
+namespace ServiceCenter.Domain.Entities;
+
 	public class Vendor : ApplicationUser
 	{
-		public string VendorType { get; set; } = "";
-        public string ContactPerson { get; set; } = "";
-        public DateOnly ContractStartDate { get; set; }
-        public DateOnly ContractEndDate { get; set; }
-        public virtual Center Center { get; set; }
-        public virtual ICollection<Transaction?> Transactions { get; set; } = new HashSet<Transaction>();
-    }
+    public DateOnly ContractStartDate { get; set; }
+    public DateOnly ContractEndDate { get; set; }
+    public virtual Center Center { get; set; }
+    public virtual ICollection<Transaction?> Transactions { get; set; } = new HashSet<Transaction>();
 }
