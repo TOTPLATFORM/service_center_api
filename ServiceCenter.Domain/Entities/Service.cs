@@ -20,7 +20,8 @@ public class Service : AuditableEntity
     public virtual ServiceCategory ServiceCategory { get; set; } = default;
     public virtual ICollection<ServicePackage> ServicePackages { get; set; } = new HashSet<ServicePackage>();
     public virtual ICollection<ServiceProvider> ServiceProviders { get; set; } = new HashSet<ServiceProvider>();
-    public virtual ICollection<Item> Item { get; set; }=new HashSet<Item>();
+
+    public virtual ICollection<Item?> Item { get; set; }=new HashSet<Item?>();
     public virtual ICollection<Feedback?> Feedbacks { get; set; } = new HashSet<Feedback?>();
 
 }

@@ -1,161 +1,161 @@
-﻿//using AutoMapper;
-//using AutoMapper.QueryableExtensions;
-//using Microsoft.AspNetCore.Http;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.EntityFrameworkCore;
-//using Microsoft.Extensions.Logging;
-//using ServiceCenter.Application.Contracts;
-//using ServiceCenter.Application.DTOS;
-//using ServiceCenter.Core.Result;
-//using ServiceCenter.Domain.Entities;
-//using ServiceCenter.Infrastructure.BaseContext;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using ServiceCenter.Application.Contracts;
+using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Result;
+using ServiceCenter.Domain.Entities;
+using ServiceCenter.Infrastructure.BaseContext;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace ServiceCenter.Application.Services;
+namespace ServiceCenter.Application.Services;
 
-//public class ServicePackageService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<ServicePackageService> logger, IUserContextService userContext) : IServicePackageService
-//{
-//    private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
-//    private readonly IMapper _mapper = mapper;
-//    private readonly ILogger<ServicePackageService> _logger = logger;
-//    private readonly IUserContextService _userContext = userContext;
+public class ServicePackageService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<ServicePackageService> logger, IUserContextService userContext) : IServicePackageService
+{
+    private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
+    private readonly IMapper _mapper = mapper;
+    private readonly ILogger<ServicePackageService> _logger = logger;
+    private readonly IUserContextService _userContext = userContext;
 
-//    ///<inheritdoc/>
-//    public async Task<Result> AddServicePackageAsync(ServicePackageRequestDto ServicePackageRequestDto)
-//    {
-//        var result = _mapper.Map<ServicePackage>(ServicePackageRequestDto);
-//        if (result is null)
-//        {
-//            _logger.LogError("Failed to map ServicePackageRequestDto to ServicePackage. ServicePackageRequestDto: {@ServicePackageRequestDto}", ServicePackageRequestDto);
-//            return Result.Invalid(new List<ValidationError>
-//{
-//    new ValidationError
-//    {
-//        ErrorMessage = "Validation Errror"
-//    }
-//});
-//        }
+    ///<inheritdoc/>
+    public async Task<Result> AddServicePackageAsync(ServicePackageRequestDto ServicePackageRequestDto)
+    {
+        var result = _mapper.Map<ServicePackage>(ServicePackageRequestDto);
+        if (result is null)
+        {
+            _logger.LogError("Failed to map ServicePackageRequestDto to ServicePackage. ServicePackageRequestDto: {@ServicePackageRequestDto}", ServicePackageRequestDto);
+            return Result.Invalid(new List<ValidationError>
+{
+    new ValidationError
+    {
+        ErrorMessage = "Validation Errror"
+    }
+});
+        }
 
-//        if (ServicePackageRequestDto.ServicesIds is not null)
-//        {
-//            var servicesResult = await GetServicesByIds(ServicePackageRequestDto.ServicesIds);
-//            result.Services = servicesResult.Value;
-//        }
+        if (ServicePackageRequestDto.ServicesIds is not null)
+        {
+            var servicesResult = await GetServicesByIds(ServicePackageRequestDto.ServicesIds);
+            result.Services = servicesResult.Value;
+        }
 
-//        result.CreatedBy = _userContext.Email;
+        result.CreatedBy = _userContext.Email;
 
-//        _dbContext.ServicePackages.Add(result);
+        _dbContext.ServicePackages.Add(result);
 
-//        await _dbContext.SaveChangesAsync();
-//        _logger.LogInformation("ServicePackage added successfully to the database");
-//        return Result.SuccessWithMessage("ServicePackage added successfully");
-//    }
-//    ///<inheritdoc/>
-//    public async Task<Result<List<ServicePackageResponseDto>>> GetAllServicePackageAsync()
-//    {
-//        var result = await _dbContext.ServicePackages
-//             .ProjectTo<ServicePackageResponseDto>(_mapper.ConfigurationProvider)
-//             .ToListAsync();
+        await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("ServicePackage added successfully to the database");
+        return Result.SuccessWithMessage("ServicePackage added successfully");
+    }
+    ///<inheritdoc/>
+    public async Task<Result<List<ServicePackageResponseDto>>> GetAllServicePackageAsync()
+    {
+        var result = await _dbContext.ServicePackages
+             .ProjectTo<ServicePackageResponseDto>(_mapper.ConfigurationProvider)
+             .ToListAsync();
 
-//        _logger.LogInformation("Fetching all  ServicePackage. Total count: { ServicePackage}.", result.Count);
+        _logger.LogInformation("Fetching all  ServicePackage. Total count: { ServicePackage}.", result.Count);
 
-//        return Result.Success(result);
-//    }
-//    ///<inheritdoc/>
-//    public async Task<Result> DeleteServicePackageAsync(int id)
-//    {
-//        var ServicePackage = await _dbContext.ServicePackages.FindAsync(id);
+        return Result.Success(result);
+    }
+    ///<inheritdoc/>
+    public async Task<Result> DeleteServicePackageAsync(int id)
+    {
+        var ServicePackage = await _dbContext.ServicePackages.FindAsync(id);
 
-//        if (ServicePackage is null)
-//        {
-//            _logger.LogWarning("ServicePackage Invaild Id ,Id {ServicePackageId}", id);
-//            return Result.NotFound(["ServicePackage Invaild Id"]);
-//        }
+        if (ServicePackage is null)
+        {
+            _logger.LogWarning("ServicePackage Invaild Id ,Id {ServicePackageId}", id);
+            return Result.NotFound(["ServicePackage Invaild Id"]);
+        }
 
-//        _dbContext.ServicePackages.Remove(ServicePackage);
-//        await _dbContext.SaveChangesAsync();
-//        _logger.LogInformation("ServicePackage removed successfully in the database");
-//        return Result.SuccessWithMessage("ServicePackage removed successfully");
-//    }
-//    ///<inheritdoc/>
-//    public async Task<Result<ServicePackageResponseDto>> UpdateServicePackageAsync(int id, ServicePackageRequestDto ServicePackageRequestDto)
-//    {
-//        var result = await _dbContext.ServicePackages.FindAsync(id);
+        _dbContext.ServicePackages.Remove(ServicePackage);
+        await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("ServicePackage removed successfully in the database");
+        return Result.SuccessWithMessage("ServicePackage removed successfully");
+    }
+    ///<inheritdoc/>
+    public async Task<Result<ServicePackageResponseDto>> UpdateServicePackageAsync(int id, ServicePackageRequestDto ServicePackageRequestDto)
+    {
+        var result = await _dbContext.ServicePackages.FindAsync(id);
 
-//        if (result is null)
-//        {
-//            _logger.LogWarning("ServicePackage Id not found,Id {ServicePackageId}", id);
-//            return Result.NotFound(["ServicePackage not found"]);
-//        }
+        if (result is null)
+        {
+            _logger.LogWarning("ServicePackage Id not found,Id {ServicePackageId}", id);
+            return Result.NotFound(["ServicePackage not found"]);
+        }
 
-//        result.ModifiedBy = _userContext.Email;
+        result.ModifiedBy = _userContext.Email;
 
-//        _mapper.Map(ServicePackageRequestDto, result);
+        _mapper.Map(ServicePackageRequestDto, result);
 
-//        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync();
 
-//        var ServicePackageResponse = _mapper.Map<ServicePackageResponseDto>(result);
-//        if (ServicePackageResponse is null)
-//        {
-//            _logger.LogError("Failed to map ServicePackageRequestDto to ServicePackageResponseDto. ServicePackageRequestDto: {@ServicePackageRequestDto}", ServicePackageResponse);
+        var ServicePackageResponse = _mapper.Map<ServicePackageResponseDto>(result);
+        if (ServicePackageResponse is null)
+        {
+            _logger.LogError("Failed to map ServicePackageRequestDto to ServicePackageResponseDto. ServicePackageRequestDto: {@ServicePackageRequestDto}", ServicePackageResponse);
 
-//            return Result.Invalid(new List<ValidationError>
-//        {
-//                new ValidationError
-//                {
-//                    ErrorMessage = "Validation Errror"
-//                }
-//        });
-//        }
+            return Result.Invalid(new List<ValidationError>
+        {
+                new ValidationError
+                {
+                    ErrorMessage = "Validation Errror"
+                }
+        });
+        }
 
-//        _logger.LogInformation("Updated ServicePackage , Id {Id}", id);
+        _logger.LogInformation("Updated ServicePackage , Id {Id}", id);
 
-//        return Result.Success(ServicePackageResponse);
-//    }
-//    ///<inheritdoc/>
-//    public async Task<Result<ServicePackageResponseDto>> GetServicePackageByIdAsync(int id)
-//    {
-//        var result = await _dbContext.ServicePackages
-//            .ProjectTo<ServicePackageResponseDto>(_mapper.ConfigurationProvider)
-//            .FirstOrDefaultAsync(p => p.Id == id);
+        return Result.Success(ServicePackageResponse);
+    }
+    ///<inheritdoc/>
+    public async Task<Result<ServicePackageResponseDto>> GetServicePackageByIdAsync(int id)
+    {
+        var result = await _dbContext.ServicePackages
+            .ProjectTo<ServicePackageResponseDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(p => p.Id == id);
 
-//        if (result is null)
-//        {
-//            _logger.LogWarning("ServicePackage Id not found,Id {ServicePackageId}", id);
+        if (result is null)
+        {
+            _logger.LogWarning("ServicePackage Id not found,Id {ServicePackageId}", id);
 
-//            return Result.NotFound(["ServicePackage not found"]);
-//        }
+            return Result.NotFound(["ServicePackage not found"]);
+        }
 
-//        _logger.LogInformation("Fetching ServicePackage");
+        _logger.LogInformation("Fetching ServicePackage");
 
-//        return Result.Success(result);
-//    }
-//    ///<inheritdoc/>
-//    public async Task<Result<List<ServicePackageResponseDto>>> SearchServicePackageByTextAsync(string text)
-//    {
-//        var names = await _dbContext.ServicePackages
-//        .ProjectTo<ServicePackageResponseDto>(_mapper.ConfigurationProvider)
-//        .Where(n => n.PackageName.Contains(text))
-//        .ToListAsync();
-//        _logger.LogInformation("Fetching search ServicePackage by name . Total count: {Prouct}.", names.Count);
-//        return Result.Success(names);
-//    }
+        return Result.Success(result);
+    }
+    ///<inheritdoc/>
+    public async Task<Result<List<ServicePackageResponseDto>>> SearchServicePackageByTextAsync(string text)
+    {
+        var names = await _dbContext.ServicePackages
+        .ProjectTo<ServicePackageResponseDto>(_mapper.ConfigurationProvider)
+        .Where(n => n.PackageName.Contains(text))
+        .ToListAsync();
+        _logger.LogInformation("Fetching search ServicePackage by name . Total count: {Prouct}.", names.Count);
+        return Result.Success(names);
+    }
 
-//    /// <summary>
-//    /// function to get specific services by their services ids
-//    /// </summary>
-//    /// <param name="servicesIds">The ids of the services to retrieve</param>
-//    /// <returns>Service response dto </returns>
-//    public async Task<Result<List<Service>>> GetServicesByIds(List<int> servicesIds)
-//    {
-//        var services = await _dbContext.Services.Where(s => servicesIds.Contains(s.Id))
-//            .ToListAsync();
+    /// <summary>
+    /// function to get specific services by their services ids
+    /// </summary>
+    /// <param name="servicesIds">The ids of the services to retrieve</param>
+    /// <returns>Service response dto </returns>
+    public async Task<Result<List<Service>>> GetServicesByIds(List<int> servicesIds)
+    {
+        var services = await _dbContext.Services.Where(s => servicesIds.Contains(s.Id))
+            .ToListAsync();
 
-//        _logger.LogInformation("Fetching Services by their ids . Total count: {Service}.", services.Count);
-//        return Result.Success(services);
-//    }
-//}
+        _logger.LogInformation("Fetching Services by their ids . Total count: {Service}.", services.Count);
+        return Result.Success(services);
+    }
+}

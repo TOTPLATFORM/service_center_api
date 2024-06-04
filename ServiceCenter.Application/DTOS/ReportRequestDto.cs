@@ -15,8 +15,7 @@ public class ReportRequestDto
     public string Task { get; set; } = "";
     [Required]
     public string Priority { get; set; } = "";
-    [Required]
-    public Status Status { get; set; }
+    public ReportStatus Status { get; set; } = ReportStatus.Pending;
     [Required]
     public DateTime DueDate { get; set; }
     [Required]

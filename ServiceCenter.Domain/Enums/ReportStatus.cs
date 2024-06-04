@@ -11,6 +11,6 @@ namespace ServiceCenter.Domain.Enums;
 public enum ReportStatus
 {
   Good,
-  Bad
-
+  Bad,
+  Pending  
 }

@@ -21,5 +21,7 @@ public class ContactRequestDto
 	[Required]
 	public string Gender { get; set; } = "";
 	public Address Address { get; set; } = default;
+    [Required]
+    public ContactStatus Status { get; set; }
 
 }

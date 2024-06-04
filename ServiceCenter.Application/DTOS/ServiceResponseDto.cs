@@ -1,4 +1,5 @@
-﻿using ServiceCenter.Domain.Enums;
+﻿using ServiceCenter.Domain.Entities;
+using ServiceCenter.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,14 @@ public class ServiceResponseDto
     public string ServiceDescription { get; set; } = "";
     public int ServicePrice { get; set; }
     public Status Avaliable { get; set; }
-    public string ServiceCategoryName { get; set; } = "";
+   
 	public ICollection<ServicePackageResponseDto> ServicePackages { get; set; } = new HashSet<ServicePackageResponseDto>();
-	public string EmployeeName { get; set; } = "";
-    public string? EmployeeId { get; set; }
-    public int ServiceCategoryId { get; set; }
+    public  CenterResponseDto Center { get; set; } = default;
+    public  ServiceCategoryResponseDto ServiceCategory { get; set; } = default;
+
+    public  ICollection<ServiceProviderResponseDto> ServiceProviders { get; set; } = new HashSet<ServiceProviderResponseDto>();
+
+    public  ICollection<ItemResponseDto> Item { get; set; } = new HashSet<ItemResponseDto>();
+    public  ICollection<FeedbackResponseDto?> Feedbacks { get; set; } = new HashSet<FeedbackResponseDto?>();
 
 }

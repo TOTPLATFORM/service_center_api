@@ -12,7 +12,6 @@ public static class CenterMapping
 			.ReverseMap();
 
 		map.CreateMap<Center, CenterResponseDto>()
-			//.ForMember(dest=>dest.ca,src=>src.MapFrom(src=>src.))
 			.ReverseMap();
 	}
 }

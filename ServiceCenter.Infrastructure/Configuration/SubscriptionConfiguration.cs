@@ -17,9 +17,5 @@ public class SubscriptionConfiguration : IEntityTypeConfiguration<Subscription>
         builder.Property(p => p.Duration)
                .IsRequired();
 
-        //builder.Property(p => p.ServicePackage)
-        //        .IsRequired();
-
-
-    }
+           }
 }

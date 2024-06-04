@@ -14,6 +14,5 @@ public class OrderRequestDto
     public string From { get; set; } = "";
     [Required]
     public Status OrderStatus { get; set; }
-    [Required]
-    public ICollection<ItemOrderRequestDto> ItemOrders { get; set; }
+   
 }

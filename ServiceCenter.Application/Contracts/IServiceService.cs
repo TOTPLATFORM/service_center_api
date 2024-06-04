@@ -22,25 +22,12 @@ public interface IServiceService : IApplicationService, IScopedService
     /// </summary>
     /// <returns>list all Service  response dto </returns>
     public Task<Result<List<ServiceResponseDto>>> GetAllServiceAsync();
-
-	/// <summary>
-	/// function to get all Service that assign to package  
-	/// </summary>
-	/// <returns>list all Service  response dto </returns>
-	public Task<Result<List<ServiceResponseDto>>> AssignServiceToPackagesAsync(int serviceId,int servicePackageId);
-
-	/// <summary>
-	/// function to get all Service that assign to package  
-	/// </summary>
-	/// <returns>list all Service  response dto </returns>
-	public Task<Result<List<ServiceResponseDto>>> GetServicesByPackageAsync(int servicePackageId);
-
-	/// <summary>
-	/// function to get  Service  by id that take   Service id
-	/// </summary>
-	/// <param name="id"> Service  id</param>
-	/// <returns> Service  response dto</returns>
-	public Task<Result<ServiceGetByIdResponseDto>> GetServiceByIdAsync(int id);
+    /// <summary>
+    /// function to get  Service  by id that take   Service id
+    /// </summary>
+    /// <param name="id"> Service  id</param>
+    /// <returns> Service  response dto</returns>
+    public Task<Result<ServiceGetByIdResponseDto>> GetServiceByIdAsync(int id);
     /// <summary>
     /// function to update Service  that take ServiceRequestDto   
     /// </summary>

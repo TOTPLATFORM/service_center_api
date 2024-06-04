@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceCenter.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,7 +16,12 @@ public class ProductBrandRequestDto
     [Required]
     public string BrandDescription { get; set; } = "";
     [Required]
-    public string CountryOfOrigin { get; set; } = "";
+    public Country CountryOfOrigin { get; set; } 
     [Required]
     public DateOnly FoundedYear { get; set; }
+
+    public ICollection<int> ProductcategoriesId { get; set; }
+    [Required]
+    public ICollection< int> InventoriesId { get; set; }
+
 }

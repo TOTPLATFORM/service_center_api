@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceCenter.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,6 @@ public class ItemCategoryResponseDto
 {
     public int Id { get; set; }
     public string CategoryName { get; set; } = "";
-    public int ReferenceNumber { get; set; }
-    public string InventoryName { get; set; } = "";
+    public virtual ICollection<ItemResponseDto> Items { get; set; } = new HashSet<ItemResponseDto>();
+    public virtual ICollection<InventoryResponseDto> Inventories { get; set; } = new HashSet<InventoryResponseDto>();
 }

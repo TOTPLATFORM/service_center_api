@@ -12,7 +12,7 @@ public class Feedback : AuditableEntity
 {
     public DateOnly FeedbackDate { get; set; }
     public string FeedbackDescription { get; set; } = "";
-    public FeedbackType FeedbackCategory { get; set; } 
+    public Category FeedbackCategory { get; set; } 
 
     public virtual Contact Contact { get; set; } = default;
     public virtual Service? Service { get; set; } = default;

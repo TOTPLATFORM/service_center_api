@@ -13,9 +13,9 @@ namespace ServiceCenter.Application.DTOS
         public string InventoryName { get; set; } = "";
         public string InventoryLocation { get; set; } = "";
         public int InventoryCapacity { get; set; }
-        //public string CategoryName { get; set; } = "";
-        //public int ReferenceNumber { get; set; }
-        public ICollection<ItemCategory> ItemCategories { get; set; } =  new HashSet<ItemCategory>();
+        public virtual ICollection<TransactionResponseDto?> Transactions { get; set; } = new HashSet<TransactionResponseDto?>();
+        public virtual ICollection<ProductBrandResponseDto?> ProductBrands { get; set; } = new HashSet<ProductBrandResponseDto?>();
+        public virtual ICollection<ItemCategoryResponseDto?> ItemCategories { get; set; } = new HashSet<ItemCategoryResponseDto?>();
 
     }
 }

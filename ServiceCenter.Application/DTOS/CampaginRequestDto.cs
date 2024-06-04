@@ -15,5 +15,5 @@ public class CampaginRequestDto
 	public DateOnly EndDate { get; set; }
 	public int Budget { get; set; }
 	public string Goals { get; set; } = "";
-	public CampaginStatus Status { get; set; } = CampaginStatus.Active;
+	public CampaginStatus Status { get; set; } = CampaginStatus.Planned;
 }

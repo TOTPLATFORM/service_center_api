@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ServiceCenter.Domain.Enums;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
-public enum FeedbackType
+public enum Category
 {
    Service,
    Product

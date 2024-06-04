@@ -24,5 +24,4 @@ public class OrderResponseDto
 		}
 	}
 	public DateTime OrderArrivalDate { get; set; }
-	public ICollection<ItemOrderResponseDto> ItemOrders { get; set; }
 }

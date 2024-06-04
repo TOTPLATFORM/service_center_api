@@ -10,15 +10,15 @@ public class MappingProfiles : Profile
     {
 
 
-        //this.AddProductBrandMapping();
+        this.AddProductBrandMapping();
 
-        //this.AddInventoryMapping();
+        this.AddInventoryMapping();
 
-        //this.AddItemMapping();
+        this.AddItemMapping();
 
-        //this.AddOrderMapping();
+        this.AddOrderMapping();
 
-        //this.AddItemCategoryMapping();
+        this.AddItemCategoryMapping();
 
         this.AddServiceCategoryMapping();
 
@@ -28,53 +28,51 @@ public class MappingProfiles : Profile
 
         //this.AddProductMapping();
 
-        //this.AddItemMapping();
+        this.AddItemMapping();
 
-        //this.AddOrderMapping();
+        this.AddOrderMapping();
 
-        //this.AddEmployeeMapping();
+        this.AddEmployeeMapping();
 
-        //this.AddItemCategoryMapping();
+        this.AddItemCategoryMapping();
 
         //this.AddBranchMapping();
 
-        //this.AddDepartmentMapping();
+        this.AddDepartmentMapping();
 
-        //this.AddFeedbackMapping();
+        this.AddFeedbackMapping();
 
-        //this.AddCompliantMapping();
+        this.AddCompliantMapping();
 
-        //this.AddServicePackageMapping();
+        this.AddServicePackageMapping();
 
-        //this.AddScheduleMapping();
+        this.AddScheduleMapping();
 
         this.AddServiceMapping();
 
-        //this.AddSubscriptionMapping();
+        this.AddSubscriptionMapping();
 
-        //this.AddOfferMapping();
+        this.AddOfferMapping();
 
-        //this.AddAppointmentMapping(); 
+        this.AddAppointmentMapping();
 
-        //this.AddContactMapping();
+        this.AddContactMapping();
 
 
 
-        //this.AddCampaginMapping();
-
-        //this.AddSalesMapping();
-
-        //this.AddReportMapping();
+        this.AddReportMapping();
 
         this.AddAuthMapping();
 
-        //this.AddRatingServiceMapping();
+        this.AddRatingServiceMapping();
 
-        //this.AddVendorMapping();
+        this.AddVendorMapping();
 
-        //this.AddWareHouseManagerMapping();
+        this.AddWareHouseManagerMapping();
 
-     
-	}
+        this.AddTransactionMapping();
+
+
+    }
 
 }
