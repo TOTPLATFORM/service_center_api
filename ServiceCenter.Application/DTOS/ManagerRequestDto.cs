@@ -8,21 +8,8 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class ManagerRequestDto
-{
-    [Required]
-    public string ManagerEmail { get; set; } = "";
-    [Required]
-    public string ManagerFirstName { get; set; } = "";
-    [Required]
-    public string ManagerLastName { get; set; } = "";
-    [Required]
-    public string ManagerPhoneNumber { get; set; } = "";
-    [Required]
-    public string UserName { get; set; } = "";
-    public string Password { get; set; } = "";
-    public DateOnly DateOfBirth { get; set; }
-    public string Gender { get; set; } = "";
+public class ManagerRequestDto : BaseUserRequestDto
+{ 
     public string Responsibilities { get; set; } = "";
     [Required]
     public DateOnly HiringDate { get; set; }
