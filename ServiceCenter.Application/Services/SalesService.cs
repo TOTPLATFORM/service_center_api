@@ -26,9 +26,10 @@ public class SalesService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
     ///<inheritdoc/>
     public async Task<Result> AddSalesAsync(SalesRequestDto salesRequestDto)
     {
+        string role = "Sales";
         var sales = _mapper.Map<Sales>(salesRequestDto);
 
-        var salesAdded = await _authService.RegisterSalesAsync(salesRequestDto);
+        var salesAdded = await _authService.RegisterUserWithRoleAsync(sales,salesRequestDto.Password,role);
 
         if (!salesAdded.IsSuccess)
         {

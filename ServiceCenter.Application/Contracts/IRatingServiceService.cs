@@ -17,25 +17,25 @@ public interface IRatingServiceService:IApplicationService,IScopedService
     /// </summary>
     /// <param name="ratingServiceRequestDto">the rating service data transfer object containing the details necessary for creation.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the rating service addition.</returns>
-    public Task<Result> AddRatingServiceAsync(RatingServiceRequestDto ratingServiceRequestDto);
+    public Task<Result> AddRatingServiceAsync(RatingRequestDto ratingServiceRequestDto);
     /// <summary>
     /// asynchronously retrieves all rating service in the system.
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of rating service response DTOs.</returns>
-    public Task<Result<List<RatingServiceResponseDto>>> GetAllRatingServicesAsync();
+    public Task<Result<List<RatingResponseDto>>> GetAllRatingServicesAsync();
     /// <summary>
     /// asynchronously retrieves a rating service by their unique identifier.
     /// </summary>
     /// <param name="id">the unique identifier of the rating service to retrieve.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the rating service response DTO.</returns>
-    public Task<Result<RatingServiceGetByIdResponseDto>> GetRatingServiceByIdAsync(int id);
+    public Task<Result<RatingResponseDto>> GetRatingServiceByIdAsync(int id);
     /// <summary>
     /// asynchronously updates the data of an existing rating service.
     /// </summary>
     /// <param name="id">the unique identifier of the rating service to update.</param>
     /// <param name="ratingRequestDto">the rating service data transfer object containing the updated details.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
-    public Task<Result<RatingServiceResponseDto>> UpdateRatingServiceAsync(int id, RatingServiceRequestDto ratingServiceRequestDto);
+    public Task<Result<RatingResponseDto>> UpdateRatingServiceAsync(int id, RatingRequestDto ratingServiceRequestDto);
     /// <summary>
     /// asynchronously deletes a rating service from the system by their unique identifier.
     /// </summary>
@@ -48,7 +48,7 @@ public interface IRatingServiceService:IApplicationService,IScopedService
     /// </summary>
     /// <param name="text">the text to search within rating service data.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of rating service response DTOs that match the search criteria.</returns>
-    public Task<Result<List<RatingServiceResponseDto>>> SearchRatingServiceByRatingValueAsync(int ratingValue);
+    public Task<Result<List<RatingResponseDto>>> SearchRatingServiceByRatingValueAsync(int ratingValue);
 
     /// <summary>
     /// asynchronously get all a rating service by agent from the system by their unique identifier.
@@ -56,7 +56,7 @@ public interface IRatingServiceService:IApplicationService,IScopedService
     /// <param name="id">the unique identifier of the service to get all.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all rating service by service operation.</returns>
 
-    public Task<Result<List<RatingServiceResponseDto>>> GetRatingServicesByServiceAsync(int serviceId);
+    public Task<Result<List<RatingResponseDto>>> GetRatingServicesByServiceAsync(int serviceId);
 
     /// <summary>
     /// asynchronously get all a rating service by customer from the system by their unique identifier.
@@ -64,5 +64,5 @@ public interface IRatingServiceService:IApplicationService,IScopedService
     /// <param name="id">the unique identifier of the customer to get all.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all rating service by customer operation.</returns>
 
-    public Task<Result<List<RatingServiceResponseDto>>> GetsRatingServicesByCustomerAsync(string customerId);
+    public Task<Result<List<RatingResponseDto>>> GetsRatingServicesByCustomerAsync(string customerId);
 }

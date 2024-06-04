@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Domain.Entities;
+using ServiceCenter.Domain.Enums;
 using ServiceCenter.Infrastructure.BaseContext;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ public static class ProductBrandTest
             BrandName = "Brand1",
             BrandDescription = "Brand is good",
             FoundedYear = DateOnly.Parse("2000/12/30"),
-            CountryOfOrigin ="Egypt"
+            CountryOfOrigin =Country.Canada
         },
         new ProductBrand
         {
@@ -27,7 +28,7 @@ public static class ProductBrandTest
             BrandName = "Brand2",
             BrandDescription = "Brand is good",
             FoundedYear = DateOnly.Parse("2000/12/30"),
-            CountryOfOrigin = "Egypt"
+            CountryOfOrigin = Country.France
         }
         );
     }

@@ -16,41 +16,33 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Services;
 
-public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<ContactService> logger, IUserContextService userContext) : IContactService
+public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<ContactService> logger,IAuthService authService, IUserContextService userContext) : IContactService
 {
 	private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
 	private readonly IMapper _mapper = mapper;
 	private readonly ILogger<ContactService> _logger = logger;
-	private readonly IUserContextService _userContext = userContext;
+    private readonly IAuthService _authService = authService;
+    private readonly IUserContextService _userContext = userContext;
 
 
 	///<inheritdoc/>
 	public async Task<Result> AddContactAsync(ContactRequestDto contactRequestDto)
 	{
-		var result = _mapper.Map<Contact>(contactRequestDto);
+		
+        var role = "Contact";
+        var contact = _mapper.Map<Contact>(contactRequestDto);
 
-		if (result is null)
-		{
-			_logger.LogError("Failed to map ContactRequestDto to Contact. ContactRequestDto: {@ContactRequestDto}", contactRequestDto);
+       var contactAdded = await _authService.RegisterUserWithRoleAsync(contact, contactRequestDto.Password, role);
 
-			return Result.Invalid(new List<ValidationError>
-			{
-				new ValidationError
-				{
-					ErrorMessage = "Validation Errror"
-				}
-			});
-		}
-		result.CreatedBy = _userContext.Email;
+        if (!contactAdded.IsSuccess)
+        {
+            return Result.Error(contactAdded.Errors.FirstOrDefault());
+        }
 
-		_dbContext.Contacts.Add(result);
+        _logger.LogInformation("Contact added successfully in the database");
 
-		await _dbContext.SaveChangesAsync();
-
-		_logger.LogInformation("Contact added successfully to the database");
-
-		return Result.SuccessWithMessage("Contact added successfully");
-	}
+        return Result.SuccessWithMessage("Contact added successfully");
+    }
 
 	///<inheritdoc/>
 	public async Task<Result<List<ContactResponseDto>>> GetAllContactsAsync()
@@ -84,7 +76,7 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
 		var previousContactStatus = contact.Status;
 		contact.Status = status;
-		contact.ModifiedBy = _userContext.Email;
+		//contact.ModifiedBy = _userContext.Email;
 		await _dbContext.SaveChangesAsync();
 		var contactResponseDto = _mapper.Map<ContactResponseDto>(contact);
 

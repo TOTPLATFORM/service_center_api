@@ -26,6 +26,7 @@ public class WareHousManagerService(ServiceCenterBaseDbContext dbContext, IMappe
 	///<inheritdoc/>
 	public async Task<Result> AddWareHouseManagerServiceAsync(WareHouseManagerRequestDto wareHouseManagerRequestDto)
     {
+        string role = "WareHouseManager";
         var wareHouseManager = _mapper.Map<WareHouseManager>(wareHouseManagerRequestDto);
         var inventory = _dbContext.Inventories.FirstOrDefault(C => C.Id == wareHouseManagerRequestDto.InventoryId);
 
@@ -37,8 +38,8 @@ public class WareHousManagerService(ServiceCenterBaseDbContext dbContext, IMappe
         {
 			wareHouseManager.Inventory = inventory;
 		}
-
-        var warehouseMangerAdded = await _authService.RegisterWarehouseManagerAsync(wareHouseManagerRequestDto);
+     
+        var warehouseMangerAdded = await _authService.RegisterUserWithRoleAsync(wareHouseManager, wareHouseManagerRequestDto.Password, role);
         await _dbContext.SaveChangesAsync();
 
 		if (!warehouseMangerAdded.IsSuccess)

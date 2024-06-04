@@ -23,28 +23,28 @@ public class ContextGenerator
             Context = new ServiceCenterBaseDbContext(options);
             Context.Database.EnsureDeleted();
             Context.Database.EnsureCreated();
-            Context.AddItem();
-            Context.AddItemCategory();
-            Context.AddInventory();
-            Context.AddDepartment();
+            //Context.AddItem();
+            //Context.AddItemCategory();
+            //Context.AddInventory();
+            //Context.AddDepartment();
          
-            Context.AddFeedback();
-            Context.AddComplaint();
-            Context.AddCenter();
-            Context.AddBranch();
-            Context.AddContact();
-            Context.AddSubscription();
-            Context.AddEmployee();
-            Context.AddOffer();
-            Context.AddSchedule();
+            //Context.AddFeedback();
+            //Context.AddComplaint();
+            //Context.AddCenter();
+            //Context.AddBranch();
+            //Context.AddContact();
+            //Context.AddSubscription();
+            //Context.AddEmployee();
+            //Context.AddOffer();
+            //Context.AddSchedule();
      
-            Context.AddAppointment();
-            Context.AddProductBrand();
-            Context.AddRatingService();
-            Context.AddCampagin();
-            Context.AddOverview();
-            Context.AddProductCategory();
-            Context.AddServiceCategory();
+            //Context.AddAppointment();
+            //Context.AddProductBrand();
+            //Context.AddRatingService();
+            //Context.AddCampagin();
+            //Context.AddOverview();
+            //Context.AddProductCategory();
+            //Context.AddServiceCategory();
             Context.SaveChanges();
         }
 

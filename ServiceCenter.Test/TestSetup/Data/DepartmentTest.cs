@@ -17,13 +17,13 @@ public static class DepartmentTest
             {
                 Id = 3,
                 DepartmentName = "A",
-                CenterId = 1,
+               
             },
             new Department
             {
                 Id = 5,
                 DepartmentName = "B",
-                CenterId= 2,
+               
             });
     }
 }

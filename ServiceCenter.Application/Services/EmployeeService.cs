@@ -27,6 +27,7 @@ public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 	///<inheritdoc/>
 	public async Task<Result> AddEmployeeAsync(EmployeeRequestDto employeeRequestDto)
 	{
+		var role = "Employee";
 		var employee = _mapper.Map<Employee>(employeeRequestDto);
 
 		var department = await _dbContext.Departments.FindAsync(employeeRequestDto.DepartmentId);
@@ -39,7 +40,7 @@ public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 		}
 		employee.Department = department;
 
-		var employeeAdded = await _authService.RegisterEmployeeAsync(employeeRequestDto);
+		var employeeAdded = await _authService.RegisterUserWithRoleAsync(employee, employeeRequestDto.Password, role);
 
 		if (!employeeAdded.IsSuccess)
 		{

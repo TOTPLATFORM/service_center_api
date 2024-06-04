@@ -17,13 +17,13 @@ public static class ProductCategoryTest
         {
             Id = 1,
             CategoryName = "Category1",
-           ReferenceNumber = 1
+         
         },
         new ProductCategory
         {
             Id = 2,
             CategoryName = "Category2",
-            ReferenceNumber = 2
+          
         }
         );
     }

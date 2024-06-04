@@ -8,7 +8,6 @@ using ServiceCenter.API.Middleware;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
 using Serilog;
-using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.Services;
 
 namespace ServiceCenter.API;
@@ -62,8 +61,6 @@ public class Program
 
 
 		builder.Services.AddCenterServices(builder.Configuration);
-
-		builder.Services.AddScoped(typeof(ITimeSlotService), typeof(TimeSlotService));
 
 		builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 				   .AddEntityFrameworkStores<ServiceCenterBaseDbContext>();

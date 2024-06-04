@@ -139,7 +139,7 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 
 		var Days = await _dbContext.Branches
 					   .ProjectTo<BranchResponseDto>(_mapper.ConfigurationProvider)
-					   .Where(n => n.BranchName.Contains(text)||n.City.Contains(text)||n.Country.Contains(text)||n.PostalCode.Contains(text)||n.EmailAddress.Contains(text))
+					   .Where(n => n.BranchName.Contains(text)||n.PostalCode.Contains(text)||n.EmailAddress.Contains(text))
 					   .ToListAsync();
 
 		_logger.LogInformation("Fetching search branch by name . Total count: {branch}.", Days.Count);

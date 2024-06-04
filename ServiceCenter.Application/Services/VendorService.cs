@@ -26,9 +26,10 @@ public class VendorService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
     ///<inheritdoc/>
     public async Task<Result> AddVendorAsync(VendorRequestDto vendorRequestDto)
     {
+        string role = "Vendor";
         var vendor = _mapper.Map<Vendor>(vendorRequestDto);
-
-        var vendorAdded = await _authService.RegisterVendorAsync(vendorRequestDto);
+       
+       var vendorAdded = await _authService.RegisterUserWithRoleAsync(vendor, vendorRequestDto.Password, role);
 
         if (!vendorAdded.IsSuccess)
         {
