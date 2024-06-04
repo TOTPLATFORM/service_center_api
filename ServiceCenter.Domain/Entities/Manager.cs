@@ -11,5 +11,4 @@ public class Manager:Employee
 
     public virtual ICollection<Report?> Reports { get; set; } = new HashSet<Report>();
     public virtual ICollection<Campagin?> Campagins { get; set; } = new HashSet<Campagin>();
-   // public virtual ICollection<Contact?> Contact { get; set; } = new HashSet<Contact>();
 }

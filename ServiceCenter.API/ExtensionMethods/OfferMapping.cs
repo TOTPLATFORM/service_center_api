@@ -8,10 +8,10 @@ public static class OfferMapping
 {
     public static void AddOfferMapping(this MappingProfiles map)
     {
-        map.CreateMap<OfferRequestDto, Offer>()
-            .ForMember(dest => dest.Product.Id, src => src.MapFrom(src => src.ProductId))
-             .ForMember(dest => dest.Service.Id, src => src.MapFrom(src => src.ServiceId))
-            .ReverseMap();
+        //map.CreateMap<OfferRequestDto, Offer>()
+        //    .ForMember(dest => dest.Product.Id, src => src.MapFrom(src => src.ProductId))
+        //     .ForMember(dest => dest.Service.Id, src => src.MapFrom(src => src.ServiceId))
+        //    .ReverseMap();
         map.CreateMap<Offer, OfferResponseDto>()
            .ReverseMap();
 

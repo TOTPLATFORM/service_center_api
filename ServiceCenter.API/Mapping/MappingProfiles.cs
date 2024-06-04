@@ -32,11 +32,11 @@ public class MappingProfiles : Profile
 
         this.AddOrderMapping();
 
-       // this.AddEmployeeMapping();
+       this.AddEmployeeMapping();
 
         this.AddItemCategoryMapping();
 
-        //this.AddBranchMapping();
+        this.AddBranchMapping();
 
         this.AddDepartmentMapping();
 
@@ -70,6 +70,7 @@ public class MappingProfiles : Profile
 
         //this.AddWareHouseManagerMapping();
 
+        this.AddManagerMapping();
 
 
     }

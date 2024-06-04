@@ -11,5 +11,5 @@ public class DepartmentResponseDto
 {
     public int Id { get; set; }
     public string DepartmentName { get; set; } = "";
-    public virtual ICollection<EmployeeResponseDto?> Employees { get; set; }
+    public  ICollection<EmployeeResponseDto> Employees { get; set; } =  new HashSet<EmployeeResponseDto>();
 }

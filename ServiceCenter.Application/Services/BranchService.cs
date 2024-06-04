@@ -26,6 +26,7 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 	///<inheritdoc/>
 	public async Task<Result> AddBranchAsync(BranchRequestDto branchRequestDto)
 	{
+		var manager = await _dbContext.Manager.FirstOrDefaultAsync(e => e.Id == branchRequestDto.ManagerId);
 		var result = _mapper.Map<Branch>(branchRequestDto);
 
 		if (result is null)
@@ -41,7 +42,7 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 			});
 		}
 		result.CreatedBy = _userContext.Email;
-
+		result.Manager = manager;
 		_dbContext.Branches.Add(result);
 
 		await _dbContext.SaveChangesAsync();
