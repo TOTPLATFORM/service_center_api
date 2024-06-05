@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -52,20 +54,20 @@ public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 		return Result.SuccessWithMessage("Employee added successfully");
 	}
 
-	public async Task<Result<List<EmployeeResponseDto>>> GetAllEmployeesAsync()
+	public async Task<Result<PaginationResult<EmployeeResponseDto>>> GetAllEmployeesAsync(int itemCount, int index)
 	{
 		var employees = await _dbContext.Users.OfType<Employee>()
 				  .ProjectTo<EmployeeResponseDto>(_mapper.ConfigurationProvider)
-				  .ToListAsync();
-		_logger.LogInformation("Fetching all employee. Total count: {employee}.", employees.Count);
+				  .GetAllWithPagination(itemCount,index);
+		_logger.LogInformation("Fetching all employee. Total count: {employee}.", employees.Data.Count);
 		return Result.Success(employees);
 	}
 
 	///<inheritdoc/>
-	public async Task<Result<EmployeeResponseDto>> GetEmployeeByIdAsync(string Id)
+	public async Task<Result<EmployeeGetByIdResponseDto>> GetEmployeeByIdAsync(string Id)
 	{
 		var employee = await _dbContext.Employees
-			.ProjectTo<EmployeeResponseDto>(_mapper.ConfigurationProvider)
+			.ProjectTo<EmployeeGetByIdResponseDto>(_mapper.ConfigurationProvider)
 			.FirstOrDefaultAsync(d => d.Id == Id);
 
 		if (employee is null)
@@ -117,30 +119,15 @@ public class EmployeeService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 
 	///<inheritdoc/>
 
-	public async Task<Result<List<EmployeeResponseDto>>> SearchEmployeeByTextAsync(string text)
+	public async Task<Result<PaginationResult<EmployeeResponseDto>>> SearchEmployeeByTextAsync(string text, int itemCount, int index)
 	{
-
-		//if (string.IsNullOrWhiteSpace(text))
-		//{
-		//	_logger.LogError("Search text cannot be empty", text);
-
-		//	return new Result.Invalid(new List<ValidationError>
-		//	{
-		//		new ValidationError
-		//		{
-		//			ErrorMessage = "Validation Errror : Search text cannot be empty"
-		//		}
-		//	});
-		//}
 
 		var employee = await _dbContext.Employees
 					   .ProjectTo<EmployeeResponseDto>(_mapper.ConfigurationProvider)
 					   .Where(n => n.EmployeeFirstName.Contains(text) )
-					   .ToListAsync();
+					   .GetAllWithPagination(itemCount,index);
 
-		_logger.LogInformation("Fetching search branch by name . Total count: {branch}.", employee.Count);
-
-		return Result.Success(employee);
+		_logger.LogInformation("Fetching search branch by name . Total count: {branch}.", employee.Data.Count);
 
 		return Result.Success(employee);
 	}
