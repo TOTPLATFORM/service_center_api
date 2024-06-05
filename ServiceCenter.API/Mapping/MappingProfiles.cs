@@ -24,9 +24,9 @@ public class MappingProfiles : Profile
 
         this.AddCenterMapping();
 
-        //this.AddProductCategoryMapping();
+        this.AddProductCategoryMapping();
 
-        //this.AddProductMapping();
+        this.AddProductMapping();
 
         this.AddItemMapping();
 

@@ -26,6 +26,22 @@ public class CenterService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 	///<inheritdoc/>
 	public async Task<Result> AddCenterAsync(CenterRequestDto centerRequestDto)
 	{
+
+		var existingCenter = await _dbContext.Centers.FirstOrDefaultAsync();
+
+		if (existingCenter != null)
+		{
+			_logger.LogError("A center already exists in the system. CenterId: {ExistingCenterId}", existingCenter.Id);
+
+			return Result.Invalid(new List<ValidationError>
+		    {
+			     new ValidationError
+			     {
+				     ErrorMessage = "A center already exists in the system"
+			     }
+		    });
+		}
+
 		var result = _mapper.Map<Center>(centerRequestDto);
 
 		if (result is null)
@@ -50,34 +66,30 @@ public class CenterService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 
 		return Result.SuccessWithMessage("Center added successfully");
 	}
+	
 	///<inheritdoc/>
-	public async Task<Result<List<CenterResponseDto>>> GetAllCentersAsync()
+	public async Task<Result<CenterResponseDto>> GetCenterAsync()
 	{
-		var result = await _dbContext.Centers
-				 .ProjectTo<CenterResponseDto>(_mapper.ConfigurationProvider)
-				 .ToListAsync();
+		var center = await _dbContext.Centers
+			.ProjectTo<CenterResponseDto>(_mapper.ConfigurationProvider)
+			.FirstOrDefaultAsync();
 
-		_logger.LogInformation("Fetching all Centers. Total count: {Center}.", result.Count);
-
-		return Result.Success(result);
-	}
-	///<inheritdoc/>
-	public async Task<Result<CenterResponseDto>> GetCenterByIdAsync(int id)
-	{
-		var result = await _dbContext.Centers
-				.ProjectTo<CenterResponseDto>(_mapper.ConfigurationProvider)
-				.FirstOrDefaultAsync(timeslot => timeslot.Id == id);
-
-		if (result is null)
+		if (center == null)
 		{
-			_logger.LogWarning("Center Id not found,Id {CenterId}", id);
+			_logger.LogWarning("No center found in the system.");
 
-			return Result.NotFound(["Center not found"]);
+			return Result.Invalid(new List<ValidationError>
+		    {
+			      new ValidationError
+			      {
+				     ErrorMessage = "No center found"
+			      }
+		    });
 		}
 
-		_logger.LogInformation("Fetching Center");
+		_logger.LogInformation("Center fetched successfully.");
 
-		return Result.Success(result);
+		return Result.Success(center);
 	}
 
 	///<inheritdoc/>
@@ -98,11 +110,11 @@ public class CenterService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 
 		await _dbContext.SaveChangesAsync();
 
-		var inventory = _mapper.Map<CenterResponseDto>(result);
+		var center = _mapper.Map<CenterResponseDto>(result);
 
-		if (inventory is null)
+		if (center is null)
 		{
-			_logger.LogError("Failed to map CenterRequestDto to CenterResponseDto. CenterRequestDto: {@CenterRequestDto}", inventory);
+			_logger.LogError("Failed to map CenterRequestDto to CenterResponseDto. CenterRequestDto: {@CenterRequestDto}", center);
 
 			return Result.Invalid(new List<ValidationError>
 			{
@@ -115,51 +127,22 @@ public class CenterService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 
 		_logger.LogInformation("Updated Center , Id {Id}", id);
 
-		return Result.Success(inventory);
-	}
-
-	///<inheritdoc/>
-	public async Task<Result<List<CenterResponseDto>>> SearchCenterByTextAsync(string text)
-	{
-
-
-		//if (string.IsNullOrWhiteSpace(text))
-		//{
-		//	_logger.LogError("Search text cannot be empty", text);
-
-		//	return new Result.Invalid(new List<ValidationError>
-		//	{
-		//		new ValidationError
-		//		{
-		//			ErrorMessage = "Validation Errror : Search text cannot be empty"
-		//		}
-		//	});
-		//}
-
-		var Days = await _dbContext.Centers
-					   .ProjectTo<CenterResponseDto>(_mapper.ConfigurationProvider)
-					   .Where(n => n.CenterName.Contains(text) || n.Specialty.Contains(text))
-					   .ToListAsync();
-
-		_logger.LogInformation("Fetching search center by name . Total count: {center}.", Days.Count);
-
-		return Result.Success(Days);
-
-	}
+		return Result.Success(center);
+	}	
 
 	///<inheritdoc/>
 	public async Task<Result> DeleteCenterAsync(int id)
 	{
-		var timeSlot = await _dbContext.Centers.FindAsync(id);
+		var center = await _dbContext.Centers.FindAsync(id);
 
-		if (timeSlot is null)
+		if (center is null)
 		{
 			_logger.LogWarning("Center Invaild Id ,Id {CenterId}", id);
 
 			return Result.NotFound(["Center Invaild Id"]);
 		}
 
-		_dbContext.Centers.Remove(timeSlot);
+		_dbContext.Centers.Remove(center);
 
 		await _dbContext.SaveChangesAsync();
 
