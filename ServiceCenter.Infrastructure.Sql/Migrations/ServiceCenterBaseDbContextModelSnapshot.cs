@@ -8,7 +8,7 @@ using ServiceCenter.Infrastructure.BaseContext;
 
 #nullable disable
 
-namespace ServiceCenter.Infrastructure.Sql.Migrations
+namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
     partial class ServiceCenterBaseDbContextModelSnapshot : ModelSnapshot
@@ -70,6 +70,21 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.ToTable("InventoryProductBrand");
                 });
 
+            modelBuilder.Entity("ItemService", b =>
+                {
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServicesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemId", "ServicesId");
+
+                    b.HasIndex("ServicesId");
+
+                    b.ToTable("ItemService");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -99,37 +114,37 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "890ce151-e940-4f9f-8a6f-23ca88a95240",
+                            Id = "e8f66106-b99c-44be-a290-27290fbadcb6",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a6cfaff7-8fc7-4bd0-90ba-c38119e0ced8",
+                            Id = "eeefd72c-ef84-48d9-b82f-511d6c5b9485",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "fd975aa5-1ab0-4f48-a09f-3db2dc326319",
+                            Id = "2e34b0cb-b01e-424a-84e8-ccc378db95d6",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "977a5b7f-6267-47cb-bcb3-b5077f4c4d8f",
+                            Id = "1915c7b6-9d63-4605-b8ec-b67e5b264549",
                             Name = "Sales",
                             NormalizedName = "SALES"
                         },
                         new
                         {
-                            Id = "7f3e6ba2-1721-4dd8-8220-613f96617481",
+                            Id = "ceed7d81-cd4e-45fe-a3d2-7dfa8e50cc02",
                             Name = "WarehouseManager",
                             NormalizedName = "WAREHOUSEMANAGER"
                         },
                         new
                         {
-                            Id = "9c31b41a-e988-444a-86e2-9fd496eed882",
+                            Id = "dfa5f8e5-26f5-4713-aa97-0d0bafde0cdb",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -749,17 +764,12 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("ServiceId");
 
                     b.ToTable("Items");
                 });
@@ -1540,6 +1550,21 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ItemService", b =>
+                {
+                    b.HasOne("ServiceCenter.Domain.Entities.Item", null)
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServiceCenter.Domain.Entities.Service", null)
+                        .WithMany()
+                        .HasForeignKey("ServicesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1729,15 +1754,7 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ServiceCenter.Domain.Entities.Service", "Service")
-                        .WithMany("Item")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Category");
-
-                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Offer", b =>
@@ -2048,8 +2065,6 @@ namespace ServiceCenter.Infrastructure.Sql.Migrations
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Service", b =>
                 {
                     b.Navigation("Feedbacks");
-
-                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.ServiceCategory", b =>
