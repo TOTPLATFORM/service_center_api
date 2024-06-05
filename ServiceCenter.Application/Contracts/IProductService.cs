@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ public interface IProductService : IApplicationService, IScopedService
     /// function to get all product  
     /// </summary>
     /// <returns>list all Product  response dto </returns>
-    public Task<Result<List<ProductResponseDto>>> GetAllProductAsync();
+    public Task<Result<PaginationResult<ProductResponseDto>>> GetAllProductAsync(int itemCount, int index);
     /// <summary>
     /// function to get  product  by id that take   Product id
     /// </summary>
@@ -45,17 +46,17 @@ public interface IProductService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">Product name</param>
     /// <returns>Product response dto </returns>
-    public Task<Result<List<ProductResponseDto>>> SearchProductByTextAsync(string text);
+    public Task<Result<PaginationResult<ProductResponseDto>>> SearchProductByTextAsync(string text, int itemCount, int index);
     /// <summary>
     /// function to search by Product   that take  Product category name
     /// </summary>
     /// <param name="text">Product  name</param>
     /// <returns>Product response dto </returns>
-    public Task<Result<List<ProductResponseDto>>> GetProductsForProductCategoryAsync(int productId);
-    /// <summary>
-    /// function to search by Product   that take  Product name
-    /// </summary>
-    /// <param name="text">Product  name</param>
-    /// <returns>Product response dto </returns>
-    public Task<Result<List<ProductResponseDto>>> GetProductsForProductBrandAsync(int brandId);
+    //public Task<Result<List<ProductResponseDto>>> GetProductsForProductCategoryAsync(int productId);
+    ///// <summary>
+    ///// function to search by Product   that take  Product name
+    ///// </summary>
+    ///// <param name="text">Product  name</param>
+    ///// <returns>Product response dto </returns>
+    //public Task<Result<List<ProductResponseDto>>> GetProductsForProductBrandAsync(int brandId);
 }
