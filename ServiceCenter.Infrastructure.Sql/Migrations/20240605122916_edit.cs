@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
+namespace ServiceCenter.Infrastructure.Sql.Migrations
 {
     /// <inheritdoc />
     public partial class edit : Migration
@@ -338,7 +338,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DepartmentName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    CenterId = table.Column<int>(type: "int", nullable: true),
+                    CenterId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -351,7 +351,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         name: "FK_Departments_Centers_CenterId",
                         column: x => x.CenterId,
                         principalTable: "Centers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -592,16 +593,20 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Manager",
+                name: "Managers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Responsibilities = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HiringDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    WorkingHours = table.Column<int>(type: "int", nullable: false),
+                    Experience = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Manager", x => x.Id);
+                    table.PrimaryKey("PK_Managers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Manager_Employees_Id",
+                        name: "FK_Managers_Employees_Id",
                         column: x => x.Id,
                         principalTable: "Employees",
                         principalColumn: "Id",
@@ -677,9 +682,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         principalTable: "Centers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Branches_Manager_ManagerId",
+                        name: "FK_Branches_Managers_ManagerId",
                         column: x => x.ManagerId,
-                        principalTable: "Manager",
+                        principalTable: "Managers",
                         principalColumn: "Id");
                 });
 
@@ -712,9 +717,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         principalTable: "Centers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Campagins_Manager_ManagerId",
+                        name: "FK_Campagins_Managers_ManagerId",
                         column: x => x.ManagerId,
-                        principalTable: "Manager",
+                        principalTable: "Managers",
                         principalColumn: "Id");
                 });
 
@@ -776,9 +781,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         principalTable: "Contacts",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Reports_Manager_ManagerId",
+                        name: "FK_Reports_Managers_ManagerId",
                         column: x => x.ManagerId,
-                        principalTable: "Manager",
+                        principalTable: "Managers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Reports_Sales_SalesId",
@@ -1015,7 +1020,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Transactions",
+                name: "Transaction",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -1033,15 +1038,15 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Transactions", x => x.Id);
+                    table.PrimaryKey("PK_Transaction", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transactions_Inventories_InventoryId",
+                        name: "FK_Transaction_Inventories_InventoryId",
                         column: x => x.InventoryId,
                         principalTable: "Inventories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Transactions_Vendors_VendorId",
+                        name: "FK_Transaction_Vendors_VendorId",
                         column: x => x.VendorId,
                         principalTable: "Vendors",
                         principalColumn: "Id",
@@ -1079,12 +1084,12 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "07a57aee-6dea-4921-a40b-7a9ee68392d2", null, "Admin", "ADMIN" },
-                    { "23301982-5163-4d3a-93f1-747e6fd54dd8", null, "Manager", "MANAGER" },
-                    { "4511207e-064d-423c-aa2e-219519972712", null, "Employee", "EMPLOYEE" },
-                    { "45cee4d4-aed9-4ccf-9455-84bb66d14dd5", null, "WarehouseManager", "WAREHOUSEMANAGER" },
-                    { "a33c7ef7-0576-46b6-89c7-51a829775818", null, "Customer", "CUSTOMER" },
-                    { "b8c27f82-d371-4092-b91a-4c44af184195", null, "Sales", "SALES" }
+                    { "7f3e6ba2-1721-4dd8-8220-613f96617481", null, "WarehouseManager", "WAREHOUSEMANAGER" },
+                    { "890ce151-e940-4f9f-8a6f-23ca88a95240", null, "Admin", "ADMIN" },
+                    { "977a5b7f-6267-47cb-bcb3-b5077f4c4d8f", null, "Sales", "SALES" },
+                    { "9c31b41a-e988-444a-86e2-9fd496eed882", null, "Manager", "MANAGER" },
+                    { "a6cfaff7-8fc7-4bd0-90ba-c38119e0ced8", null, "Customer", "CUSTOMER" },
+                    { "fd975aa5-1ab0-4f48-a09f-3db2dc326319", null, "Employee", "EMPLOYEE" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -1293,13 +1298,13 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 column: "ServicePackageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_InventoryId",
-                table: "Transactions",
+                name: "IX_Transaction_InventoryId",
+                table: "Transaction",
                 column: "InventoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_VendorId",
-                table: "Transactions",
+                name: "IX_Transaction_VendorId",
+                table: "Transaction",
                 column: "VendorId");
 
             migrationBuilder.CreateIndex(
@@ -1377,7 +1382,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 name: "Subscriptions");
 
             migrationBuilder.DropTable(
-                name: "Transactions");
+                name: "Transaction");
 
             migrationBuilder.DropTable(
                 name: "WareHouseManagers");
@@ -1431,7 +1436,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 name: "Branches");
 
             migrationBuilder.DropTable(
-                name: "Manager");
+                name: "Managers");
 
             migrationBuilder.DropTable(
                 name: "Employees");

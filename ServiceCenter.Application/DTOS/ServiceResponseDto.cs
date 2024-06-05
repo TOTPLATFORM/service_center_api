@@ -15,7 +15,6 @@ public class ServiceResponseDto
     public string ServiceDescription { get; set; } = "";
     public int ServicePrice { get; set; }
     public Status Avaliable { get; set; }
-   
 	public ICollection<ServicePackageResponseDto> ServicePackages { get; set; } = new HashSet<ServicePackageResponseDto>();
     public  CenterResponseDto Center { get; set; } = default;
     public  ServiceCategoryResponseDto ServiceCategory { get; set; } = default;

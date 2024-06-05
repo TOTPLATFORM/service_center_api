@@ -49,13 +49,11 @@ public class ServiceCenterBaseDbContext : IdentityDbContext<ApplicationUser>
 	public DbSet<Subscription> Subscriptions { get; set; }
 	public DbSet<Department> Departments { get; set; }
 	public DbSet<Employee> Employees { get; set; }
+    public DbSet<Manager> Managers { get; set; }
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<WareHouseManager> WareHouseManagers { get; set; }
 	public DbSet<Offer> Offers { get; set; }
     public DbSet<Campagin> Campagins { get; set; }
 	public DbSet<Report> Reports { get; set; }
 	public DbSet<Center>Centers { get; set; }
-
-    public DbSet<Transaction> Transactions { get; set; }
-
 }

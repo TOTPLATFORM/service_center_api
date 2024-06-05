@@ -18,7 +18,6 @@ public class BranchResponseDto
     public string BranchPhoneNumber { get; set; } = "";
     public string EmailAddress { get; set; } = "";
     public  ICollection<ComplaintResponseDto?> Complaints { get; set; } = new HashSet<ComplaintResponseDto?>();
-
     public  ManagerResponseDto? Manager { get; set; } = default;
     public  InventoryResponseDto? Inventory { get; set; } = default;
 
