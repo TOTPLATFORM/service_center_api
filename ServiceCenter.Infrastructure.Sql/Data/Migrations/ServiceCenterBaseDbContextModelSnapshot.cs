@@ -99,37 +99,37 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "07a57aee-6dea-4921-a40b-7a9ee68392d2",
+                            Id = "eb93961c-c5fc-4c5b-9a84-00db5d7dc010",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a33c7ef7-0576-46b6-89c7-51a829775818",
+                            Id = "99ec9705-db80-48fd-97bb-8b35b68c029b",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "4511207e-064d-423c-aa2e-219519972712",
+                            Id = "63e7f3a5-64b4-400a-bcff-a41a3fdc90e8",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "b8c27f82-d371-4092-b91a-4c44af184195",
+                            Id = "ea3ba056-56cf-4018-9920-5bcf95da0c0a",
                             Name = "Sales",
                             NormalizedName = "SALES"
                         },
                         new
                         {
-                            Id = "45cee4d4-aed9-4ccf-9455-84bb66d14dd5",
+                            Id = "9e06e4bb-4146-4624-b429-56709b888941",
                             Name = "WarehouseManager",
                             NormalizedName = "WAREHOUSEMANAGER"
                         },
                         new
                         {
-                            Id = "23301982-5163-4d3a-93f1-747e6fd54dd8",
+                            Id = "fcb700bb-abce-47de-b29f-bffde5c64b4c",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -583,7 +583,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CenterId")
+                    b.Property<int>("CenterId")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -1667,9 +1667,13 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Department", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Center", null)
+                    b.HasOne("ServiceCenter.Domain.Entities.Center", "Center")
                         .WithMany("Departments")
-                        .HasForeignKey("CenterId");
+                        .HasForeignKey("CenterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Center");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Feedback", b =>

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class edit : Migration
+    public partial class Initialcreating : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -338,7 +338,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DepartmentName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    CenterId = table.Column<int>(type: "int", nullable: true),
+                    CenterId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -351,7 +351,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         name: "FK_Departments_Centers_CenterId",
                         column: x => x.CenterId,
                         principalTable: "Centers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -629,7 +630,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         column: x => x.Id,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -832,7 +833,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         column: x => x.ServicesId,
                         principalTable: "Services",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -1079,12 +1080,12 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "07a57aee-6dea-4921-a40b-7a9ee68392d2", null, "Admin", "ADMIN" },
-                    { "23301982-5163-4d3a-93f1-747e6fd54dd8", null, "Manager", "MANAGER" },
-                    { "4511207e-064d-423c-aa2e-219519972712", null, "Employee", "EMPLOYEE" },
-                    { "45cee4d4-aed9-4ccf-9455-84bb66d14dd5", null, "WarehouseManager", "WAREHOUSEMANAGER" },
-                    { "a33c7ef7-0576-46b6-89c7-51a829775818", null, "Customer", "CUSTOMER" },
-                    { "b8c27f82-d371-4092-b91a-4c44af184195", null, "Sales", "SALES" }
+                    { "63e7f3a5-64b4-400a-bcff-a41a3fdc90e8", null, "Employee", "EMPLOYEE" },
+                    { "99ec9705-db80-48fd-97bb-8b35b68c029b", null, "Customer", "CUSTOMER" },
+                    { "9e06e4bb-4146-4624-b429-56709b888941", null, "WarehouseManager", "WAREHOUSEMANAGER" },
+                    { "ea3ba056-56cf-4018-9920-5bcf95da0c0a", null, "Sales", "SALES" },
+                    { "eb93961c-c5fc-4c5b-9a84-00db5d7dc010", null, "Admin", "ADMIN" },
+                    { "fcb700bb-abce-47de-b29f-bffde5c64b4c", null, "Manager", "MANAGER" }
                 });
 
             migrationBuilder.CreateIndex(
