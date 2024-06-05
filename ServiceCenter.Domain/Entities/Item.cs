@@ -14,5 +14,5 @@ public class Item : AuditableEntity
 	public int ItemStock { get; set; }
 	public int ItemPrice { get; set; }
 	public virtual ItemCategory Category { get; set; }
-    public virtual Service Service { get; set; }
+    public virtual ICollection<Service?> Services { get; set; } = new HashSet<Service?>();
 }
