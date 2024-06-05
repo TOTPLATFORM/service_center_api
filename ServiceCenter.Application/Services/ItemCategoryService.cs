@@ -24,6 +24,12 @@ public class ItemCategoryService(ServiceCenterBaseDbContext dbContext, IMapper m
     ///<inheritdoc/>
     public async Task<Result> AddItemCategoryAsync(ItemCategoryRequestDto ItemCategoryRequestDto)
     {
+        var inventory = new List<Inventory>();
+        foreach (var item in ItemCategoryRequestDto.inventoryIds)
+        {
+            inventory.Add(await _dbContext.Inventories.FirstOrDefaultAsync(i => i.Id == item));
+        }
+       
         var result = _mapper.Map<ItemCategory>(ItemCategoryRequestDto);
         if (result is null)
         {
@@ -36,6 +42,7 @@ public class ItemCategoryService(ServiceCenterBaseDbContext dbContext, IMapper m
                 }
             });
         }
+        result.Inventories = inventory;
         result.CreatedBy = _userContext.Email;
         _dbContext.ItemCategories.Add(result);
         await _dbContext.SaveChangesAsync();
