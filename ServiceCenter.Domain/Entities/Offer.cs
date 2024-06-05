@@ -17,6 +17,6 @@ public class Offer: AuditableEntity
     public int Discount { get; set; }
     public Category OfferCategory { get; set; }
 
-    public virtual Product Product { get; set; } = default;
-     public virtual Service Service { get; set; } = default;
+    public virtual Product? Product { get; set; } = default;
+     public virtual Service? Service { get; set; } = default;
 }
