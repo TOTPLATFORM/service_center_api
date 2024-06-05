@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
@@ -39,10 +40,10 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
 	[Authorize(Roles = "Admin,Manager")]
-	[ProducesResponseType(typeof(Result<List<DepartmentResponseDto>>), StatusCodes.Status200OK)]
-	public async Task<Result<List<DepartmentResponseDto>>> GetAllDepartments()
+	[ProducesResponseType(typeof(Result<PaginationResult<DepartmentResponseDto>>), StatusCodes.Status200OK)]
+	public async Task<Result<PaginationResult<DepartmentResponseDto>>> GetAllDepartments(int itemCount, int index)
 	{
-		return await _departmentService.GetAllDepartmentsAsync();
+		return await _departmentService.GetAllDepartmentsAsync(itemCount,index);
 	}
 	/// <summary>
 	/// get all departments in the system.
@@ -56,7 +57,7 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<DepartmentResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-	public async Task<Result<DepartmentResponseDto>> GetDepartmentById(int id)
+	public async Task<Result<DepartmentGetByIdResponseDto>> GetDepartmentById(int id)
 	{
 		return await _departmentService.GetDepartmentByIdAsync(id);
 	}
@@ -75,7 +76,7 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<DepartmentResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<DepartmentResponseDto>> UpdateDepartment(int id, DepartmentRequestDto departmentRequestDto)
+	public async Task<Result<DepartmentGetByIdResponseDto>> UpdateDepartment(int id, DepartmentRequestDto departmentRequestDto)
 	{
 		return await _departmentService.UpdateDepartmentAsync(id, departmentRequestDto);
 	}
@@ -88,13 +89,13 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
-	[HttpGet("search/{text}")]
+	[HttpGet("search")]
 	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<DepartmentResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<List<DepartmentResponseDto>>> SerachDepartmentByText(string text)
+	public async Task<Result<PaginationResult<DepartmentResponseDto>>> SerachDepartmentByText(string text, int itemCount, int index)
 	{
-		return await _departmentService.SearchDepartmentByTextAsync(text);
+		return await _departmentService.SearchDepartmentByTextAsync(text,itemCount,index);
 	}
 
 	/// <summary>
@@ -106,13 +107,13 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
-	[HttpGet("searchByRelation/{id}")]
+	[HttpGet("searchByRelation")]
 	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<DepartmentResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-	public async Task<Result<List<DepartmentResponseDto>>> SearchDepartmentByRelation(int id)
+	public async Task<Result<PaginationResult<DepartmentResponseDto>>> SearchDepartmentByRelation(int id, int itemCount, int index)
 	{
-		return await _departmentService.GetAllEmployeesForSpecificDepartmentAsync(id);
+		return await _departmentService.GetAllEmployeesForSpecificDepartmentAsync(id,itemCount,index);
 	}
 
 	/// <summary>
