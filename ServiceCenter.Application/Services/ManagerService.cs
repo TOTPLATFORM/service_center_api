@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -37,15 +41,88 @@ public class ManagerService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		}
 		manager.Department = department;
 
-		var employeeAdded = await _authService.RegisterUserWithRoleAsync(manager, managerRequestDto.Password, role);
+		var managerAdded = await _authService.RegisterUserWithRoleAsync(manager, managerRequestDto.Password, role);
 
-		if (!employeeAdded.IsSuccess)
+		if (!managerAdded.IsSuccess)
 		{
-			return Result.Error(employeeAdded.Errors.FirstOrDefault());
+			return Result.Error(managerAdded.Errors.FirstOrDefault());
 		}
 
 		_logger.LogInformation("Manager added successfully in the database");
 
 		return Result.SuccessWithMessage("Manager added successfully");
+	}
+
+
+	///<inheritdoc/>
+	public async Task<Result<PaginationResult<ManagerResponseDto>>> GetAllManagersAsync(int itemCount, int index)
+	{
+		var result = await _dbContext.Managers
+				 .ProjectTo<ManagerResponseDto>(_mapper.ConfigurationProvider)
+				 .GetAllWithPagination(itemCount, index);
+
+		_logger.LogInformation("Fetching all Managers. Total count: {Manager}.", result.Data.Count);
+
+		return Result.Success(result);
+	}
+	///<inheritdoc/>
+	public async Task<Result<ManagerGetByIdResponseDto>> GetMangertByIdAsync(string id)
+	{
+		var result = await _dbContext.Managers
+				.ProjectTo<ManagerGetByIdResponseDto>(_mapper.ConfigurationProvider)
+				.FirstOrDefaultAsync(manager => manager.Id == id);
+
+		if (result is null)
+		{
+			_logger.LogWarning("Manager Id not found,Id {ManagerId}", id);
+
+			return Result.NotFound(["Manager not found"]);
+		}
+
+		_logger.LogInformation("Fetching Manager");
+
+		return Result.Success(result);
+	}
+	
+	///<inheritdoc/>
+	public async Task<Result<PaginationResult<ManagerResponseDto>>> SearchManagerByTextAsync(string text,int itemCount,int index)
+	{
+
+		    var result = await _dbContext.Departments
+				.ProjectTo<ManagerResponseDto>(_mapper.ConfigurationProvider)
+				.Where(n => n.ManagerFirstName.Contains(text) || n.ManagerLastName.Contains(text))
+				.GetAllWithPagination(itemCount,index);
+
+		_logger.LogInformation("Fetching search manager by name . Total count: {managers}.", result.Data.Count);
+
+		return Result.Success(result);
+
+	}
+	///<inheritdoc/>
+	public async Task<Result<ManagerGetByIdResponseDto>> UpdateManagerAsync(string id, ManagerRequestDto managerRequestDto)
+	{
+		var manager = await _dbContext.Managers.FindAsync(id);
+
+		if (manager is null)
+		{
+			_logger.LogWarning("manager  Id not found,Id {id}", id);
+
+			return Result.NotFound(["The manager  is not found"]);
+		}
+		managerRequestDto.UserName = manager.UserName;
+
+		_mapper.Map(managerRequestDto, manager);
+
+		var result = await _authService.UpdateUserAsync(manager);
+
+		if (!result.IsSuccess)
+		{
+			return Result.Error(result.Errors.FirstOrDefault());
+		}
+
+		var updatedManager = _mapper.Map<ManagerGetByIdResponseDto>(manager);
+
+		_logger.LogInformation("mananger  updated successfully");
+		return Result.Success(updatedManager, "manager  updated successfully");
 	}
 }

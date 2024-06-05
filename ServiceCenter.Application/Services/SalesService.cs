@@ -26,7 +26,9 @@ public class SalesService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
     ///<inheritdoc/>
     public async Task<Result> AddSalesAsync(SalesRequestDto salesRequestDto)
     {
-        string role = "Sales";
+
+		string role = "Sales";
+
         var sales = _mapper.Map<Sales>(salesRequestDto);
 
         var salesAdded = await _authService.RegisterUserWithRoleAsync(sales,salesRequestDto.Password,role);
@@ -36,7 +38,38 @@ public class SalesService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
             return Result.Error(salesAdded.Errors.FirstOrDefault());
         }
 
-        _logger.LogInformation("Sales added successfully in the database");
+
+		var department = await _dbContext.Departments.FirstOrDefaultAsync(d => d.Id == salesRequestDto.DepartmentId);
+
+		if (department == null)
+		{
+			return Result.Invalid(new List<ValidationError>
+		    {
+			       new ValidationError
+			       {
+				        ErrorMessage = "Department not found"
+			       }
+		    });
+		}
+
+		sales.Department.Id = salesRequestDto.DepartmentId;
+
+		var employee = await _dbContext.Employees.FirstOrDefaultAsync(e => e.Email == salesRequestDto.Email);
+
+		if (employee == null)
+		{
+			return Result.Invalid(new List<ValidationError>
+		    {
+			      new ValidationError
+			      {
+				      ErrorMessage = "Employee not found"
+			      }
+		    });
+		}
+
+		sales.Id = employee.Id;
+
+		_logger.LogInformation("Sales added successfully in the database");
 
         return Result.SuccessWithMessage("Sales added successfully");
     }

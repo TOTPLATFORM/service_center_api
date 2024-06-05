@@ -13,4 +13,7 @@ public class SalesRequestDto : BaseUserRequestDto
     
     [Required]
     public int CenterId { get; set; }
+
+    [Required]
+    public  int DepartmentId { get; set; }
 }

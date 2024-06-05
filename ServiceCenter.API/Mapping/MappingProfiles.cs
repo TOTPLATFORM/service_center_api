@@ -6,73 +6,71 @@ namespace ServiceCenter.API.Mapping;
 
 public class MappingProfiles : Profile
 {
-    public MappingProfiles()
-    {
+	public MappingProfiles()
+	{
+		this.AddProductBrandMapping();
+
+		this.AddInventoryMapping();
+
+		this.AddItemMapping();
+
+		this.AddOrderMapping();
+
+		this.AddItemCategoryMapping();
+
+		this.AddServiceCategoryMapping();
+
+		this.AddCenterMapping();
+
+		this.AddProductCategoryMapping();
+
+		this.AddProductMapping();
+
+		this.AddItemMapping();
+
+		this.AddOrderMapping();
+
+		this.AddEmployeeMapping();
+
+		this.AddItemCategoryMapping();
+
+		this.AddBranchMapping();
+
+		this.AddDepartmentMapping();
+
+		this.AddFeedbackMapping();
+
+		this.AddCompliantMapping();
+
+		this.AddServicePackageMapping();
+
+		//   this.AddScheduleMapping();
+
+		this.AddServiceMapping();
+
+		this.AddSubscriptionMapping();
+
+		this.AddOfferMapping();
+
+		this.AddAppointmentMapping();
+
+		//   this.AddContactMapping();
+
+		this.AddReportMapping();
+
+		this.AddAuthMapping();
+
+		this.AddRatingServiceMapping();
+
+		// this.AddVendorMapping();
+
+		//this.AddWareHouseManagerMapping();
+
+		this.AddManagerMapping();
+
+		this.AddSalesMapping();
 
 
-        this.AddProductBrandMapping();
-
-        this.AddInventoryMapping();
-
-        this.AddItemMapping();
-
-        this.AddOrderMapping();
-
-        this.AddItemCategoryMapping();
-
-        this.AddServiceCategoryMapping();
-
-        this.AddCenterMapping();
-
-       this.AddProductCategoryMapping();
-
-        this.AddProductMapping();
-
-        this.AddItemMapping();
-
-        this.AddOrderMapping();
-
-       this.AddEmployeeMapping();
-
-        this.AddItemCategoryMapping();
-
-        this.AddBranchMapping();
-
-        this.AddDepartmentMapping();
-
-        this.AddFeedbackMapping();
-
-        this.AddCompliantMapping();
-
-        this.AddServicePackageMapping();
-
-        this.AddScheduleMapping();
-
-        this.AddServiceMapping();
-
-        this.AddSubscriptionMapping();
-
-        this.AddOfferMapping();
-
-        this.AddAppointmentMapping();
-
-       this.AddContactMapping();
-
-        this.AddSalesMapping();
-
-        this.AddReportMapping();
-
-        this.AddAuthMapping();
-
-        this.AddRatingServiceMapping();
-
-        this.AddVendorMapping();
-
-       this.AddWareHouseManagerMapping();
-
-        this.AddManagerMapping();
-
-        this.AddCampaginMapping();
-    }
+	}
 
 }

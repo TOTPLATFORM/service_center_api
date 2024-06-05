@@ -9,9 +9,9 @@ public static class ProductMapping
     public static void AddProductMapping(this MappingProfiles map)
     {
         map.CreateMap<ProductRequestDto, Product>()
-         .ReverseMap();
+          .ForPath(dest => dest.Sales.Id, src => src.MapFrom(src => src.SalesId));
+
         map.CreateMap<Product, ProductResponseDto>()
-               
-            .ReverseMap();
+            .ForMember(dest => dest.SalesName, src => src.MapFrom(src => src.Sales.FirstName));
     }
 }
