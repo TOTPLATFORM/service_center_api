@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceCenter.Infrastructure.BaseContext;
 
 #nullable disable
 
-namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
+namespace ServiceCenter.Infrastructure.Sql.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
-    [Migration("20240604123617_edit")]
-    partial class edit
+    partial class ServiceCenterBaseDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,37 +99,37 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "07a57aee-6dea-4921-a40b-7a9ee68392d2",
+                            Id = "890ce151-e940-4f9f-8a6f-23ca88a95240",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a33c7ef7-0576-46b6-89c7-51a829775818",
+                            Id = "a6cfaff7-8fc7-4bd0-90ba-c38119e0ced8",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "4511207e-064d-423c-aa2e-219519972712",
+                            Id = "fd975aa5-1ab0-4f48-a09f-3db2dc326319",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "b8c27f82-d371-4092-b91a-4c44af184195",
+                            Id = "977a5b7f-6267-47cb-bcb3-b5077f4c4d8f",
                             Name = "Sales",
                             NormalizedName = "SALES"
                         },
                         new
                         {
-                            Id = "45cee4d4-aed9-4ccf-9455-84bb66d14dd5",
+                            Id = "7f3e6ba2-1721-4dd8-8220-613f96617481",
                             Name = "WarehouseManager",
                             NormalizedName = "WAREHOUSEMANAGER"
                         },
                         new
                         {
-                            Id = "23301982-5163-4d3a-93f1-747e6fd54dd8",
+                            Id = "9c31b41a-e988-444a-86e2-9fd496eed882",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -586,7 +583,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CenterId")
+                    b.Property<int>("CenterId")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -1364,7 +1361,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Transaction");
                 });
 
             modelBuilder.Entity("ServiceServicePackage", b =>
@@ -1441,7 +1438,20 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     b.HasBaseType("ServiceCenter.Domain.Entities.Employee");
 
-                    b.ToTable("Manager");
+                    b.Property<int>("Experience")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("HiringDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Responsibilities")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("WorkingHours")
+                        .HasColumnType("int");
+
+                    b.ToTable("Managers");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Sales", b =>
@@ -1670,9 +1680,13 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Department", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Center", null)
+                    b.HasOne("ServiceCenter.Domain.Entities.Center", "Center")
                         .WithMany("Departments")
-                        .HasForeignKey("CenterId");
+                        .HasForeignKey("CenterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Center");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Feedback", b =>

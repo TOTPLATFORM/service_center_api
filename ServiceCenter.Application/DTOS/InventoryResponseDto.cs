@@ -13,8 +13,8 @@ namespace ServiceCenter.Application.DTOS
         public string InventoryName { get; set; } = "";
         public string InventoryLocation { get; set; } = "";
         public int InventoryCapacity { get; set; }
-        public virtual ICollection<ProductBrandResponseDto?> ProductBrands { get; set; } = new HashSet<ProductBrandResponseDto?>();
-        public virtual ICollection<ItemCategoryResponseDto?> ItemCategories { get; set; } = new HashSet<ItemCategoryResponseDto?>();
+        public  ICollection<ProductBrandResponseDto> ProductBrands { get; set; } = new HashSet<ProductBrandResponseDto>();
+        public  ICollection<ItemCategoryResponseDto> ItemCategories { get; set; } = new HashSet<ItemCategoryResponseDto>();
 
     }
 }

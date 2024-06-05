@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -27,10 +29,10 @@ public class DepartmentService(ServiceCenterBaseDbContext dbContext, IMapper map
 	public async Task<Result> AddDepartmentAsync(DepartmentRequestDto departmentRequestDto)
 	{
 		var result = _mapper.Map<Department>(departmentRequestDto);
-
+		var center = await _dbContext.Centers.FirstOrDefaultAsync();
 		if (result is null)
 		{
-			_logger.LogError("Failed to map DepartmentRequestDto to Department. DepartmentRequestDto: {@DepartmentRequestDto}", departmentRequestDto);
+			_logger.LogError("Failed to map DepartmentRequestDto to Department. DepartmentRequestDto: {DepartmentRequestDto}", departmentRequestDto);
 
 			return Result.Invalid(new List<ValidationError>
 			{
@@ -41,7 +43,7 @@ public class DepartmentService(ServiceCenterBaseDbContext dbContext, IMapper map
 			});
 		}
 		result.CreatedBy = _userContext.Email;
-
+		result.Center = center;
 		_dbContext.Departments.Add(result);
 
 		await _dbContext.SaveChangesAsync();
@@ -51,21 +53,21 @@ public class DepartmentService(ServiceCenterBaseDbContext dbContext, IMapper map
 		return Result.SuccessWithMessage("Department added successfully");
 	}
 	///<inheritdoc/>
-	public async Task<Result<List<DepartmentResponseDto>>> GetAllDepartmentsAsync()
+	public async Task<Result<PaginationResult<DepartmentResponseDto>>> GetAllDepartmentsAsync(int itemCount,int index)
 	{
 		var result = await _dbContext.Departments
 				 .ProjectTo<DepartmentResponseDto>(_mapper.ConfigurationProvider)
-				 .ToListAsync();
+				 .GetAllWithPagination(itemCount,index);
 
-		_logger.LogInformation("Fetching all Departments. Total count: {Department}.", result.Count);
+		_logger.LogInformation("Fetching all Departments. Total count: {Department}.", result.Data.Count);
 
 		return Result.Success(result);
 	}
 	///<inheritdoc/>
-	public async Task<Result<DepartmentResponseDto>> GetDepartmentByIdAsync(int id)
+	public async Task<Result<DepartmentGetByIdResponseDto>> GetDepartmentByIdAsync(int id)
 	{
 		var result = await _dbContext.Departments
-				.ProjectTo<DepartmentResponseDto>(_mapper.ConfigurationProvider)
+				.ProjectTo<DepartmentGetByIdResponseDto>(_mapper.ConfigurationProvider)
 				.FirstOrDefaultAsync(department => department.Id == id);
 
 		if (result is null)
@@ -82,7 +84,7 @@ public class DepartmentService(ServiceCenterBaseDbContext dbContext, IMapper map
 
 	///<inheritdoc/>
 
-	public async Task<Result<DepartmentResponseDto>> UpdateDepartmentAsync(int id, DepartmentRequestDto departmentRequestDto)
+	public async Task<Result<DepartmentGetByIdResponseDto>> UpdateDepartmentAsync(int id, DepartmentRequestDto departmentRequestDto)
 	{
 		var result = await _dbContext.Departments.FindAsync(id);
 
@@ -98,7 +100,7 @@ public class DepartmentService(ServiceCenterBaseDbContext dbContext, IMapper map
 
 		await _dbContext.SaveChangesAsync();
 
-		var inventory = _mapper.Map<DepartmentResponseDto>(result);
+		var inventory = _mapper.Map<DepartmentGetByIdResponseDto>(result);
 
 		if (inventory is null)
 		{
@@ -119,43 +121,29 @@ public class DepartmentService(ServiceCenterBaseDbContext dbContext, IMapper map
 	}
 
 	///<inheritdoc/>
-	public async Task<Result<List<DepartmentResponseDto>>> SearchDepartmentByTextAsync(string text)
+	public async Task<Result<PaginationResult<DepartmentResponseDto>>> SearchDepartmentByTextAsync(string text,int itemCount,int index)
 	{
 
+		    var result = await _dbContext.Departments
+				.ProjectTo<DepartmentResponseDto>(_mapper.ConfigurationProvider)
+				.Where(n => n.DepartmentName.Contains(text))
+				.GetAllWithPagination(itemCount,index);
 
-		//if (string.IsNullOrWhiteSpace(text))
-		//{
-		//	_logger.LogError("Search text cannot be empty", text);
+		_logger.LogInformation("Fetching search department by name . Total count: {departments}.", result.Data.Count);
 
-		//	return new Result.Invalid(new List<ValidationError>
-		//	{
-		//		new ValidationError
-		//		{
-		//			ErrorMessage = "Validation Errror : Search text cannot be empty"
-		//		}
-		//	});
-		//}
-
-		var name = await _dbContext.Departments
-					   .ProjectTo<DepartmentResponseDto>(_mapper.ConfigurationProvider)
-					   .Where(n => n.DepartmentName.Contains(text))
-					   .ToListAsync();
-
-		_logger.LogInformation("Fetching search time slot by name . Total count: {time slot}.", name.Count);
-
-		return Result.Success(name);
+		return Result.Success(result);
 
 	}
 
 	///<inheritdoc/>
-	public async Task<Result<List<DepartmentResponseDto>>> GetAllEmployeesForSpecificDepartmentAsync(int id)
+	public async Task<Result<PaginationResult<DepartmentResponseDto>>> GetAllEmployeesForSpecificDepartmentAsync(int id, int itemCount, int index)
 	{
 		var employees = await _dbContext.Departments
 		   .Where(s => s.Id == id)
 		   .ProjectTo<DepartmentResponseDto>(_mapper.ConfigurationProvider)
-		   .ToListAsync();
+		   .GetAllWithPagination(itemCount,index);
 
-		_logger.LogInformation("Fetching employees. Total count: {employee}.", employees.Count);
+		_logger.LogInformation("Fetching employees. Total count: {employee}.", employees.Data.Count);
 
 		return Result.Success(employees);
 	}
