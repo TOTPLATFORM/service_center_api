@@ -13,5 +13,7 @@ public static class DepartmentMapping
 
 		map.CreateMap<Department, DepartmentResponseDto>()
 			.ReverseMap();
-	}
+		map.CreateMap<Department, DepartmentGetByIdResponseDto>();
+
+    }
 }
