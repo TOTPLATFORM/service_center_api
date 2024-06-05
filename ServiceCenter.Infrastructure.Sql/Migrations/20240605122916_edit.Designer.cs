@@ -9,11 +9,11 @@ using ServiceCenter.Infrastructure.BaseContext;
 
 #nullable disable
 
-namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
+namespace ServiceCenter.Infrastructure.Sql.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
-    [Migration("20240605092106_edit3")]
-    partial class edit3
+    [Migration("20240605122916_edit")]
+    partial class edit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,37 +102,37 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "139c25e3-2faf-4190-a581-5e421fcb768e",
+                            Id = "890ce151-e940-4f9f-8a6f-23ca88a95240",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "c0e8540b-36da-4f3d-9cb7-f0452d938553",
+                            Id = "a6cfaff7-8fc7-4bd0-90ba-c38119e0ced8",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "a1a3d4e9-4e70-4f7f-8670-7422b6513f3a",
+                            Id = "fd975aa5-1ab0-4f48-a09f-3db2dc326319",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "7a3ca6cf-d7f6-4f3d-92b4-24b7539c5be5",
+                            Id = "977a5b7f-6267-47cb-bcb3-b5077f4c4d8f",
                             Name = "Sales",
                             NormalizedName = "SALES"
                         },
                         new
                         {
-                            Id = "95cb486b-64fd-4dc6-81ab-9b858b911b34",
+                            Id = "7f3e6ba2-1721-4dd8-8220-613f96617481",
                             Name = "WarehouseManager",
                             NormalizedName = "WAREHOUSEMANAGER"
                         },
                         new
                         {
-                            Id = "4ac1e94f-72b4-4447-b8a4-34ff444587ae",
+                            Id = "9c31b41a-e988-444a-86e2-9fd496eed882",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -586,7 +586,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CenterId")
+                    b.Property<int>("CenterId")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -1364,7 +1364,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Transaction");
                 });
 
             modelBuilder.Entity("ServiceServicePackage", b =>
@@ -1683,9 +1683,13 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Department", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Center", null)
+                    b.HasOne("ServiceCenter.Domain.Entities.Center", "Center")
                         .WithMany("Departments")
-                        .HasForeignKey("CenterId");
+                        .HasForeignKey("CenterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Center");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Feedback", b =>
