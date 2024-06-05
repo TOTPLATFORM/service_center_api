@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
@@ -29,12 +30,13 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
 
     [HttpGet]
     // [Authorize(Roles = "Manager")]
-    [ProducesResponseType(typeof(Result<List<ProductBrandResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<List<ProductBrandResponseDto>>> GetAllProductBrands()
+    [ProducesResponseType(typeof(Result<PaginationResult<ProductBrandResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<PaginationResult<ProductBrandResponseDto>>> GetAllProductBrands(int itemCount, int index)
     {
-        return await _productBrandService.GetAllProductBrandAsync();
+        return await _productBrandService.GetAllProductBrandAsync(itemCount, index);
     }
-    /// <summary>
+
+	    /// <summary>
     /// action for get product brand by id that take product brand id.  
     /// </summary>
     /// <returns>result of product brand response dto</returns>
