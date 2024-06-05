@@ -31,20 +31,6 @@ public class CenterController(ICenterService centerService) : BaseController
 	}
 
 	/// <summary>
-	/// get all centers in the system.
-	/// </summary>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpGet]
-	[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<List<CenterResponseDto>>), StatusCodes.Status200OK)]
-	public async Task<Result<List<CenterResponseDto>>> GetAllCenters()
-	{
-		return await _centerService.GetAllCentersAsync();
-	}
-	/// <summary>
 	/// get center by id  from the system.
 	/// </summary>
 	///<param name="id">id of center.</param>
@@ -56,9 +42,9 @@ public class CenterController(ICenterService centerService) : BaseController
 	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<CenterResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<CenterResponseDto>> GetCenterById(int id)
+	public async Task<Result<CenterResponseDto>> GetCenter()
 	{
-		return await _centerService.GetCenterByIdAsync(id);
+		return await _centerService.GetCenterAsync();
 	}
 
 	/// <summary>
@@ -79,23 +65,7 @@ public class CenterController(ICenterService centerService) : BaseController
 	{
 		return await _centerService.UpdateCenterAsync(id, centerRequestDto);
 	}
-	/// <summary>
-	/// search  center by text in the system.
-	/// </summary>
-	///<param name="text">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-
-	[HttpGet("search/{text}")]
-	[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<CenterResponseDto>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<List<CenterResponseDto>>> SerachCenterByText(string text)
-	{
-		return await _centerService.SearchCenterByTextAsync(text);
-	}
+	
 	/// <summary>
 	/// delete  center by id from the system.
 	/// </summary>
