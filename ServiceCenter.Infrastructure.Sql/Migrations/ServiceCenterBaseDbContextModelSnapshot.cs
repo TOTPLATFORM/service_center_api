@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceCenter.Infrastructure.BaseContext;
 
 #nullable disable
 
-namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
+namespace ServiceCenter.Infrastructure.Sql.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
-    [Migration("20240605092330_Initial creating")]
-    partial class Initialcreating
+    partial class ServiceCenterBaseDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,37 +99,37 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "eb93961c-c5fc-4c5b-9a84-00db5d7dc010",
+                            Id = "890ce151-e940-4f9f-8a6f-23ca88a95240",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "99ec9705-db80-48fd-97bb-8b35b68c029b",
+                            Id = "a6cfaff7-8fc7-4bd0-90ba-c38119e0ced8",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "63e7f3a5-64b4-400a-bcff-a41a3fdc90e8",
+                            Id = "fd975aa5-1ab0-4f48-a09f-3db2dc326319",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "ea3ba056-56cf-4018-9920-5bcf95da0c0a",
+                            Id = "977a5b7f-6267-47cb-bcb3-b5077f4c4d8f",
                             Name = "Sales",
                             NormalizedName = "SALES"
                         },
                         new
                         {
-                            Id = "9e06e4bb-4146-4624-b429-56709b888941",
+                            Id = "7f3e6ba2-1721-4dd8-8220-613f96617481",
                             Name = "WarehouseManager",
                             NormalizedName = "WAREHOUSEMANAGER"
                         },
                         new
                         {
-                            Id = "fcb700bb-abce-47de-b29f-bffde5c64b4c",
+                            Id = "9c31b41a-e988-444a-86e2-9fd496eed882",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -1364,7 +1361,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Transaction");
                 });
 
             modelBuilder.Entity("ServiceServicePackage", b =>
@@ -1441,7 +1438,20 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     b.HasBaseType("ServiceCenter.Domain.Entities.Employee");
 
-                    b.ToTable("Manager");
+                    b.Property<int>("Experience")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("HiringDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Responsibilities")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("WorkingHours")
+                        .HasColumnType("int");
+
+                    b.ToTable("Managers");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Sales", b =>
