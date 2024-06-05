@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -46,16 +49,17 @@ public class ProductBrandService(ServiceCenterBaseDbContext dbContext, IMapper m
     }
     ///<inheritdoc/>
 
-    public async Task<Result<List< ProductBrandResponseDto>>> GetAllProductBrandAsync()
+    public async Task<Result<PaginationResult< ProductBrandResponseDto>>> GetAllProductBrandAsync(int itemCount, int index)
     {
         var result = await _dbContext.ProductBrands
                  .ProjectTo<ProductBrandResponseDto>(_mapper.ConfigurationProvider)
-                 .ToListAsync();
+                 .GetAllWithPagination(itemCount, index);
 
-        _logger.LogInformation("Fetching all  productBrand. Total count: { productBrand}.", result.Count);
+        _logger.LogInformation("Fetching all  productBrand. Total count: { productBrand}.", result.Data.Count);
 
         return Result.Success(result);
     }
+ 
 
     ///<inheritdoc/>
     public async Task<Result<ProductBrandResponseDto>> GetProductBrandByIdAsync(int id)
@@ -136,6 +140,34 @@ public class ProductBrandService(ServiceCenterBaseDbContext dbContext, IMapper m
             .ToListAsync();
         _logger.LogInformation("Fetching search ProductBrand by name . Total count: {ProductBrand}.", names.Count);
         return Result.Success(names);
+    }
+    public async Task<Result<List<ProductBrandResponseDto>>> AssignProductBrandToInventoryAsync(int inventoryId, int productBrandId)
+    {
+        var inventory = await _dbContext.Inventories.FindAsync(inventoryId);
+
+        if (inventory is null)
+        {
+            _logger.LogWarning("InventoryId Id not found,Id {id}", inventoryId);
+
+            return Result.NotFound(["The Facility is not found"]);
+        }
+
+        var productBrand = await _dbContext.ProductBrands.FindAsync(productBrandId);
+
+        if (productBrand is null)
+        {
+            _logger.LogWarning("Property Id not found,Id {id}", productBrandId);
+
+            return Result.NotFound(["The Property is not found"]);
+        }
+
+        inventory.ProductBrands.Add(productBrand);
+        await _dbContext.SaveChangesAsync();
+
+        _logger.LogInformation("Successfully assigned productBrand to inventory");
+
+        return Result.SuccessWithMessage("productBrand added successfully to inventory");
+
     }
 
 }

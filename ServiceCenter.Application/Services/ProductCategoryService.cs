@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -46,16 +48,16 @@ public class ProductCategoryService(ServiceCenterBaseDbContext dbContext, IMappe
 
   
     ///<inheritdoc/>
-    public async Task<Result<List<ProductCategoryResponseDto>>> GetAllProductCategoryAsync()
+    public async Task<Result<PaginationResult<ProductCategoryResponseDto>>> GetAllProductCategoryAsync(int itemCount, int index)
     {
         var result = await _dbContext.ProductCategories
              .ProjectTo<ProductCategoryResponseDto>(_mapper.ConfigurationProvider)
-             .ToListAsync();
-
-        _logger.LogInformation("Fetching all  ProductCategory. Total count: { ProductCategory}.", result.Count);
+             .GetAllWithPagination(itemCount, index);
+        _logger.LogInformation("Fetching all  ProductCategory. Total count: { ProductCategory}.", result.Data.Count);
 
         return Result.Success(result);
     }
+  
 
     ///<inheritdoc/>
     public async  Task<Result<ProductCategoryResponseDto>> GetProductCategoryByIdAsync(int id)
@@ -139,5 +141,33 @@ public class ProductCategoryService(ServiceCenterBaseDbContext dbContext, IMappe
         .ToListAsync();
         _logger.LogInformation("Fetching search ProductCategory by name . Total count: {ProductCategory}.", names.Count);
         return Result.Success(names);
+    }
+    public async Task<Result<List<ProductCategoryResponseDto>>> AssignProductCategoryToProductBrandAsync(int productCategoryId, int productBrandId)
+    {
+        var productCategory = await _dbContext.ProductCategories.FindAsync(productCategoryId);
+
+        if (productCategory is null)
+        {
+            _logger.LogWarning("ProductCategoryId Id not found,Id {id}", productCategoryId);
+
+            return Result.NotFound(["The Facility is not found"]);
+        }
+
+        var productBrand = await _dbContext.ProductBrands.FindAsync(productBrandId);
+
+        if (productBrand is null)
+        {
+            _logger.LogWarning("Property Id not found,Id {id}", productBrandId);
+
+            return Result.NotFound(["The Property is not found"]);
+        }
+
+        productBrand.ProductCategories.Add(productCategory);
+        await _dbContext.SaveChangesAsync();
+
+        _logger.LogInformation("Successfully assigned productCategory to productBrand");
+
+        return Result.SuccessWithMessage("productCategory added successfully to productBrand");
+
     }
 }

@@ -20,8 +20,6 @@ public class ProductBrandRequestDto
     [Required]
     public DateOnly FoundedYear { get; set; }
 
-    public ICollection<int> ProductcategoriesId { get; set; }
-    [Required]
-    public ICollection< int> InventoriesId { get; set; }
+    
 
 }

@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ public interface IItemCategoryService : IApplicationService, IScopedService
     /// function to get all item category 
     /// </summary>
     /// <returns>list all item category response dto </returns>
-    public Task<Result<List<ItemCategoryResponseDto>>> GetAllItemCategoryAsync();
+    public Task<Result<PaginationResult<ItemCategoryResponseDto>>> GetAllItemCategoryAsync(int itemCount, int index);
     /// <summary>
     /// function to get  item category by id that take   item category id
     /// </summary>
@@ -45,11 +46,11 @@ public interface IItemCategoryService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">item category name</param>
     /// <returns>item category response dto </returns>
-    public Task<Result<List<ItemCategoryResponseDto>>> SearchItemCategoryByTextAsync(string text);
+    public Task<Result<PaginationResult<ItemCategoryResponseDto>>> SearchItemCategoryByTextAsync(string text, int itemCount, int index);
     /// <summary>
     /// function to search by inventory  that take  inventory name
     /// </summary>
     /// <param name="inventoryName">inventory name</param>
     /// <returns>item category response dto </returns
-    public Task<Result<List<ItemCategoryResponseDto>>> GetAllItemsCategoryForSpecificInventory(string inventoryName);
+    public Task<Result<PaginationResult<ItemCategoryResponseDto>>> GetAllItemsCategoryForSpecificInventory(int inventoryId, int itemCount, int index);
 }
