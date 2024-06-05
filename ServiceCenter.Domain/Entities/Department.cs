@@ -10,7 +10,8 @@ namespace ServiceCenter.Domain.Entities;
 public class Department : AuditableEntity
 {
 	public string DepartmentName { get; set; } = "";
-   
-     public virtual ICollection<Employee?> Employees { get; set; } = new HashSet<Employee>();
+    public virtual Center Center { get; set; }
+
+    public virtual ICollection<Employee?> Employees { get; set; } = new HashSet<Employee?>();
 
 }
