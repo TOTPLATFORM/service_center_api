@@ -26,6 +26,36 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 	///<inheritdoc/>
 	public async Task<Result> AddInventoryAsync(InventoryRequestDto inventoryRequestDto)
 	{
+		var branch = await _dbContext.Branches.FirstOrDefaultAsync(e => e.Id == inventoryRequestDto.BranchId);
+
+		if (branch == null)
+		{
+			_logger.LogError("Branch not found. BranchId: {BranchId}", inventoryRequestDto.BranchId);
+
+			return Result.Invalid(new List<ValidationError>
+		    {
+			      new ValidationError
+			      {
+				    ErrorMessage = "Branch not found"
+			      }
+		    });
+		}
+
+		var existingInventory = await _dbContext.Inventories.FirstOrDefaultAsync(e => e.BranchId == inventoryRequestDto.BranchId);
+
+		if (existingInventory != null)
+		{
+			_logger.LogError("Inventory already exists for the branch. BranchId: {BranchId}", inventoryRequestDto.BranchId);
+
+			return Result.Invalid(new List<ValidationError>
+		    {
+			       new ValidationError
+			       {
+				        ErrorMessage = "Inventory already exists for the branch"
+			       }
+		    });
+		}
+
 		var result = _mapper.Map<Inventory>(inventoryRequestDto);
 
 		if (result is null)
@@ -41,6 +71,9 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 			});
 		}
 		result.CreatedBy = _userContext.Email;
+
+		result.Branch = branch;
+
 		_dbContext.Inventories.Add(result);
 
 		await _dbContext.SaveChangesAsync();

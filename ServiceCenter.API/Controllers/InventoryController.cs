@@ -38,7 +38,7 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-	[Authorize(Roles = "WarehouseManager,Manager")]
+	[Authorize(Roles = "Admin,WarehouseManager,Manager")]
 	[ProducesResponseType(typeof(Result<List<InventoryResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<List<InventoryResponseDto>>> GetAllInventories()
 	{

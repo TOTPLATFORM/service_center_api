@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceCenter.Infrastructure.BaseContext;
 
@@ -11,9 +12,11 @@ using ServiceCenter.Infrastructure.BaseContext;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
-    partial class ServiceCenterBaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240605092106_edit3")]
+    partial class edit3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,42 +103,36 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         new
                         {
                             Id = "139c25e3-2faf-4190-a581-5e421fcb768e",
-                            Id = "eb93961c-c5fc-4c5b-9a84-00db5d7dc010",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "c0e8540b-36da-4f3d-9cb7-f0452d938553",
-                            Id = "99ec9705-db80-48fd-97bb-8b35b68c029b",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "a1a3d4e9-4e70-4f7f-8670-7422b6513f3a",
-                            Id = "63e7f3a5-64b4-400a-bcff-a41a3fdc90e8",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
                             Id = "7a3ca6cf-d7f6-4f3d-92b4-24b7539c5be5",
-                            Id = "ea3ba056-56cf-4018-9920-5bcf95da0c0a",
                             Name = "Sales",
                             NormalizedName = "SALES"
                         },
                         new
                         {
                             Id = "95cb486b-64fd-4dc6-81ab-9b858b911b34",
-                            Id = "9e06e4bb-4146-4624-b429-56709b888941",
                             Name = "WarehouseManager",
                             NormalizedName = "WAREHOUSEMANAGER"
                         },
                         new
                         {
                             Id = "4ac1e94f-72b4-4447-b8a4-34ff444587ae",
-                            Id = "fcb700bb-abce-47de-b29f-bffde5c64b4c",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -589,7 +586,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CenterId")
+                    b.Property<int?>("CenterId")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -1686,13 +1683,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Department", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Center", "Center")
+                    b.HasOne("ServiceCenter.Domain.Entities.Center", null)
                         .WithMany("Departments")
-                        .HasForeignKey("CenterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Center");
+                        .HasForeignKey("CenterId");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Feedback", b =>
