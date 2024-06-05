@@ -137,5 +137,33 @@ public class ProductBrandService(ServiceCenterBaseDbContext dbContext, IMapper m
         _logger.LogInformation("Fetching search ProductBrand by name . Total count: {ProductBrand}.", names.Count);
         return Result.Success(names);
     }
+    public async Task<Result<List<ProductBrandResponseDto>>> AssignProductBrandToInventoryAsync(int inventoryId, int productBrandId)
+    {
+        var inventory = await _dbContext.Inventories.FindAsync(inventoryId);
+
+        if (inventory is null)
+        {
+            _logger.LogWarning("InventoryId Id not found,Id {id}", inventoryId);
+
+            return Result.NotFound(["The Facility is not found"]);
+        }
+
+        var productBrand = await _dbContext.ProductBrands.FindAsync(productBrandId);
+
+        if (productBrand is null)
+        {
+            _logger.LogWarning("Property Id not found,Id {id}", productBrandId);
+
+            return Result.NotFound(["The Property is not found"]);
+        }
+
+        inventory.ProductBrands.Add(productBrand);
+        await _dbContext.SaveChangesAsync();
+
+        _logger.LogInformation("Successfully assigned productBrand to inventory");
+
+        return Result.SuccessWithMessage("productBrand added successfully to inventory");
+
+    }
 
 }

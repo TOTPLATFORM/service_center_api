@@ -46,4 +46,5 @@ public interface IProductBrandService : IApplicationService, IScopedService
     /// <param name="text">ProductBrand name</param>
     /// <returns>ProductBrand response dto </returns>
     public  Task<Result<List<ProductBrandResponseDto>>> SearchProductBrandByTextAsync(string text);
+    public Task<Result<List<ProductBrandResponseDto>>> AssignProductBrandToInventoryAsync(int inventoryId, int productBrandId);
 }
