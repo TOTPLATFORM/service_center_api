@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -21,14 +22,14 @@ public interface IEmployeeService : IApplicationService, IScopedService
     /// asynchronously retrieves all employees in the system.
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of employee response DTOs.</returns>
-	public Task<Result<List<EmployeeResponseDto>>> GetAllEmployeesAsync();
+	public Task<Result<PaginationResult<EmployeeResponseDto>>> GetAllEmployeesAsync(int itemCount, int index);
 
     /// <summary>
     /// asynchronously retrieves a employee by their unique identifier.
     /// </summary>
     /// <param name="id">the unique identifier of the employee to retrieve.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the employee response DTO.</returns>
-	public Task<Result<EmployeeResponseDto>> GetEmployeeByIdAsync(string id);
+	public Task<Result<EmployeeGetByIdResponseDto>> GetEmployeeByIdAsync(string id);
 
     /// <summary>
     /// asynchronously updates the data of an existing employee.
@@ -44,7 +45,7 @@ public interface IEmployeeService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">the text to search within employee data.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of employee response DTOs that match the search criteria.</returns>
-	public Task<Result<List<EmployeeResponseDto>>> SearchEmployeeByTextAsync(string text);
+	public Task<Result<PaginationResult<EmployeeResponseDto>>> SearchEmployeeByTextAsync(string text, int itemCount, int index);
 
     /// <summary>
     /// asynchronously deletes a employee from the system by their unique identifier.
