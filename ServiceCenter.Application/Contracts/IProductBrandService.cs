@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,8 @@ public interface IProductBrandService : IApplicationService, IScopedService
 		/// function to get all productBrand 
 		/// </summary>
 		/// <returns>list all product brand response dto </returns>
-		public Task<Result<List<ProductBrandResponseDto>>> GetAllProductBrandAsync();
+		public Task<Result<PaginationResult<ProductBrandResponseDto>>> GetAllProductBrandAsync(int itemCount, int index);
+
     /// <summary>
     /// function to get  product brand by id that take   product brand id
     /// </summary>
@@ -46,4 +48,5 @@ public interface IProductBrandService : IApplicationService, IScopedService
     /// <param name="text">ProductBrand name</param>
     /// <returns>ProductBrand response dto </returns>
     public  Task<Result<List<ProductBrandResponseDto>>> SearchProductBrandByTextAsync(string text);
+    public Task<Result<List<ProductBrandResponseDto>>> AssignProductBrandToInventoryAsync(int inventoryId, int productBrandId);
 }

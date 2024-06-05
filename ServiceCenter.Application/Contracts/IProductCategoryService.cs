@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ public interface IProductCategoryService :IApplicationService, IScopedService
     /// function to get all product category 
     /// </summary>
     /// <returns>list all Product category response dto </returns>
-    public Task<Result<List<ProductCategoryResponseDto>>> GetAllProductCategoryAsync();
+    public Task<Result<PaginationResult<ProductCategoryResponseDto>>> GetAllProductCategoryAsync(int itemCount, int index);
     /// <summary>
     /// function to get  product category by id that take   ProductCategory id
     /// </summary>
@@ -46,4 +47,5 @@ public interface IProductCategoryService :IApplicationService, IScopedService
     /// <param name="text">ProductCategory name</param>
     /// <returns>ProductCategory response dto </returns>
     public Task<Result<List<ProductCategoryResponseDto>>> SearchProductCategoryByTextAsync(string text);
+    public Task<Result<List<ProductCategoryResponseDto>>> AssignProductCategoryToProductBrandAsync(int productCategoryId, int productBrandId);
 }
