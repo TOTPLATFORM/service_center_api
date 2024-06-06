@@ -13,6 +13,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ServiceCenter.Application.Contracts;
+using ServiceCenter.Core.Entities;
+using ServiceCenter.Application.ExtensionForServices;
 
 namespace ServiceCenter.Application.Services;
 public class SubscriptionService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<SubscriptionService> logger, IUserContextService userContext) : ISubscriptionService
@@ -47,13 +49,13 @@ public class SubscriptionService(ServiceCenterBaseDbContext dbContext, IMapper m
     }
 
     ///<inheritdoc/>
-    public async Task<Result<List<SubscriptionResponseDto>>> GetAllSubscriptionAsync()
+    public async Task<Result<PaginationResult<SubscriptionResponseDto>>> GetAllSubscriptionAsync(int itemCount, int index)
     {
         var result = await _dbContext.Subscriptions
              .ProjectTo<SubscriptionResponseDto>(_mapper.ConfigurationProvider)
-             .ToListAsync();
+             .GetAllWithPagination(itemCount, index);
 
-        _logger.LogInformation("Fetching all  Subscription. Total count: { Subscription}.", result.Count);
+        _logger.LogInformation("Fetching all  Subscription. Total count: { Subscription}.", result.Data.Count);
 
         return Result.Success(result);
     }
