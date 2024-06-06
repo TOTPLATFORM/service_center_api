@@ -15,7 +15,7 @@ public class Center : AuditableEntity
 	public virtual ICollection<Branch> Branches { get; set; } = new HashSet<Branch>();
     public virtual ICollection<Department> Departments { get; set; } = new HashSet<Department>();
     public virtual ICollection<Service> Services { get; set; } = new HashSet<Service>();
-    public virtual ICollection<Sales?> Sales { get; set; } = new HashSet<Sales>();
+
     public virtual ICollection<Campagin?> Campagins { get; set; } = new HashSet<Campagin>();
     public virtual ICollection<Vendor?> Vendors { get; set; } = new HashSet<Vendor>();
 
