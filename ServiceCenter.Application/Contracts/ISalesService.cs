@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ public interface ISalesService : IApplicationService, IScopedService
     /// function to get all sales 
     /// </summary>
     /// <returns>list all salesResponseDto </returns>
-    public Task<Result<List<SalesResponseDto>>> GetAllSalesAsync();
+    public Task<Result<PaginationResult<SalesResponseDto>>> GetAllSalesAsync(int itemCount, int index);
 
     /// <summary>
     /// function to get sales by id that take  sales id
@@ -47,7 +48,7 @@ public interface ISalesService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">text</param>
     /// <returns>all saleses that contain this text </returns>
-    public Task<Result<List<SalesResponseDto>>> SearchSalesByTextAsync(string text);
+    public Task<Result<PaginationResult<SalesResponseDto>>> SearchSalesByTextAsync(string text, int itemCount, int index);
 
     /// <summary>
     /// function to delete Sales that take SalesDto   
