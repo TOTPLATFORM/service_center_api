@@ -1,5 +1,6 @@
 ﻿using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ public interface ISubscriptionService : IApplicationService, IScopedService
     /// asynchronously retrieves all contracts in the system.
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of contract response DTOs.</returns>
-    public Task<Result<List<SubscriptionResponseDto>>> GetAllSubscriptionAsync();
+    public Task<Result<PaginationResult<SubscriptionResponseDto>>> GetAllSubscriptionAsync(int itemCount, int index);
     /// <summary>
     /// asynchronously retrieves a contract by their unique identifier.
     /// </summary>
