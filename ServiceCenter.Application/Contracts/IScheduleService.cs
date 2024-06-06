@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -11,48 +12,60 @@ namespace ServiceCenter.Application.Contracts;
 public interface IScheduleService : IApplicationService, IScopedService
 {
     /// <summary>
-    /// asynchronously adds a new schedule to the database.
+    /// Retrieves all schedules for a specific serviceprovider by their ID.
     /// </summary>
-    /// <param name="scheduleRequestDto">the schedule data transfer object containing the details necessary for creation.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the schedule addition.</returns>
-    public Task<Result> AddScheduleAsync(ScheduleRequestDto scheduleRequestDto);
-    /// <summary>
-    /// asynchronously retrieves all schedules in the system.
-    /// </summary>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of schedule response DTOs.</returns>
-    public Task<Result<List<ScheduleResponseDto>>> GetAllSchedulesAsync();
+    /// <param name="serviceproviderId">The ID of the serviceprovider whose schedules are to be retrieved.</param>
+    /// <returns>A Result containing a list of schedule response DTOs.</returns>
+    Task<Result<PaginationResult<ScheduleResponseDto>>> GetAllSchedulesByServiceProviderIdAsync(string serviceproviderId, int itemCount, int index);
 
     /// <summary>
-    /// asynchronously searches for schedules based on the provided text.
+    /// Retrieves a specific schedule by its ID.
     /// </summary>
-    /// <param name="text">the text to search within schedule data.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of schedule response DTOs that match the search criteria.</returns>
-    public Task<Result<List<ScheduleResponseDto>>> SearchSchedulesByTextAsync(string text);
-    /// <summary>
-    /// asynchronously retrieves a schedule by their unique identifier.
-    /// </summary>
-    /// <param name="id">the unique identifier of the schedule to retrieve.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the schedule response DTO.</returns>
-    public Task<Result<ScheduleGetByIdResponseDto>> GetScheduleByIdAsync(int id);
-    /// <summary>
-    /// asynchronously updates the data of an existing schedule.
-    /// </summary>
-    /// <param name="id">the unique identifier of the schedule to update.</param>
-    /// <param name="scheduleRequestDto">the schedule data transfer object containing the updated details.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
-    public Task<Result<ScheduleResponseDto>> UpdateScheduleAsync(int id, ScheduleRequestDto scheduleRequestDto);
-    /// <summary>
-    /// asynchronously deletes a schedule from the system by their unique identifier.
-    /// </summary>
-    /// <param name="id">the unique identifier of the schedule to delete.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
-    public Task<Result> DeleteScheduleAsync(int id);
+    /// <param name="id">The ID of the schedule to retrieve.</param>
+    /// <returns>A Result containing the schedule response DTO, or an error if not found.</returns>
+    Task<Result<ScheduleResponseDto>> GetScheduleByIdAsync(int id);
 
     /// <summary>
-    /// asynchronously get all a schedule by agent from the system by their unique identifier.
+    /// Adds a new schedule for a serviceprovider.
     /// </summary>
-    /// <param name="id">the unique identifier of the agent to get all.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all schedule by agent operation.</returns>
+    /// <param name="requestDto">The DTO representing the schedule to create.</param>
+    /// <returns>A Result indicating the outcome of the add operation.</returns>
+    Task<Result> AddScheduleAsync(ScheduleRequestDto requestDto);
 
-    public Task<Result<List<ScheduleResponseDto>>> GetScheduleByEmployeeAsync(string id);
+    /// <summary>
+    /// Updates an existing schedule.
+    /// </summary>
+    /// <param name="id">The ID of the schedule to update.</param>
+    /// <param name="scheduleRequestDto">The DTO representing the updated schedule.</param>
+    /// <returns>A Result containing the updated schedule response DTO.</returns>
+    Task<Result<ScheduleResponseDto>> UpdateScheduleAsync(int id, ScheduleRequestDto scheduleRequestDto);
+
+    /// <summary>
+    /// Deletes a schedule by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the schedule to delete.</param>
+    /// <returns>A Result indicating the outcome of the deletion operation.</returns>
+    Task<Result> DeleteScheduleAsync(int id);
+
+    /// <summary>
+    /// Retrieves available schedules for a specific serviceprovider for the entire week.
+    /// </summary>
+    /// <param name="serviceproviderId">The ID of the serviceprovider whose available schedules are to be retrieved.</param>
+    /// <returns>A Result containing a list of available schedule response DTOs.</returns>
+    Task<Result<List<ScheduleResponseDto>>> GetAvailableSchedulesForServiceProviderByWeekAsync(string serviceproviderId);
+
+    /// <summary>
+    /// Retrieves available schedules for a specific serviceprovider on a specific day.
+    /// </summary>
+    /// <param name="serviceproviderId">The ID of the serviceprovider whose available schedules are to be retrieved.</param>
+    /// <param name="dayOfWeek">The day of the week for which schedules are to be retrieved.</param>
+    /// <returns>A Result containing a list of available schedule response DTOs.</returns>
+    Task<Result<List<ScheduleResponseDto>>> GetAvailableSchedulesForServiceProviderByDayAsync(string serviceproviderId, DayOfWeek dayOfWeek);
+
+    /// <summary>
+    /// Retrieves a summary of schedules for a specific serviceprovider.
+    /// </summary>
+    /// <param name="serviceproviderId">The ID of the serviceprovider.</param>
+    /// <returns>A Result containing a list of serviceprovider schedule summary DTOs.</returns>
+    public Task<Result<List<ServiceProviderWeeklyScheduleDto>>> GetServiceProviderWeeklySchedulesAsync(string serviceproviderId);
 }
