@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for department-related services that manages department data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface IDepartmentService : IApplicationService, IScopedService
 {
     /// <summary>

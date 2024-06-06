@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for center-related services that manages center data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface ICenterService : IApplicationService, IScopedService
 {
     /// <summary>
@@ -36,5 +39,5 @@ public interface ICenterService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="id">the unique identifier of the center to delete.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
-	public Task<Result> DeleteCenterAsync(int id);
+	//public Task<Result> DeleteCenterAsync(int id);
 }

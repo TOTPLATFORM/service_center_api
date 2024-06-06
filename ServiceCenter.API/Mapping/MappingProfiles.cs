@@ -6,73 +6,72 @@ namespace ServiceCenter.API.Mapping;
 
 public class MappingProfiles : Profile
 {
-    public MappingProfiles()
-    {
+	public MappingProfiles()
+	{
+		this.AddProductBrandMapping();
 
+		this.AddInventoryMapping();
 
-        this.AddProductBrandMapping();
+		this.AddItemMapping();
 
-        this.AddInventoryMapping();
+		this.AddOrderMapping();
 
-        this.AddItemMapping();
+		this.AddItemCategoryMapping();
 
-        this.AddOrderMapping();
+		this.AddServiceCategoryMapping();
 
-        this.AddItemCategoryMapping();
+		this.AddCenterMapping();
 
-        this.AddServiceCategoryMapping();
+		this.AddProductCategoryMapping();
 
-        this.AddCenterMapping();
+		this.AddProductMapping();
 
-        this.AddProductCategoryMapping();
+		this.AddItemMapping();
 
-        this.AddProductMapping();
+		this.AddOrderMapping();
 
-        this.AddItemMapping();
+		this.AddEmployeeMapping();
 
-        this.AddOrderMapping();
+		this.AddItemCategoryMapping();
 
-       this.AddEmployeeMapping();
+		this.AddBranchMapping();
 
-        this.AddItemCategoryMapping();
+		this.AddDepartmentMapping();
 
-        this.AddBranchMapping();
+		this.AddFeedbackMapping();
 
-        this.AddDepartmentMapping();
+		this.AddCompliantMapping();
 
-        this.AddFeedbackMapping();
+		this.AddServicePackageMapping();
 
-        this.AddCompliantMapping();
+		 this.AddScheduleMapping();
 
-        this.AddServicePackageMapping();
+		this.AddServiceMapping();
 
-     //   this.AddScheduleMapping();
+		this.AddSubscriptionMapping();
 
-        this.AddServiceMapping();
+		this.AddOfferMapping();
 
-        this.AddSubscriptionMapping();
+		this.AddAppointmentMapping();
 
-        this.AddOfferMapping();
+	    this.AddContactMapping();
 
-        this.AddAppointmentMapping();
+		this.AddReportMapping();
 
-     //   this.AddContactMapping();
+		this.AddAuthMapping();
 
-
-
-        this.AddReportMapping();
-
-        this.AddAuthMapping();
-
-        this.AddRatingServiceMapping();
+		this.AddRatingServiceMapping();
 
         this.AddVendorMapping();
 
-        //this.AddWareHouseManagerMapping();
+		this.AddWareHouseManagerMapping();
 
         this.AddManagerMapping();
         this.AddCampaginMapping();
 
-    }
+		this.AddSalesMapping();
+
+		this.AddCampaginMapping();
+	}
 
 }

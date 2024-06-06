@@ -23,5 +23,6 @@ public class Service : AuditableEntity
 
     public virtual ICollection<Item> Item { get; set; }=new HashSet<Item>();
     public virtual ICollection<Feedback?> Feedbacks { get; set; } = new HashSet<Feedback?>();
+    public virtual ICollection<Rating?> Ratings { get; set; } = new HashSet<Rating?>();
 
 }

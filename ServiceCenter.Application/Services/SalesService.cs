@@ -26,8 +26,20 @@ public class SalesService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
     ///<inheritdoc/>
     public async Task<Result> AddSalesAsync(SalesRequestDto salesRequestDto)
     {
-        string role = "Sales";
+
+		string role = "Sales";
+
         var sales = _mapper.Map<Sales>(salesRequestDto);
+        var department = await _dbContext.Departments.FindAsync(salesRequestDto.DepartmentId);
+
+        if (department is null)
+        {
+            _logger.LogWarning("Department Invaild Id ,Id {departmentId}", salesRequestDto.DepartmentId);
+
+            return Result.NotFound(["Department Invaild Id"]);
+        }
+        sales.Department = department;
+
 
         var salesAdded = await _authService.RegisterUserWithRoleAsync(sales,salesRequestDto.Password,role);
 
@@ -35,10 +47,12 @@ public class SalesService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
         {
             return Result.Error(salesAdded.Errors.FirstOrDefault());
         }
-
         _logger.LogInformation("Sales added successfully in the database");
 
         return Result.SuccessWithMessage("Sales added successfully");
+
+
+
     }
 
     public async Task<Result<List<SalesResponseDto>>> GetAllSalesAsync()

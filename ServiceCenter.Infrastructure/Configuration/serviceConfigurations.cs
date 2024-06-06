@@ -30,19 +30,6 @@ public  class serviceConfigurations : IEntityTypeConfiguration<Service>
         builder.Property(T => T.Avaliable)
 		       .IsRequired();
 
-		//builder.HasMany(s => s.ServicePackages)
-		//	   .WithMany(sp => sp.Services)
-		//	   .UsingEntity<Dictionary<string, object>>(
-		//		"ServicePackageServices",
-		//		j => j.HasOne<ServicePackage>()
-		//			  .WithMany()
-		//			  .HasForeignKey("ServicePackageId"),
-		//		j => j.HasOne<Service>()
-		//			  .WithMany()
-		//			  .HasForeignKey("ServiceId"),
-		//		j =>
-		//		{
-		//			j.HasKey("ServiceId", "ServicePackageId");
-		//		});
+		
 	}
 }

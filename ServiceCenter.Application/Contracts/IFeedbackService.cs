@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for feedback-related services that manages feedback data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface IFeedbackService : IApplicationService, IScopedService
 {
     /// <summary>

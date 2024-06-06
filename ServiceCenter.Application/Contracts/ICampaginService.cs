@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for campagin-related services that manages campagin data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface ICampaginService : IApplicationService, IScopedService
 {
     /// <summary>

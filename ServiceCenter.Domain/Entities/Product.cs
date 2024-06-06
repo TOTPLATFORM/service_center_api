@@ -13,7 +13,7 @@ public class Product : AuditableEntity
     public string ProductDescription { get; set; } = "";
     public int ProductPrice { get; set; } 
    public virtual ICollection<Feedback?> Feedbacks { get; set; } = new HashSet<Feedback?>();
-
-   public virtual Sales? Sales { get; set; } = default;
-
+   public virtual ProductCategory ProductCategory { get; set; } = default;
+    public virtual ICollection<Order?> Orders   { get; set; } = new HashSet<Order?>();
+    public virtual ICollection<Rating?> Ratings { get; set; } = new HashSet<Rating?>();
 }

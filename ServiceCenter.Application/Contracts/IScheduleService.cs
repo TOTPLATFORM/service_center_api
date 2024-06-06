@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for schedule-related services that manages schedule data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface IScheduleService : IApplicationService, IScopedService
 {
     /// <summary>

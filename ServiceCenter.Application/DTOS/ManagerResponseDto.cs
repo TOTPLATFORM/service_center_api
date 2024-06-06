@@ -15,9 +15,6 @@ public class ManagerResponseDto
     public string ManagerLastName { get; set; } = "";
     public string ManagerPhoneNumber { get; set; } = "";
     public string UserName { get; set; } = "";
-    public string Responsibilities { get; set; } = "";
-    public DateOnly HiringDate { get; set; }
-    public int WorkingHours { get; set; }
-    public int Experience { get; set; }
     public string DepartmentName { get; set; } = "";
+
 }
