@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Enums;
 using System;
@@ -11,49 +12,74 @@ namespace ServiceCenter.Application.Contracts;
 public interface IAppointmentService : IApplicationService, IScopedService
 {
     /// <summary>
-    /// asynchronously adds a new appointment to the database.
+    /// Asynchronously deletes an appointment.
     /// </summary>
-    /// <param name="appointmentRequestDto">the appointment data transfer object containing the details necessary for creation.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the appointment addition.</returns>
-    public Task<Result> AddAppointmentAsync(AppointmentRequestDto appointmentRequestDto);
-    /// <summary>
-    /// asynchronously retrieves all appointments in the system.
-    /// </summary>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of appointment response DTOs.</returns>
-    public Task<Result<List<AppointmentResponseDto>>> GetAllAppointmentsAsync();
-    /// <summary>
-    /// asynchronously retrieves a appointment by their unique identifier.
-    /// </summary>
-    /// <param name="id">the unique identifier of the appointment to retrieve.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the appointment response DTO.</returns>
-    public Task<Result<AppointmentResponseDto>> GetAppointmentByIdAsync(int id);
-    /// <summary>
-    /// asynchronously updates the data of an existing appointment.
-    /// </summary>
-    /// <param name="id">the unique identifier of the appointment to update.</param>
-    /// <param name="appointmentRequestDto">the appointment data transfer object containing the updated details.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
-    public Task<Result<AppointmentResponseDto>> UpdateAppointmentAsync(int id, AppointmentRequestDto appointmentRequestDto);
-    /// <summary>
-    /// asynchronously deletes a appointment from the system by their unique identifier.
-    /// </summary>
-    /// <param name="id">the unique identifier of the appointment to delete.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
-    public Task<Result> DeleteAppointmentAsync(int id);
+    /// <param name="id">The ID of the appointment to be deleted.</param>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the delete operation.</returns>
+    Task<Result> DeleteAppointmentAsync(int id);
 
     /// <summary>
-    /// asynchronously get all a appointment by customer from the system by their unique identifier.
+    /// Asynchronously retrieves an appointment by its ID.
     /// </summary>
-    /// <param name="id">the unique identifier of the customer to get all.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all appointment by agent operation.</returns>
-
-    public Task<Result<List<AppointmentResponseDto>>> GetAppointmentsByCustomerAsync(string id);
+    /// <param name="id">The ID of the appointment to retrieve.</param>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result containing the appointment response DTO, or a NotFound result if the appointment is not found.</returns>
+    Task<Result<AppointmentResponseDto>> GetAppointmentByIdAsync(int id);
 
     /// <summary>
-    /// asynchronously get all a appointment by employee from the system by their unique identifier.
+    /// Asynchronously retrieves all appointments.
     /// </summary>
-    /// <param name="id">the unique identifier of the employee to get all.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all appointment by client operation.</returns>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result containing a list of appointment response DTOs.</returns>
+    Task<Result<PaginationResult<AppointmentResponseDto>>> GetAllAppointmentsAsync(int itemCount, int index);
 
-    public Task<Result<List<AppointmentResponseDto>>> GetsAppointmentsByEmployeeAsync(string id);
+    /// <summary>
+    /// Asynchronously retrieves all appointments for a specific contact by their ID.
+    /// </summary>
+    /// <param name="contactId">The ID of the contact whose appointments are to be retrieved.</param>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result containing a list of appointment response DTOs.</returns>
+    Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByContactIdAsync(string contactId, int itemCount, int index);
+
+    /// <summary>
+    /// Asynchronously retrieves all appointments for a specific serviceprovider by their ID.
+    /// </summary>
+    /// <param name="serviceproviderId">The ID of the serviceprovider whose appointments are to be retrieved.</param>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result containing a list of appointment response DTOs.</returns>
+    Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceProviderIdAsync(string serviceproviderId, int itemCount, int index);
+
+    /// <summary>
+    /// Asynchronously books an appointment.
+    /// </summary>
+    /// <param name="appointmentRequestDto">The DTO representing the appointment to be booked.</param>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the booking operation.</returns>
+    Task<Result> BookAppointmentAsync(AppointmentRequestDto appointmentRequestDto);
+
+    /// <summary>
+    /// Asynchronously cancels an appointment.
+    /// </summary>
+    /// <param name="id">The ID of the appointment to be canceled.</param>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the cancellation operation.</returns>
+    Task<Result> CancelAppointmentAsync(int id);
+
+    /// <summary>
+    /// Changes the status of an appointment.
+    /// </summary>
+    /// <param name="id">The ID of the appointment to change the status of.</param>
+    /// <param name="status">The new status of the appointment.</param>
+    /// <returns>A Result indicating the outcome of the update operation.</returns>
+    Task<Result> ChangeAppointmentStatusAsync(int id, AppointmentStatus status);
+
+    /// <summary>
+    /// Retrieves appointments by serviceprovider ID and status.
+    /// </summary>
+    /// <param name="serviceproviderId">The ID of the serviceprovider whose appointments to retrieve.</param>
+    /// <param name="status">The status of the appointments to filter by.</param>
+    /// <returns>A Result containing a list of appointment response DTOs.</returns>
+    Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceProviderIdAndStatusAsync(string serviceproviderId, AppointmentStatus status, int itemCount, int index);
+
+    /// <summary>
+    /// Retrieves appointments by contact ID and status.
+    /// </summary>
+    /// <param name="contactId">The ID of the contact whose appointments to retrieve.</param>
+    /// <param name="status">The status of the appointments to filter by.</param>
+    /// <returns>A Result containing a list of appointment response DTOs.</returns>
+    Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByContactIdAndStatusAsync(string contactId, AppointmentStatus status, int itemCount, int index);
 }
