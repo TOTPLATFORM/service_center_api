@@ -10,7 +10,13 @@ namespace ServiceCenter.Application.DTOS;
 public class ScheduleRequestDto
 {
     [Required]
-    public string EmployeeId { get; set; } = "";
+    public string ServiceProviderId { get; set; } = "";
     [Required]
-    public int TimeSlotId { get; set; }
+    public DayOfWeek DayOfWeek { get; set; }
+    [Required]
+    public TimeOnly StartTime { get; set; }
+    [Required]
+    public TimeOnly EndTime { get; set; }
+    [Required]
+    public TimeSpan Duration { get; set; }
 }
