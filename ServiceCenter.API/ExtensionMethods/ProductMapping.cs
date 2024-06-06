@@ -8,8 +8,11 @@ public static class ProductMapping
 {
     public static void AddProductMapping(this MappingProfiles map)
     {
-        map.CreateMap<ProductRequestDto, Product>();
-
-        map.CreateMap<Product, ProductResponseDto>();
+        map.CreateMap<ProductRequestDto, Product>()
+          .ForPath(dest => dest.Sales.Id, src => src.MapFrom(src => src.SalesId))
+         .ReverseMap();
+        map.CreateMap<Product, ProductResponseDto>()
+            .ForMember(dest => dest.SalesName, src => src.MapFrom(src => src.Sales.FirstName))
+            .ReverseMap();
     }
 }

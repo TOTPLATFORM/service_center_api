@@ -10,7 +10,11 @@ namespace ServiceCenter.Application.DTOS;
 public class AppointmentRequestDto
 {
     [Required]
-    public int ScheduleId { get; set; }
+    public string ContactId { get; set; } = "";
     [Required]
-    public string CustomerId { get; set; } = "";
+    public int ScheduleId { get; set; }
+    //[Required]
+    //public DateTime AppointmentDate { get; set; }
+    [Required]
+    public string Description { get; set; } = "";
 }

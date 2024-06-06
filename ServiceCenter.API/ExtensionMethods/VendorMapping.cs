@@ -9,6 +9,7 @@ public static class VendorMapping
     public static void AddVendorMapping(this MappingProfiles map)
     {
         map.CreateMap<VendorRequestDto, Vendor>()
+            .ForPath(dest => dest.Center.Id, src => src.MapFrom(src => src.CenterId))
             .ReverseMap();
 
         map.CreateMap<Vendor, VendorResponseDto>()

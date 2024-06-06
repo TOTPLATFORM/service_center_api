@@ -10,6 +10,5 @@ public class ItemCategoryResponseDto
 {
     public int Id { get; set; }
     public string CategoryName { get; set; } = "";
-    public  ICollection<ItemResponseDto> Items { get; set; } = new HashSet<ItemResponseDto>();
-    public  ICollection<InventoryResponseDto> Inventories { get; set; } = new HashSet<InventoryResponseDto>();
+    public  ICollection<string> InventoryName { get; set; } = new HashSet<string>();
 }

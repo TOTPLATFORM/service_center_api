@@ -10,6 +10,8 @@ public class ItemCategoryRequestDto
 {
     [Required]
     public string CategoryName { get; set; } = "";
+    [Required]
+    public ICollection<int> inventoryIds { get; set; } = new HashSet<int>();
  
 }
 

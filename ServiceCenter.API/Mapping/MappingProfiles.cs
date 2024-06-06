@@ -62,11 +62,12 @@ public class MappingProfiles : Profile
 
 		this.AddRatingServiceMapping();
 
-		this.AddVendorMapping();
+        this.AddVendorMapping();
 
 		this.AddWareHouseManagerMapping();
 
-		this.AddManagerMapping();
+        this.AddManagerMapping();
+        this.AddCampaginMapping();
 
 		this.AddSalesMapping();
 

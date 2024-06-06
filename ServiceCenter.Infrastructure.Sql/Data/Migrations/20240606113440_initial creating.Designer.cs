@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceCenter.Infrastructure.BaseContext;
 
@@ -11,9 +12,11 @@ using ServiceCenter.Infrastructure.BaseContext;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
-    partial class ServiceCenterBaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240606113440_initial creating")]
+    partial class initialcreating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,21 +265,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("OrderProduct", b =>
-                {
-                    b.Property<int>("OrdersId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrdersId", "ProductsId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("OrderProduct");
-                });
-
             modelBuilder.Entity("ProductBrandProductCategory", b =>
                 {
                     b.Property<int>("ProductBrandsId")
@@ -290,36 +278,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.HasIndex("ProductCategoriesId");
 
                     b.ToTable("ProductBrandProductCategory");
-                });
-
-            modelBuilder.Entity("ProductRating", b =>
-                {
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RatingsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductsId", "RatingsId");
-
-                    b.HasIndex("RatingsId");
-
-                    b.ToTable("ProductRating");
-                });
-
-            modelBuilder.Entity("RatingService", b =>
-                {
-                    b.Property<int>("RatingsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServicesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RatingsId", "ServicesId");
-
-                    b.HasIndex("ServicesId");
-
-                    b.ToTable("RatingService");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.ApplicationUser", b =>
@@ -911,10 +869,10 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ServiceId")
+                    b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
                     b.Property<DateOnly>("StartDate")
@@ -992,7 +950,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductCategoryId")
+                    b.Property<int?>("ProductCategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("ProductDescription")
@@ -1008,12 +966,17 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.Property<int>("ProductPrice")
                         .HasColumnType("int");
 
+                    b.Property<string>("SalesId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductCategoryId");
+
+                    b.HasIndex("SalesId");
 
                     b.ToTable("Products");
                 });
@@ -1682,21 +1645,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OrderProduct", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Order", null)
-                        .WithMany()
-                        .HasForeignKey("OrdersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServiceCenter.Domain.Entities.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ProductBrandProductCategory", b =>
                 {
                     b.HasOne("ServiceCenter.Domain.Entities.ProductBrand", null)
@@ -1708,36 +1656,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.HasOne("ServiceCenter.Domain.Entities.ProductCategory", null)
                         .WithMany()
                         .HasForeignKey("ProductCategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ProductRating", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServiceCenter.Domain.Entities.Rating", null)
-                        .WithMany()
-                        .HasForeignKey("RatingsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("RatingService", b =>
-                {
-                    b.HasOne("ServiceCenter.Domain.Entities.Rating", null)
-                        .WithMany()
-                        .HasForeignKey("RatingsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServiceCenter.Domain.Entities.Service", null)
-                        .WithMany()
-                        .HasForeignKey("ServicesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1880,11 +1798,15 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     b.HasOne("ServiceCenter.Domain.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ServiceCenter.Domain.Entities.Service", "Service")
                         .WithMany()
-                        .HasForeignKey("ServiceId");
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
 
@@ -1893,13 +1815,15 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Product", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.ProductCategory", "ProductCategory")
+                    b.HasOne("ServiceCenter.Domain.Entities.ProductCategory", null)
                         .WithMany("Products")
-                        .HasForeignKey("ProductCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductCategoryId");
 
-                    b.Navigation("ProductCategory");
+                    b.HasOne("ServiceCenter.Domain.Entities.Sales", "Sales")
+                        .WithMany("Products")
+                        .HasForeignKey("SalesId");
+
+                    b.Navigation("Sales");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Report", b =>
@@ -2215,6 +2139,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Sales", b =>
                 {
+                    b.Navigation("Products");
+
                     b.Navigation("Reports");
                 });
 
