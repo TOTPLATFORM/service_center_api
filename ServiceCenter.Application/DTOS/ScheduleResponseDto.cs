@@ -9,8 +9,9 @@ namespace ServiceCenter.Application.DTOS;
 public class ScheduleResponseDto
 {
     public int Id { get; set; }
-    public string EmployeeName { get; set; } = "";
+    public DayOfWeek DayOfWeek { get; set; }
     public TimeOnly StartTime { get; set; }
     public TimeOnly EndTime { get; set; }
-    public string Day { get; set; } = "";
+    public string ServiceProviderId { get; set; } = "";
+    public string ServiceProviderName { get; set; } = "";
 }
