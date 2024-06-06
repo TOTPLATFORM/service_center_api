@@ -10,6 +10,8 @@ namespace ServiceCenter.Domain.Enums;
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum Category
 {
-   Service,
-   Product
+    BuyOneGetOne,
+    Sales50Percentange,
+    FreeDelivery,
+    Voucher
 }
