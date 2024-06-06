@@ -28,7 +28,7 @@ public class ItemCategoryService(ServiceCenterBaseDbContext dbContext, IMapper m
         foreach (var item in ItemCategoryRequestDto.inventoryIds)
         {
             inventory.Add(await _dbContext.Inventories.FirstOrDefaultAsync(i => i.Id == item));
-        }
+        } 
        
         var result = _mapper.Map<ItemCategory>(ItemCategoryRequestDto);
         if (result is null)
