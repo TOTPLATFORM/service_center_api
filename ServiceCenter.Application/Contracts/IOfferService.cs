@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ public interface IOfferService : IApplicationService, IScopedService
     /// function to get all Offer  
     /// </summary>
     /// <returns>list all Offer  response dto </returns>
-    public Task<Result<List<OfferResponseDto>>> GetAllOfferAsync();
+    public Task<Result<PaginationResult<OfferResponseDto>>> GetAllOfferAsync(int itemCount , int index);
     /// <summary>
     /// function to get  Offer  by id that take   Offer id
     /// </summary>
@@ -43,7 +44,7 @@ public interface IOfferService : IApplicationService, IScopedService
 	/// </summary>
 	/// <param name="text">offer name</param>
 	/// <returns>offer response dto </returns>
-	public Task<Result<List<OfferResponseDto>>> SearchOfferByTextAsync(string text);
+	public Task<Result<PaginationResult<OfferResponseDto>>> SearchOfferByTextAsync(string text,int itemCount,int index);
 
 	/// <summary>
 	/// function to delete Offer  that take Offer  id   
@@ -57,6 +58,6 @@ public interface IOfferService : IApplicationService, IScopedService
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of products response DTOs.</returns>
 
-    public Task<Result<List<ProductResponseDto>>> GetProductsByOffer(int offerId);
+    public Task<Result<PaginationResult<ProductResponseDto>>> GetProductsByOffer(int offerId,int itemCount,int index);
 
 }
