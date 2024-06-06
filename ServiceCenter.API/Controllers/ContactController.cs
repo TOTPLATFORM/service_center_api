@@ -6,6 +6,7 @@ using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Enums;
+using ServiceCenter.Core.Entities;
 
 namespace ServiceCenter.API.Controllers;
 
@@ -31,6 +32,19 @@ public class ContactController(IContactService contactService) : BaseController
 		return await _contactService.AddContactAsync(contactRequestDto);
 	}
 
+	/// <summary>
+	/// Register a new customer  to the system.
+	/// </summary>
+	/// <param name="customerRequestDto">The data transfer object containing contact details for creation.</param>
+	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+	[HttpPost("registerCustomer")]
+	[ProducesResponseType(typeof(Result<ContactResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+	public async Task<Result<ContactResponseDto>> RegisterCustomer(CustomerRequestDto customerRequestDto)
+	{
+		return await _contactService.RegisterCustomerAsync(customerRequestDto);
+	}
 
 	/// <summary>
 	/// get all contacts in the system.
@@ -41,10 +55,10 @@ public class ContactController(IContactService contactService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
     [Authorize(Roles = "Admin,Manager,Sales")]
-    [ProducesResponseType(typeof(Result<List<ContactResponseDto>>), StatusCodes.Status200OK)]
-	public async Task<Result<List<ContactResponseDto>>> GetAllContacts()
+    [ProducesResponseType(typeof(Result<PaginationResult<ContactResponseDto>>), StatusCodes.Status200OK)]
+	public async Task<Result<PaginationResult<ContactResponseDto>>> GetAllContacts(int itemCount , int index)
 	{
-		return await _contactService.GetAllContactsAsync();
+		return await _contactService.GetAllContactsAsync(itemCount,index);
 	}
 
 	/// <summary>

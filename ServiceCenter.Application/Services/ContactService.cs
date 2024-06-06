@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Domain.Enums;
@@ -45,15 +47,40 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
     }
 
 	///<inheritdoc/>
-	public async Task<Result<List<ContactResponseDto>>> GetAllContactsAsync()
+	public async Task<Result<PaginationResult<ContactResponseDto>>> GetAllContactsAsync(int itemCount,int index)
 	{
 		var result = await _dbContext.Contacts
 				 .ProjectTo<ContactResponseDto>(_mapper.ConfigurationProvider)
-				 .ToListAsync();
+				 .GetAllWithPagination(itemCount,index);
 
-		_logger.LogInformation("Fetching all Contacts. Total count: {Contact}.", result.Count);
+		_logger.LogInformation("Fetching all Contacts. Total count: {Contact}.", result.Data.Count);
 
 		return Result.Success(result);
+	}
+
+	///<inheritdoc/>
+
+	public async Task<Result<ContactResponseDto>> RegisterCustomerAsync(CustomerRequestDto customerRequestDto)
+	{
+		var contact = _mapper.Map<Contact>(customerRequestDto);
+
+		if (contact.Status != ContactStatus.Customer)
+		{
+			contact.Status = ContactStatus.Customer;
+		}
+
+		var role = "Customer";
+
+		var contactAdded = await _authService.RegisterUserWithRoleAsync(contact, customerRequestDto.Password, role);
+
+		if (!contactAdded.IsSuccess)
+		{
+			return Result.Error(contactAdded.Errors.FirstOrDefault());
+		}
+
+		_logger.LogInformation("customer added successfully in the database");
+
+		return Result.SuccessWithMessage("Contact added successfully");
 	}
 
 	///<inheritdoc/>
@@ -76,7 +103,6 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
 		var previousContactStatus = contact.Status;
 		contact.Status = status;
-		//contact.ModifiedBy = _userContext.Email;
 		await _dbContext.SaveChangesAsync();
 		var contactResponseDto = _mapper.Map<ContactResponseDto>(contact);
 
