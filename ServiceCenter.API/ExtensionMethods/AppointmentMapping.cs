@@ -9,11 +9,10 @@ public static class AppointmentMapping
     public static void AddAppointmentMapping(this MappingProfiles map)
     {
         map.CreateMap<AppointmentRequestDto, Appointment>();
-        //map.CreateMap<Appointment, AppointmentResponseDto>()
-        //    .ForMember(d => d.StartTime, o => o.MapFrom(s => s.Schedule.TimeSlot.StartTime))
-        //    .ForMember(d => d.EndTime, o => o.MapFrom(s => s.Schedule.TimeSlot.EndTime))
-        //    .ForMember(d => d.Day, o => o.MapFrom(s => s.Schedule.TimeSlot.Day))
-        //    .ForMember(d => d.Employee, o => o.MapFrom(s => s.Schedule.Employee));
+        map.CreateMap<Appointment, AppointmentResponseDto>()
+            .ForMember(dest => dest.ServiceProvider, src => src.MapFrom(src => src.Schedule.ServiceProvider))
+            .ForMember(dest => dest.StartTime, src => src.MapFrom(src => src.Schedule.StartTime))
+            .ForMember(dest => dest.EndTime, src => src.MapFrom(src => src.Schedule.EndTime));
     }
 }
 
