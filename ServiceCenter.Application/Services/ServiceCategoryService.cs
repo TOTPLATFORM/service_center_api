@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -45,19 +47,19 @@ public class ServiceCategoryService(ServiceCenterBaseDbContext dbContext, IMappe
     }
     ///<inheritdoc/>
 
-    public async Task<Result<List<ServiceCategoryResponseDto>>> GetAllServiceCategoryAsync()
+    public async Task<Result<PaginationResult<ServiceCategoryResponseDto>>> GetAllServiceCategoryAsync(int itemCount, int index)
     {
         var result = await _dbContext.ServiceCategories
                  .ProjectTo<ServiceCategoryResponseDto>(_mapper.ConfigurationProvider)
-                 .ToListAsync();
+                 .GetAllWithPagination(itemCount,index);
 
-        _logger.LogInformation("Fetching all  ServiceCategory. Total count: { ServiceCategory}.", result.Count);
+        _logger.LogInformation("Fetching all  ServiceCategory. Total count: { ServiceCategory}.", result.Data.Count);
 
-        return Result.Success(result);
-    }
+		return Result.Success(result);
+	}
 
-    ///<inheritdoc/>
-    public async Task<Result<ServiceCategoryResponseDto>> GetServiceCategoryByIdAsync(int id)
+	///<inheritdoc/>
+	public async Task<Result<ServiceCategoryResponseDto>> GetServiceCategoryByIdAsync(int id)
     {
         var result = await _dbContext.ServiceCategories
                 .ProjectTo<ServiceCategoryResponseDto>(_mapper.ConfigurationProvider)
@@ -127,13 +129,15 @@ public class ServiceCategoryService(ServiceCenterBaseDbContext dbContext, IMappe
     }
 
     //<inheritdoc/>
-    public async Task<Result<List<ServiceCategoryResponseDto>>> SearchServiceCategoryByTextAsync(string text)
+    public async Task<Result<PaginationResult<ServiceCategoryResponseDto>>> SearchServiceCategoryByTextAsync(string text, int itemCount, int index)
     {
         var names = await _dbContext.ServiceCategories
             .ProjectTo<ServiceCategoryResponseDto>(_mapper.ConfigurationProvider)
             .Where(n => n.ServiceCategoryName.Contains(text))
-            .ToListAsync();
-        _logger.LogInformation("Fetching search ServiceCategory by name . Total count: {ServiceCategory}.", names.Count);
+            .GetAllWithPagination(itemCount,index);
+
+        _logger.LogInformation("Fetching search ServiceCategory by name . Total count: {ServiceCategory}.", names.Data.Count);
+
         return Result.Success(names);
     }
 }

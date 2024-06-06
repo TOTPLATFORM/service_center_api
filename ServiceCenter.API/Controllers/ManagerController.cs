@@ -93,7 +93,7 @@ public class ManagerController(IManagerService managerService) : BaseController
 
 	[HttpGet("search")]
 	[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<ManagerResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<PaginationResult<ManagerResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<PaginationResult<ManagerResponseDto>>> SerachManagerByText(string text, int itemCount, int index)
 	{

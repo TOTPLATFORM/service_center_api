@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
@@ -25,10 +26,10 @@ public class ServiceCategoryController(IServiceCategoryService itemCategoryServi
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(Result<List<ServiceCategoryResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<List<ServiceCategoryResponseDto>>> GetAllServiceCategories()
+    [ProducesResponseType(typeof(Result<PaginationResult<ServiceCategoryResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<PaginationResult<ServiceCategoryResponseDto>>> GetAllServiceCategories(int itemCount, int index)
     {
-        return await _itemCategoryService.GetAllServiceCategoryAsync();
+        return await _itemCategoryService.GetAllServiceCategoryAsync(itemCount,index);
     }
     /// <summary>
     /// action for get ServiceCategory by id that take ServiceCategory id.  
@@ -70,10 +71,10 @@ public class ServiceCategoryController(IServiceCategoryService itemCategoryServi
     /// <param name="text">ServiceCategory name</param>
     /// <returns>ServiceCategory response dto </returns>
     [HttpGet("search/{text}")]
-    [ProducesResponseType(typeof(Result<ServiceCategoryResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<PaginationResult<ServiceCategoryResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<List<ServiceCategoryResponseDto>>> SearchServiceCategoryByText(string text)
+    public async Task<Result<PaginationResult<ServiceCategoryResponseDto>>> SearchServiceCategoryByText(string text, int itemCount, int index)
     {
-        return await _itemCategoryService.SearchServiceCategoryByTextAsync(text);
+        return await _itemCategoryService.SearchServiceCategoryByTextAsync(text,  itemCount,  index);
     }
 }

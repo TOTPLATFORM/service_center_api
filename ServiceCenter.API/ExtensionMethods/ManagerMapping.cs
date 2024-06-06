@@ -15,8 +15,8 @@ public static class ManagerMapping
 		   .ForMember(dest => dest.ManagerLastName, src => src.MapFrom(src => src.LastName))
 		   .ForMember(dest => dest.ManagerEmail, src => src.MapFrom(src => src.Email))
 		   .ForMember(dest => dest.ManagerPhoneNumber, src => src.MapFrom(src => src.PhoneNumber))
-		   .ForMember(dest => dest.DepartmentName, src => src.MapFrom(src => src.Department.DepartmentName));
-
+		   .ForMember(dest=>dest.DepartmentName,src=>src.MapFrom(src=>src.Department.DepartmentName))
+		   .ReverseMap();
 
 		map.CreateMap<Manager, ManagerGetByIdResponseDto>()
 		   .ForMember(dest => dest.ManagerFirstName, src => src.MapFrom(src => src.FirstName))

@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -51,13 +53,13 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		return Result.SuccessWithMessage("Service added successfully");
 	}
 	///<inheritdoc/>
-	public async Task<Result<List<ServiceResponseDto>>> GetAllServiceAsync()
+	public async Task<Result<PaginationResult<ServiceResponseDto>>> GetAllServiceAsync(int itemCount , int index)
 	{
 		var result = await _dbContext.Services
 			 .ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
-			 .ToListAsync();
+			 .GetAllWithPagination(itemCount,index);
 
-		_logger.LogInformation("Fetching all  Service. Total count: { Service}.", result.Count);
+		_logger.LogInformation("Fetching all  Service. Total count: { Service}.", result.Data.Count);
 
 		return Result.Success(result);
 	}

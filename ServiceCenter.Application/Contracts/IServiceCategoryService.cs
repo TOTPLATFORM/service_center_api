@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ public interface IServiceCategoryService : IApplicationService, IScopedService
     /// function to get all service category 
     /// </summary>
     /// <returns>list all service category response dto </returns>
-    public Task<Result<List<ServiceCategoryResponseDto>>> GetAllServiceCategoryAsync();
+    public Task<Result<PaginationResult<ServiceCategoryResponseDto>>> GetAllServiceCategoryAsync(int itemCount, int index);
     /// <summary>
     /// function to get  service category by id that take   service category id
     /// </summary>
@@ -48,5 +49,5 @@ public interface IServiceCategoryService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">service category name</param>
     /// <returns>service category response dto </returns>
-    public Task<Result<List<ServiceCategoryResponseDto>>> SearchServiceCategoryByTextAsync(string text);
+    public Task<Result<PaginationResult<ServiceCategoryResponseDto>>> SearchServiceCategoryByTextAsync(string text, int itemCount, int index);
 }
