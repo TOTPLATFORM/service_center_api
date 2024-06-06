@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -15,139 +17,142 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Services;
 
-public class SalesService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<SalesService> logger, IUserContextService userContext, IAuthService authService) : ISalesService
+public class SalesService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<SalesService> logger, IUserContextService userContext, IAuthService authService) : IEmployeeService
 {
-    private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
-    private readonly IMapper _mapper = mapper;
-    private readonly ILogger<ISalesService> _logger = logger;
-    private readonly IUserContextService _userContext = userContext;
-    private readonly IAuthService _authService = authService;
-
-    ///<inheritdoc/>
-    public async Task<Result> AddSalesAsync(SalesRequestDto salesRequestDto)
-    {
-
-		string role = "Sales";
-
-        var sales = _mapper.Map<Sales>(salesRequestDto);
-        var department = await _dbContext.Departments.FindAsync(salesRequestDto.DepartmentId);
-
-        if (department is null)
-        {
-            _logger.LogWarning("Department Invaild Id ,Id {departmentId}", salesRequestDto.DepartmentId);
-
-            return Result.NotFound(["Department Invaild Id"]);
-        }
-        sales.Department = department;
+	private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
+	private readonly IMapper _mapper = mapper;
+	private readonly ILogger<IEmployeeService> _logger = logger;
+	private readonly IUserContextService _userContext = userContext;
+	private readonly IAuthService _authService = authService;
 
 
-        var salesAdded = await _authService.RegisterUserWithRoleAsync(sales,salesRequestDto.Password,role);
+	///<inheritdoc/>
+	public async Task<Result> AddEmployeeAsync(EmployeeRequestDto employeeRequestDto)
+	{
+		var role = "Employee";
+		var employee = _mapper.Map<Employee>(employeeRequestDto);
 
-        if (!salesAdded.IsSuccess)
-        {
-            return Result.Error(salesAdded.Errors.FirstOrDefault());
-        }
-        _logger.LogInformation("Sales added successfully in the database");
+		var department = await _dbContext.Departments.FindAsync(employeeRequestDto.DepartmentId);
 
-        return Result.SuccessWithMessage("Sales added successfully");
+		if (department is null)
+		{
+			_logger.LogWarning("Department Invaild Id ,Id {departmentId}", employeeRequestDto.DepartmentId);
 
+			return Result.NotFound(["Department Invaild Id"]);
+		}
+		employee.Department = department;
 
+		var employeeAdded = await _authService.RegisterUserWithRoleAsync(employee, employeeRequestDto.Password, role);
 
-    }
+		if (!employeeAdded.IsSuccess)
+		{
+			return Result.Error(employeeAdded.Errors.FirstOrDefault());
+		}
 
-    public async Task<Result<List<SalesResponseDto>>> GetAllSalesAsync()
-    {
-        var sales = await _dbContext.Users.OfType<Sales>()
-                  .ProjectTo<SalesResponseDto>(_mapper.ConfigurationProvider)
-                  .ToListAsync();
-        _logger.LogInformation("Fetching all sales. Total count: {sales}.", sales.Count);
-        return Result.Success(sales);
-    }
+		_logger.LogInformation("Employee added successfully in the database");
 
-    ///<inheritdoc/>
-    public async Task<Result<SalesResponseDto>> GetSalesByIdAsync(string Id)
-    {
-        var sales = await _dbContext.Sales
-            .ProjectTo<SalesResponseDto>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(d => d.Id == Id);
+		return Result.SuccessWithMessage("Employee added successfully");
+	}
 
-        if (sales is null)
-        {
-            _logger.LogWarning("sales Id not found,Id {salesId}", Id);
-            return Result.NotFound(["sales not found"]);
-        }
-        _logger.LogInformation("Fetching sales");
+	public async Task<Result<PaginationResult<EmployeeResponseDto>>> GetAllEmployeesAsync(int itemCount, int index)
+	{
+		var employees = await _dbContext.Users.OfType<Employee>()
+				  .ProjectTo<EmployeeResponseDto>(_mapper.ConfigurationProvider)
+				  .GetAllWithPagination(itemCount,index);
+		_logger.LogInformation("Fetching all employee. Total count: {employee}.", employees.Data.Count);
+		return Result.Success(employees);
+	}
 
-        return Result.Success(sales);
-    }
+	///<inheritdoc/>
+	public async Task<Result<EmployeeGetByIdResponseDto>> GetEmployeeByIdAsync(string Id)
+	{
+		var employee = await _dbContext.Employees
+			.ProjectTo<EmployeeGetByIdResponseDto>(_mapper.ConfigurationProvider)
+			.FirstOrDefaultAsync(d => d.Id == Id);
 
-    ///<inheritdoc/>
-    public async Task<Result<SalesResponseDto>> UpdateSalesAsync(string id, SalesRequestDto salesRequestDto)
-    {
-        var sales = await _dbContext.Sales.FindAsync(id);
+		if (employee is null)
+		{
+			_logger.LogWarning("employee Id not found,Id {employeeId}", Id);
+			return Result.NotFound(["employee not found"]);
+		}
+		_logger.LogInformation("Fetching employee");
 
-        if (sales is null)
-        {
-            _logger.LogWarning("sales Id not found,Id {salesId}", id);
+		return Result.Success(employee);
+	}
 
-            return Result.NotFound(["sales not found"]);
-        }
+	///<inheritdoc/>
 
-        _mapper.Map(salesRequestDto, sales);
+	public async Task<Result<EmployeeResponseDto>> UpdateEmployeeAsync(string id, EmployeeRequestDto employeeRequestDto)
+	{
+		var employee = await _dbContext.Employees.FindAsync(id);
 
-        await _dbContext.SaveChangesAsync();
+		if (employee is null)
+		{
+			_logger.LogWarning("employee Id not found,Id {employeeId}", id);
 
-        var salesResponse = _mapper.Map<SalesResponseDto>(sales);
+			return Result.NotFound(["employee not found"]);
+		}
 
-        if (salesResponse is null)
-        {
-            _logger.LogError("Failed to map salesRequestDto to salesResponseDto. salesRequestDto: {@salesRequestDto}", salesRequestDto);
+		_mapper.Map(employeeRequestDto, employee);
 
-            return Result.Invalid(new List<ValidationError>
-            {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-            });
-        }
+		await _dbContext.SaveChangesAsync();
 
-        _logger.LogInformation("Updated sales , Id {Id}", id);
+		var employeeResponse = _mapper.Map<EmployeeResponseDto>(employee);
 
-        return Result.Success(salesResponse);
-    }
+		if (employeeResponse is null)
+		{
+			_logger.LogError("Failed to map employeeRequestDto to employeeResponseDto. employeeRequestDto: {@employeeRequestDto}", employeeRequestDto);
 
-    ///<inheritdoc/>
-    public async Task<Result<List<SalesResponseDto>>> SearchSalesByTextAsync(string text)
-    {
-        var sales = await _dbContext.Sales
-                       .ProjectTo<SalesResponseDto>(_mapper.ConfigurationProvider)
-                       .Where(n => n.SalesFirstName.Contains(text))
-                       .ToListAsync();
+			return Result.Invalid(new List<ValidationError>
+			{
+				new ValidationError
+				{
+					ErrorMessage = "Validation Errror"
+				}
+			});
+		}
 
-        _logger.LogInformation("Fetching search branch by name . Total count: {branch}.", sales.Count);
+		_logger.LogInformation("Updated employee , Id {Id}", id);
 
-        return Result.Success(sales);
-    }
+		return Result.Success(employeeResponse);
+	}
 
-    ///<inheritdoc/>
-    public async Task<Result> DeleteSalesAsync(string id)
-    {
-        var sales = await _dbContext.Sales.FindAsync(id);
+	///<inheritdoc/>
 
-        if (sales is null)
-        {
-            _logger.LogWarning("sales Invaild Id ,Id {salesId}", id);
+	public async Task<Result<PaginationResult<EmployeeResponseDto>>> SearchEmployeeByTextAsync(string text, int itemCount, int index)
+	{
 
-            return Result.NotFound(["sales Invaild Id"]);
-        }
+		var employee = await _dbContext.Employees
+					   .ProjectTo<EmployeeResponseDto>(_mapper.ConfigurationProvider)
+					   .Where(n => n.EmployeeFirstName.Contains(text) )
+					   .GetAllWithPagination(itemCount,index);
 
-        _dbContext.Sales.Remove(sales);
+		_logger.LogInformation("Fetching search branch by name . Total count: {branch}.", employee.Data.Count);
 
-        await _dbContext.SaveChangesAsync();
+		return Result.Success(employee);
+	}
 
-        _logger.LogInformation("sales remove successfully in the database");
+	///<inheritdoc/>
 
-        return Result.SuccessWithMessage("sales remove successfully ");
-    }
+	public async Task<Result> DeleteEmployeeAsync(string id)
+	{
+		var employee = await _dbContext.Employees.FindAsync(id);
+
+		if (employee is null)
+		{
+			_logger.LogWarning("employee Invaild Id ,Id {employeeId}", id);
+
+			return Result.NotFound(["employee Invaild Id"]);
+		}
+
+		_dbContext.Employees.Remove(employee);
+
+		await _dbContext.SaveChangesAsync();
+
+		_logger.LogInformation("employee remove successfully in the database");
+
+		return Result.SuccessWithMessage("employee remove successfully ");
+	}
 }
+
+
