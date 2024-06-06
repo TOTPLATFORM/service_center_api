@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using ServiceCenter.Application.Services;
+using ServiceCenter.Core.Entities;
 
 namespace ServiceCenter.API.Controllers;
 
@@ -29,10 +30,10 @@ public class ItemController(IItemService itemService) : BaseController
 
     [HttpGet]
     [Authorize(Roles = "ServiceProvider,Manager,Admin,WarehouseManager")]
-    [ProducesResponseType(typeof(Result<List<ItemResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<List<ItemResponseDto>>> GetAllItems()
+    [ProducesResponseType(typeof(Result<PaginationResult<ItemResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<PaginationResult<ItemResponseDto>>> GetAllItems(int itemCount,int index)
     {
-        return await _ItemService.GetAllItemAsync();
+        return await _ItemService.GetAllItemAsync(itemCount,index);
     }
     /// <summary>
     /// action for get item by id that take item id.  
@@ -72,15 +73,17 @@ public class ItemController(IItemService itemService) : BaseController
     /// function to search by Item name  that take  Item name
     /// </summary>
     /// <param name="text">Item name</param>
+    /// <param name="itemCount">item count in page</param>
+    /// <param name="index">Item index</param>
     /// <returns>Item response dto </returns>
 
-    [HttpGet("search/{text}")]
+    [HttpGet("search")]
     [Authorize(Roles = "ServiceProvider,Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result<ItemResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<ItemResponseDto>>> SearchItemByText(string text)
+    public async Task<Result<PaginationResult<ItemResponseDto>>> SearchItemByText(string text,int itemCount,int index)
     {
-        return await _ItemService.SearchItemByTextAsync(text);
+        return await _ItemService.SearchItemByTextAsync(text,itemCount,index);
     }
 
 
