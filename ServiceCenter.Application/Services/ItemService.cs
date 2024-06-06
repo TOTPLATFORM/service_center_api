@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using ServiceCenter.Infrastructure.BaseContext;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Domain.Entities;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 
 namespace ServiceCenter.Application.Services;
 public class ItemService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<ItemService> logger, IUserContextService userContext) : IItemService
@@ -21,6 +23,7 @@ public class ItemService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
     public async Task<Result> AddItemAsync(ItemRequestDto ItemRequestDto)
     {
         var result = _mapper.Map<Item>(ItemRequestDto);
+        var category = await _dbContext.ItemCategories.FirstOrDefaultAsync(i => i.Id == ItemRequestDto.CategoryId);
         if (result is null)
         {
             _logger.LogError("Failed to map ItemRequestDto to Item. ItemRequestDto: {@ItemRequestDto}", ItemRequestDto);
@@ -32,6 +35,7 @@ public class ItemService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
                 }
             });
         }
+        result.Category = category;
         result.CreatedBy = _userContext.Email;
         _dbContext.Items.Add(result);
         await _dbContext.SaveChangesAsync();
@@ -40,13 +44,13 @@ public class ItemService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
     }
     ///<inheritdoc/>
 
-    public async Task<Result<List<ItemResponseDto>>> GetAllItemAsync()
+    public async Task<Result<PaginationResult<ItemResponseDto>>> GetAllItemAsync(int itemCount,int index)
     {
         var result = await _dbContext.Items
                  .ProjectTo<ItemResponseDto>(_mapper.ConfigurationProvider)
-                 .ToListAsync();
+                 .GetAllWithPagination(itemCount,index);
 
-        _logger.LogInformation("Fetching all  Item. Total count: { Item}.", result.Count);
+        _logger.LogInformation("Fetching all  Item. Total count: { Item}.", result.Data.Count);
 
         return Result.Success(result);
     }
@@ -73,7 +77,7 @@ public class ItemService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
     public async Task<Result<ItemResponseDto>> UpdateItemAsync(int id, ItemRequestDto ItemRequestDto)
     {
         var result = await _dbContext.Items.FindAsync(id);
-
+        var category = await _dbContext.ItemCategories.FirstOrDefaultAsync(i => i.Id == ItemRequestDto.CategoryId);
         if (result is null)
         {
             _logger.LogWarning("Item Id not found,Id {ItemId}", id);
@@ -81,7 +85,7 @@ public class ItemService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
         }
 
         result.ModifiedBy = _userContext.Email;
-
+        result.Category = category;
         _mapper.Map(ItemRequestDto, result);
 
         await _dbContext.SaveChangesAsync();
@@ -122,13 +126,13 @@ public class ItemService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
     }
     //<inheritdoc/>
 
-    public async Task<Result<List<ItemResponseDto>>> SearchItemByTextAsync(string text)
+    public async Task<Result<PaginationResult<ItemResponseDto>>> SearchItemByTextAsync(string text,int itemCount,int index)
     {
         var names = await _dbContext.Items
             .ProjectTo<ItemResponseDto>(_mapper.ConfigurationProvider)
             .Where(n => n.ItemName.Contains(text))
-            .ToListAsync();
-        _logger.LogInformation("Fetching search Item by name . Total count: {Item}.", names.Count);
+            .GetAllWithPagination(itemCount,index);
+        _logger.LogInformation("Fetching search Item by name . Total count: {Item}.", names.Data.Count);
         return Result.Success(names);
     }
 

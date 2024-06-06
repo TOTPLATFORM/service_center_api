@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ public interface IItemService : IApplicationService, IScopedService
     /// function to get all item 
     /// </summary>
     /// <returns>list all item response dto </returns>
-    public Task<Result<List<ItemResponseDto>>> GetAllItemAsync();
+    public Task<Result<PaginationResult<ItemResponseDto>>> GetAllItemAsync(int itemCount,int index);
     /// <summary>
     /// function to get  item by id that take   item id
     /// </summary>
@@ -47,7 +48,7 @@ public interface IItemService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">item name</param>
     /// <returns>Item response dto </returns>
-    public Task<Result<List<ItemResponseDto>>> SearchItemByTextAsync(string text);
+    public Task<Result<PaginationResult<ItemResponseDto>>> SearchItemByTextAsync(string text,int itemCount , int index);
     /// <summary>
     /// Decreases items quantity asynchronously.
     /// </summary>
