@@ -26,6 +26,8 @@ public class BranchConfigurations : IEntityTypeConfiguration<Branch>
 		.IsRequired()
 		.HasColumnType("varchar")
 		.HasMaxLength(50);
-	
-	}
+	    
+		builder.Property(b=>b.ManagerId)
+            .IsRequired(false);
+    }
 }
