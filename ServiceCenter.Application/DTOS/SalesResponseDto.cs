@@ -17,6 +17,5 @@ public class SalesResponseDto
     public string SalesPhoneNumber { get; set; } = "";
     public Gender Gender { get; set; }
     public string UserName { get; set; } = "";
-    public  ICollection<ProductResponseDto> Products { get; set; } = new HashSet<ProductResponseDto>();
     public ICollection<ReportResponseDto> Reports { get; set; } = new HashSet<ReportResponseDto>();
 }
