@@ -72,6 +72,8 @@ public class MappingProfiles : Profile
 		this.AddSalesMapping();
 
 		this.AddCampaginMapping();
+
+		this.AddServiceProviderMapping();
 	}
 
 }
