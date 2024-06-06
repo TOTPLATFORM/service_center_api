@@ -70,7 +70,7 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Employee,Manager")]
+    [Authorize(Roles = "Employee,Manager,Admin")]
     [ProducesResponseType(typeof(Result<SubscriptionResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<SubscriptionResponseDto>> UpdateSubscription(int id, SubscriptionRequestDto SubscriptionRequestDto)
@@ -86,7 +86,7 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> DeleteSubscriptionAsycn(int id)

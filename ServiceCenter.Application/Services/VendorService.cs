@@ -45,6 +45,7 @@ public class VendorService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         _logger.LogInformation("Vendor added successfully in the database");
 
         return Result.SuccessWithMessage("Vendor added successfully");
+
     }
 
     public async Task<Result<List<VendorResponseDto>>> GetAllVendorsAsync()

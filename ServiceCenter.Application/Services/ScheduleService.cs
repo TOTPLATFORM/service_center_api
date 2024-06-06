@@ -216,7 +216,7 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
             .ToListAsync();
 
         var bookedSchedules = await _dbContext.Appointments
-            .Where(a => a.Schedule.ServiceProviderId == serviceproviderId && a.Status == AppointmentStatus.Scheduled)
+            .Where(a => a.Schedule.ServiceProviderId == serviceproviderId)
             .Select(a => new { a.ScheduleId, a.AppointmentDate })
             .ToListAsync();
 
@@ -239,7 +239,7 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
             .ToListAsync();
 
         var bookedSchedules = await _dbContext.Appointments
-            .Where(a => a.Schedule.ServiceProviderId == serviceproviderId && a.Status == AppointmentStatus.Scheduled)
+            .Where(a => a.Schedule.ServiceProviderId == serviceproviderId)
             .Select(a => new { a.ScheduleId, a.AppointmentDate })
             .ToListAsync();
 
