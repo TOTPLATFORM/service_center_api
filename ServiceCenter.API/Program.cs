@@ -9,6 +9,8 @@ using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
 using Serilog;
 using ServiceCenter.Application.Services;
+using Microsoft.Extensions.Options;
+using System.Reflection;
 
 namespace ServiceCenter.API;
 
@@ -38,9 +40,12 @@ public class Program
 				Type = SecuritySchemeType.ApiKey,
 				BearerFormat = "JWT",
 				In = ParameterLocation.Header,
-				Description = "Enter your token"
-			});
+				Description = "Enter your token",
 
+			});
+			var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+			var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+			options.IncludeXmlComments(xmlPath);
 			options.AddSecurityRequirement(new OpenApiSecurityRequirement
 				{
 					{
@@ -68,8 +73,7 @@ public class Program
 		builder.Services.AddDbContext<ServiceCenterBaseDbContext>(options =>
 				   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionForSql"),
 					b => b.MigrationsAssembly("ServiceCenter.Infrastructure.Sql")));
-
-
+		                    
 
 		builder.Services.AddJwtAuthentication(builder);
 
