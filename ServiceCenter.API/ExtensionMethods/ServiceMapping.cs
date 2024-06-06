@@ -12,8 +12,7 @@ public static class ServiceMapping
             .ReverseMap();
 
         map.CreateMap<Service, ServiceResponseDto>()
-             //  .ForPath(dest=>dest.ServiceProviderName,src=>src.MapFrom(src=>src.ServiceProviders.SelectMany(src=>src.FirstName + " " + src.LastName)))
-               .ReverseMap();
+            .ReverseMap();
 
 
     }

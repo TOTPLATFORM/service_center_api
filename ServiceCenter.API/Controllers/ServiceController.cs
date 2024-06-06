@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
@@ -35,10 +36,10 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-	[ProducesResponseType(typeof(Result<List<ServiceResponseDto>>), StatusCodes.Status200OK)]
-	public async Task<Result<List<ServiceResponseDto>>> GetAllService()
+	[ProducesResponseType(typeof(Result<PaginationResult<ServiceResponseDto>>), StatusCodes.Status200OK)]
+	public async Task<Result<PaginationResult<ServiceResponseDto>>> GetAllService(int itemCount , int index)
 	{
-		return await _ServiceService.GetAllServiceAsync();
+		return await _ServiceService.GetAllServiceAsync(itemCount,index);
 	}
 	/// <summary>
 	/// get Service by id in the system.
@@ -110,7 +111,7 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
-	[HttpGet("assign/{id}")]
+	[HttpGet("assign/serviceId/{serviceId}/packageId/{servicePackageId}")]
 	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<List<ServiceResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]

@@ -22,5 +22,7 @@ public class ServiceRequestDto
     [Required]
     public int ServiceCategoryId { get; set; }
     [Required]
-    public int CenterId { get; set; }
+    public  List<int> ItemIds { get; set; }
+
+
 }

@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using System;
@@ -24,7 +25,7 @@ public interface IServiceService : IApplicationService, IScopedService
 	/// function to get all Service  
 	/// </summary>
 	/// <returns>list all Service  response dto </returns>
-	public Task<Result<List<ServiceResponseDto>>> GetAllServiceAsync();
+	public Task<Result<PaginationResult<ServiceResponseDto>>> GetAllServiceAsync(int itemCount, int index);
 
 	/// <summary>
 	/// function to get all Service that assign to package  
