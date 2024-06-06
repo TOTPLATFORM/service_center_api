@@ -138,16 +138,16 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         return Result.Success(names);
     }
 
-    //public async Task<Result<List<ProductResponseDto>>> GetProductsForProductCategoryAsync(int categoryId)
-    //{
-    //    var products = await _dbContext.Products
-    //          .Where(s => s.ProductCategories.Id == categoryId)
-    //          .ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider)
-    //          .ToListAsync();
+    public async Task<PaginationResult<ProductResponseDto>> GetProductsForProductCategoryAsync(int categoryId, int itemCount, int index)
+    {
+        var products = await _dbContext.Products
+              .Where(s => s.ProductCategory.Id == categoryId)
+              .ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider)
+              .GetAllWithPagination(itemCount,index);
 
-    //    _logger.LogInformation("Fetching products. Total count: {products}.", products.Count);
-    //    return Result.Success(products);
-    //}
+        _logger.LogInformation("Fetching products. Total count: {products}.", products.Data.Count);
+        return Result.Success(products);
+    }
 
     //public async Task<Result<List<ProductResponseDto>>> GetProductsForProductBrandAsync(int brandId)
     //{
