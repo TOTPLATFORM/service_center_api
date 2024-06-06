@@ -13,6 +13,5 @@ public class VendorRequestDto : BaseUserRequestDto
     public DateOnly ContractStartDate { get; set; }
     [Required]
     public DateOnly ContractEndDate { get; set; }
-    [Required]
-    public int CenterId { get; set; }
+  
 }

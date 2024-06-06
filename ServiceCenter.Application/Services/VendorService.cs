@@ -26,8 +26,12 @@ public class VendorService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
     ///<inheritdoc/>
     public async Task<Result> AddVendorAsync(VendorRequestDto vendorRequestDto)
     {
+
         string role = "Vendor";
+
         var vendor = _mapper.Map<Vendor>(vendorRequestDto);
+
+        var center = await _dbContext.Centers.FirstOrDefaultAsync();
        
        var vendorAdded = await _authService.RegisterUserWithRoleAsync(vendor, vendorRequestDto.Password, role);
 
@@ -36,9 +40,12 @@ public class VendorService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
             return Result.Error(vendorAdded.Errors.FirstOrDefault());
         }
 
+        vendor.Center = center;
+
         _logger.LogInformation("Vendor added successfully in the database");
 
         return Result.SuccessWithMessage("Vendor added successfully");
+
     }
 
     public async Task<Result<List<VendorResponseDto>>> GetAllVendorsAsync()

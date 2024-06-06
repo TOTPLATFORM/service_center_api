@@ -16,5 +16,5 @@ public class VendorResponseDto
     public string ContactPerson { get; set; } = "";
     public DateOnly ContractStartDate { get; set; }
     public DateOnly ContractEndDate { get; set; }
-    public int CenterId { get; set; } 
+   
 }
