@@ -26,64 +26,32 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 	///<inheritdoc/>
 	public async Task<Result> AddBranchAsync(BranchRequestDto branchRequestDto)
 	{
-		var manager = await _dbContext.Managers.FirstOrDefaultAsync(e => e.Id == branchRequestDto.ManagerId);
 
-		if (manager == null)
-		{
-			_logger.LogError("Manager not found. ManagerId: {ManagerId}", branchRequestDto.ManagerId);
+        var branch = _mapper.Map<Branch>(branchRequestDto);
 
-			return Result.Invalid(new List<ValidationError>
-		    {
-			       new ValidationError
-			       {
-				        ErrorMessage = "Manager not found"
-			       }
-		    });
-		}
+        if (branch == null)
+        {
+            _logger.LogError("Failed to map BranchRequestDto to Branch. BranchRequestDto: {@BranchRequestDto}", branchRequestDto);
 
-		var existingBranch = await _dbContext.Branches.FirstOrDefaultAsync(e => e.BranchName == branchRequestDto.BranchName && e.Manager.Id != branchRequestDto.ManagerId);
+            return Result.Invalid(new List<ValidationError>
+            {
+               new ValidationError
+               {
+                ErrorMessage = "Validation Error"
+               }
+            });
+        }
 
-		if (existingBranch != null)
-		{
-			_logger.LogError("Branch already exists under a different manager. BranchName: {BranchName}, ExistingManagerId: {ExistingManagerId}", branchRequestDto.BranchName, existingBranch.Manager.Id);
-			
-			return Result.Invalid(new List<ValidationError>
-		    {
+        branch.CreatedBy = _userContext.Email;
 
-			      new ValidationError
-			      {
-				      ErrorMessage = "Branch already exists under a different manager"
-			      }
-		    });
-		}
+        _dbContext.Branches.Add(branch);
 
-		var result = _mapper.Map<Branch>(branchRequestDto);
+        await _dbContext.SaveChangesAsync();
 
-		if (result is null)
-		{
-			_logger.LogError("Failed to map BranchRequestDto to Branch. BranchRequestDto: {@BranchRequestDto}", branchRequestDto);
+        _logger.LogInformation("Branch added successfully to the database");
 
-			return Result.Invalid(new List<ValidationError>
-			{
-				new ValidationError
-				{
-					ErrorMessage = "Validation Errror"
-				}
-			});
-		}
-
-		result.CreatedBy = _userContext.Email;
-
-		result.Manager = manager;
-
-		_dbContext.Branches.Add(result);
-
-		await _dbContext.SaveChangesAsync();
-
-		_logger.LogInformation("Branch added successfully to the database");
-
-		return Result.SuccessWithMessage("Branch added successfully");
-	}
+        return Result.SuccessWithMessage("Branch added successfully");
+    }
 
 	///<inheritdoc/>
 	public async Task<Result<List<BranchResponseDto>>> GetAllBranchesAsync()
