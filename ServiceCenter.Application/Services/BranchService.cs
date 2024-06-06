@@ -29,6 +29,7 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 
         var branch = _mapper.Map<Branch>(branchRequestDto);
 		var manager = await _dbContext.Managers.FirstOrDefaultAsync(m => m.Id == branchRequestDto.ManagerId);
+		var managerInBranch = await _dbContext.Branches.Where(b => b.ManagerId == branchRequestDto.ManagerId).FirstOrDefaultAsync();
         if (branch == null)
         {
             _logger.LogError("Failed to map BranchRequestDto to Branch. BranchRequestDto: {@BranchRequestDto}", branchRequestDto);
@@ -40,6 +41,11 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
                 ErrorMessage = "Validation Error"
                }
             });
+        }
+		if (managerInBranch != null)
+		{
+            _logger.LogError("Failed to added in database this manager in branch");
+            return Result.Error("Failed to added in database this manager in branch");
         }
         branch.CreatedBy = _userContext.Email;
 		branch.Manager = manager;

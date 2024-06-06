@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -29,6 +31,16 @@ public class WareHousManagerService(ServiceCenterBaseDbContext dbContext, IMappe
         string role = "WareHouseManager";
         var wareHouseManager = _mapper.Map<WareHouseManager>(wareHouseManagerRequestDto);
         var inventory = _dbContext.Inventories.FirstOrDefault(C => C.Id == wareHouseManagerRequestDto.InventoryId);
+        var department = await _dbContext.Departments.FindAsync(wareHouseManagerRequestDto.DepartmentId);
+        var wareHouseManagerInInventoy = await _dbContext.Inventories.Where(b => b.Id == wareHouseManagerRequestDto.InventoryId).FirstOrDefaultAsync();
+
+        if (department is null)
+        {
+            _logger.LogWarning("Department Invaild Id ,Id {departmentId}", wareHouseManagerRequestDto.DepartmentId);
+
+            return Result.NotFound(["Department Invaild Id"]);
+        }
+        wareHouseManager.Department = department;
 
         if (inventory is null)
         {
@@ -38,7 +50,11 @@ public class WareHousManagerService(ServiceCenterBaseDbContext dbContext, IMappe
         {
 			wareHouseManager.Inventory = inventory;
 		}
-     
+        if (wareHouseManagerInInventoy != null)
+        {
+            _logger.LogError("Failed to added in database this  warehousemanger in inventory");
+            return Result.Error("Failed to added in database this warehousemanger in inventory");
+        }
         var warehouseMangerAdded = await _authService.RegisterUserWithRoleAsync(wareHouseManager, wareHouseManagerRequestDto.Password, role);
         await _dbContext.SaveChangesAsync();
 
@@ -50,7 +66,11 @@ public class WareHousManagerService(ServiceCenterBaseDbContext dbContext, IMappe
 		_logger.LogInformation("WareHouseManager added successfully in the database");
 
 		return Result.SuccessWithMessage("WareHouseManager added successfully");
-	}
+       
+       
+
+       
+    }
     ///<inheritdoc/>
     public async Task<Result> DeleteWareHouseManagerServiceAsync(string id)
     {
@@ -69,12 +89,13 @@ public class WareHousManagerService(ServiceCenterBaseDbContext dbContext, IMappe
         return Result.SuccessWithMessage("wareHouseManager remove successfully");
     }
     ///<inheritdoc/>
-    public async Task<Result<List<WareHouseManagerResponseDto>>> GetAllWareHouseManagerServicesAsync()
+    public async Task<Result<PaginationResult<WareHouseManagerResponseDto>>> GetAllWareHouseManagerServicesAsync(int itemcount, int index)
     {
         
-        var wareHouseManager = await _dbContext.WareHouseManagers.ProjectTo<WareHouseManagerResponseDto>(_mapper.ConfigurationProvider).ToListAsync();
+        var wareHouseManager = await _dbContext.WareHouseManagers.ProjectTo<WareHouseManagerResponseDto>(_mapper.ConfigurationProvider)
+            .GetAllWithPagination( itemcount,  index);
 
-        _logger.LogInformation("Fetching all wareHouseManager . Total count: {inventories}.", wareHouseManager.Count);
+        _logger.LogInformation("Fetching all wareHouseManager . Total count: {inventories}.", wareHouseManager.Data.Count);
 
         return Result.Success(wareHouseManager);
     }
@@ -94,9 +115,11 @@ public class WareHousManagerService(ServiceCenterBaseDbContext dbContext, IMappe
         return Result.Success(wareHouseManagerResponseDto);
     }
     ///<inheritdoc/>
-    public async Task<Result<List<WareHouseManagerResponseDto>>> SearchWareHouseManagerByTextAsync(string text)
+    public async Task<Result<PaginationResult<WareHouseManagerResponseDto>>> SearchWareHouseManagerByTextAsync(string text, int itemcount, int index)
     {
-        var wareHouseManagerResponseDto = await _dbContext.WareHouseManagers.Where(w => w.FirstName.Contains(text)|| w.LastName.Contains(text)|| w.Email.Contains(text)|| w.Inventory.InventoryName.Contains(text)).ProjectTo<WareHouseManagerResponseDto>(_mapper.ConfigurationProvider).ToListAsync();
+        var wareHouseManagerResponseDto = await _dbContext.WareHouseManagers.Where(w => w.FirstName.Contains(text)|| w.LastName.Contains(text)|| w.Email.Contains(text)|| w.Inventory.InventoryName.Contains(text))
+            .ProjectTo<WareHouseManagerResponseDto>(_mapper.ConfigurationProvider)
+            .GetAllWithPagination( itemcount,  index);
 
         if (wareHouseManagerResponseDto is null)
         {
