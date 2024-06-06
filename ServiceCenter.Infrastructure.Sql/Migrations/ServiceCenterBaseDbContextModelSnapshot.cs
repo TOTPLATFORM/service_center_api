@@ -114,43 +114,43 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2a0e1e52-4a8f-4bef-93d8-64879560aa4d",
+                            Id = "59e3e6e5-61ae-4bb2-a653-9540a128fc7d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d131e92c-789b-42b3-a256-41956dee5d4f",
+                            Id = "89fdc10a-1085-4536-bde2-4759322ab162",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "944d6a36-c8d4-4b59-81ff-e547aedaa59c",
+                            Id = "efbec024-0318-41f2-9b5f-740636481c69",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "0b392b17-2343-4f51-b9f3-c6928d553c93",
+                            Id = "0c80dd4c-56f8-4463-8165-bd74d5943f09",
                             Name = "Sales",
                             NormalizedName = "SALES"
                         },
                         new
                         {
-                            Id = "7fbd03a0-c618-4f7d-b63b-2a1a94ec1cb3",
+                            Id = "e9c1d78c-9136-4f92-a0fb-80ce17685fdd",
                             Name = "WarehouseManager",
                             NormalizedName = "WAREHOUSEMANAGER"
                         },
                         new
                         {
-                            Id = "9b91e4d6-b89e-466e-a09a-15a6e7ae097c",
+                            Id = "b293ca1d-717d-4883-91ea-58f62770c225",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "c5136d3f-7fb8-4207-84b1-798730f599a9",
+                            Id = "7ae1de07-11a0-4c20-9d69-dc0050082b6c",
                             Name = "ServiceProvider",
                             NormalizedName = "SERVICEPROVIDER"
                         });
@@ -1534,11 +1534,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     b.HasBaseType("ServiceCenter.Domain.Entities.Employee");
 
-                    b.Property<int>("CenterId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("CenterId");
-
                     b.ToTable("Sales");
                 });
 
@@ -2093,19 +2088,11 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Sales", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Center", "Center")
-                        .WithMany("Sales")
-                        .HasForeignKey("CenterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ServiceCenter.Domain.Entities.Employee", null)
                         .WithOne()
                         .HasForeignKey("ServiceCenter.Domain.Entities.Sales", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Center");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.ServiceProvider", b =>
@@ -2146,8 +2133,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.Navigation("Campagins");
 
                     b.Navigation("Departments");
-
-                    b.Navigation("Sales");
 
                     b.Navigation("Services");
 

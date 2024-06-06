@@ -111,7 +111,7 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
-	[HttpGet("assign/{id}")]
+	[HttpGet("assign/serviceId/{serviceId}/packageId/{servicePackageId}")]
 	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<List<ServiceResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]

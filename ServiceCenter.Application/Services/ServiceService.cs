@@ -27,12 +27,27 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 	private readonly IUserContextService _userContext = userContext;
 
 	///<inheritdoc/>
-	public async Task<Result> AddServiceAsync(ServiceRequestDto ServiceRequestDto)
+	public async Task<Result> AddServiceAsync(ServiceRequestDto serviceRequestDto)
 	{
-		var result = _mapper.Map<Service>(ServiceRequestDto);
+		var result = _mapper.Map<Service>(serviceRequestDto);
+
+		var center = await _dbContext.Centers.FirstOrDefaultAsync();
+
+		if (center == null)
+		{
+			_logger.LogError("No center found in the database.");
+			return Result.Invalid(new List<ValidationError>
+		{
+			new ValidationError
+			{
+				ErrorMessage = "No center found in the database."
+			}
+		});
+		}
+
 		if (result is null)
 		{
-			_logger.LogError("Failed to map ServiceRequestDto to Service. ServiceRequestDto: {@ServiceRequestDto}", ServiceRequestDto);
+			_logger.LogError("Failed to map ServiceRequestDto to Service. ServiceRequestDto: {@ServiceRequestDto}", serviceRequestDto);
 
 			return Result.Invalid(new List<ValidationError>
 			{
@@ -44,6 +59,29 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		}
 		result.CreatedBy = _userContext.Email;
 
+		result.Center = center;
+
+		if (serviceRequestDto.ItemIds != null && serviceRequestDto.ItemIds.Any())
+		{
+			var items = await _dbContext.Items.Where(i => serviceRequestDto.ItemIds.Contains(i.Id)).ToListAsync();
+
+			if (items.Count != serviceRequestDto.ItemIds.Count)
+			{
+				    _logger.LogError("Some items were not found in the database.");
+
+				      return Result.Invalid(new List<ValidationError>
+			          {
+				            new ValidationError { ErrorMessage = "Some items were not found in the database." }
+			          });
+			}
+
+			result.Item = items.Select(i => new Item
+			{
+				Services = i.Services,
+				ItemName = i.ItemName
+			}).ToList();
+
+		}
 		_dbContext.Services.Add(result);
 
 		await _dbContext.SaveChangesAsync();
@@ -165,16 +203,16 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		{
 			_logger.LogWarning("ServiceId Id not found,Id {id}", serviceId);
 
-			return Result.NotFound(["The Facility is not found"]);
+			return Result.NotFound(["The Service is not found"]);
 		}
 
 		var package = await _dbContext.ServicePackages.FindAsync(servicePackageId);
 
 		if (package is null)
 		{
-			_logger.LogWarning("Property Id not found,Id {id}", servicePackageId);
+			_logger.LogWarning("Package Id not found,Id {id}", servicePackageId);
 
-			return Result.NotFound(["The Property is not found"]);
+			return Result.NotFound(["The Package is not found"]);
 		}
 
 		service.ServicePackages.Add(package);

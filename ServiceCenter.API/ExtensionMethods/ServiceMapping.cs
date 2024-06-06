@@ -12,7 +12,6 @@ public static class ServiceMapping
             .ReverseMap();
 
         map.CreateMap<Service, ServiceResponseDto>()
-            .ForMember(dest=>dest.Center.CenterName,src=>src.MapFrom(src=>src.Center.CenterName))
             .ReverseMap();
 
 

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Editsales : Migration
+    public partial class edit4 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -382,12 +382,16 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Appointments",
+                name: "Items",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    ItemName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    ItemDescription = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    ItemStock = table.Column<int>(type: "int", nullable: false),
+                    ItemPrice = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -395,11 +399,11 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.PrimaryKey("PK_Items", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Appointments_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
+                        name: "FK_Items_ItemCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "ItemCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -646,34 +650,24 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Items",
+                name: "ItemService",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ItemName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    ItemDescription = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    ItemStock = table.Column<int>(type: "int", nullable: false),
-                    ItemPrice = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
-                    ServiceId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ItemId = table.Column<int>(type: "int", nullable: false),
+                    ServicesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Items", x => x.Id);
+                    table.PrimaryKey("PK_ItemService", x => new { x.ItemId, x.ServicesId });
                     table.ForeignKey(
-                        name: "FK_Items_ItemCategories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "ItemCategories",
+                        name: "FK_ItemService_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Items_Services_ServiceId",
-                        column: x => x.ServiceId,
+                        name: "FK_ItemService_Services_ServicesId",
+                        column: x => x.ServicesId,
                         principalTable: "Services",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -786,37 +780,30 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 name: "Sales",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CenterId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sales", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sales_Centers_CenterId",
-                        column: x => x.CenterId,
-                        principalTable: "Centers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Sales_Employees_Id",
                         column: x => x.Id,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ServiceProvider",
+                name: "ServiceProviders",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ServiceProvider", x => x.Id);
+                    table.PrimaryKey("PK_ServiceProviders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ServiceProvider_Employees_Id",
+                        name: "FK_ServiceProviders_Employees_Id",
                         column: x => x.Id,
                         principalTable: "Employees",
                         principalColumn: "Id",
@@ -936,9 +923,10 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    DayOfWeek = table.Column<int>(type: "int", nullable: false),
                     StartTime = table.Column<TimeOnly>(type: "time", nullable: false),
                     EndTime = table.Column<TimeOnly>(type: "time", nullable: false),
-                    ServiceProviderId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ServiceProviderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -948,10 +936,11 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     table.PrimaryKey("PK_Schedules", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Schedules_ServiceProvider_ServiceProviderId",
+                        name: "FK_Schedules_ServiceProviders_ServiceProviderId",
                         column: x => x.ServiceProviderId,
-                        principalTable: "ServiceProvider",
-                        principalColumn: "Id");
+                        principalTable: "ServiceProviders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -965,17 +954,17 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     table.PrimaryKey("PK_ServiceServiceProvider", x => new { x.ServiceProvidersId, x.ServicesId });
                     table.ForeignKey(
-                        name: "FK_ServiceServiceProvider_ServiceProvider_ServiceProvidersId",
+                        name: "FK_ServiceServiceProvider_ServiceProviders_ServiceProvidersId",
                         column: x => x.ServiceProvidersId,
-                        principalTable: "ServiceProvider",
+                        principalTable: "ServiceProviders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ServiceServiceProvider_Services_ServicesId",
                         column: x => x.ServicesId,
                         principalTable: "Services",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1032,6 +1021,39 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         name: "FK_Inventories_Branches_BranchId",
                         column: x => x.BranchId,
                         principalTable: "Branches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Appointments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContactId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ScheduleId = table.Column<int>(type: "int", nullable: false),
+                    AppointmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Contacts_ContactId",
+                        column: x => x.ContactId,
+                        principalTable: "Contacts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Schedules_ScheduleId",
+                        column: x => x.ScheduleId,
+                        principalTable: "Schedules",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1149,18 +1171,24 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "07ba781e-2b48-4d60-9fed-5dfa3df608d1", null, "Admin", "ADMIN" },
-                    { "5063e201-7f0c-4cd2-a96c-6f8baab1e534", null, "Manager", "MANAGER" },
-                    { "71aa8824-412f-4184-96ca-73644039ae02", null, "Employee", "EMPLOYEE" },
-                    { "74114cbd-74d2-439f-87ac-628ab9a398e9", null, "WarehouseManager", "WAREHOUSEMANAGER" },
-                    { "9efb9c51-54ee-4d53-9a5d-59d3bc25d2bd", null, "Customer", "CUSTOMER" },
-                    { "c2496602-5ff0-4f89-8251-a4d3fda43e6f", null, "Sales", "SALES" }
+                    { "0c80dd4c-56f8-4463-8165-bd74d5943f09", null, "Sales", "SALES" },
+                    { "59e3e6e5-61ae-4bb2-a653-9540a128fc7d", null, "Admin", "ADMIN" },
+                    { "7ae1de07-11a0-4c20-9d69-dc0050082b6c", null, "ServiceProvider", "SERVICEPROVIDER" },
+                    { "89fdc10a-1085-4536-bde2-4759322ab162", null, "Customer", "CUSTOMER" },
+                    { "b293ca1d-717d-4883-91ea-58f62770c225", null, "Manager", "MANAGER" },
+                    { "e9c1d78c-9136-4f92-a0fb-80ce17685fdd", null, "WarehouseManager", "WAREHOUSEMANAGER" },
+                    { "efbec024-0318-41f2-9b5f-740636481c69", null, "Employee", "EMPLOYEE" }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointments_OrderId",
+                name: "IX_Appointments_ContactId",
                 table: "Appointments",
-                column: "OrderId");
+                column: "ContactId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_ScheduleId",
+                table: "Appointments",
+                column: "ScheduleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -1283,9 +1311,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_ServiceId",
-                table: "Items",
-                column: "ServiceId");
+                name: "IX_ItemService_ServicesId",
+                table: "ItemService",
+                column: "ServicesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Offers_ProductId",
@@ -1336,11 +1364,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 name: "IX_Reports_SalesId",
                 table: "Reports",
                 column: "SalesId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sales_CenterId",
-                table: "Sales",
-                column: "CenterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Schedules_ServiceProviderId",
@@ -1433,7 +1456,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 name: "InventoryProductBrand");
 
             migrationBuilder.DropTable(
-                name: "Items");
+                name: "ItemService");
 
             migrationBuilder.DropTable(
                 name: "Offers");
@@ -1454,9 +1477,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 name: "Reports");
 
             migrationBuilder.DropTable(
-                name: "Schedules");
-
-            migrationBuilder.DropTable(
                 name: "ServiceServicePackage");
 
             migrationBuilder.DropTable(
@@ -1472,10 +1492,13 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 name: "WareHouseManagers");
 
             migrationBuilder.DropTable(
+                name: "Schedules");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "ItemCategories");
+                name: "Items");
 
             migrationBuilder.DropTable(
                 name: "Orders");
@@ -1496,9 +1519,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 name: "Sales");
 
             migrationBuilder.DropTable(
-                name: "ServiceProvider");
-
-            migrationBuilder.DropTable(
                 name: "Services");
 
             migrationBuilder.DropTable(
@@ -1509,6 +1529,12 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Inventories");
+
+            migrationBuilder.DropTable(
+                name: "ServiceProviders");
+
+            migrationBuilder.DropTable(
+                name: "ItemCategories");
 
             migrationBuilder.DropTable(
                 name: "ProductCategories");
