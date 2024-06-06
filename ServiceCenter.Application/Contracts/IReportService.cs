@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Reports;
 
+/// <summary>
+/// provides an interface for report-related services that manages report data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface IReportService : IApplicationService, IScopedService
 {
     /// <summary>

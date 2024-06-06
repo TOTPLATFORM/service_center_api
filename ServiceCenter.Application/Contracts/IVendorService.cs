@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for vendor-related services that manages vendor data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface IVendorService : IApplicationService, IScopedService
 {
     /// <summary>

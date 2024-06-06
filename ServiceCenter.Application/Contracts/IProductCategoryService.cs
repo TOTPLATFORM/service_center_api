@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for productCategory-related services that manages productCategory data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface IProductCategoryService :IApplicationService, IScopedService
 {
     /// <summary>

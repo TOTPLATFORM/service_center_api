@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Subscriptions;
 
+/// <summary>
+/// provides an interface for subscription-related services that manages subscription data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface ISubscriptionService : IApplicationService, IScopedService
 {
     /// <summary>

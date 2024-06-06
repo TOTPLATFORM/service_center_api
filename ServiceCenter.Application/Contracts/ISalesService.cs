@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for sales-related services that manages sales data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface ISalesService : IApplicationService, IScopedService
 {
     /// <summary>

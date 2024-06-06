@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for employee-related services that manages employee data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface IEmployeeService : IApplicationService, IScopedService
 {
     /// <summary>

@@ -83,7 +83,7 @@ public class ManagerController(IManagerService managerService) : BaseController
 	}
 
 	/// <summary>
-	/// search  department by text in the system.
+	/// search  manager by text in the system.
 	/// </summary>
 	///<param name="text">id</param>
 	/// <remarks>

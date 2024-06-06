@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for complaint-related services that manages complaint data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface IComplaintService : IApplicationService, IScopedService
 {
     /// <summary>

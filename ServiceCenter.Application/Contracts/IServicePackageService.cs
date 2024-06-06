@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for servicePackage-related services that manages servicePackage data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface IServicePackageService : IApplicationService, IScopedService
 {
     /// <summary>

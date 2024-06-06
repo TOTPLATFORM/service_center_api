@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for offer-related services that manages offer data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface IOfferService : IApplicationService, IScopedService
 {
     /// <summary>
