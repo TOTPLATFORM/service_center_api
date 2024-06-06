@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
@@ -38,9 +39,9 @@ public class SalesController(ISalesService salesService) : BaseController
     [HttpGet]
     [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<List<SalesResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<List<SalesResponseDto>>> GetAllSales()
+    public async Task<Result<PaginationResult<SalesResponseDto>>> GetAllSales(int itemCount, int index)
     {
-        return await _salesService.GetAllSalesAsync();
+        return await _salesService.GetAllSalesAsync(itemCount,index);
     }
     /// <summary>
     /// get all sales in the system.
@@ -86,13 +87,13 @@ public class SalesController(ISalesService salesService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
-    [HttpGet("search/{text}")]
+    [HttpGet("search")]
     [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<SalesResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<List<SalesResponseDto>>> SerachSalesByText(string text)
+    public async Task<Result<PaginationResult<SalesResponseDto>>> SerachSalesByText(string text, int itemCount, int index)
     {
-        return await _salesService.SearchSalesByTextAsync(text);
+        return await _salesService.SearchSalesByTextAsync(text,itemCount,index);
     }
     /// <summary>
     /// delete  sales by id from the system.
