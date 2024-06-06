@@ -15,7 +15,6 @@ public class ProductResponseDto
     public int ProductPrice { get; set; }
 
     public virtual ICollection<FeedbackResponseDto?> Feedbacks { get; set; } = new HashSet<FeedbackResponseDto>();
-   
-    public string? SalesName { get; set; } = "";
+  
     
 }

@@ -44,7 +44,7 @@ public class MappingProfiles : Profile
 
 		this.AddServicePackageMapping();
 
-		//   this.AddScheduleMapping();
+		 this.AddScheduleMapping();
 
 		this.AddServiceMapping();
 
@@ -54,7 +54,7 @@ public class MappingProfiles : Profile
 
 		this.AddAppointmentMapping();
 
-		//   this.AddContactMapping();
+	    this.AddContactMapping();
 
 		this.AddReportMapping();
 
@@ -62,15 +62,15 @@ public class MappingProfiles : Profile
 
 		this.AddRatingServiceMapping();
 
-		// this.AddVendorMapping();
+		this.AddVendorMapping();
 
-		//this.AddWareHouseManagerMapping();
+		this.AddWareHouseManagerMapping();
 
 		this.AddManagerMapping();
 
 		this.AddSalesMapping();
 
-
+		this.AddCampaginMapping();
 	}
 
 }

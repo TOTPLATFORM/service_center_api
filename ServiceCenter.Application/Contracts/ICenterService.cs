@@ -36,5 +36,5 @@ public interface ICenterService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="id">the unique identifier of the center to delete.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
-	public Task<Result> DeleteCenterAsync(int id);
+	//public Task<Result> DeleteCenterAsync(int id);
 }

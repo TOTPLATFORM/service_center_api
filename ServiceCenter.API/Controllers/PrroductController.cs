@@ -105,14 +105,17 @@ public class ProductController(IProductService productService) : BaseController
     {
         return await _productService.SearchProductByTextAsync(text, itemCount, index);
     }
-     //[HttpGet("searchByProductCategory/{categoryId}")]
-    //[Authorize(Roles = "Manager")]
-    //[ProducesResponseType(typeof(Result<ProductResponseDto>), StatusCodes.Status200OK)]
-    //[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    //public async Task<Result<List<ProductResponseDto>>> SearchProductByProductCategory(int categoryId)
-    //{
-    //    return await _productService.GetProductsForProductCategoryAsync(categoryId);
-    //}
+    [HttpGet("searchByProductCategory/{categoryId}")]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(typeof(Result<PaginationResult<ProductResponseDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+    public async Task<Result<PaginationResult<ProductResponseDto>>> SearchProductByProductCategory(int categoryId, int itemCount, int index)
+    {
+        return await _productService.GetProductsForProductCategoryAsync(categoryId,  itemCount,  index);
+    }
+  
+
+   
 
     //[HttpGet("searchByProductBrand/{brandId}")]
     //[Authorize(Roles = "Manager")]
