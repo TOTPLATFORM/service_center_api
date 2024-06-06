@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -32,28 +34,29 @@ public class VendorService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         var vendor = _mapper.Map<Vendor>(vendorRequestDto);
 
         var center = await _dbContext.Centers.FirstOrDefaultAsync();
-       
-       var vendorAdded = await _authService.RegisterUserWithRoleAsync(vendor, vendorRequestDto.Password, role);
+
+        vendor.Center = center;
+
+        var vendorAdded = await _authService.RegisterUserWithRoleAsync(vendor, vendorRequestDto.Password, role);
 
         if (!vendorAdded.IsSuccess)
         {
             return Result.Error(vendorAdded.Errors.FirstOrDefault());
         }
 
-        vendor.Center = center;
-
+      
         _logger.LogInformation("Vendor added successfully in the database");
 
         return Result.SuccessWithMessage("Vendor added successfully");
 
     }
 
-    public async Task<Result<List<VendorResponseDto>>> GetAllVendorsAsync()
+    public async Task<Result<PaginationResult<VendorResponseDto>>> GetAllVendorsAsync(int itemCount,int index)
     {
         var vendor = await _dbContext.Users.OfType<Vendor>()
                   .ProjectTo<VendorResponseDto>(_mapper.ConfigurationProvider)
-                  .ToListAsync();
-        _logger.LogInformation("Fetching all vendor. Total count: {vendor}.", vendor.Count);
+                  .GetAllWithPagination(itemCount,index);
+        _logger.LogInformation("Fetching all vendor. Total count: {vendor}.", vendor.Data.Count);
         return Result.Success(vendor);
     }
 
@@ -111,14 +114,14 @@ public class VendorService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
     }
 
     ///<inheritdoc/>
-    public async Task<Result<List<VendorResponseDto>>> SearchVendorByTextAsync(string text)
+    public async Task<Result<PaginationResult<VendorResponseDto>>> SearchVendorByTextAsync(string text,int itemcount, int index)
     {
         var vendor = await _dbContext.Vendors
                        .ProjectTo<VendorResponseDto>(_mapper.ConfigurationProvider)
                        .Where(n => n.VendorFirstName.Contains(text))
-                       .ToListAsync();
+                       .GetAllWithPagination(itemcount,index);
 
-        _logger.LogInformation("Fetching search branch by name . Total count: {branch}.", vendor.Count);
+        _logger.LogInformation("Fetching search branch by name . Total count: {branch}.", vendor.Data.Count);
 
         return Result.Success(vendor);
     }

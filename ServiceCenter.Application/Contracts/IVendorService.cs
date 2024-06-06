@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ public interface IVendorService : IApplicationService, IScopedService
     /// function to get all vendor 
     /// </summary>
     /// <returns>list all vendorResponseDto </returns>
-    public Task<Result<List<VendorResponseDto>>> GetAllVendorsAsync();
+    public Task<Result<PaginationResult<VendorResponseDto>>> GetAllVendorsAsync(int itemcount, int index);
 
     /// <summary>
     /// function to get vendor by id that take  vendor id
@@ -47,7 +48,7 @@ public interface IVendorService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">text</param>
     /// <returns>all vendores that contain this text </returns>
-    public Task<Result<List<VendorResponseDto>>> SearchVendorByTextAsync(string text);
+    public Task<Result<PaginationResult<VendorResponseDto>>> SearchVendorByTextAsync(string text, int itemcount, int index);
 
     /// <summary>
     /// function to delete Vendor that take VendorDto   
