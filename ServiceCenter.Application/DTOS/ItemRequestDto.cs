@@ -21,7 +21,6 @@ public class  ItemRequestDto
     public int ItemPrice { get; set; }
     [Required]
    public int CategoryId { get; set; }
-    public int ServiceId {  get; set; }
 
 }
 
