@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for contact-related services that manages contact data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface IContactService : IApplicationService, IScopedService
 {
     /// <summary>

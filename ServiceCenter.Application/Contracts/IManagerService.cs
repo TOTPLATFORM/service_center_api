@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for manager-related services that manages manager data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface IManagerService: IScopedService , IApplicationService
 {
     /// <summary>

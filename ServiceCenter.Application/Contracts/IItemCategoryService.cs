@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for itemCategory-related services that manages itemCategory data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface IItemCategoryService : IApplicationService, IScopedService
 {
     /// <summary>

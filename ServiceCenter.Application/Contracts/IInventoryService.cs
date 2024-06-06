@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for inventory-related services that manages inventory data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface IInventoryService : IApplicationService ,IScopedService
 {
 	/// <summary>

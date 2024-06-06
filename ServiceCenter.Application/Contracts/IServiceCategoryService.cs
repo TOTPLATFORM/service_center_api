@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for serviceCategory-related services that manages serviceCategory data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface IServiceCategoryService : IApplicationService, IScopedService
 {
     /// <summary>

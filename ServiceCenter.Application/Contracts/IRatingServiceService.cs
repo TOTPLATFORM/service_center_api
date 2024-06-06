@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 /// <summary>
-/// provides an interface for rating service-related services that manages rating service data across the application. Inherits from IApplicationService and IScopedService.
+/// provides an interface for rating related services that manages rating data across the application. Inherits from IApplicationService and IScopedService.
 /// </summary>
 public interface IRatingServiceService:IApplicationService,IScopedService
 {

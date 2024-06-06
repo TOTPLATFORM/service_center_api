@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+/// <summary>
+/// provides an interface for center-related services that manages center data across the application. Inherits from IApplicationService and IScopedService.
+/// </summary>
 public interface ICenterService : IApplicationService, IScopedService
 {
     /// <summary>
