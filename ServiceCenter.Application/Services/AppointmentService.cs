@@ -1,142 +1,220 @@
-﻿//using AutoMapper;
-//using AutoMapper.QueryableExtensions;
-//using Microsoft.EntityFrameworkCore;
-//using Microsoft.Extensions.Logging;
-//using ServiceCenter.Application.Contracts;
-//using ServiceCenter.Application.DTOS;
-//using ServiceCenter.Core.Result;
-//using ServiceCenter.Domain.Entities;
-//using ServiceCenter.Infrastructure.BaseContext;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using ServiceCenter.Application.Contracts;
+using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
+using ServiceCenter.Core.Result;
+using ServiceCenter.Domain.Entities;
+using ServiceCenter.Domain.Enums;
+using ServiceCenter.Infrastructure.BaseContext;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace ServiceCenter.Application.Services;
+namespace ServiceCenter.Application.Services;
 
-//public class AppointmentService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<AppointmentService> logger, IUserContextService userContext) :IAppointmentService
-//{
-//    private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
-//    private readonly IMapper _mapper = mapper;
-//    private readonly ILogger<AppointmentService> _logger = logger;
-//    private readonly IUserContextService _userContext = userContext;
-//    /// <inheritdoc/>
-//    public async Task<Result> AddAppointmentAsync(AppointmentRequestDto appointmentRequestDto)
-//    {
-//        var appointment = _mapper.Map<Appointment>(appointmentRequestDto);
-//        var customer = _dbContext.Customers.FirstOrDefault(C => C.Id == appointmentRequestDto.CustomerId);
-//        var schedule = _dbContext.Schedules.FirstOrDefault(C => C.Id == appointmentRequestDto.ScheduleId);
+public class AppointmentService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<AppointmentService> logger, IUserContextService userContext) : IAppointmentService
+{
+    private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
+    private readonly IMapper _mapper = mapper;
+    private readonly ILogger<AppointmentService> _logger = logger;
+    private readonly IUserContextService _userContext = userContext;
 
-//        if (customer is null || schedule is null)
-//        {
-//            _logger.LogInformation("customer or schedule not found");
-//            return Result.Error("appointment added failed to the database");
-//        }
-//        appointment.CreatedBy = _userContext.Email;
-//        appointment.Customer = customer;
-//        appointment.Schedule = schedule;
+    ///<inheritdoc/>
+    public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAllAppointmentsAsync(int itemCount, int index)
+    {
+        var appointments = await _dbContext.Appointments
+            .ProjectTo<AppointmentResponseDto>(_mapper.ConfigurationProvider)
+            .GetAllWithPagination(itemCount, index);
 
-//        _dbContext.Appointments.Add(appointment);
-//        await _dbContext.SaveChangesAsync();
+        if (index > appointments.TotalCount)
+        {
+            appointments.End = appointments.TotalCount;
+        }
 
-//        _logger.LogInformation("appointment added successfully to the database");
-//        return Result.SuccessWithMessage("appointment added successfully");
-//    }
-//    /// <inheritdoc/>
-//    public async Task<Result> DeleteAppointmentAsync(int id)
-//    {
-//        var appointment = await _dbContext.Appointments.FindAsync(id);
+        _logger.LogInformation("Fetching all appointments. Total count: {appointments}.", appointments);
+        return Result.Success(appointments);
+    }
 
-//        if (appointment is null)
-//        {
-//            _logger.LogWarning($"appointment  with id {id} was not found while attempting to delete");
-//            return Result.NotFound(["The appointment  is not found"]);
-//        }
+    ///<inheritdoc/>
+    public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceProviderIdAsync(string serviceproviderId, int itemCount, int index)
+    {
+        var appointments = await _dbContext.Appointments
+            .Where(a => a.Schedule.ServiceProviderId == serviceproviderId)
+            .ProjectTo<AppointmentResponseDto>(_mapper.ConfigurationProvider)
+            .GetAllWithPagination(itemCount, index);
 
-//        _dbContext.Appointments.Remove(appointment);
-//        await _dbContext.SaveChangesAsync();
+        if (index > appointments.TotalCount)
+        {
+            appointments.End = appointments.TotalCount;
+        }
 
-//        _logger.LogInformation($"Successfully removed appointment  {appointment}");
-//        return Result.SuccessWithMessage("appointment  removed successfully");
-//    }
-//    /// <inheritdoc/>
-//    public async Task<Result<List<AppointmentResponseDto>>> GetsAppointmentsByEmployeeAsync(string id)
-//    {
-//        var appointmentForEmployee = await _dbContext.Appointments.Where(A => A.Schedule.Employee.Id == id)
-//                    .ProjectTo<AppointmentResponseDto>(_mapper.ConfigurationProvider)
-//                    .ToListAsync();
+        _logger.LogInformation("Fetching appointments for serviceprovider {serviceproviderId}. Total count: {count}.", serviceproviderId, appointments);
+        return Result.Success(appointments);
+    }
 
-//        _logger.LogInformation("Fetching all appointment for specific agent . Total count: {appointment}.", appointmentForEmployee.Count);
+    ///<inheritdoc/>
+    public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByContactIdAsync(string contactId, int itemCount, int index)
+    {
+        var appointments = await _dbContext.Appointments
+            .Where(a => a.ContactId == contactId)
+            .ProjectTo<AppointmentResponseDto>(_mapper.ConfigurationProvider)
+            .GetAllWithPagination(itemCount, index);
 
-//        return Result.Success(appointmentForEmployee);
-//    }
-//    /// <inheritdoc/>
-//    public async Task<Result<List<AppointmentResponseDto>>> GetAppointmentsByCustomerAsync(string id)
-//    {
-//        var appointmentForCustomer = await _dbContext.Appointments.Where(A => A.Customer.Id == id)
-//            .ProjectTo<AppointmentResponseDto>(_mapper.ConfigurationProvider)
-//            .ToListAsync();
+        if (index > appointments.TotalCount)
+        {
+            appointments.End = appointments.TotalCount;
+        }
 
-//        _logger.LogInformation("Fetching all appointment for specific client . Total count: {appointment}.", appointmentForCustomer.Count);
+        _logger.LogInformation("Fetching appointments for contact {contactId}. Total count: {count}.", contactId, appointments);
+        return Result.Success(appointments);
+    }
 
-//        return Result.Success(appointmentForCustomer);
-//    }
-//    /// <inheritdoc/>
-//    public async Task<Result<List<AppointmentResponseDto>>> GetAllAppointmentsAsync()
-//    {
-//        var appointmentResponseDto = await _dbContext.Appointments
-//                    .ProjectTo<AppointmentResponseDto>(_mapper.ConfigurationProvider)
-//                    .ToListAsync();
+    ///<inheritdoc/>
+    public async Task<Result<AppointmentResponseDto>> GetAppointmentByIdAsync(int id)
+    {
+        var appointment = await _dbContext.Appointments
+            .ProjectTo<AppointmentResponseDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(a => a.Id == id);
 
-//        _logger.LogInformation("Fetching all appointment . Total count: {appointment}.", appointmentResponseDto.Count);
+        if (appointment is null)
+        {
+            _logger.LogWarning("Appointment Id not found, Id {id}", id);
+            return Result.NotFound(new[] { "The appointment is not found" });
+        }
 
-//        return Result.Success(appointmentResponseDto);
-//    }
-//    /// <inheritdoc/>
-//    public async Task<Result<AppointmentResponseDto>> GetAppointmentByIdAsync(int id)
-//    {
-//        var appointmentResponseDto = await _dbContext.Appointments
-//                    .ProjectTo<AppointmentResponseDto>(_mapper.ConfigurationProvider)
-//                    .FirstOrDefaultAsync(c => c.Id == id);
+        _logger.LogInformation("Fetched one appointment");
+        return Result.Success(appointment);
+    }
 
-//        if (appointmentResponseDto is null)
-//        {
-//            _logger.LogWarning("appointment  Id not found,Id {id}", id);
-//            return Result.NotFound(["The appointment  is not found"]);
-//        }
+    ///<inheritdoc/>
+    public async Task<Result> BookAppointmentAsync(AppointmentRequestDto appointmentRequestDto)
+    {
+        var schedule = await _dbContext.Schedules.FindAsync(appointmentRequestDto.ScheduleId);
+        if (schedule == null)
+        {
+            _logger.LogError("Schedule Id not found, Id {id}", appointmentRequestDto.ScheduleId);
+            return Result.NotFound(new[] { "The schedule is not found" });
+        }
 
-//        _logger.LogInformation("Fetched appointment  details");
-//        return Result.Success(appointmentResponseDto);
-//    }
+        var today = DateTime.UtcNow.Date;
+        var appointmentDate = today.AddDays((int)schedule.DayOfWeek - (int)today.DayOfWeek);
 
-//    /// <inheritdoc/>
-//    public async Task<Result<AppointmentResponseDto>> UpdateAppointmentAsync(int id, AppointmentRequestDto appointmentRequestDto)
-//    {
-//        var appointment = await _dbContext.Appointments.FindAsync(id);
-//        var customer = _dbContext.Customers.FirstOrDefault(C => C.Id == appointmentRequestDto.CustomerId);
-//        var schedule = _dbContext.Schedules.FirstOrDefault(C => C.Id == appointmentRequestDto.ScheduleId);
+        if (appointmentDate < today)
+        {
+            appointmentDate = appointmentDate.AddDays(7);
+        }
 
-//        if (customer is null || schedule is null)
-//        {
-//            _logger.LogInformation("customer or schedule not found");
-//            return Result.Error("appointment added failed to the database");
-//        }
+        var existingAppointment = await _dbContext.Appointments
+            .FirstOrDefaultAsync(a => a.ScheduleId == appointmentRequestDto.ScheduleId && a.AppointmentDate == appointmentDate);
 
-//        if (appointment is null)
-//        {
-//            _logger.LogWarning("appointment  Id not found,Id {id}", id);
-//            return Result.NotFound(["The appointment  is not found"]);
-//        }
-//        appointment.Customer = customer;
-//        appointment.Schedule = schedule;
-//        appointment.ModifiedBy = _userContext.Email;
+        if (existingAppointment != null)
+        {
+            _logger.LogError("Appointment already exists for schedule Id {id} on date {date}", appointmentRequestDto.ScheduleId, appointmentDate);
+            return Result.Error(new[] { "An appointment has already been booked for this schedule on the specified date." });
+        }
 
-//        await _dbContext.SaveChangesAsync();
+        var appointment = _mapper.Map<Appointment>(appointmentRequestDto);
+        appointment.AppointmentDate = appointmentDate;
+        appointment.Status = AppointmentStatus.Scheduled;
+        appointment.CreatedBy = _userContext.Email;
 
-//        var updatedAppointment = _mapper.Map<AppointmentResponseDto>(appointment);
+        _dbContext.Appointments.Add(appointment);
+        await _dbContext.SaveChangesAsync();
 
-//        _logger.LogInformation("appointment  updated successfully");
-//        return Result.Success(updatedAppointment, "appointment  updated successfully");
-//    }
-//}
+        _logger.LogInformation("Appointment booked successfully for schedule Id {id} on date {date}", appointmentRequestDto.ScheduleId, appointmentDate);
+        return Result.SuccessWithMessage("Appointment booked successfully");
+    }
+
+    ///<inheritdoc/>
+    public async Task<Result> CancelAppointmentAsync(int id)
+    {
+        var appointment = await _dbContext.Appointments.FindAsync(id);
+
+        if (appointment is null)
+        {
+            _logger.LogWarning($"Appointment with id {id} was not found while attempting to cancel");
+            return Result.NotFound(new[] { "The appointment is not found" });
+        }
+
+        appointment.Status = AppointmentStatus.Canceled;
+        appointment.ModifiedBy = _userContext.Email;
+
+        await _dbContext.SaveChangesAsync();
+
+        _logger.LogInformation($"Successfully canceled appointment {appointment}");
+        return Result.SuccessWithMessage("Appointment canceled successfully");
+    }
+
+    ///<inheritdoc/>
+    public async Task<Result> ChangeAppointmentStatusAsync(int id, AppointmentStatus status)
+    {
+        var appointment = await _dbContext.Appointments.FindAsync(id);
+        if (appointment == null)
+        {
+            _logger.LogError("Appointment Id not found, Id {id}", id);
+            return Result.NotFound(new[] { "The appointment is not found" });
+        }
+
+        appointment.Status = status;
+        await _dbContext.SaveChangesAsync();
+
+        _logger.LogInformation("Appointment status updated successfully for Id {id} to status {status}", id, status);
+        return Result.SuccessWithMessage("Appointment status updated successfully");
+    }
+
+    ///<inheritdoc/>
+    public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceProviderIdAndStatusAsync(string serviceproviderId, AppointmentStatus status, int itemCount, int index)
+    {
+        var appointments = await _dbContext.Appointments
+            .Where(a => a.Schedule.ServiceProviderId == serviceproviderId && a.Status == status)
+            .ProjectTo<AppointmentResponseDto>(_mapper.ConfigurationProvider)
+            .GetAllWithPagination(itemCount, index);
+
+        if (index > appointments.TotalCount)
+        {
+            appointments.End = appointments.TotalCount;
+        }
+
+        return Result.Success(appointments);
+    }
+
+    ///<inheritdoc/>
+    public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByContactIdAndStatusAsync(string contactId, AppointmentStatus status, int itemCount, int index)
+    {
+        var appointments = await _dbContext.Appointments
+            .Where(a => a.ContactId == contactId && a.Status == status)
+            .ProjectTo<AppointmentResponseDto>(_mapper.ConfigurationProvider)
+            .GetAllWithPagination(itemCount, index);
+
+        if (index > appointments.TotalCount)
+        {
+            appointments.End = appointments.TotalCount;
+        }
+
+        return Result.Success(appointments);
+    }
+
+    ///<inheritdoc/>
+    public async Task<Result> DeleteAppointmentAsync(int id)
+    {
+        var appointment = await _dbContext.Appointments.FindAsync(id);
+
+        if (appointment is null)
+        {
+            _logger.LogWarning("Appointment Invalid Id, Id {AppointmentId}", id);
+            return Result.NotFound(new[] { "Appointment Invalid Id" });
+        }
+
+        _dbContext.Appointments.Remove(appointment);
+        await _dbContext.SaveChangesAsync();
+
+        _logger.LogInformation("Appointment removed successfully from the database");
+        return Result.SuccessWithMessage("Appointment removed successfully");
+    }
+}
