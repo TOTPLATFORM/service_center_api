@@ -18,7 +18,8 @@ public class ServiceResponseDto
 	public ICollection<ServicePackageResponseDto> ServicePackages { get; set; } = new HashSet<ServicePackageResponseDto>();
     public  CenterResponseDto Center { get; set; } = default;
     public  ServiceCategoryResponseDto ServiceCategory { get; set; } = default;
-    public string ServiceProviderName { get; set; } = "";
+   // public string ServiceProviderName { get; set; } = "";
+    public ICollection<string> ServiceProviderId { get; set; } = new HashSet<string>();
     public  ICollection<ItemResponseDto> Item { get; set; } = new HashSet<ItemResponseDto>();
     public  ICollection<FeedbackResponseDto?> Feedbacks { get; set; } = new HashSet<FeedbackResponseDto?>();
 
