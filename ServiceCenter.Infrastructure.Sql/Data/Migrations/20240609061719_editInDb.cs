@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class edit4 : Migration
+    public partial class editInDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -332,6 +332,35 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Branches",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BranchName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Address_City = table.Column<int>(type: "int", nullable: false),
+                    Address_Country = table.Column<int>(type: "int", nullable: false),
+                    Address_PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BranchPhoneNumber = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    EmailAddress = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    CenterId = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Branches", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Branches_Centers_CenterId",
+                        column: x => x.CenterId,
+                        principalTable: "Centers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Departments",
                 columns: table => new
                 {
@@ -541,6 +570,64 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Complaints",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ComplaintDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    ComplaintDescription = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    ComplaintCategory = table.Column<int>(type: "int", nullable: false),
+                    ComplaintStatus = table.Column<int>(type: "int", nullable: false),
+                    BranchId = table.Column<int>(type: "int", nullable: true),
+                    ContactId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Complaints", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Complaints_Branches_BranchId",
+                        column: x => x.BranchId,
+                        principalTable: "Branches",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Complaints_Contacts_ContactId",
+                        column: x => x.ContactId,
+                        principalTable: "Contacts",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Inventories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    InventoryName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    InventoryLocation = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
+                    InventoryCapacity = table.Column<int>(type: "int", nullable: false),
+                    BranchId = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Inventories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Inventories_Branches_BranchId",
+                        column: x => x.BranchId,
+                        principalTable: "Branches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
                 {
@@ -684,7 +771,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false),
                     EndDate = table.Column<DateOnly>(type: "date", nullable: false),
                     Discount = table.Column<int>(type: "int", nullable: false),
-                    OfferCategory = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: true),
                     ServiceId = table.Column<int>(type: "int", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -756,6 +842,88 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "InventoryItemCategory",
+                columns: table => new
+                {
+                    InventoriesId = table.Column<int>(type: "int", nullable: false),
+                    ItemCategoriesId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InventoryItemCategory", x => new { x.InventoriesId, x.ItemCategoriesId });
+                    table.ForeignKey(
+                        name: "FK_InventoryItemCategory_Inventories_InventoriesId",
+                        column: x => x.InventoriesId,
+                        principalTable: "Inventories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InventoryItemCategory_ItemCategories_ItemCategoriesId",
+                        column: x => x.ItemCategoriesId,
+                        principalTable: "ItemCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InventoryProductBrand",
+                columns: table => new
+                {
+                    InventoriesId = table.Column<int>(type: "int", nullable: false),
+                    ProductBrandsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InventoryProductBrand", x => new { x.InventoriesId, x.ProductBrandsId });
+                    table.ForeignKey(
+                        name: "FK_InventoryProductBrand_Inventories_InventoriesId",
+                        column: x => x.InventoriesId,
+                        principalTable: "Inventories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InventoryProductBrand_ProductBrands_ProductBrandsId",
+                        column: x => x.ProductBrandsId,
+                        principalTable: "ProductBrands",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transaction",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TransactionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    InventoryId = table.Column<int>(type: "int", nullable: false),
+                    VendorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transaction", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Transaction_Inventories_InventoryId",
+                        column: x => x.InventoryId,
+                        principalTable: "Inventories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Transaction_Vendors_VendorId",
+                        column: x => x.VendorId,
+                        principalTable: "Vendors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Managers",
                 columns: table => new
                 {
@@ -763,17 +931,24 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     Responsibilities = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HiringDate = table.Column<DateOnly>(type: "date", nullable: false),
                     WorkingHours = table.Column<int>(type: "int", nullable: false),
-                    Experience = table.Column<int>(type: "int", nullable: false)
+                    Experience = table.Column<int>(type: "int", nullable: false),
+                    BranchId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Managers", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Managers_Branches_BranchId",
+                        column: x => x.BranchId,
+                        principalTable: "Branches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Managers_Employees_Id",
                         column: x => x.Id,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -811,36 +986,28 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Branches",
+                name: "WareHouseManagers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BranchName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    Address_City = table.Column<int>(type: "int", nullable: false),
-                    Address_Country = table.Column<int>(type: "int", nullable: false),
-                    Address_PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BranchPhoneNumber = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    EmailAddress = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    ManagerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CenterId = table.Column<int>(type: "int", nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PositionTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StartDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    EndtDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    InventoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Branches", x => x.Id);
+                    table.PrimaryKey("PK_WareHouseManagers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Branches_Centers_CenterId",
-                        column: x => x.CenterId,
-                        principalTable: "Centers",
-                        principalColumn: "Id");
+                        name: "FK_WareHouseManagers_Employees_Id",
+                        column: x => x.Id,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Branches_Managers_ManagerId",
-                        column: x => x.ManagerId,
-                        principalTable: "Managers",
+                        name: "FK_WareHouseManagers_Inventories_InventoryId",
+                        column: x => x.InventoryId,
+                        principalTable: "Inventories",
                         principalColumn: "Id");
                 });
 
@@ -964,65 +1131,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         column: x => x.ServicesId,
                         principalTable: "Services",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Complaints",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ComplaintDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    ComplaintDescription = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    ComplaintCategory = table.Column<int>(type: "int", nullable: false),
-                    ComplaintStatus = table.Column<int>(type: "int", nullable: false),
-                    BranchId = table.Column<int>(type: "int", nullable: true),
-                    ContactId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Complaints", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Complaints_Branches_BranchId",
-                        column: x => x.BranchId,
-                        principalTable: "Branches",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Complaints_Contacts_ContactId",
-                        column: x => x.ContactId,
-                        principalTable: "Contacts",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Inventories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    InventoryName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    InventoryLocation = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
-                    InventoryCapacity = table.Column<int>(type: "int", nullable: false),
-                    BranchId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Inventories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Inventories_Branches_BranchId",
-                        column: x => x.BranchId,
-                        principalTable: "Branches",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -1055,115 +1164,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         column: x => x.ScheduleId,
                         principalTable: "Schedules",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "InventoryItemCategory",
-                columns: table => new
-                {
-                    InventoriesId = table.Column<int>(type: "int", nullable: false),
-                    ItemCategoriesId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InventoryItemCategory", x => new { x.InventoriesId, x.ItemCategoriesId });
-                    table.ForeignKey(
-                        name: "FK_InventoryItemCategory_Inventories_InventoriesId",
-                        column: x => x.InventoriesId,
-                        principalTable: "Inventories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_InventoryItemCategory_ItemCategories_ItemCategoriesId",
-                        column: x => x.ItemCategoriesId,
-                        principalTable: "ItemCategories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "InventoryProductBrand",
-                columns: table => new
-                {
-                    InventoriesId = table.Column<int>(type: "int", nullable: false),
-                    ProductBrandsId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InventoryProductBrand", x => new { x.InventoriesId, x.ProductBrandsId });
-                    table.ForeignKey(
-                        name: "FK_InventoryProductBrand_Inventories_InventoriesId",
-                        column: x => x.InventoriesId,
-                        principalTable: "Inventories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_InventoryProductBrand_ProductBrands_ProductBrandsId",
-                        column: x => x.ProductBrandsId,
-                        principalTable: "ProductBrands",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Transaction",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TransactionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    InventoryId = table.Column<int>(type: "int", nullable: false),
-                    VendorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Transaction", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Transaction_Inventories_InventoryId",
-                        column: x => x.InventoryId,
-                        principalTable: "Inventories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Transaction_Vendors_VendorId",
-                        column: x => x.VendorId,
-                        principalTable: "Vendors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "WareHouseManagers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PositionTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StartDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    EndtDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    InventoryId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WareHouseManagers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_WareHouseManagers_Employees_Id",
-                        column: x => x.Id,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_WareHouseManagers_Inventories_InventoryId",
-                        column: x => x.InventoryId,
-                        principalTable: "Inventories",
-                        principalColumn: "Id");
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.InsertData(
@@ -1171,13 +1172,14 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0c80dd4c-56f8-4463-8165-bd74d5943f09", null, "Sales", "SALES" },
-                    { "59e3e6e5-61ae-4bb2-a653-9540a128fc7d", null, "Admin", "ADMIN" },
-                    { "7ae1de07-11a0-4c20-9d69-dc0050082b6c", null, "ServiceProvider", "SERVICEPROVIDER" },
-                    { "89fdc10a-1085-4536-bde2-4759322ab162", null, "Customer", "CUSTOMER" },
-                    { "b293ca1d-717d-4883-91ea-58f62770c225", null, "Manager", "MANAGER" },
-                    { "e9c1d78c-9136-4f92-a0fb-80ce17685fdd", null, "WarehouseManager", "WAREHOUSEMANAGER" },
-                    { "efbec024-0318-41f2-9b5f-740636481c69", null, "Employee", "EMPLOYEE" }
+                    { "3ae1677b-5aa1-4f55-a957-0f1ba9925cf0", null, "Manager", "MANAGER" },
+                    { "4d752b08-4993-4e4f-a88d-e37726c76853", null, "ServiceProvider", "SERVICEPROVIDER" },
+                    { "69c61340-581a-47d0-b2e3-fa3b9b09bef4", null, "Customer", "CUSTOMER" },
+                    { "808a0317-62a1-4e0e-a22c-ee7e26594b0f", null, "Sales", "SALES" },
+                    { "a523c8f0-ffdf-4488-b716-93892c97b638", null, "Admin", "ADMIN" },
+                    { "ce9c9792-9c8d-4436-9f8d-84f6eb921ceb", null, "Vendor", "VENDOR" },
+                    { "ede64ff0-7469-42be-b7e3-25c17598361a", null, "Employee", "EMPLOYEE" },
+                    { "f33339bc-5bfc-42fc-ba3c-f8a37848eaa1", null, "WarehouseManager", "WAREHOUSEMANAGER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -1235,11 +1237,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 column: "CenterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Branches_ManagerId",
-                table: "Branches",
-                column: "ManagerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Campagins_CenterId",
                 table: "Campagins",
                 column: "CenterId");
@@ -1292,8 +1289,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Inventories_BranchId",
                 table: "Inventories",
-                column: "BranchId",
-                unique: true);
+                column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InventoryItemCategory_ItemCategoriesId",
@@ -1314,6 +1310,11 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 name: "IX_ItemService_ServicesId",
                 table: "ItemService",
                 column: "ServicesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Managers_BranchId",
+                table: "Managers",
+                column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Offers_ProductId",
@@ -1516,6 +1517,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 name: "Contacts");
 
             migrationBuilder.DropTable(
+                name: "Managers");
+
+            migrationBuilder.DropTable(
                 name: "Sales");
 
             migrationBuilder.DropTable(
@@ -1544,9 +1548,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Branches");
-
-            migrationBuilder.DropTable(
-                name: "Managers");
 
             migrationBuilder.DropTable(
                 name: "Employees");

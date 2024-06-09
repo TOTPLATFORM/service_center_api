@@ -12,8 +12,8 @@ using ServiceCenter.Infrastructure.BaseContext;
 namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 {
     [DbContext(typeof(ServiceCenterBaseDbContext))]
-    [Migration("20240606123656_edit4")]
-    partial class edit4
+    [Migration("20240609061719_editInDb")]
+    partial class editInDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,45 +117,51 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "59e3e6e5-61ae-4bb2-a653-9540a128fc7d",
+                            Id = "a523c8f0-ffdf-4488-b716-93892c97b638",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "89fdc10a-1085-4536-bde2-4759322ab162",
+                            Id = "69c61340-581a-47d0-b2e3-fa3b9b09bef4",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "efbec024-0318-41f2-9b5f-740636481c69",
+                            Id = "ede64ff0-7469-42be-b7e3-25c17598361a",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "0c80dd4c-56f8-4463-8165-bd74d5943f09",
+                            Id = "808a0317-62a1-4e0e-a22c-ee7e26594b0f",
                             Name = "Sales",
                             NormalizedName = "SALES"
                         },
                         new
                         {
-                            Id = "e9c1d78c-9136-4f92-a0fb-80ce17685fdd",
+                            Id = "f33339bc-5bfc-42fc-ba3c-f8a37848eaa1",
                             Name = "WarehouseManager",
                             NormalizedName = "WAREHOUSEMANAGER"
                         },
                         new
                         {
-                            Id = "b293ca1d-717d-4883-91ea-58f62770c225",
+                            Id = "3ae1677b-5aa1-4f55-a957-0f1ba9925cf0",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "7ae1de07-11a0-4c20-9d69-dc0050082b6c",
+                            Id = "4d752b08-4993-4e4f-a88d-e37726c76853",
                             Name = "ServiceProvider",
                             NormalizedName = "SERVICEPROVIDER"
+                        },
+                        new
+                        {
+                            Id = "ce9c9792-9c8d-4436-9f8d-84f6eb921ceb",
+                            Name = "Vendor",
+                            NormalizedName = "VENDOR"
                         });
                 });
 
@@ -474,7 +480,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar");
 
-                    b.Property<int?>("CenterId")
+                    b.Property<int>("CenterId")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -489,9 +495,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar");
 
-                    b.Property<string>("ManagerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -502,8 +505,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CenterId");
-
-                    b.HasIndex("ManagerId");
 
                     b.ToTable("Branches");
                 });
@@ -790,8 +791,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId")
-                        .IsUnique();
+                    b.HasIndex("BranchId");
 
                     b.ToTable("Inventories");
                 });
@@ -900,9 +900,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OfferCategory")
-                        .HasColumnType("int");
 
                     b.Property<string>("OfferDescription")
                         .IsRequired()
@@ -1517,6 +1514,9 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                 {
                     b.HasBaseType("ServiceCenter.Domain.Entities.Employee");
 
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Experience")
                         .HasColumnType("int");
 
@@ -1529,6 +1529,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
                     b.Property<int>("WorkingHours")
                         .HasColumnType("int");
+
+                    b.HasIndex("BranchId");
 
                     b.ToTable("Managers");
                 });
@@ -1761,13 +1763,11 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Branch", b =>
                 {
-                    b.HasOne("ServiceCenter.Domain.Entities.Center", null)
+                    b.HasOne("ServiceCenter.Domain.Entities.Center", "Center")
                         .WithMany("Branches")
-                        .HasForeignKey("CenterId");
-
-                    b.HasOne("ServiceCenter.Domain.Entities.Manager", "Manager")
-                        .WithMany()
-                        .HasForeignKey("ManagerId");
+                        .HasForeignKey("CenterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.OwnsOne("ServiceCenter.Domain.Entities.Address", "Address", b1 =>
                         {
@@ -1795,7 +1795,7 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
                     b.Navigation("Address")
                         .IsRequired();
 
-                    b.Navigation("Manager");
+                    b.Navigation("Center");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Campagin", b =>
@@ -1855,8 +1855,8 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Inventory", b =>
                 {
                     b.HasOne("ServiceCenter.Domain.Entities.Branch", "Branch")
-                        .WithOne("Inventory")
-                        .HasForeignKey("ServiceCenter.Domain.Entities.Inventory", "BranchId")
+                        .WithMany()
+                        .HasForeignKey("BranchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -2082,11 +2082,19 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Manager", b =>
                 {
+                    b.HasOne("ServiceCenter.Domain.Entities.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ServiceCenter.Domain.Entities.Employee", null)
                         .WithOne()
                         .HasForeignKey("ServiceCenter.Domain.Entities.Manager", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Branch");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Sales", b =>
@@ -2125,8 +2133,6 @@ namespace ServiceCenter.Infrastructure.Sql.Data.Migrations
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Branch", b =>
                 {
                     b.Navigation("Complaints");
-
-                    b.Navigation("Inventory");
                 });
 
             modelBuilder.Entity("ServiceCenter.Domain.Entities.Center", b =>

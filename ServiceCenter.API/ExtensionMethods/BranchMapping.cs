@@ -8,10 +8,8 @@ public static class BranchMapping
 {
 	public static void AddBranchMapping(this MappingProfiles map)
 	{
-		map.CreateMap<BranchRequestDto, Branch>()
-			   .ForPath(dest => dest.Manager.Id, src => src.MapFrom(src => src.ManagerId))
-			   .ForPath(dest => dest.Inventory.Id, src => src.MapFrom(src => src.InventoryId))
-			   .ReverseMap();
+		map.CreateMap<BranchRequestDto, Branch>();
+			  
 
 		map.CreateMap<Branch, BranchResponseDto>()
 			.ForMember(dest => dest.Country, src => src.MapFrom(src => src.Address.Country))

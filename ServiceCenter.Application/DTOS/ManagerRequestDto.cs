@@ -19,4 +19,6 @@ public class ManagerRequestDto : BaseUserRequestDto
     public int Experience { get; set; }
     [Required]
     public int DepartmentId { get; set; }
+    [Required]
+    public int BranchId { get; set; }
 }
