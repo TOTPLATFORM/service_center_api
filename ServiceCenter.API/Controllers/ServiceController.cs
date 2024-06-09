@@ -88,7 +88,7 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	{
 		return await _ServiceService.DeleteServiceAsync(id);
 	}
-	/// </summary>
+	/// <summary>
 	///<param name="text">id</param>
 	/// <remarks>
 	/// Access is limited to users with the "Admin" role.
@@ -103,7 +103,7 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 		return await _ServiceService.SearchServiceByTextAsync(text);
 	}
 
-	/// </summary>
+	/// <summary>
 	///<param name="id">id of Service.</param>
 	///<param name="ServiceRequestDto">Service dto.</param>
 	/// <remarks>
@@ -128,4 +128,20 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	{
 		return await _ServiceService.GetServicesByPackageAsync(servicePackageId);
 	}
+    /// <summary>
+    ///<param name="id">id of Service.</param>
+    ///<param name="ServiceRequestDto">Service dto.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+    [HttpGet("search/ByCategory")]
+	[AllowAnonymous]
+    [ProducesResponseType(typeof(Result<PaginationResult<ServiceResponseDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<PaginationResult<ServiceResponseDto>>> GetServicesByCategory(int serviceCategoryId, int itemCount, int index)
+    {
+        return await _ServiceService.GetServicesByCategoryAsync(serviceCategoryId,itemCount,index);
+    }
 }
