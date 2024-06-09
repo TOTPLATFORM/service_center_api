@@ -21,5 +21,6 @@ public class BranchRequestDto
     [EmailAddress]
     public string EmailAddress { get; set; } = "";
     public string? ManagerId { get; set; }
+    public int CenterId { get; set; }
     public int? InventoryId { get; set; }
 }

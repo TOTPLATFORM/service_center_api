@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -83,13 +85,13 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 		return Result.SuccessWithMessage("Inventory added successfully");
 	}
 	///<inheritdoc/>
-	public async Task<Result<List<InventoryResponseDto>>> GetAllInventoriesAsync()
+	public async Task<Result<PaginationResult<InventoryResponseDto>>> GetAllInventoriesAsync(int itemCount, int index)
 	{
 		var result = await _dbContext.Inventories
 				 .ProjectTo<InventoryResponseDto>(_mapper.ConfigurationProvider)
-				 .ToListAsync();
+				 .GetAllWithPagination( itemCount,  index);
 
-		_logger.LogInformation("Fetching all Inventories. Total count: {Inventory}.", result.Count);
+		_logger.LogInformation("Fetching all Inventories. Total count: {Inventory}.", result.Data.Count);
 
 		return Result.Success(result);
 	}
@@ -151,14 +153,14 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 	}
 
 	///<inheritdoc/>
-	public async Task<Result<List<InventoryResponseDto>>> SearchInventoryByTextAsync(string text)
+	public async Task<Result<PaginationResult<InventoryResponseDto>>> SearchInventoryByTextAsync(string text, int itemCount, int index)
 	{
 		var name = await _dbContext.Inventories
 					   .ProjectTo<InventoryResponseDto>(_mapper.ConfigurationProvider)
 					   .Where(n => n.InventoryName.Contains(text))
-					   .ToListAsync();
+					   .GetAllWithPagination( itemCount,  index);
 
-		_logger.LogInformation("Fetching search time slot by name . Total count: {time slot}.", name.Count);
+		_logger.LogInformation("Fetching search time slot by name . Total count: {time slot}.", name.Data.Count);
 
 		return Result.Success(name);
 

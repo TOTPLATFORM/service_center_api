@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ public interface IInventoryService : IApplicationService ,IScopedService
 	/// function to get all inventories 
 	/// </summary>
 	/// <returns>list all inventoryResponseDto </returns>
-	public Task<Result<List<InventoryResponseDto>>> GetAllInventoriesAsync();
+	public Task<Result<PaginationResult<InventoryResponseDto>>> GetAllInventoriesAsync(int itemCount, int index);
 
 	/// <summary>
 	/// function to get inventory by id that take  inventory id
@@ -47,7 +48,7 @@ public interface IInventoryService : IApplicationService ,IScopedService
 	/// </summary>
 	/// <param name="text">text</param>
 	/// <returns>all inventory that contain this text </returns>
-	public Task<Result<List<InventoryResponseDto>>> SearchInventoryByTextAsync(string text);
+	public Task<Result<PaginationResult<InventoryResponseDto>>> SearchInventoryByTextAsync(string text, int itemCount, int index);
 
 	/// <summary>
 	/// function to delete Inventory that take InventoryDto   

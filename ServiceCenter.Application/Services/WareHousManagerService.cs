@@ -52,8 +52,8 @@ public class WareHousManagerService(ServiceCenterBaseDbContext dbContext, IMappe
 		}
         if (wareHouseManagerInInventoy != null)
         {
-            _logger.LogError("Failed to added in database this  warehousemanger in inventory");
-            return Result.Error("Failed to added in database this warehousemanger in inventory");
+            _logger.LogError("Failed to added in database this  warehousemanager in inventory");
+            return Result.Error("Failed to added in database this warehousemanager in inventory");
         }
         var warehouseMangerAdded = await _authService.RegisterUserWithRoleAsync(wareHouseManager, wareHouseManagerRequestDto.Password, role);
         await _dbContext.SaveChangesAsync();

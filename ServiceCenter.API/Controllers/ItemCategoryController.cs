@@ -83,7 +83,7 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     {
         return await _itemCategoryService.SearchItemCategoryByTextAsync(text,itemCount,index);
     }
-    [HttpGet("searchByRelation/{text}")]
+    [HttpGet("searchByRelation/{id}")]
     [Authorize(Roles = "WarehouseManager,Admin")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]

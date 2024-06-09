@@ -88,7 +88,7 @@ public class ManagerService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 	public async Task<Result<PaginationResult<ManagerResponseDto>>> SearchManagerByTextAsync(string text,int itemCount,int index)
 	{
 
-		    var result = await _dbContext.Departments
+		    var result = await _dbContext.Managers
 				.ProjectTo<ManagerResponseDto>(_mapper.ConfigurationProvider)
 				.Where(n => n.ManagerFirstName.Contains(text) || n.ManagerLastName.Contains(text))
 				.GetAllWithPagination(itemCount,index);
