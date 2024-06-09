@@ -9,7 +9,7 @@ using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
 
-public class WareHousManagerController(IWareHousManagerService wareHousManager) : BaseController
+public class WareHouseManagerController(IWareHousManagerService wareHousManager) : BaseController
 {
     private readonly IWareHousManagerService _wareHousManager = wareHousManager;
 

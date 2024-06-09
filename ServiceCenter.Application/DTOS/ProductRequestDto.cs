@@ -18,5 +18,5 @@ public class ProductRequestDto
     public int ProductPrice { get; set; }
 
     [Required]
-    public int CategoryId { get; set; } = default;
+    public int CategoryId { get; set; } 
 }

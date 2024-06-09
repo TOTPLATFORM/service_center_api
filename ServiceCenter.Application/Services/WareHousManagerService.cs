@@ -32,7 +32,7 @@ public class WareHousManagerService(ServiceCenterBaseDbContext dbContext, IMappe
         var wareHouseManager = _mapper.Map<WareHouseManager>(wareHouseManagerRequestDto);
         var inventory = _dbContext.Inventories.FirstOrDefault(C => C.Id == wareHouseManagerRequestDto.InventoryId);
         var department = await _dbContext.Departments.FindAsync(wareHouseManagerRequestDto.DepartmentId);
-        var wareHouseManagerInInventoy = await _dbContext.Inventories.Where(b => b.Id == wareHouseManagerRequestDto.InventoryId).FirstOrDefaultAsync();
+        var wareHouseManagerInInventoy = await _dbContext.WareHouseManagers.Where(b => b.InventoryId == wareHouseManagerRequestDto.InventoryId).FirstOrDefaultAsync();
 
         if (department is null)
         {
