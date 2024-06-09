@@ -9,6 +9,7 @@ using ServiceCenter.Application.ExtensionForServices;
 using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
+using ServiceCenter.Domain.Enums;
 using ServiceCenter.Infrastructure.BaseContext;
 using System;
 using System.Collections.Generic;
@@ -236,19 +237,36 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
 	public async Task<Result<List<ServiceResponseDto>>> GetServicesByPackageAsync(int servicePackageId)
 	{
-		var pacakge = await _dbContext.ServicePackages.FindAsync(servicePackageId);
+        var pacakge = await _dbContext.Services.Where(s => s.ServicePackages.Select(p => p.Id).First() == servicePackageId)
+            .ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
 
-		if (pacakge is null)
+        if (pacakge is null)
 		{
 			_logger.LogWarning("ServicePackageId Id not found,Id {id}", servicePackageId);
 			return Result.NotFound(["The package is not found"]);
 		}
 
-		var services = _mapper.Map<List<ServiceResponseDto>>(pacakge.Services);
+		//var services = _mapper.Map<List<ServiceResponseDto>>(pacakge.Services);
 
 		_logger.LogInformation($"Successfully retrieved services  by their package id");
-		return Result.Success(services);
+		return Result.Success(pacakge);
 
 	}
+    ///<inheritdoc/>
+    public async Task<Result<PaginationResult<ServiceResponseDto>>> GetServicesByCategoryAsync(int categoryId, int itemCount, int index)
+    {
+        var category = await _dbContext.Services.Where(s => s.ServiceCategoryId == categoryId)
+			.ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
+			.GetAllWithPagination(itemCount,index);
 
+        if (category.Data.Count ==0)
+        {
+            _logger.LogWarning("ServiceCategoryId Id not found,Id {id}", categoryId);
+            return Result.NotFound(["The Category is not found"]);
+        }
+
+        _logger.LogInformation($"Successfully retrieved services  by their category id");
+        return Result.Success(category);
+    }
 }
