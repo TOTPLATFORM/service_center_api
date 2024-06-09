@@ -2,3 +2,4 @@
 obj
 bin 
 /ServiceCenter.API/Logs/log-development-20240501.json
+/ServiceCenter.API/Logs
