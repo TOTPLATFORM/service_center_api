@@ -14,7 +14,6 @@ public class RoleUserConfigurations : IEntityTypeConfiguration<IdentityRole>
 	public void Configure(EntityTypeBuilder<IdentityRole> builder)
 	{
 		builder.HasData(new IdentityRole { Name = "Admin", NormalizedName = "Admin".ToUpper() },
-		   new IdentityRole { Name = "Customer", NormalizedName = "Customer".ToUpper() },
 		   new IdentityRole { Name = "Employee", NormalizedName = "Employee".ToUpper() },
 		   new IdentityRole { Name = "Sales", NormalizedName = "Sales".ToUpper() },
 		   new IdentityRole { Name = "WarehouseManager", NormalizedName = "WarehouseManager".ToUpper() },

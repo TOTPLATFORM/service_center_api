@@ -1,111 +1,102 @@
-﻿//using ServiceCenter.Core.Result;
-//using AutoMapper;
-//using AutoMapper.QueryableExtensions;
-//using ServiceCenter.Application.Contracts;
-//using Microsoft.EntityFrameworkCore;
-//using Microsoft.Extensions.Logging;
-//using ServiceCenter.Infrastructure.BaseContext;
-//using ServiceCenter.Application.DTOS;
-//using ServiceCenter.Domain.Entities;
-//using ServiceCenter.Domain.Enums;
+﻿//using servicecenter.core.result;
+//using automapper;
+//using automapper.queryableextensions;
+//using servicecenter.application.contracts;
+//using microsoft.entityframeworkcore;
+//using microsoft.extensions.logging;
+//using servicecenter.infrastructure.basecontext;
+//using servicecenter.application.dtos;
+//using servicecenter.domain.entities;
+//using servicecenter.domain.enums;
 
-//namespace HMSWithLayers.Application.Services;
+//namespace hmswithlayers.application.services;
 
-//public class OrderService(IItemService itemService, ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<OrderService> logger, IUserContextService userContext) : IOrderService
+//public class orderservice(iitemservice itemservice, servicecenterbasedbcontext dbcontext, imapper mapper, ilogger<orderservice> logger, iusercontextservice usercontext) : iorderservice
 //{
-//    private readonly IItemService _itemService = itemService;
-//    private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
-//    private readonly IMapper _mapper = mapper;
-//    private readonly ILogger<OrderService> _logger = logger;
-//    private readonly IUserContextService _userContext = userContext;
+//    private readonly iitemservice _itemservice = itemservice;
+//    private readonly servicecenterbasedbcontext _dbcontext = dbcontext;
+//    private readonly imapper _mapper = mapper;
+//    private readonly ilogger<orderservice> _logger = logger;
+//    private readonly iusercontextservice _usercontext = usercontext;
 
-//    ///<inheritdoc/>
-//    public async Task<Result<List<OrderResponseDto>>> GetAllOrderAsync(Status status)
+//    /<inheritdoc/>
+//    public async task<result<list<orderresponsedto>>> getallorderasync(status status)
 //    {
-//        var ordersResponseDto = await _dbContext.Orders
-//            .Where(order => order.OrderStatus == status)
-//            .ProjectTo<OrderResponseDto>(_mapper.ConfigurationProvider)
-//            .ToListAsync();
+//        var ordersresponsedto = await _dbcontext.orders
+//            .where(order => order.orderstatus == status)
+//            .projectto<orderresponsedto>(_mapper.configurationprovider)
+//            .tolistasync();
 
-//        _logger.LogInformation("Fetching all orders. Total count: {ordersResponseDto}.", ordersResponseDto.Count);
-//        return Result.Success(ordersResponseDto);
+//        _logger.loginformation("fetching all orders. total count: {ordersresponsedto}.", ordersresponsedto.count);
+//        return result.success(ordersresponsedto);
 //    }
 
-//    ///<inheritdoc/>
-//    public async Task<Result<OrderResponseDto>> GetOrderByIdAsync(int id)
+//    /<inheritdoc/>
+//    public async task<result<orderresponsedto>> getorderbyidasync(int id)
 //    {
-//        var orderResponseDto = await _dbContext.Orders
-//            .ProjectTo<OrderResponseDto>(_mapper.ConfigurationProvider)
-//            .FirstOrDefaultAsync(item => item.Id == id);
+//        var orderresponsedto = await _dbcontext.orders
+//            .projectto<orderresponsedto>(_mapper.configurationprovider)
+//            .firstordefaultasync(item => item.id == id);
 
-//        if (orderResponseDto is null)
+//        if (orderresponsedto is null)
 //        {
-//            _logger.LogWarning($"Order with id {id} was not found while attempting to fetch by id");
-//            return Result.NotFound(["The order is not found"]);
+//            _logger.logwarning($"order with id {id} was not found while attempting to fetch by id");
+//            return result.notfound(["the order is not found"]);
 //        }
 
-//        _logger.LogInformation("Fetched one order");
-//        return Result.Success(orderResponseDto);
+//        _logger.loginformation("fetched one order");
+//        return result.success(orderresponsedto);
 //    }
-//    ///<inheritdoc/>
-//    public async Task<Result> AddOrderAsync(OrderRequestDto orderDto)
+//    /<inheritdoc/>
+//    public async task<result> addorderasync(orderrequestdto orderdto)
 //    {
-//        var order = _mapper.Map<Order>(orderDto);
+//        var order = _mapper.map<order>(orderdto);
 
-//        var result = await _itemService.DecreaseItemsQuantity(orderDto.ItemOrders);
+//        var result = await _itemservice.decreaseitemsquantity(orderdto.itemorders);
 
-//        if (!result.IsSuccess)
+//        if (!result.issuccess)
 //        {
 //            return result;
 //        }
 
-//        order.CreatedBy = _userContext.Email;
-//        _dbContext.Orders.Add(order);
-//        await _dbContext.SaveChangesAsync();
+//        order.createdby = _usercontext.email;
+//        _dbcontext.orders.add(order);
+//        await _dbcontext.savechangesasync();
 
-//        _logger.LogInformation($"Successfully placed an order : {order}");
-//        return Result.SuccessWithMessage("Successfully placed order");
+//        _logger.loginformation($"successfully placed an order : {order}");
+//        return result.successwithmessage("successfully placed order");
 //    }
 
-//    ///<inheritdoc/>
-//    public async Task<Result<OrderResponseDto>> UpdateOrderStatusAsync(int id,Status status)
+//<inheritdoc/>
+//public async task<result<orderresponsedto>> updateorderstatusasync(int id, status status)
 //    {
-//        var order = await _dbContext.Orders.FindAsync(id);
+//        var order = await _dbcontext.orders.findasync(id);
 
 //        if (order is null)
 //        {
-//            _logger.LogWarning($"Order with id {id} was not found while attempting to update order status by id");
-//            return Result.NotFound(["The order is not found"]);
+//            _logger.logwarning($"order with id {id} was not found while attempting to update order status by id");
+//            return result.notfound(["the order is not found"]);
 //        }
 
-//        if (status == Status.Cancelled)
-//        {
-//            var result = await _itemService.IncreaseItemsQuantity(_mapper.Map<List<ItemOrderRequestDto>>(order.ItemOrders));
 
-//            if (!result.IsSuccess)
-//            {
-//                return result;
-//            }
-//        }
 
-//        var previousOrderStatus = order.OrderStatus;
-//        order.OrderStatus = status;
-//        order.ModifiedBy = _userContext.Email;
-//        await _dbContext.SaveChangesAsync();
-//        var orderResponseDto = _mapper.Map<OrderResponseDto>(order);
+//        order.orderstatus = status;
+//        order.modifiedby = _usercontext.email;
+//        await _dbcontext.savechangesasync();
+//        var orderresponsedto = _mapper.map<orderresponsedto>(order);
 
-//        _logger.LogInformation($"Successfully update order status to: {order.OrderStatus} from: {previousOrderStatus}");
-//        return Result.Success(orderResponseDto, "Successfully updated order");
+//        _logger.loginformation($"successfully update order status to: {order.orderstatus} ");
+//        return result.success(orderresponsedto, "successfully updated order");
 //    }
 
-  
-//    public async Task<Result<List<OrderResponseDto>>> SearchOrderByTextAsync(Status text)
+
+//    public async task<result<list<orderresponsedto>>> searchorderbytextasync(status text)
 //    {
-//        var orders = await _dbContext.Orders
-//            .ProjectTo<OrderResponseDto>(_mapper.ConfigurationProvider)
-//            .Where(n => n.OrderStatus.Equals(text))
-//            .ToListAsync();
-//        _logger.LogInformation("Fetching search Order by name . Total count: {order}.", orders.Count);
-//        return Result.Success(orders);
+//        var orders = await _dbcontext.orders
+//            .projectto<orderresponsedto>(_mapper.configurationprovider)
+//            .where(n => n.orderstatus.equals(text))
+//            .tolistasync();
+//        _logger.loginformation("fetching search order by name . total count: {order}.", orders.count);
+//        return result.success(orders);
 //    }
 //}

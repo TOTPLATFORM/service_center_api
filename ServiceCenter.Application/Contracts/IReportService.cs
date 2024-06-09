@@ -1,6 +1,8 @@
 ﻿using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
+using ServiceCenter.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +27,7 @@ public interface IReportService : IApplicationService, IScopedService
     /// function to get all Report  
     /// </summary>
     /// <returns>list all Report  response dto </returns>
-    public Task<Result<List<ReportResponseDto>>> GetAllReportAsync();
+    public Task<Result<PaginationResult<ReportResponseDto>>> GetAllReportAsync(int itemCount,int index);
     /// <summary>
     /// function to get  Report  by id that take   Report id
     /// </summary>
@@ -46,4 +48,5 @@ public interface IReportService : IApplicationService, IScopedService
     /// <param name="id">Report  id</param>
     /// <returns>Report  removed successfully </returns>
     public Task<Result> DeleteReportAsync(int id);
+    public Task<Result<ReportResponseDto>> UpdateReportStatusAsync(int id, ReportStatus status);
 }

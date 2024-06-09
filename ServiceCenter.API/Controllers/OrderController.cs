@@ -11,7 +11,7 @@
 
 //public class OrderController(IOrderService orderService) : BaseController
 //{
-//    private readonly IOrderService _orderService= orderService;
+//    private readonly IOrderService _orderService = orderService;
 
 //    /// <summary>
 //    /// action for Get all  orders based on the status that take status.
@@ -70,6 +70,6 @@
 //    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 //    public async Task<Result<OrderResponseDto>> UpdateOrderStatus(Status status, int id)
 //    {
-//        return await _orderService.UpdateOrderStatusAsync(id,status);
+//        return await _orderService.UpdateOrderStatusAsync(id, status);
 //    }
 //}

@@ -8,6 +8,9 @@ using ServiceCenter.Application.Contracts;
 using ServiceCenter.Domain.Entities;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
+using ServiceCenter.Domain.Enums;
 
 namespace ServiceCenter.Application.Services;
 
@@ -21,7 +24,9 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
     ///<inheritdoc/>
     public async Task<Result> AddReportAsync(ReportRequestDto ReportRequestDto)
     {
-        var sales = await _dbContext.Users.OfType<Sales>().FirstOrDefaultAsync(s => s.Id == ReportRequestDto.SalesId);
+        var sales = await _dbContext.Sales.FirstOrDefaultAsync(s => s.Id == ReportRequestDto.SalesId);
+        var Manager = await _dbContext.Managers.FirstOrDefaultAsync(s => s.Id == ReportRequestDto.ManagerId);
+        var Contact = await _dbContext.Contacts.FirstOrDefaultAsync(s => s.Id == ReportRequestDto.ContactId);
         var result = _mapper.Map<Report>(ReportRequestDto);
         if (result is null)
         {
@@ -35,6 +40,9 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
             });
         }
         result.CreatedBy = _userContext.Email;
+        result.Manager=Manager;
+        result.Contact = Contact;
+        result.Sales = sales;
 
         _dbContext.Reports.Add(result);
 
@@ -44,13 +52,13 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
     }
 
     ///<inheritdoc/>
-    public async Task<Result<List<ReportResponseDto>>> GetAllReportAsync()
+    public async Task<Result<PaginationResult<ReportResponseDto>>> GetAllReportAsync(int itemCount, int index)
     {
         var result = await _dbContext.Reports
              .ProjectTo<ReportResponseDto>(_mapper.ConfigurationProvider)
-             .ToListAsync();
+             .GetAllWithPagination(itemCount,index);
 
-        _logger.LogInformation("Fetching all  Report. Total count: { Report}.", result.Count);
+        _logger.LogInformation("Fetching all  Report. Total count: { Report}.", result.Data.Count);
 
         return Result.Success(result);
     }
@@ -125,5 +133,39 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         return Result.SuccessWithMessage("Report removed successfully");
     }
 
+    ///<inheritdoc/>
+    public async Task<Result<ReportResponseDto>> UpdateReportStatusAsync(int id, ReportStatus status)
+    {
+        var Report = await _dbContext.Reports.FindAsync(id);
 
+        if (Report is null)
+        {
+            _logger.LogWarning($"Report with id {id} was not found while attempting to update Report status by id");
+            return Result.NotFound(["The Report is not found"]);
+        }
+
+        Report.Status = status;
+        var role =await _dbContext.Roles.FirstOrDefaultAsync(r => r.Name == "Contact");
+
+
+        var contact = await _dbContext.Contacts.FindAsync(Report.Contact.Id);
+        if (status == ReportStatus.Good)
+        {
+             contact.Status = ContactStatus.Customer;
+            role.Name = "Customer";
+            role.NormalizedName = "Customer".ToUpper();
+            _dbContext.Roles.Update(role);
+        }
+        if (status == ReportStatus.Bad)
+        {
+             contact.Status = ContactStatus.Cancelled;
+        }
+        Report.ModifiedBy = _userContext.Email;
+        _dbContext.Contacts.Update(contact);
+        _dbContext.Reports.Update(Report);
+        await _dbContext.SaveChangesAsync();
+        var reportResponseDto = _mapper.Map<ReportResponseDto>(Report);
+        _logger.LogInformation($"Successfully update report status to: {Report.Status}");
+        return Result.Success(reportResponseDto, "Successfully updated report");
+    }
 }

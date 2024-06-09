@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿ using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Reports;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Core.Result;
 using Microsoft.AspNetCore.Authorization;
+using ServiceCenter.Core.Entities;
+using ServiceCenter.Domain.Enums;
 
 namespace ServiceCenter.API.Controllers;
 
@@ -19,7 +21,7 @@ public class ReportController(IReportService ReportService) : BaseController
     /// </remarks>
     /// <returns>result for Report  added successfully.</returns>
     [HttpPost]
-    [Authorize(Roles = "Sales")]
+    [Authorize(Roles = "Admin,Sales")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddReport(ReportRequestDto ReportDto)
@@ -37,10 +39,10 @@ public class ReportController(IReportService ReportService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
-    [ProducesResponseType(typeof(Result<List<ReportResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<List<ReportResponseDto>>> GetAllReport()
+    [ProducesResponseType(typeof(Result<PaginationResult<ReportResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<PaginationResult<ReportResponseDto>>> GetAllReport(int itemCount, int index)
     {
-        return await _ReportService.GetAllReportAsync();
+        return await _ReportService.GetAllReportAsync(itemCount,index);
     }
     /// <summary>
     /// get Report by id in the system.
@@ -89,6 +91,15 @@ public class ReportController(IReportService ReportService) : BaseController
     public async Task<Result> DeleteReportAsycn(int id)
     {
         return await _ReportService.DeleteReportAsync(id);
+    }
+
+    [HttpPut("reportId/{id}/status/{status}")]
+    [Authorize(Roles = "Admin,Manager")]
+    [ProducesResponseType(typeof(Result<ReportResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<ReportResponseDto>> UpdateReportStatus( int id,ReportStatus status )
+    {
+        return await _ReportService.UpdateReportStatusAsync(id, status);
     }
 
 }
