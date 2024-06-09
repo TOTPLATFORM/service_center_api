@@ -18,4 +18,5 @@ public class Branch : AuditableEntity
     public string? ManagerId { get; set; }
     public virtual Manager Manager { get; set; } = default;
     public virtual Inventory? Inventory { get; set; } = default;
+    public virtual Center Center  { get; set; }
 }
