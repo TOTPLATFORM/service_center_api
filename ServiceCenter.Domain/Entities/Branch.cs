@@ -13,10 +13,9 @@ public class Branch : AuditableEntity
     public Address Address { get; set; } = default;
     public string BranchPhoneNumber { get; set; } = "";
     public string EmailAddress { get; set; } = "";
-    public int CenterId { get; set; }
     public virtual Center Center { get; set; } = default;
     public virtual ICollection<Complaint?> Complaints { get; set; } = new HashSet<Complaint>();
-    //public string? ManagerId { get; set; }
-    //public virtual Manager Manager { get; set; } = default;
-    //public virtual Inventory? Inventory { get; set; } = default;
+    public string? ManagerId { get; set; }
+    public virtual Manager Manager { get; set; } = default;
+    public virtual Inventory? Inventory { get; set; } = default;
 }
