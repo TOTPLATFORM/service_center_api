@@ -11,7 +11,7 @@ namespace ServiceCenter.Application.DTOS;
 
 public class ContactResponseDto
 {
-    public int Id { get; set; } 
+    public string Id { get; set; } 
     public string ContactFirstName { get; set; } = "";
 
     public string ContactLastName { get; set; } = "";

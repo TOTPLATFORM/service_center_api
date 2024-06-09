@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
@@ -37,10 +38,10 @@ public class VendorController(IVendorService vendorService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
-    [ProducesResponseType(typeof(Result<List<VendorResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<List<VendorResponseDto>>> GetAllVendor()
+    [ProducesResponseType(typeof(Result<PaginationResult<VendorResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<PaginationResult<VendorResponseDto>>> GetAllVendor(int itemcount, int index)
     {
-        return await _vendorService.GetAllVendorsAsync();
+        return await _vendorService.GetAllVendorsAsync( itemcount,  index);
     }
     /// <summary>
     /// get all vendor in the system.
@@ -88,11 +89,11 @@ public class VendorController(IVendorService vendorService) : BaseController
 
     [HttpGet("search/{text}")]
     [Authorize(Roles = "Admin,Manager")]
-    [ProducesResponseType(typeof(Result<VendorResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<PaginationResult<VendorResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<List<VendorResponseDto>>> SerachVendorByText(string text)
+    public async Task<Result<PaginationResult<VendorResponseDto>>> SerachVendorByText(string text, int itemcount, int index)
     {
-        return await _vendorService.SearchVendorByTextAsync(text);
+        return await _vendorService.SearchVendorByTextAsync(text,  itemcount,  index);
     }
     /// <summary>
     /// delete  vendor by id from the system.

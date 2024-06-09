@@ -23,7 +23,7 @@ public class ProductCategoryController(IProductCategoryService productCategorySe
     /// </remarks>
     /// <returns>result for product category added successfully.</returns>
     [HttpPost]
-    [Authorize(Roles = "Manager,WarehouseManager")]
+    [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddProductCategory(ProductCategoryRequestDto productCategoryDto)
@@ -70,7 +70,7 @@ public class ProductCategoryController(IProductCategoryService productCategorySe
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Manager,WarehouseManager")]
+    [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result<ProductCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ProductCategoryResponseDto>> UpdateProductCategory(int id, ProductCategoryRequestDto ProductCategoryRequestDto)
@@ -86,7 +86,7 @@ public class ProductCategoryController(IProductCategoryService productCategorySe
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager ,WarehouseManager")]
+    [Authorize(Roles = "Admin,Manager ,WarehouseManager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteProductCategory(int id)
@@ -107,8 +107,8 @@ public class ProductCategoryController(IProductCategoryService productCategorySe
     {
         return await _productCategoryService.SearchProductCategoryByTextAsync(text);
     }
-    [HttpGet("assign/{id}")]
-    [Authorize(Roles = "Manager,WarehouseManager")]
+    [HttpGet("assign")]
+    [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result<List<ProductCategoryResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<ProductCategoryResponseDto>>> AssignProductCategoryToProductBrand(int productCategory, int productBrandId)

@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ public interface IWareHousManagerService : IApplicationService , IScopedService
     /// asynchronously retrieves all warehouse in the system.
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of warehouse response DTOs.</returns>
-    public Task<Result<List<WareHouseManagerResponseDto>>> GetAllWareHouseManagerServicesAsync();
+    public Task<Result<PaginationResult<WareHouseManagerResponseDto>>> GetAllWareHouseManagerServicesAsync(int itemcount, int index);
     /// <summary>
     /// asynchronously retrieves a warehouse by their unique identifier.
     /// </summary>
@@ -48,5 +49,5 @@ public interface IWareHousManagerService : IApplicationService , IScopedService
     /// </summary>
     /// <param name="text">the text to search within warehouse data.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of warehouse response DTOs that match the search criteria.</returns>
-    public Task<Result<List<WareHouseManagerResponseDto>>> SearchWareHouseManagerByTextAsync(string text);
+    public Task<Result<PaginationResult<WareHouseManagerResponseDto>>> SearchWareHouseManagerByTextAsync(string text, int itemcount, int index);
 }

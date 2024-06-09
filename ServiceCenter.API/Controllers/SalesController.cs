@@ -52,7 +52,7 @@ public class SalesController(ISalesService salesService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "Manager,Sales")]
+    [Authorize(Roles = "Manager,Sales,Admin")]
     [ProducesResponseType(typeof(Result<SalesResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<SalesResponseDto>> GetSalesById(string id)
@@ -71,7 +71,7 @@ public class SalesController(ISalesService salesService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Manager,Sales")]
+    [Authorize(Roles = "Manager,Sales,Admin")]
     [ProducesResponseType(typeof(Result<SalesResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<SalesResponseDto>> UpdateSales(string id, SalesRequestDto salesRequestDto)

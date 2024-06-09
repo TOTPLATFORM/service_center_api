@@ -20,7 +20,7 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
     /// <param name="productBrandDto">product brand dto</param>
     /// <returns>result for product brand added successfully.</returns>
     [HttpPost]
-    [Authorize(Roles = "Manager,WarehouseManager")]
+    [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddProductBrand(ProductBrandRequestDto productBrandDto)
@@ -47,7 +47,7 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
         return await _productBrandService.GetProductBrandByIdAsync(id);
     }
     [HttpPut("{id}")]
-    [Authorize(Roles = "Manager,WarehouseManager")]
+    [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result<ProductBrandResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ProductBrandResponseDto>> UpdateProductBrand(int id, ProductBrandRequestDto productBrandDto)
@@ -60,7 +60,7 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
     /// <param name="id">product brand id</param>
     /// <returns>result of product brand removed successfully </returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager,WarehouseManager")]
+    [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteProductBrand(int id)
@@ -80,8 +80,8 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
     {
         return await _productBrandService.SearchProductBrandByTextAsync(text);
     }
-    [HttpGet("assign/{id}")]
-    [Authorize(Roles = "Manager,WarehouseManager")]
+    [HttpGet("assign")]
+    [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result<List<ProductBrandResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<ProductBrandResponseDto>>> AssignProductBrandToInventory(int inventoryId, int productBrandId)

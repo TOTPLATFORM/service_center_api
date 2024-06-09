@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
@@ -38,11 +39,11 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-	[Authorize(Roles = "Admin,WarehouseManager,Manager")]
-	[ProducesResponseType(typeof(Result<List<InventoryResponseDto>>), StatusCodes.Status200OK)]
-	public async Task<Result<List<InventoryResponseDto>>> GetAllInventories()
+	[Authorize(Roles = "Admin,Manager")]
+	[ProducesResponseType(typeof(Result<PaginationResult<InventoryResponseDto>>), StatusCodes.Status200OK)]
+	public async Task<Result<PaginationResult<InventoryResponseDto>>> GetAllInventories(int itemCount, int index)
 	{
-		return await _inventoryService.GetAllInventoriesAsync();
+		return await _inventoryService.GetAllInventoriesAsync( itemCount,  index);
 	}
 	/// <summary>
 	/// get all inventories in the system.
@@ -53,7 +54,7 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
-	[Authorize(Roles = "WarehouseManager,Manager")]
+	[Authorize(Roles = "Admin,WarehouseManager,Manager")]
 	[ProducesResponseType(typeof(Result<InventoryResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<InventoryResponseDto>> GetInventoryById(int id)
@@ -72,7 +73,7 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPut("{id}")]
-	[Authorize(Roles = "WarehouseManager")]
+	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<InventoryResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<InventoryResponseDto>> UpdateInventory(int id, InventoryRequestDto inventoryRequestDto)
@@ -89,12 +90,12 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-	[Authorize(Roles = "WarehouseManager")]
-	[ProducesResponseType(typeof(Result<InventoryResponseDto>), StatusCodes.Status200OK)]
+	[Authorize(Roles = "Admin,Manager")]
+	[ProducesResponseType(typeof(Result<PaginationResult<InventoryResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<List<InventoryResponseDto>>> SerachInventoryByText(string text)
+	public async Task<Result<PaginationResult<InventoryResponseDto>>> SerachInventoryByText(string text, int itemCount, int index)
 	{
-		return await _inventoryService.SearchInventoryByTextAsync(text);
+		return await _inventoryService.SearchInventoryByTextAsync(text,  itemCount,  index);
 	}
 	/// <summary>
 	/// delete  inventory by id from the system.

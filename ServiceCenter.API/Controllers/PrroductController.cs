@@ -106,7 +106,7 @@ public class ProductController(IProductService productService) : BaseController
         return await _productService.SearchProductByTextAsync(text, itemCount, index);
     }
     [HttpGet("searchByProductCategory/{categoryId}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<ProductResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<PaginationResult<ProductResponseDto>>> SearchProductByProductCategory(int categoryId, int itemCount, int index)

@@ -37,12 +37,13 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		{
 			_logger.LogError("No center found in the database.");
 			return Result.Invalid(new List<ValidationError>
-		{
-			new ValidationError
-			{
-				ErrorMessage = "No center found in the database."
-			}
-		});
+		    {
+				new ValidationError
+			    {
+				     ErrorMessage = "No center found in the database."
+			    }
+
+			});
 		}
 
 		if (result is null)
@@ -57,6 +58,19 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 				}
 			});
 		}
+
+		var serviceCategory = await _dbContext.ServiceCategories.FindAsync(serviceRequestDto.ServiceCategoryId);
+
+		if (serviceCategory == null)
+		{
+			_logger.LogError("Service category with Id {ServiceCategoryId} not found.", serviceRequestDto.ServiceCategoryId);
+
+			return Result.Invalid(new List<ValidationError>
+		    {
+			     new ValidationError { ErrorMessage = "Service category not found" }
+		    });
+		}
+
 		result.CreatedBy = _userContext.Email;
 
 		result.Center = center;
@@ -67,21 +81,17 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
 			if (items.Count != serviceRequestDto.ItemIds.Count)
 			{
-				    _logger.LogError("Some items were not found in the database.");
+				  _logger.LogError("Some items were not found in the database.");
 
-				      return Result.Invalid(new List<ValidationError>
-			          {
-				            new ValidationError { ErrorMessage = "Some items were not found in the database." }
-			          });
+				    return Result.Invalid(new List<ValidationError>
+			        {
+				          new ValidationError { ErrorMessage = "Some items were not found in the database." }
+			        });
 			}
 
-			result.Item = items.Select(i => new Item
-			{
-				Services = i.Services,
-				ItemName = i.ItemName
-			}).ToList();
-
+			result.Item = items; 
 		}
+
 		_dbContext.Services.Add(result);
 
 		await _dbContext.SaveChangesAsync();

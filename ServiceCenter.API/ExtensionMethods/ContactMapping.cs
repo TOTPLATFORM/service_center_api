@@ -7,11 +7,12 @@ public static class ContactMapping
 {
 	public static void AddContactMapping(this MappingProfiles map)
 	{
-		map.CreateMap<ContactRequestDto, Contact>()
-		
+		map.CreateMap<ContactRequestDto, Contact>();
+
+
+		map.CreateMap<Contact, ContactResponseDto>()
 			.ReverseMap();
 
-		map.CreateMap<ContactResponseDto, Contact>()
-			.ReverseMap();
+		map.CreateMap<CustomerRequestDto, Contact>();
 	}
 }

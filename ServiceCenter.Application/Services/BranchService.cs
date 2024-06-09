@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -59,13 +62,13 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
     }
 
 	///<inheritdoc/>
-	public async Task<Result<List<BranchResponseDto>>> GetAllBranchesAsync()
+	public async Task<Result<PaginationResult<BranchResponseDto>>> GetAllBranchesAsync(int itemCount, int index)
 	{
 		var result = await _dbContext.Branches
 				 .ProjectTo<BranchResponseDto>(_mapper.ConfigurationProvider)
-				 .ToListAsync();
+				 .GetAllWithPagination( itemCount,  index);
 
-		_logger.LogInformation("Fetching all Branches. Total count: {Branch}.", result.Count);
+		_logger.LogInformation("Fetching all Branches. Total count: {Branch}.", result.Data.Count);
 
 		return Result.Success(result);
 	}
@@ -127,7 +130,7 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 	}
 
 	///<inheritdoc/>
-	public async Task<Result<List<BranchResponseDto>>> SearchBranchByTextAsync(string text)
+	public async Task<Result<PaginationResult<BranchResponseDto>>> SearchBranchByTextAsync(string text, int itemCount, int index)
 	{
 
 
@@ -147,9 +150,9 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 		var Days = await _dbContext.Branches
 					   .ProjectTo<BranchResponseDto>(_mapper.ConfigurationProvider)
 					   .Where(n => n.BranchName.Contains(text)||n.PostalCode.Contains(text)||n.EmailAddress.Contains(text))
-					   .ToListAsync();
+					   .GetAllWithPagination( itemCount,  index);
 
-		_logger.LogInformation("Fetching search branch by name . Total count: {branch}.", Days.Count);
+		_logger.LogInformation("Fetching search branch by name . Total count: {branch}.", Days.Data.Count);
 
 		return Result.Success(Days);
 
