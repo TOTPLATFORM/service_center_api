@@ -64,4 +64,10 @@ public interface IServiceService : IApplicationService, IScopedService
 	/// <param name="text">Service name</param>
 	/// <returns>Service response dto </returns>
 	public Task<Result<List<ServiceResponseDto>>> SearchServiceByTextAsync(string text);
+
+    /// <summary>
+    /// function to get all Service that assign to category  
+    /// </summary>
+    /// <returns>list all Service  response dto </returns>
+    public Task<Result<PaginationResult<ServiceResponseDto>>> GetServicesByCategoryAsync(int categoryId,int itemCount,int index);
 }
