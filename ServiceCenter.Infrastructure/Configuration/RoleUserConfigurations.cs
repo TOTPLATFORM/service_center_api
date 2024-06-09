@@ -20,7 +20,8 @@ public class RoleUserConfigurations : IEntityTypeConfiguration<IdentityRole>
 		   new IdentityRole { Name = "WarehouseManager", NormalizedName = "WarehouseManager".ToUpper() },
 		   new IdentityRole { Name = "Manager", NormalizedName = "Manager".ToUpper() },
            new IdentityRole { Name = "ServiceProvider", NormalizedName = "ServiceProvider".ToUpper() },
-           new IdentityRole { Name = "Vendor", NormalizedName = "Vendor".ToUpper() }
+           new IdentityRole { Name = "Vendor", NormalizedName = "Vendor".ToUpper() },
+           new IdentityRole { Name = "Contact", NormalizedName = "Contact".ToUpper() }
 
            );
 	}
