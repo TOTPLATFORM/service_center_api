@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
@@ -37,10 +38,10 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
-    [ProducesResponseType(typeof(Result<List<FeedbackResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<List<FeedbackResponseDto>>> GetAllFeedback()
+    [ProducesResponseType(typeof(Result<PaginationResult<FeedbackResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<PaginationResult<FeedbackResponseDto>>> GetAllFeedback(int itemCount, int index)
     {
-        return await _FeedbackService.GetAllFeedbackAsync();
+        return await _FeedbackService.GetAllFeedbackAsync( itemCount,  index);
     }
     /// <summary>
     /// get Feedback by id in the system.
@@ -91,17 +92,46 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
         return await _FeedbackService.DeleteFeedbackAsync(id);
     }
     /// </summary>
-    ///<param name="text">customer name </param>
+    ///<param name="text">customer id </param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    //[HttpGet("searchByFeedbacks/{customerId}")]
-    //[Authorize(Roles = "Admin,Customer,Manager")]
-    //[ProducesResponseType(typeof(Result<FeedbackResponseDto>), StatusCodes.Status200OK)]
-    //[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    //public async Task<Result<List<FeedbackResponseDto>>> GetFeedbacksByCustomer(string customerId)
-    //{
-    //    return await _FeedbackService.GetFeedbacksByCustomerAsync(customerId);
-    //}
+    [HttpGet("searchByFeedbacks/{customerId}")]
+    [Authorize(Roles = "Admin,Manager")]
+    [ProducesResponseType(typeof(Result<PaginationResult<FeedbackResponseDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+    public async Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificCustomer(string customerId, int itemCount, int index)
+    {
+        return await _FeedbackService.GetFeedbacksForSpecificCustomerAsync(customerId, itemCount,  index);
+    }
+    /// </summary>
+    ///<param name="text">product id  </param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpGet("searchByFeedbacks/{productId}")]
+    [Authorize(Roles = "Admin,Customer,Manager")]
+    [ProducesResponseType(typeof(Result<PaginationResult<FeedbackResponseDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+    public async Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificProduct(int productId, int itemCount, int index)
+    {
+        return await _FeedbackService.GetFeedbacksForSpecificProductAsync(productId, itemCount, index);
+    }
+    /// </summary>
+    ///<param name="text">service id </param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpGet("searchByFeedbacks/{serviceId}")]
+    [Authorize(Roles = "Admin,Customer,Manager")]
+    [ProducesResponseType(typeof(Result<PaginationResult<FeedbackResponseDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+    public async Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificService(int serviceId, int itemCount, int index)
+    {
+        return await _FeedbackService.GetFeedbacksForSpecificServiceAsync(serviceId, itemCount, index);
+    }
+
 }

@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Castle.Core.Resource;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -61,13 +64,13 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
         return Result.SuccessWithMessage("Feedback added successfully");
     }
     ///<inheritdoc/>
-    public async Task<Result<List<FeedbackResponseDto>>> GetAllFeedbackAsync()
+    public async Task<Result<PaginationResult<FeedbackResponseDto>>> GetAllFeedbackAsync(int itemCount, int index)
     {
         var result = await _dbContext.Feedbacks
              .ProjectTo<FeedbackResponseDto>(_mapper.ConfigurationProvider)
-             .ToListAsync();
+             .GetAllWithPagination(itemCount,index);
 
-        _logger.LogInformation("Fetching all  Feedback. Total count: { Feedback}.", result.Count);
+        _logger.LogInformation("Fetching all  Feedback. Total count: { Feedback}.", result.Data.Count);
 
         return Result.Success(result);
     }
@@ -90,9 +93,21 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
         return Result.Success(result);
     }
     ///<inheritdoc/>
-    public async Task<Result<FeedbackResponseDto>> UpdateFeedbackAsync(int id, FeedbackRequestDto FeedbackRequestDto)
+    public async Task<Result<FeedbackResponseDto>> UpdateFeedbackAsync(int id, FeedbackRequestDto feedbackRequestDto)
     {
         var result = await _dbContext.Feedbacks.FindAsync(id);
+        result.Product = null;
+        result.Service = null;
+        if (feedbackRequestDto.ProductId > 1)
+        {
+            var product = await _dbContext.Products.FirstOrDefaultAsync(o => o.Id == feedbackRequestDto.ProductId);
+            result.Product = product;
+        }
+        if (feedbackRequestDto.ServiceId > 1)
+        {
+            var service = await _dbContext.Services.FirstOrDefaultAsync(o => o.Id == feedbackRequestDto.ServiceId);
+            result.Service = service;
+        }
 
         if (result is null)
         {
@@ -102,7 +117,7 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 
         result.ModifiedBy = _userContext.Email;
 
-        _mapper.Map(FeedbackRequestDto, result);
+        _mapper.Map(feedbackRequestDto, result);
 
         await _dbContext.SaveChangesAsync();
 
@@ -141,14 +156,39 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
         return Result.SuccessWithMessage("Feedback removed successfully");
     }
     ///<inheritdoc/>
-    //public async Task<Result<List<FeedbackResponseDto>>> GetFeedbacksByCustomerAsync(string customerId)
-    //{
-    //    var Feedbacks = await _dbContext.Feedbacks
-    //          .Where(s => s.ContactId == customerId)
-    //          .ProjectTo<FeedbackResponseDto>(_mapper.ConfigurationProvider)
-    //          .ToListAsync();
+ 
+    public async Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificCustomerAsync(string customerId, int itemCount, int index)
+    {
+        var Feedbacks = await _dbContext.Feedbacks
+              .Where(s => s.Contact.Id == customerId)
+              .ProjectTo<FeedbackResponseDto>(_mapper.ConfigurationProvider)
+              .GetAllWithPagination(itemCount, index);
 
-    //    _logger.LogInformation("Fetching Feedbacks. Total count: {Feedbacks}.", Feedbacks.Count);
-    //    return Result.Success(Feedbacks);
-    //}
+        _logger.LogInformation("Fetching Feedbacks. Total count: {Feedbacks}.", Feedbacks.Data.Count);
+        return Result.Success(Feedbacks);
+    }
+
+
+    public async Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificProductAsync(int ProductId, int itemCount, int index)
+    {
+        var Feedbacks = await _dbContext.Feedbacks
+         .Where(s => s.Product.Id == ProductId)
+         .ProjectTo<FeedbackResponseDto>(_mapper.ConfigurationProvider)
+         .GetAllWithPagination(itemCount, index);
+
+        _logger.LogInformation("Fetching Feedbacks. Total count: {Feedbacks}.", Feedbacks.Data.Count);
+        return Result.Success(Feedbacks);
+    }
+
+
+    public async Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificServiceAsync(int serviceId, int itemCount, int index)
+    {
+        var Feedbacks = await _dbContext.Feedbacks
+               .Where(s => s.Service.Id == serviceId)
+               .ProjectTo<FeedbackResponseDto>(_mapper.ConfigurationProvider)
+                .GetAllWithPagination(itemCount, index);
+
+        _logger.LogInformation("Fetching Feedbacks. Total count: {Feedbacks}.", Feedbacks.Data.Count);
+        return Result.Success(Feedbacks);
+    }
 }

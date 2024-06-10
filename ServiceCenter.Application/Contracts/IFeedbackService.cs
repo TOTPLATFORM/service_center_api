@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ public interface IFeedbackService : IApplicationService, IScopedService
     /// asynchronously retrieves all feedbacks in the system.
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of feedback response DTOs.</returns>
-    public Task<Result<List<FeedbackResponseDto>>> GetAllFeedbackAsync();
+    public Task<Result<PaginationResult<FeedbackResponseDto>>> GetAllFeedbackAsync(int itemCount, int index);
     /// <summary>
     /// asynchronously retrieves a feedback by their unique identifier.
     /// </summary>
@@ -48,5 +49,7 @@ public interface IFeedbackService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="customerId">the unique identifier of the customer to retrieve its feedbacks.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all feedbacks by customer id operation.</returns>
-   // public Task<Result<List<FeedbackResponseDto>>> GetFeedbacksByCustomerAsync(string customerId);
+    public Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificCustomerAsync(string customerId, int itemCount, int index);
+    public Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificProductAsync(int ProductId, int itemCount, int index);
+    public Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificServiceAsync(int ProductId, int itemCount, int index);
 }
