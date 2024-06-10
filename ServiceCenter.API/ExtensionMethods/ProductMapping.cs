@@ -13,5 +13,7 @@ public static class ProductMapping
            .ReverseMap();
         map.CreateMap<Product, ProductResponseDto>()
             .ReverseMap();
+        map.CreateMap<Product, ProductGetByIdResponseDto>()
+          .ReverseMap();
     }
 }

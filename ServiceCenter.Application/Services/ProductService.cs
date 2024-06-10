@@ -28,6 +28,7 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
     public async Task<Result> AddProductAsync(ProductRequestDto productRequestDto)
     {
         var result = _mapper.Map<Product>(productRequestDto);
+        var ProductCategory = await _dbContext.ProductCategories.FirstOrDefaultAsync(m => m.Id == productRequestDto.CategoryId);
         if (result is null)
         {
             _logger.LogError("Failed to map ProductRequestDto to Product. ProductRequestDto: {@ProductRequestDto}", productRequestDto);
@@ -40,7 +41,7 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         });
         }
         result.CreatedBy = _userContext.Email;
-
+        result.ProductCategory = ProductCategory;
         _dbContext.Products.Add(result);
 
         await _dbContext.SaveChangesAsync();

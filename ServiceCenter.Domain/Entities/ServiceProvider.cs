@@ -10,4 +10,6 @@ public class ServiceProvider:Employee
 {
     public virtual ICollection<Service> Services { get; set; }
     public virtual ICollection<Schedule> Schedules { get; set; }
+    public virtual ICollection<Complaint> Complaints { get; set; }
+
 }

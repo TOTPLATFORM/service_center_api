@@ -22,8 +22,7 @@ public class ComplaintConfigurations : IEntityTypeConfiguration<Complaint>
 			  .HasColumnType("varchar")
 			  .HasMaxLength(100);
 
-        builder.Property(T => T.ComplaintCategory)
-            .IsRequired(); ;
+  
 
     }
 }

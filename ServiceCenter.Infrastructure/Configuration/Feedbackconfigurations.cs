@@ -18,8 +18,7 @@ public class Feedbackconfigurations : IEntityTypeConfiguration<Feedback>
 			 .HasColumnType("varchar")
              .HasMaxLength(100);
 
-        builder.Property(T => T.FeedbackCategory)
-            .IsRequired();
+    
 
 		builder.Property(T => T.FeedbackDate)
               .IsRequired();

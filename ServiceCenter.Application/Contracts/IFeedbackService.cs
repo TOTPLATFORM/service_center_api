@@ -48,5 +48,5 @@ public interface IFeedbackService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="customerId">the unique identifier of the customer to retrieve its feedbacks.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all feedbacks by customer id operation.</returns>
-    public Task<Result<List<FeedbackResponseDto>>> GetFeedbacksByCustomerAsync(string customerId);
+   // public Task<Result<List<FeedbackResponseDto>>> GetFeedbacksByCustomerAsync(string customerId);
 }
