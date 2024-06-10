@@ -10,10 +10,7 @@ public static class ServiceMapping
     {
         map.CreateMap<ServiceRequestDto, Service>()
             .ReverseMap();
-
           map.CreateMap<Service, ServiceResponseDto>()
-          .ForPath(dest => dest.ServiceProviderId,
-                opt => opt.MapFrom(src => src.ServiceProviders.Select(sp => sp.Id).ToList()))
             .ReverseMap();
         map.CreateMap<ServiceGetByIdResponseDto, Service>()
           .ReverseMap();
