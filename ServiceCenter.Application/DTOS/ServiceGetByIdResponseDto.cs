@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class ComplaintResponseDto
+public class ServiceGetByIdResponseDto
 {
     public int Id { get; set; }
-    public DateOnly ComplaintDate { get; set; }
-    public string ComplaintDescription { get; set; } = "";
-    public Status ComplaintStatus { get; set; }
-    
+    public string ServiceName { get; set; } = "";
+    public string ServiceDescription { get; set; } = "";
+    public int ServicePrice { get; set; }
+    public Status Avaliable { get; set; }
 }

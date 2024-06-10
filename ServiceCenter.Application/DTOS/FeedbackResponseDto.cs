@@ -13,9 +13,8 @@ public class FeedbackResponseDto
     public int Id { get; set; }
     public DateOnly FeedbackDate { get; set; }
     public string FeedbackDescription { get; set; } = "";
-    public Category FeedbackCategory { get; set; }
-    public string ContactName { get; set; } = "";
-    public  ServiceResponseDto? Service { get; set; } = default;
-    public  ProductResponseDto? Product { get; set; } = default;
+      public string ContactName { get; set; } = "";
+    public ServiceGetByIdResponseDto? Service { get; set; } = default;
+    public  ProductGetByIdResponseDto? Product { get; set; } = default;
 
 }

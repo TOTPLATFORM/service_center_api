@@ -14,9 +14,7 @@ public class FeedbackRequestDto
     public DateOnly FeedbackDate { get; set; }
     [Required]
     public string FeedbackDescription { get; set; } = "";
-    [Required]
-    public Category FeedbackCategory { get; set; }
-
+   
     [Required]
     public string ContactId { get; set; } = "";
     public int ProductId  { get; set; }

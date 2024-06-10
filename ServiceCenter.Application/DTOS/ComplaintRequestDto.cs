@@ -14,8 +14,7 @@ public class ComplaintRequestDto
     public DateOnly ComplaintDate { get; set; }
     [Required]
     public string ComplaintDescription { get; set; } = "";
-    [Required]
-    public ComplaintType ComplaintCategory { get; set; }
+  
     public Status ComplaintStatus { get; set; }=Status.Pending;
 
 
