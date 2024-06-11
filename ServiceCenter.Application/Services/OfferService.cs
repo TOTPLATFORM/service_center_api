@@ -95,14 +95,21 @@ public class OfferService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
     public async Task<Result<OfferResponseDto>> UpdateOfferAsync(int id, OfferRequestDto OfferRequestDto)
     {
         var result = await _dbContext.Offers.FindAsync(id);
-        result.Product = null;
-        result.Service = null;
-        if (OfferRequestDto.ProductId > 1)
+        var mapped=_mapper.Map(OfferRequestDto, result);
+        if ( OfferRequestDto.ServiceId==0)
+        {
+            result.Service = null;
+        }
+        if (OfferRequestDto.ProductId == 0)
+        {
+            result.Product = null;
+        }
+        if (OfferRequestDto.ProductId > 0)
         {
             var product = await _dbContext.Products.FirstOrDefaultAsync(o => o.Id == OfferRequestDto.ProductId);
             result.Product = product;
         }
-        if (OfferRequestDto.ServiceId > 1)
+        if (OfferRequestDto.ServiceId > 0)
         {
             var service = await _dbContext.Services.FirstOrDefaultAsync(o => o.Id == OfferRequestDto.ServiceId);
             result.Service = service;
@@ -115,9 +122,8 @@ public class OfferService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
 
         result.ModifiedBy = _userContext.Email;
 
-        _mapper.Map(OfferRequestDto, result);
 
-        await _dbContext.SaveChangesAsync();
+        _dbContext.SaveChanges();
 
         var OfferResponse = _mapper.Map<OfferResponseDto>(result);
         if (OfferResponse is null)
