@@ -4,14 +4,14 @@ using ServiceCenter.Domain.Entities;
 
 namespace ServiceCenter.API.ExtensionMethods;
 
-public static class RatingServiceMapping
+public static class RatingMapping
 {
     public static void AddRatingServiceMapping(this MappingProfiles map)
     {
-        map.CreateMap<RatingRequestDto, Rating>()
-          .ForMember(d => d.CreatedDate, o => o.MapFrom(s => s.RatingDate)); ;
+        map.CreateMap<RatingRequestDto, Rating>();
         map.CreateMap<Rating, RatingResponseDto>()
-            .ForMember(d => d.RatingDate, o => o.MapFrom(s => s.CreatedDate)); ;
-    
+               .ForMember(d => d.ContactName,o=>o.MapFrom(s=>s.Contact.SelectMany(c=>c.FirstName)))
+               .ForMember(d => d.RatingDate, o => o.MapFrom(s => s.CreatedDate)); 
+
     }
 }

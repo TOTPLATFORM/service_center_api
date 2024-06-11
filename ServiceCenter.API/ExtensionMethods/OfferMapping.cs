@@ -17,11 +17,11 @@ public static class OfferMapping
             .ForMember(dest => dest.OfferName, src => src.MapFrom(src => src.OfferName.ToString()))
            .ReverseMap();
 
-        map.CreateMap<Offer, ProductResponseDto>()
+        map.CreateMap<Offer, ProductGetByIdResponseDto>()
             .ForMember(dest => dest.ProductName, src => src.MapFrom(src => src.Product.ProductName))
             .ForMember(dest => dest.ProductPrice, src => src.MapFrom(src => src.Product.ProductPrice))
             .ForMember(dest => dest.ProductDescription, src => src.MapFrom(src => src.Product.ProductDescription));
-        map.CreateMap<Offer, ServiceResponseDto>()
+        map.CreateMap<Offer, ServiceGetByIdResponseDto>()
             .ForMember(dest => dest.ServiceName, src => src.MapFrom(src => src.Service.ServiceName))
             .ForMember(dest => dest.ServiceDescription, src => src.MapFrom(src => src.Service.ServiceDescription))
             .ForMember(dest => dest.ServicePrice, src => src.MapFrom(src => src.Service.ServicePrice));

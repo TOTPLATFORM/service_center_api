@@ -49,10 +49,10 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         return Result.SuccessWithMessage("Product added successfully");
     }
     ///<inheritdoc/>
-    public async Task<Result<PaginationResult<ProductResponseDto>>> GetAllProductAsync(int itemCount, int index)
+    public async Task<Result<PaginationResult<ProductGetByIdResponseDto>>> GetAllProductAsync(int itemCount, int index)
     {
         var result = await _dbContext.Products
-             .ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider)
+             .ProjectTo<ProductGetByIdResponseDto>(_mapper.ConfigurationProvider)
              .GetAllWithPagination(itemCount,index);
 
         _logger.LogInformation("Fetching all  Product. Total count: { Product}.", result.Data.Count);
@@ -60,10 +60,10 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         return Result.Success(result);
     }
     ///<inheritdoc/>
-    public async Task<Result<ProductResponseDto>> GetProductByIdAsync(int id)
+    public async Task<Result<ProductGetByIdResponseDto>> GetProductByIdAsync(int id)
     {
         var result = await _dbContext.Products
-            .ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<ProductGetByIdResponseDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(p => p.Id == id);
 
         if (result is null)
@@ -78,7 +78,7 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         return Result.Success(result);
     }
     ///<inheritdoc/>
-    public async Task<Result<ProductResponseDto>> UpdateProductAsync(int id, ProductRequestDto productRequestDto)
+    public async Task<Result<ProductGetByIdResponseDto>> UpdateProductAsync(int id, ProductRequestDto productRequestDto)
     {
         var result = await _dbContext.Products.FindAsync(id);
 
@@ -94,7 +94,7 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
         await _dbContext.SaveChangesAsync();
 
-        var ProductResponse = _mapper.Map<ProductResponseDto>(result);
+        var ProductResponse = _mapper.Map<ProductGetByIdResponseDto>(result);
         if (ProductResponse is null)
         {
             _logger.LogError("Failed to map ProductRequestDto to ProductResponseDto. ProductRequestDto: {@ProductRequestDto}", ProductResponse);
@@ -129,21 +129,21 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         return Result.SuccessWithMessage("Product removed successfully");
     }
     ///<inheritdoc/>
-    public async Task<Result<PaginationResult<ProductResponseDto>>> SearchProductByTextAsync(string text, int itemCount, int index)
+    public async Task<Result<PaginationResult<ProductGetByIdResponseDto>>> SearchProductByTextAsync(string text, int itemCount, int index)
     {
         var names = await _dbContext.Products
-        .ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider)
+        .ProjectTo<ProductGetByIdResponseDto>(_mapper.ConfigurationProvider)
         .Where(n => n.ProductName.Contains(text))
         .GetAllWithPagination(itemCount,index);
         _logger.LogInformation("Fetching search Product by name . Total count: {Prouct}.", names.Data.Count);
         return Result.Success(names);
     }
 
-    public async Task<PaginationResult<ProductResponseDto>> GetProductsForProductCategoryAsync(int categoryId, int itemCount, int index)
+    public async Task<PaginationResult<ProductGetByIdResponseDto>> GetProductsForProductCategoryAsync(int categoryId, int itemCount, int index)
     {
         var products = await _dbContext.Products
               .Where(s => s.ProductCategory.Id == categoryId)
-              .ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider)
+              .ProjectTo<ProductGetByIdResponseDto>(_mapper.ConfigurationProvider)
               .GetAllWithPagination(itemCount,index);
 
         _logger.LogInformation("Fetching products. Total count: {products}.", products.Data.Count);

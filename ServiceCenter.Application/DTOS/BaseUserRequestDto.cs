@@ -20,7 +20,7 @@ public class BaseUserRequestDto
 	[Required]
 	public Gender Gender { get; set; } = Gender.Male;
 	[Required]
-	public string Phone { get; set; } = "";
+	public string PhoneNumber { get; set; } = "";
 
 	[EmailAddress]
 	[Required]

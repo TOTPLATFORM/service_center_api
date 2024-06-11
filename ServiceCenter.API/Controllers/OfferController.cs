@@ -112,8 +112,8 @@ public class OfferController(IOfferService OfferService) : BaseController
 
     [HttpGet("SearchByOffer")]
     [Authorize(Roles = "Customer,Admin,Manager")]
-    [ProducesResponseType(typeof(Result<List<ProductResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<PaginationResult<ProductResponseDto>>> GetProductsByOffer(int offerId,int itemCount,int index)
+    [ProducesResponseType(typeof(Result<List<ProductGetByIdResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<PaginationResult<ProductGetByIdResponseDto>>> GetProductsByOffer(int offerId,int itemCount,int index)
     {
         return await _OfferService.GetProductsByOffer(offerId,itemCount,index);
     }

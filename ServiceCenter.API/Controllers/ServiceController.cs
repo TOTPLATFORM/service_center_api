@@ -36,8 +36,8 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-	[ProducesResponseType(typeof(Result<PaginationResult<ServiceResponseDto>>), StatusCodes.Status200OK)]
-	public async Task<Result<PaginationResult<ServiceResponseDto>>> GetAllService(int itemCount , int index)
+	[ProducesResponseType(typeof(Result<PaginationResult<ServiceGetByIdResponseDto>>), StatusCodes.Status200OK)]
+	public async Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetAllService(int itemCount , int index)
 	{
 		return await _ServiceService.GetAllServiceAsync(itemCount,index);
 	}
@@ -50,9 +50,9 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
-	[ProducesResponseType(typeof(Result<ServiceResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<ServiceGetByIdResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-	public async Task<Result<ServiceResponseDto>> GetServiceById(int id)
+	public async Task<Result<ServiceGetByIdResponseDto>> GetServiceById(int id)
 	{
 		return await _ServiceService.GetServiceByIdAsync(id);
 	}
@@ -66,9 +66,9 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 
 	[HttpPut("{id}")]
 	[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<ServiceResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<ServiceGetByIdResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<ServiceResponseDto>> UpdateService(int id, ServiceRequestDto ServiceRequestDto)
+	public async Task<Result<ServiceGetByIdResponseDto>> UpdateService(int id, ServiceRequestDto ServiceRequestDto)
 	{
 		return await _ServiceService.UpdateServiceAsync(id, ServiceRequestDto);
 	}
@@ -96,9 +96,9 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-	[ProducesResponseType(typeof(Result<ServiceResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<ServiceGetByIdResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-	public async Task<Result<List<ServiceResponseDto>>> SearchServiceByText(string text)
+	public async Task<Result<List<ServiceGetByIdResponseDto>>> SearchServiceByText(string text)
 	{
 		return await _ServiceService.SearchServiceByTextAsync(text);
 	}
@@ -113,18 +113,18 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 
 	[HttpGet("assign/serviceId/{serviceId}/packageId/{servicePackageId}")]
 	[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<List<ServiceResponseDto>>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<List<ServiceGetByIdResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<List<ServiceResponseDto>>> AssignServiceToPacakge(int serviceId, int servicePackageId)
+	public async Task<Result<List<ServiceGetByIdResponseDto>>> AssignServiceToPacakge(int serviceId, int servicePackageId)
 	{
 		return await _ServiceService.AssignServiceToPackagesAsync(serviceId, servicePackageId);
 	}
 
 	[HttpGet("search/ByPackage/{servicePackageId}")]
 	[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<List<ServiceResponseDto>>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<List<ServiceGetByIdResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<List<ServiceResponseDto>>> GetServicesByPacakge(int servicePackageId)
+	public async Task<Result<List<ServiceGetByIdResponseDto>>> GetServicesByPacakge(int servicePackageId)
 	{
 		return await _ServiceService.GetServicesByPackageAsync(servicePackageId);
 	}
@@ -138,9 +138,9 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 
     [HttpGet("search/ByCategory")]
 	[AllowAnonymous]
-    [ProducesResponseType(typeof(Result<PaginationResult<ServiceResponseDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<PaginationResult<ServiceGetByIdResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<PaginationResult<ServiceResponseDto>>> GetServicesByCategory(int serviceCategoryId, int itemCount, int index)
+    public async Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetServicesByCategory(int serviceCategoryId, int itemCount, int index)
     {
         return await _ServiceService.GetServicesByCategoryAsync(serviceCategoryId,itemCount,index);
     }

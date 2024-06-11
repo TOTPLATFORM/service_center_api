@@ -10,5 +10,5 @@ public class SubscriptionResponseDto
 {
     public int Id { get; set; }
     public DateOnly Duration { get; set; } 
-    public string PackageName { get; set; } = "";
+   public ServicePackageGetByIdResponseDto Package { get; set; }
 }

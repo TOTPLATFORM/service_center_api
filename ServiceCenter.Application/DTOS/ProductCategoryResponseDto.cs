@@ -11,6 +11,6 @@ public class ProductCategoryResponseDto
 {
     public int Id { get; set; }
     public string CategoryName { get; set; } = "";
-    public  ICollection<ProductResponseDto> Products { get; set; } = new HashSet<ProductResponseDto>();
+    public  ICollection<ProductGetByIdResponseDto> Products { get; set; } = new HashSet<ProductGetByIdResponseDto>();
     public  ICollection<ProductBrandResponseDto> ProductBrands { get; set; } = new HashSet<ProductBrandResponseDto>();
 }

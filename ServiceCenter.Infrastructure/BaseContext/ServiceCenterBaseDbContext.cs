@@ -57,4 +57,5 @@ public class ServiceCenterBaseDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Campagin> Campagins { get; set; }
 	public DbSet<Report> Reports { get; set; }
 	public DbSet<Center>Centers { get; set; }
+	public DbSet<Rating> Ratings { get; set; }
 }

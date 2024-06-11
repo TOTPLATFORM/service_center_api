@@ -8,8 +8,7 @@ public static class EmployeeMapping
 {
 	public static void AddEmployeeMapping(this MappingProfiles map)
 	{
-		map.CreateMap<EmployeeRequestDto, Employee>()
-            .ForMember(dest => dest.PhoneNumber, src => src.MapFrom(src => src.Phone));
+		map.CreateMap<EmployeeRequestDto, Employee>();
 
         map.CreateMap<Employee, EmployeeGetByIdResponseDto>()
 			.ForMember(dest => dest.EmployeeFirstName, src => src.MapFrom(src => src.FirstName))

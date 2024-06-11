@@ -13,5 +13,7 @@ public static class ServicePackageMapping
 
         map.CreateMap<ServicePackage, ServicePackageResponseDto>()
             .ReverseMap();
+        map.CreateMap<ServicePackage, ServicePackageGetByIdResponseDto>()
+           .ReverseMap();
     }
 }

@@ -12,6 +12,8 @@ public class RatingRequestDto
     [Required]
     public int RatingValue { get; set; }
     [Required]
-    public DateOnly RatingDate { get; set; }
+    public string ContactId { get; set; }
+    public int ProductId { get; set; }
+    public int ServiceId { get; set; }
 
 }

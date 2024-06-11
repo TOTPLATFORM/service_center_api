@@ -6,8 +6,7 @@ public static class ServiceProviderMapping
 {
     public static void AddServiceProviderMapping(this MappingProfiles map)
     {
-        map.CreateMap<ServiceProviderRequestDto,Domain.Entities.ServiceProvider>()
-            .ForMember(dest => dest.PhoneNumber, src => src.MapFrom(src => src.Phone));
+        map.CreateMap<ServiceProviderRequestDto,Domain.Entities.ServiceProvider>();
 
         map.CreateMap<Domain.Entities.ServiceProvider, ServiceProviderResponseDto>()
             .ForMember(dest => dest.ServiceProviderFirstName, src => src.MapFrom(src => src.FirstName))

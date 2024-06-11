@@ -14,7 +14,7 @@ public class FeedbackResponseDto
     public DateOnly FeedbackDate { get; set; }
     public string FeedbackDescription { get; set; } = "";
       public string ContactName { get; set; } = "";
-    public ServiceGetByIdResponseDto? Service { get; set; } = default;
-    public  ProductGetByIdResponseDto? Product { get; set; } = default;
+    public ServiceResponseDto? Service { get; set; } = default;
+    public  ProductResponseDto? Product { get; set; } = default;
 
 }
