@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using ServiceCenter.Application.ExtensionForServices;
 using ServiceCenter.Core.Entities;
 using ServiceCenter.Domain.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace ServiceCenter.Application.Services;
 
@@ -145,16 +146,21 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         }
 
         Report.Status = status;
-        var role =await _dbContext.Roles.FirstOrDefaultAsync(r => r.Name == "Contact");
+        var role =await _dbContext.Roles.FirstOrDefaultAsync(r => r.Name == "Customer");
 
 
         var contact = await _dbContext.Contacts.FindAsync(Report.Contact.Id);
         if (status == ReportStatus.Good)
         {
-             contact.Status = ContactStatus.Customer;
-            role.Name = "Customer";
-            role.NormalizedName = "Customer".ToUpper();
-            _dbContext.Roles.Update(role);
+            contact.Status = ContactStatus.Customer;
+            var roleUser= await _dbContext.UserRoles.FirstOrDefaultAsync(u => u.UserId == contact.Id);
+            var roleUserNew = new IdentityUserRole<string>
+            {
+                RoleId = role.Id,
+                UserId = contact.Id,
+            };
+            _dbContext.UserRoles.Remove(roleUser);
+            _dbContext.UserRoles.Add(roleUserNew);
         }
         if (status == ReportStatus.Bad)
         {
