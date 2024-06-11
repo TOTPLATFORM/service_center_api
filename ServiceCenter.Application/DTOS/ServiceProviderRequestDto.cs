@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceCenter.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,4 +12,6 @@ public class ServiceProviderRequestDto:BaseUserRequestDto
 {
     [Required]
     public int DepartmentId { get; set; }
+    [Required]
+    public ICollection<int> ServiceIds { get; set; }
 }

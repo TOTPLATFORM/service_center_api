@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Domain.Enums;
@@ -63,13 +66,13 @@ public class CampaginService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 
 
 	///<inheritdoc/>
-	public async Task<Result<List<CampaginResponseDto>>> GetAllCampaginsAsync()
+	public async Task<Result<PaginationResult<CampaginResponseDto>>> GetAllCampaginsAsync(int itemCount,int index)
 	{
 		var result = await _dbContext.Campagins
 				 .ProjectTo<CampaginResponseDto>(_mapper.ConfigurationProvider)
-				 .ToListAsync();
+				 .GetAllWithPagination( itemCount,  index);
 
-		_logger.LogInformation("Fetching all Campagins. Total count: {campagin}.", result.Count);
+		_logger.LogInformation("Fetching all Campagins. Total count: {campagin}.", result.Data.Count);
 
 		return Result.Success(result);
 	}
@@ -161,14 +164,14 @@ public class CampaginService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 		return Result.Success(campaginResponseDto, "Successfully updated campagin");
 	}
 	///<inheritdoc/>
-	public async Task<Result<List<CampaginResponseDto>>> SearchCampaginByTextAsync(string text)
+	public async Task<Result<PaginationResult<CampaginResponseDto>>> SearchCampaginByTextAsync(string text, int itemCount, int index)
 	{
 		var campagins = await _dbContext.Campagins
 					   .ProjectTo<CampaginResponseDto>(_mapper.ConfigurationProvider)
 					   .Where(c => c.CampaginDescription.Contains(text) || c.CampaginDescription.Contains(text))
-					   .ToListAsync();
+					   .GetAllWithPagination( itemCount, index);
 
-		_logger.LogInformation("Fetching search campagin by name . Total count: {campagin}.", campagins.Count);
+		_logger.LogInformation("Fetching search campagin by name . Total count: {campagin}.", campagins.Data.Count);
 
 		return Result.Success(campagins);
 	}

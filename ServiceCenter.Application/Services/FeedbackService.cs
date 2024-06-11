@@ -96,14 +96,12 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
     public async Task<Result<FeedbackResponseDto>> UpdateFeedbackAsync(int id, FeedbackRequestDto feedbackRequestDto)
     {
         var result = await _dbContext.Feedbacks.FindAsync(id);
-        result.Product = null;
-        result.Service = null;
-        if (feedbackRequestDto.ProductId > 1)
+        if (feedbackRequestDto.ProductId > 0)
         {
             var product = await _dbContext.Products.FirstOrDefaultAsync(o => o.Id == feedbackRequestDto.ProductId);
             result.Product = product;
         }
-        if (feedbackRequestDto.ServiceId > 1)
+        if (feedbackRequestDto.ServiceId > 0)
         {
             var service = await _dbContext.Services.FirstOrDefaultAsync(o => o.Id == feedbackRequestDto.ServiceId);
             result.Service = service;
@@ -117,7 +115,7 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 
         result.ModifiedBy = _userContext.Email;
 
-        _mapper.Map(feedbackRequestDto, result);
+        _mapper.Map(result,feedbackRequestDto);
 
         await _dbContext.SaveChangesAsync();
 

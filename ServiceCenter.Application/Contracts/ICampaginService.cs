@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Enums;
 using System;
@@ -25,7 +26,7 @@ public interface ICampaginService : IApplicationService, IScopedService
     /// asynchronously retrieves all campaigns in the system.
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of campaign response DTOs.</returns>
-	public Task<Result<List<CampaginResponseDto>>> GetAllCampaginsAsync();
+	public Task<Result<PaginationResult<CampaginResponseDto>>> GetAllCampaginsAsync(int itemCount, int index);
 
     /// <summary>
     /// asynchronously retrieves a campaign by their unique identifier.
@@ -47,7 +48,7 @@ public interface ICampaginService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">the text to search within campaign data.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of campaign response DTOs that match the search criteria.</returns>
-	public Task<Result<List<CampaginResponseDto>>> SearchCampaginByTextAsync(string text);
+	public Task<Result<PaginationResult<CampaginResponseDto>>> SearchCampaginByTextAsync(string text, int itemCount, int index);
 
     /// <summary>
     /// asynchronously updates the status of an existing campaign.

@@ -29,6 +29,12 @@ public class ServiceProviderService(ServiceCenterBaseDbContext dbContext, IMappe
     ///<inheritdoc/>
     public async Task<Result> AddServiceProviderAsync(ServiceProviderRequestDto serviceproviderRequestDto)
     {
+
+        var service = new List<Service>();
+        foreach (var item in serviceproviderRequestDto.ServiceIds)
+        {
+            service.Add(await _dbContext.Services.FirstOrDefaultAsync(i => i.Id == item));
+        }
         var role = "ServiceProvider";
         var serviceprovider = _mapper.Map<ServiceProvider>(serviceproviderRequestDto);
 
@@ -41,7 +47,7 @@ public class ServiceProviderService(ServiceCenterBaseDbContext dbContext, IMappe
             return Result.NotFound(["Department Invaild Id"]);
         }
         serviceprovider.Department = department;
-
+        serviceprovider.Services = service;
         var serviceproviderAdded = await _authService.RegisterUserWithRoleAsync(serviceprovider, serviceproviderRequestDto.Password, role);
 
         if (!serviceproviderAdded.IsSuccess)
