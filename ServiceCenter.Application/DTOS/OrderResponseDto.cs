@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,19 +10,10 @@ namespace ServiceCenter.Application.DTOS;
 public class OrderResponseDto
 {
     public int Id { get; set; }
-    public string From { get; set; } = "";
-    public Status OrderStatus { get; set; }
+    public ContactResponseDto Contact { get; set; }
+    public string OrderStatus { get; set; } = "";
+    public DateTime OrderDate { get; set; }
+    public ICollection<ItemOrderResponseDto> ItemOrders { get; set; }
+    public int TotalPrice { get; set; }
 
-	private DateTime _orderDate;
-
-	public DateTime OrderDate
-	{
-		get => _orderDate;
-		set
-		{
-			_orderDate = value;
-			OrderArrivalDate = _orderDate.AddDays(2); 
-		}
-	}
-	public DateTime OrderArrivalDate { get; set; }
 }

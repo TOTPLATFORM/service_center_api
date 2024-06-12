@@ -10,7 +10,7 @@ namespace ServiceCenter.Application.DTOS;
 public class ScheduleRequestDto
 {
     [Required]
-    public string ServiceProviderId { get; set; } = "";
+    public int ServiceId { get; set; } 
     [Required]
     public DayOfWeek DayOfWeek { get; set; }
     [Required]
