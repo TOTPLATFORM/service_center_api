@@ -14,8 +14,10 @@ public class ComplaintRequestDto
     public DateOnly ComplaintDate { get; set; }
     [Required]
     public string ComplaintDescription { get; set; } = "";
-  
+
+    [Required]
+    public string ContactId { get; set; } = "";
     public Status ComplaintStatus { get; set; }=Status.Pending;
-
-
+    public int ServiceProviderId { get; set; }
+    public int BranchId { get; set; }
 }

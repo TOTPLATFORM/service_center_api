@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
@@ -33,23 +34,23 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     /// retrieves all rating service for spicific customer in the system.
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all rating service for spicific customer.</returns>
-    [HttpGet("SearchByCustomer/{id}")]
-    [Authorize(Roles = "Admin,Customer")]
-    [ProducesResponseType(typeof(Result<List<RatingResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<List<RatingResponseDto>>> GetsRatingsByCustomer(string id)
-    {
-        return await _ratingServiceService.GetsRatingsByCustomerAsync(id);
-    }
+    //[HttpGet("SearchByCustomer/{id}")]
+    //[Authorize(Roles = "Admin,Customer")]
+    //[ProducesResponseType(typeof(Result<List<RatingResponseDto>>), StatusCodes.Status200OK)]
+    //public async Task<Result<List<RatingResponseDto>>> GetsRatingsByCustomer(string id)
+    //{
+    //    return await _ratingServiceService.GetsRatingsByCustomerAsync(id);
+    //}
     /// <summary>
     /// retrieves all rating service for spicific service in the system.
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all rating service for spicific service.</returns>
     [HttpGet("SearchByService/{id}")]
     [Authorize(Roles = "Admin,Customer,Manager")]
-    [ProducesResponseType(typeof(Result<List<RatingResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<List<RatingResponseDto>>> GetRatingsByService(int id)
+    [ProducesResponseType(typeof(Result<PaginationResult<RatingResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<PaginationResult<RatingResponseDto>>> GetRatingsByService(int id, int itemCount, int index)
     {
-        return await _ratingServiceService.GetRatingsByServiceAsync(id);
+        return await _ratingServiceService.GetRatingsByServiceAsync(id,itemCount,index);
     }
     /// <summary>
     /// retrieves all rating service in the system.
@@ -57,10 +58,10 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all rating service.</returns>
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
-    [ProducesResponseType(typeof(Result<List<RatingResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<List<RatingResponseDto>>> GetAllRating()
+    [ProducesResponseType(typeof(Result<PaginationResult<RatingResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<PaginationResult<RatingResponseDto>>> GetAllRating( int itemCount, int index)
     {
-        return await _ratingServiceService.GetAllRatingsAsync();
+        return await _ratingServiceService.GetAllRatingsAsync( itemCount,  index);
     }
 
     /// <summary>
@@ -69,7 +70,7 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     /// <param name="id">the unique identifier of the rating service .</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the rating service details.</returns>
     [HttpGet("{id:int}")]
-    [Authorize(Roles = "Customer,Manager")]
+    [Authorize(Roles = "Admin,Customer,Manager")]
     [ProducesResponseType(typeof(Result<RatingResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result<RatingResponseDto>), StatusCodes.Status404NotFound)]
     public async Task<Result<RatingResponseDto>> GetRatingById(int id)
@@ -87,7 +88,7 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
     [HttpPut("{id}")]
-    [Authorize(Roles = "Customer")]
+    [Authorize(Roles = "Admin,Customer")]
     [ProducesResponseType(typeof(Result<RatingResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -105,11 +106,22 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Customer")]
+    [Authorize(Roles = "Admin,Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteRating(int id)
     {
         return await _ratingServiceService.DeleteRatingAsync(id);
+    }
+    /// <summary>
+    /// retrieves all rating   in the system.
+    /// </summary>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all rating service for spicific customer.</returns>
+    [HttpGet("SearchByRatingValue/{id}")]
+    [Authorize(Roles = "Admin,Customer")]
+    [ProducesResponseType(typeof(Result<PaginationResult<RatingResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<PaginationResult<RatingResponseDto>>> GetsRatingsByRatingValue(int ratingValue, int itemCount, int index)
+    {
+        return await _ratingServiceService.SearchRatingByRatingValueAsync(ratingValue, itemCount,index);
     }
 }

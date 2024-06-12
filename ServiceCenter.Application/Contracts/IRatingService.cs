@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ public interface IRatingService:IApplicationService,IScopedService
     /// asynchronously retrieves all rating in the system.
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of rating response DTOs.</returns>
-    public Task<Result<List<RatingResponseDto>>> GetAllRatingsAsync();
+    public Task<Result<PaginationResult<RatingResponseDto>>> GetAllRatingsAsync(int itemCount, int index);
     /// <summary>
     /// asynchronously retrieves a rating by their unique identifier.
     /// </summary>
@@ -48,7 +49,7 @@ public interface IRatingService:IApplicationService,IScopedService
     /// </summary>
     /// <param name="text">the text to search within rating data.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of rating response DTOs that match the search criteria.</returns>
-    public Task<Result<List<RatingResponseDto>>> SearchRatingByRatingValueAsync(int ratingValue);
+    public Task<Result<PaginationResult<RatingResponseDto>>> SearchRatingByRatingValueAsync(int ratingValue, int itemCount, int index);
 
     /// <summary>
     /// asynchronously get all a rating by agent from the system by their unique identifier.
@@ -56,7 +57,7 @@ public interface IRatingService:IApplicationService,IScopedService
     /// <param name="id">the unique identifier of the service to get all.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all rating by service operation.</returns>
 
-    public Task<Result<List<RatingResponseDto>>> GetRatingsByServiceAsync(int serviceId);
+    public Task<Result<PaginationResult<RatingResponseDto>>> GetRatingsByServiceAsync(int serviceId, int itemCount, int index);
 
     /// <summary>
     /// asynchronously get all a rating by customer from the system by their unique identifier.
@@ -64,5 +65,5 @@ public interface IRatingService:IApplicationService,IScopedService
     /// <param name="id">the unique identifier of the customer to get all.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all rating by customer operation.</returns>
 
-    public Task<Result<List<RatingResponseDto>>> GetsRatingsByCustomerAsync(string customerId);
+   // public Task<Result<List<RatingResponseDto>>> GetsRatingsByCustomerAsync(string customerId);
 }
