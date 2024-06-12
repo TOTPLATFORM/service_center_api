@@ -42,10 +42,10 @@ public class AppointmentService(ServiceCenterBaseDbContext dbContext, IMapper ma
     }
 
     ///<inheritdoc/>
-    public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceProviderIdAsync(string serviceproviderId, int itemCount, int index)
+    public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceIdAsync(int serviceId, int itemCount, int index)
     {
         var appointments = await _dbContext.Appointments
-            .Where(a => a.Schedule.ServiceProviderId == serviceproviderId)
+            .Where(a => a.Schedule.ServiceId == serviceId)
             .ProjectTo<AppointmentResponseDto>(_mapper.ConfigurationProvider)
             .GetAllWithPagination(itemCount, index);
 
@@ -54,7 +54,7 @@ public class AppointmentService(ServiceCenterBaseDbContext dbContext, IMapper ma
             appointments.End = appointments.TotalCount;
         }
 
-        _logger.LogInformation("Fetching appointments for serviceprovider {serviceproviderId}. Total count: {count}.", serviceproviderId, appointments);
+        _logger.LogInformation("Fetching appointments for service {serviceId}. Total count: {count}.", serviceId, appointments);
         return Result.Success(appointments);
     }
 
@@ -160,6 +160,16 @@ public class AppointmentService(ServiceCenterBaseDbContext dbContext, IMapper ma
             _logger.LogError("Appointment Id not found, Id {id}", id);
             return Result.NotFound(new[] { "The appointment is not found" });
         }
+        
+        if (status == AppointmentStatus.Completed)
+        {
+            var itemService = await _dbContext.ItemServices.Where(i => i.Service.Id == appointment.Schedule.ServiceId)
+                .Select(s => new { s.Item ,s.QuantityItem}).ToListAsync();
+            foreach (var item in itemService)
+            {
+                item.Item.ItemStock = item.Item.ItemStock-item.QuantityItem;
+            }
+        }
 
         appointment.Status = status;
         await _dbContext.SaveChangesAsync();
@@ -169,10 +179,10 @@ public class AppointmentService(ServiceCenterBaseDbContext dbContext, IMapper ma
     }
 
     ///<inheritdoc/>
-    public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceProviderIdAndStatusAsync(string serviceproviderId, AppointmentStatus status, int itemCount, int index)
+    public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceIdAndStatusAsync(int serviceId, AppointmentStatus status, int itemCount, int index)
     {
         var appointments = await _dbContext.Appointments
-            .Where(a => a.Schedule.ServiceProviderId == serviceproviderId && a.Status == status)
+            .Where(a => a.Schedule.ServiceId == serviceId && a.Status == status)
             .ProjectTo<AppointmentResponseDto>(_mapper.ConfigurationProvider)
             .GetAllWithPagination(itemCount, index);
 

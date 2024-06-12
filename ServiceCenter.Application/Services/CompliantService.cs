@@ -25,17 +25,17 @@
 //	public async Task<Result> AddComplaintAsync(ComplaintRequestDto ComplaintRequestDto)
 //	{
 //		var result = _mapper.Map<Complaint>(ComplaintRequestDto);
-		
+
 //		if (result is null)
 //		{
 //			_logger.LogError("Failed to map ComplaintRequestDto to Complaint. ComplaintRequestDto: {@ComplaintRequestDto}", ComplaintRequestDto);
 //			return Result.Invalid(new List<ValidationError>
-//		    {
-//		        new ValidationError
-//		        {
-//			         ErrorMessage = "Validation Errror"
-//		        }
-//	        });
+//			{
+//				new ValidationError
+//				{
+//					 ErrorMessage = "Validation Errror"
+//				}
+//			});
 //		}
 //		result.CreatedBy = _userContext.Email;
 
@@ -145,7 +145,7 @@
 //	public async Task<Result<List<ComplaintResponseDto>>> GetComplaintsByCustomerAsync(string customerId)
 //	{
 //		var complaints = await _dbContext.Complaints
-//			  .Where(s => s.CustomerId == customerId)
+//			  .Where(s => s.Id == customerId)
 //			  .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
 //			  .ToListAsync();
 
