@@ -39,11 +39,11 @@ public interface IAppointmentService : IApplicationService, IScopedService
     Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByContactIdAsync(string contactId, int itemCount, int index);
 
     /// <summary>
-    /// Asynchronously retrieves all appointments for a specific serviceprovider by their ID.
+    /// Asynchronously retrieves all appointments for a specific service by their ID.
     /// </summary>
-    /// <param name="serviceproviderId">The ID of the serviceprovider whose appointments are to be retrieved.</param>
+    /// <param name="serviceId">The ID of the service whose appointments are to be retrieved.</param>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result containing a list of appointment response DTOs.</returns>
-    Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceProviderIdAsync(string serviceproviderId, int itemCount, int index);
+    Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceIdAsync(int serviceId, int itemCount, int index);
 
     /// <summary>
     /// Asynchronously books an appointment.
@@ -68,12 +68,12 @@ public interface IAppointmentService : IApplicationService, IScopedService
     Task<Result> ChangeAppointmentStatusAsync(int id, AppointmentStatus status);
 
     /// <summary>
-    /// Retrieves appointments by serviceprovider ID and status.
+    /// Retrieves appointments by service ID and status.
     /// </summary>
-    /// <param name="serviceproviderId">The ID of the serviceprovider whose appointments to retrieve.</param>
+    /// <param name="serviceId">The ID of the service whose appointments to retrieve.</param>
     /// <param name="status">The status of the appointments to filter by.</param>
     /// <returns>A Result containing a list of appointment response DTOs.</returns>
-    Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceProviderIdAndStatusAsync(string serviceproviderId, AppointmentStatus status, int itemCount, int index);
+    Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceIdAndStatusAsync(int serviceId, AppointmentStatus status, int itemCount, int index);
 
     /// <summary>
     /// Retrieves appointments by contact ID and status.
