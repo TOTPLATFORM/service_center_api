@@ -31,7 +31,8 @@ public class ServiceCenterBaseDbContext : IdentityDbContext<ApplicationUser>
     }
     public DbSet<Schedule> Schedules { get; set; }
 	public DbSet<Appointment> Appointments { get; set; }
-	public DbSet<Product> Products { get; set; }
+    public DbSet<ItemServices> ItemServices { get; set; }
+    public DbSet<Product> Products { get; set; }
 	public DbSet<ProductCategory> ProductCategories { get; set; }
 	public DbSet<Branch> Branches { get; set; }
     public DbSet<ServiceProvider> ServiceProviders { get; set; }
