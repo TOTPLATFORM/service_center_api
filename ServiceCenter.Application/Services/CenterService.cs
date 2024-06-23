@@ -68,11 +68,11 @@ public class CenterService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 	}
 	
 	///<inheritdoc/>
-	public async Task<Result<CenterResponseDto>> GetCenterAsync()
+	public async Task<Result<List<CenterResponseDto>>> GetCenterAsync()
 	{
 		var center = await _dbContext.Centers
 			.ProjectTo<CenterResponseDto>(_mapper.ConfigurationProvider)
-			.FirstOrDefaultAsync();
+			.ToListAsync();
 
 		if (center == null)
 		{

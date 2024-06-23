@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 namespace ServiceCenter.API.Controllers;
 
@@ -40,9 +41,10 @@ public class CenterController(ICenterService centerService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
 	[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<CenterResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<List<CenterResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<CenterResponseDto>> GetCenter()
+
+	public async Task<Result<List<CenterResponseDto>>> GetCenter()
 	{
 		return await _centerService.GetCenterAsync();
 	}

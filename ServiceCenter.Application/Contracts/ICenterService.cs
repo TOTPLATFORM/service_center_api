@@ -24,7 +24,7 @@ public interface ICenterService : IApplicationService, IScopedService
     /// asynchronously retrieves a center by .
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the center response DTO.</returns>
-	public Task<Result<CenterResponseDto>> GetCenterAsync();
+	public Task<Result<List<CenterResponseDto>>> GetCenterAsync();
 
     /// <summary>
     /// asynchronously updates the data of an existing center.
