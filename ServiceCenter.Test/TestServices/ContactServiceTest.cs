@@ -1,9 +1,14 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using ServiceCenter.API.Mapping;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
+using ServiceCenter.Core.JWT;
+using ServiceCenter.Domain.Entities;
 using ServiceCenter.Domain.Enums;
 using ServiceCenter.Test.TestPriority;
 using ServiceCenter.Test.TestSetup;
@@ -21,6 +26,12 @@ public class ContactServiceTest
 {
     private static ContactService _contactService;
     private string userEmail = "mariamabdeeen@gmail.com";
+    private List<ApplicationUser> _users = new List<ApplicationUser>
+        {
+            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f645630",FirstName="Hager",LastName="Shaban",DateOfBirth=new DateOnly(2000,12,30),Email="hagershaaban7@gmail.com" ,UserName="hager3012"},
+            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f654945",FirstName="Hager",LastName="Shaban",DateOfBirth=new DateOnly(2000,12,30),Email="hagershaaban7@gmail.com" ,UserName="hager1230"},
+
+        };
     private ContactService CreateContactService()
     {
 
@@ -33,10 +44,32 @@ public class ContactServiceTest
             ILogger<ContactService> logger = new LoggerFactory().CreateLogger<ContactService>();
 
             IUserContextService userContext = new UserContextService();
-            IAuthService authService = default;
+            var userStore = new UserStore<ApplicationUser>(dbContext);
+            ILogger<ApplicationUser> userLogger = new LoggerFactory().CreateLogger<ApplicationUser>();
 
-            _contactService = new ContactService(dbContext, mapper, logger,  authService,userContext);
+            UserManager<ApplicationUser> userManager = InMemoryUserStore.MockUserManager(_users).Object;
+
+            var jwtOptions = Options.Create(new JWT
+
+            {
+
+                Issuer = "TOTPlatform",
+
+                Audience = "PlatformUsers",
+
+                Key = "QqEz6jAMz8LIsXLcm4GtSOp24cQ50LxPlY/cgZ4NCZQ=",
+
+                DurationInDays = 1
+
+            });
+
+            var authService = new AuthService(userManager, userLogger, mapper, jwtOptions);
+
+
+            _contactService = new ContactService(dbContext, mapper, logger,  authService, userContext);
         }
+
+       
 
         return _contactService;
     }
