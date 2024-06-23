@@ -23,28 +23,34 @@ public class ContextGenerator
             Context = new ServiceCenterBaseDbContext(options);
             Context.Database.EnsureDeleted();
             Context.Database.EnsureCreated();
-            //Context.AddItem();
-            //Context.AddItemCategory();
-            //Context.AddInventory();
-            //Context.AddDepartment();
-         
-            //Context.AddFeedback();
-            //Context.AddComplaint();
-            //Context.AddCenter();
-            //Context.AddBranch();
-            //Context.AddContact();
-            //Context.AddSubscription();
-            //Context.AddEmployee();
-            //Context.AddOffer();
-            //Context.AddSchedule();
-     
-            //Context.AddAppointment();
-            //Context.AddProductBrand();
-            //Context.AddRatingService();
-            //Context.AddCampagin();
-            //Context.AddOverview();
-            //Context.AddProductCategory();
-            //Context.AddServiceCategory();
+            Context.AddItem();
+            Context.AddItemCategory();
+            Context.AddInventory();
+            Context.AddDepartment();
+            Context.AddService();
+            Context.AddFeedback();
+            Context.AddComplaint();
+            Context.AddCenter();
+            Context.AddBranch();
+            Context.AddContact();
+            Context.AddSubscription();
+            Context.AddEmployee();
+            Context.AddOffer();
+            Context.AddSchedule();
+            Context.AddServicePackage();
+            Context.AddAppointment();
+            Context.AddProductBrand();
+            Context.AddRating();
+            Context.AddCampagin();
+            Context.AddOverview();
+            Context.AddProductCategory();
+            Context.AddServiceCategory();
+            Context.AddSales();
+            Context.AddManager();
+            Context.AddWareHouseManager();
+            Context.AddServiceProvider();   
+            Context.AddVendor();
+
             Context.SaveChanges();
         }
 
