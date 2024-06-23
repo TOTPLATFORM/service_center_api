@@ -11,8 +11,6 @@ namespace ServiceCenter.Application.DTOS;
 public class FeedbackRequestDto
 {
     [Required]
-    public DateOnly FeedbackDate { get; set; }
-    [Required]
     public string FeedbackDescription { get; set; } = "";
    
     [Required]

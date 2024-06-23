@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Test.TestSetup.Data;
 
-public static class EmployeeTest
+public static class SalesTest
 {
-    public static void AddEmployee(this ServiceCenterBaseDbContext context)
+    public static void AddSales(this ServiceCenterBaseDbContext context)
     {
-        context.Employees.AddRange(
-        new Employee
+        context.Sales.AddRange(
+        new Sales
         {
             Id = "0d133c1a-804f-4548-8f7e-8c3f504844e0",
             DateOfBirth = DateOnly.Parse("2000/12/30"),
@@ -23,10 +23,10 @@ public static class EmployeeTest
             LastName = "shaban",
             Gender = Gender.Female,
             PhoneNumber = "0621654984",
-           
+
 
         },
-        new Employee
+        new Sales
         {
             Id = "sOB316984165",
             DateOfBirth = DateOnly.Parse("2000/12/30"),
@@ -39,4 +39,5 @@ public static class EmployeeTest
         }
         );
     }
+    
 }

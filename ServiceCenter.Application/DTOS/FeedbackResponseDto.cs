@@ -11,10 +11,11 @@ namespace ServiceCenter.Application.DTOS;
 public class FeedbackResponseDto
 {
     public int Id { get; set; }
-    public DateOnly FeedbackDate { get; set; }
+    public DateTime FeedbackDate { get; set; }
     public string FeedbackDescription { get; set; } = "";
-      public string ContactName { get; set; } = "";
-    public ServiceResponseDto? Service { get; set; } = default;
+    public string ContactName { get; set; } = "";
+    public  ServiceResponseDto? Service { get; set; } = default;
     public  ProductResponseDto? Product { get; set; } = default;
+
 
 }

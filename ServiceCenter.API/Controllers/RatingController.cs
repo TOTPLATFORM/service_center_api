@@ -11,117 +11,126 @@ namespace ServiceCenter.API.Controllers;
 
 public class RatingController(IRatingService ratingServiceService) : BaseController
 {
-    private readonly IRatingService _ratingServiceService = ratingServiceService;
+    private readonly IRatingService _RatingService = ratingServiceService;
 
     /// <summary>
-    /// adds a new rating service to the system.
+    /// action for add Rating  action that take  Rating dto   
     /// </summary>
-    /// <param name="ratingRequestDto">the data transfer object containing rating service details for creation.</param>
+    /// <param name="RatingDto">Rating  dto</param>
     /// <remarks>
-    /// access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>result for Rating  added successfully.</returns>
     [HttpPost]
     [Authorize(Roles = "Admin,Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    public async Task<Result> AddRating(RatingRequestDto ratingRequestDto)
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result> AddRating(RatingRequestDto RatingDto)
     {
-        return await _ratingServiceService.AddRatingAsync(ratingRequestDto);
-    }
-
-
-    /// <summary>
-    /// retrieves all rating service for spicific customer in the system.
-    /// </summary>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all rating service for spicific customer.</returns>
-    //[HttpGet("SearchByCustomer/{id}")]
-    //[Authorize(Roles = "Admin,Customer")]
-    //[ProducesResponseType(typeof(Result<List<RatingResponseDto>>), StatusCodes.Status200OK)]
-    //public async Task<Result<List<RatingResponseDto>>> GetsRatingsByCustomer(string id)
-    //{
-    //    return await _ratingServiceService.GetsRatingsByCustomerAsync(id);
-    //}
-    /// <summary>
-    /// retrieves all rating service for spicific service in the system.
-    /// </summary>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all rating service for spicific service.</returns>
-    [HttpGet("SearchByService/{id}")]
-    [Authorize(Roles = "Admin,Customer,Manager")]
-    [ProducesResponseType(typeof(Result<PaginationResult<RatingResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<PaginationResult<RatingResponseDto>>> GetRatingsByService(int id, int itemCount, int index)
-    {
-        return await _ratingServiceService.GetRatingsByServiceAsync(id,itemCount,index);
+        return await _RatingService.AddRatingAsync(RatingDto);
     }
     /// <summary>
-    /// retrieves all rating service in the system.
+    /// get all Rating categories in the system.
     /// </summary>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all rating service.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<RatingResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<PaginationResult<RatingResponseDto>>> GetAllRating( int itemCount, int index)
+    public async Task<Result<PaginationResult<RatingResponseDto>>> GetAllRating(int itemCount, int index)
     {
-        return await _ratingServiceService.GetAllRatingsAsync( itemCount,  index);
+        return await _RatingService.GetAllRatingAsync(itemCount, index);
     }
-
     /// <summary>
-    /// retrieves a rating service  by their unique identifier.
+    /// get Rating by id in the system.
     /// </summary>
-    /// <param name="id">the unique identifier of the rating service .</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the rating service details.</returns>
-    [HttpGet("{id:int}")]
-    [Authorize(Roles = "Admin,Customer,Manager")]
+    ///<param name="id">id of Rating.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpGet("{id}")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<RatingResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result<RatingResponseDto>), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<RatingResponseDto>> GetRatingById(int id)
     {
-        return await _ratingServiceService.GetRatingByIdAsync(id);
+        return await _RatingService.GetRatingByIdAsync(id);
     }
-
-    /// <summary>
-    /// updates an existing rating service's information.
     /// </summary>
-    /// <param name="id">the unique identifier of the rating service  to update.</param>
-    /// <param name="ratingRequestDto">the data transfer object containing updated details for the rating service.</param>
+    ///<param name="id">id of Rating.</param>
+    ///<param name="RatingRequestDto">Rating dto.</param>
     /// <remarks>
-    /// access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin,Customer")]
     [ProducesResponseType(typeof(Result<RatingResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<RatingResponseDto>> UpdateRating(int id, RatingRequestDto ratingRequestDto)
+    public async Task<Result<RatingResponseDto>> UpdateRatingValue(int id, int ratingValue)
     {
-        return await _ratingServiceService.UpdateRatingAsync(id, ratingRequestDto);
+        return await _RatingService.UpdateRatingValueAsync(id, ratingValue);
     }
-
     /// <summary>
-    /// deletes a rating service  from the system by their unique identifier.
+    /// delete  Rating  by id from the system.
     /// </summary>
-    /// <param name="id">the unique identifier of the rating service  to delete.</param>
+    ///<param name="id">id</param>
     /// <remarks>
-    /// access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin,Customer")]
+    [Authorize(Roles = "Admin,Customer,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result> DeleteRating(int id)
+    public async Task<Result> DeleteRatingAsycn(int id)
     {
-        return await _ratingServiceService.DeleteRatingAsync(id);
+        return await _RatingService.DeleteRatingAsync(id);
     }
-    /// <summary>
-    /// retrieves all rating   in the system.
     /// </summary>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all rating service for spicific customer.</returns>
-    [HttpGet("SearchByRatingValue/{id}")]
-    [Authorize(Roles = "Admin,Customer")]
+    ///<param name="text">customer id </param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpGet("searchByCustomer/{customerId}")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<RatingResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<PaginationResult<RatingResponseDto>>> GetsRatingsByRatingValue(int ratingValue, int itemCount, int index)
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+    public async Task<Result<PaginationResult<RatingResponseDto>>> GetRatingsForSpecificCustomer(string customerId, int itemCount, int index)
     {
-        return await _ratingServiceService.SearchRatingByRatingValueAsync(ratingValue, itemCount,index);
+        return await _RatingService.GetRatingsForSpecificCustomerAsync(customerId, itemCount, index);
+    }
+    /// </summary>
+    ///<param name="text">product id  </param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpGet("searchByProduct/{productId}")]
+    [Authorize(Roles = "Admin,Customer,Manager")]
+    [ProducesResponseType(typeof(Result<PaginationResult<RatingResponseDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+    public async Task<Result<PaginationResult<RatingResponseDto>>> GetRatingsForSpecificProduct(int productId, int itemCount, int index)
+    {
+        return await _RatingService.GetRatingsForSpecificProductAsync(productId, itemCount, index);
+    }
+    /// </summary>
+    ///<param name="text">service id </param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpGet("searchByService/{serviceId}")]
+    [Authorize(Roles = "Admin,Customer,Manager")]
+    [ProducesResponseType(typeof(Result<PaginationResult<RatingResponseDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+    public async Task<Result<PaginationResult<RatingResponseDto>>> GetRatingsForSpecificService(int serviceId, int itemCount, int index)
+    {
+        return await _RatingService.GetRatingsForSpecificServiceAsync(serviceId, itemCount, index);
     }
 }

@@ -10,9 +10,10 @@ namespace ServiceCenter.Application.DTOS;
 public class RatingRequestDto
 {
     [Required]
+    [Range(1, 5)]
     public int RatingValue { get; set; }
     [Required]
-    public string ContactId { get; set; }
+    public string ContactId { get; set; } 
     public int ProductId { get; set; }
     public int ServiceId { get; set; }
 

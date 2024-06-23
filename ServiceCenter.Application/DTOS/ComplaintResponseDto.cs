@@ -10,11 +10,12 @@ namespace ServiceCenter.Application.DTOS;
 public class ComplaintResponseDto
 {
     public int Id { get; set; }
-    public DateOnly ComplaintDate { get; set; }
+    public DateTime ComplaintDate { get; set; }
     public string ComplaintDescription { get; set; } = "";
     public Status ComplaintStatus { get; set; }
     public string ContactName { get; set; } = "";
     public ServiceProviderResponseDto? ServiceProvider { get; set; } = default;
     public BranchResponseDto? Branch { get; set; } = default;
+ 
 
 }

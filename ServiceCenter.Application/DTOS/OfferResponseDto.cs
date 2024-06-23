@@ -16,7 +16,6 @@ public class OfferResponseDto
     public DateOnly StartDate { get; set; }
     public DateOnly EndDate { get; set; }
     public int Discount { get; set; }
-    public ContactResponseDto Contact { get; set; } 
-    public  ProductResponseDto? Product { get; set; } = default;
+   public  ProductResponseDto? Product { get; set; } = default;
     public  ServiceResponseDto? Service { get; set; } = default;
 }

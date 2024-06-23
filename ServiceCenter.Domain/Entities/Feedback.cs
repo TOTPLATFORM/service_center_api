@@ -10,10 +10,7 @@ namespace ServiceCenter.Domain.Entities;
 
 public class Feedback : AuditableEntity
 {
-    public DateOnly FeedbackDate { get; set; }
-    public string FeedbackDescription { get; set; } = "";
- //   public Category FeedbackCategory { get; set; } 
-
+     public string FeedbackDescription { get; set; } = "";
     public virtual Contact Contact { get; set; } = default;
     public virtual Service? Service { get; set; } = default;
     public virtual Product? Product { get; set; } = default;
