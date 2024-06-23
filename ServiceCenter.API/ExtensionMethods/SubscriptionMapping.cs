@@ -10,7 +10,6 @@ public static class SubscriptionMapping
     {
         map.CreateMap<SubscriptionRequestDto, Subscription>().ReverseMap();
         map.CreateMap<Subscription, SubscriptionResponseDto>()
-           .ForMember(dest => dest.PackageName, src => src.MapFrom(src => src.ServicePackage.PackageName))
             .ReverseMap();
     }
 }

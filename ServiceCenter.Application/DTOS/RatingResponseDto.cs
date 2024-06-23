@@ -12,5 +12,7 @@ public class RatingResponseDto
     public int Id { get; set; }
     public int RatingValue { get; set; }
     public DateTime RatingDate { get; set; }
-    public  ICollection<ContactResponseDto> Contact { get; set; } = new HashSet<ContactResponseDto>();
+  
+    public ICollection< ProductResponseDto?> Product { get; set; } = new HashSet<ProductResponseDto>();
+    public ICollection<ServiceResponseDto?> Service { get; set; } = new HashSet<ServiceResponseDto>();
 }

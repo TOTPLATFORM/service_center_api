@@ -1,157 +1,194 @@
-﻿//using AutoMapper;
-//using AutoMapper.QueryableExtensions;
-//using Microsoft.EntityFrameworkCore;
-//using Microsoft.Extensions.Logging;
-//using ServiceCenter.Application.Contracts;
-//using ServiceCenter.Application.DTOS;
-//using ServiceCenter.Core.Result;
-//using ServiceCenter.Domain.Entities;
-//using ServiceCenter.Domain.Enums;
-//using ServiceCenter.Infrastructure.BaseContext;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Castle.Core.Resource;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using ServiceCenter.Application.Contracts;
+using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
+using ServiceCenter.Core.Result;
+using ServiceCenter.Domain.Entities;
+using ServiceCenter.Infrastructure.BaseContext;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<ComplaintService> logger, IUserContextService userContext) : IComplaintService
-//{
-//	private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
-//	private readonly IMapper _mapper = mapper;
-//	private readonly ILogger<ComplaintService> _logger = logger;
-//	private readonly IUserContextService _userContext = userContext;
+namespace ServiceCenter.Application.Services;
 
-//	///<inheritdoc/>
-//	public async Task<Result> AddComplaintAsync(ComplaintRequestDto ComplaintRequestDto)
-//	{
-//		var result = _mapper.Map<Complaint>(ComplaintRequestDto);
+public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<ComplaintService> logger, IUserContextService  userContext) : IComplaintService
+{
+    private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
+    private readonly IMapper _mapper = mapper;
+    private readonly ILogger<ComplaintService> _logger = logger;
+    private readonly IUserContextService _userContext = userContext;
 
-//		if (result is null)
-//		{
-//			_logger.LogError("Failed to map ComplaintRequestDto to Complaint. ComplaintRequestDto: {@ComplaintRequestDto}", ComplaintRequestDto);
-//			return Result.Invalid(new List<ValidationError>
-//			{
-//				new ValidationError
-//				{
-//					 ErrorMessage = "Validation Errror"
-//				}
-//			});
-//		}
-//		result.CreatedBy = _userContext.Email;
+    ///<inheritdoc/>
+    public async Task<Result> AddComplaintAsync(ComplaintRequestDto ComplaintRequestDto)
+    {
+        var result = _mapper.Map<Complaint>(ComplaintRequestDto);
+        result.Branch = null;
+        result.ServiceProvider= null;
+        if (ComplaintRequestDto.BranchId > 1)
+        {
+            var Branch = await _dbContext.Branches.FirstOrDefaultAsync(o => o.Id == ComplaintRequestDto.BranchId);
+            result.Branch = Branch;
+        }
+        if (ComplaintRequestDto.ServiceProviderId > 1)
+        {
+            var serviceProvider= await _dbContext.ServiceProviders.FirstOrDefaultAsync(o => o.Id == ComplaintRequestDto.ServiceProviderId);
+            result.ServiceProvider= serviceProvider;
+        }
+        var contact = await _dbContext.Contacts.FirstOrDefaultAsync(m => m.Id == ComplaintRequestDto.ContactId);
 
-//		_dbContext.Complaints.Add(result);
+        if (result is null)
+        {
+            _logger.LogError("Failed to map ComplaintRequestDto to Complaint. ComplaintRequestDto: {@ComplaintRequestDto}", ComplaintRequestDto);
+            return Result.Invalid(new List<ValidationError>
+    {
+        new ValidationError
+        {
+            ErrorMessage = "Validation Errror"
+        }
+    });
+        }
+        result.CreatedBy = _userContext.Email;
+        result.Contact = contact;
 
-//		await _dbContext.SaveChangesAsync();
-//		_logger.LogInformation("Complaint added successfully to the database");
-//		return Result.SuccessWithMessage("Complaint added successfully");
-//	}
+        _dbContext.Complaints.Add(result);
 
-//	///<inheritdoc/>
-//	public async Task<Result<List<ComplaintResponseDto>>> GetAllComplaintsAsync()
-//	{
-//		var result = await _dbContext.Complaints
-//			 .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
-//			 .ToListAsync();
+        await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("Complaint added successfully to the database");
+        return Result.SuccessWithMessage("Complaint added successfully");
+    }
+    ///<inheritdoc/>
+    public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetAllComplaintAsync(int itemCount, int index)
+    {
+        var result = await _dbContext.Complaints
+             .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
+             .GetAllWithPagination(itemCount, index);
 
-//		_logger.LogInformation("Fetching all  Complaint. Total count: { Complaint}.", result.Count);
+        _logger.LogInformation("Fetching all  Complaint. Total count: { Complaint}.", result.Data.Count);
 
-//		return Result.Success(result);
-//	}
+        return Result.Success(result);
+    }
+    ///<inheritdoc/>
+    public async Task<Result<ComplaintResponseDto>> GetComplaintByIdAsync(int id)
+    {
+        var result = await _dbContext.Complaints
+            .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(p => p.Id == id);
 
-//	///<inheritdoc/>
-//	public async Task<Result<ComplaintResponseDto>> GetComplaintByIdAsync(int id)
-//	{
-//		var result = await _dbContext.Complaints
-//			.ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
-//			.FirstOrDefaultAsync(p => p.Id == id);
+        if (result is null)
+        {
+            _logger.LogWarning("Complaint Id not found,Id {ComplaintId}", id);
 
-//		if (result is null)
-//		{
-//			_logger.LogWarning("Complaint Id not found,Id {ComplaintId}", id);
+            return Result.NotFound(["Complaint not found"]);
+        }
 
-//			return Result.NotFound(["Complaint not found"]);
-//		}
+        _logger.LogInformation("Fetching Complaint");
 
-//		_logger.LogInformation("Fetching Complaint");
+        return Result.Success(result);
+    }
+    ///<inheritdoc/>
+    public async Task<Result<ComplaintResponseDto>> UpdateComplaintAsync(int id, ComplaintRequestDto ComplaintRequestDto)
+    {
+        var result = await _dbContext.Complaints.FindAsync(id);
+        if (ComplaintRequestDto.BranchId > 0)
+        {
+            var Branch = await _dbContext.Branches.FirstOrDefaultAsync(o => o.Id == ComplaintRequestDto.BranchId);
+            result.Branch = Branch;
+           Branch.Complaints.Add(result);
+        }
+        if (ComplaintRequestDto.ServiceProviderId ==null)
+        {
+            var serviceProvider= await _dbContext.Services.FirstOrDefaultAsync(o => o.Id == ComplaintRequestDto.ServiceProviderId);
+            result.ServiceProvider= serviceProvider;
+            serviceProvider.Complaints.Add(result);
+        }
 
-//		return Result.Success(result);
-//	}
+        if (result is null)
+        {
+            _logger.LogWarning("Complaint Id not found,Id {ComplaintId}", id);
+            return Result.NotFound(["Complaint not found"]);
+        }
 
-//	///<inheritdoc/>
-//	public async Task<Result<ComplaintResponseDto>> UpdateComplaintAsync(int id, ComplaintRequestDto ComplaintRequestDto)
-//	{
-//		var result = await _dbContext.Complaints.FindAsync(id);
+        result.ModifiedBy = _userContext.Email;
 
-//		if (result is null)
-//		{
-//			_logger.LogWarning("Complaint Id not found,Id {ComplaintId}", id);
-//			return Result.NotFound(["Complaint not found"]);
-//		}
+        _mapper.Map(result, ComplaintRequestDto);
 
-//		result.ModifiedBy = _userContext.Email;
+        await _dbContext.SaveChangesAsync();
 
-//		_mapper.Map(ComplaintRequestDto, result);
+        var ComplaintResponse = _mapper.Map<ComplaintResponseDto>(result);
+        if (ComplaintResponse is null)
+        {
+            _logger.LogError("Failed to map ComplaintRequestDto to ComplaintResponseDto. ComplaintRequestDto: {@ComplaintRequestDto}", ComplaintResponse);
 
-//		await _dbContext.SaveChangesAsync();
+            return Result.Invalid(new List<ValidationError>
+        {
+                new ValidationError
+                {
+                    ErrorMessage = "Validation Errror"
+                }
+        });
+        }
 
-//		var ComplaintResponse = _mapper.Map<ComplaintResponseDto>(result);
-//		if (ComplaintResponse is null)
-//		{
-//			_logger.LogError("Failed to map ComplaintRequestDto to ComplaintResponseDto. ComplaintRequestDto: {@ComplaintRequestDto}", ComplaintResponse);
+        _logger.LogInformation("Updated Complaint , Id {Id}", id);
 
-//			return Result.Invalid(new List<ValidationError>
-//		{
-//				new ValidationError
-//				{
-//					ErrorMessage = "Validation Errror"
-//				}
-//		});
-//		}
+        return Result.Success(ComplaintResponse);
+    }
+    ///<inheritdoc/>
+    public async Task<Result> DeleteComplaintAsync(int id)
+    {
+        var Complaint = await _dbContext.Complaints.FindAsync(id);
 
-//		_logger.LogInformation("Updated Complaint , Id {Id}", id);
+        if (Complaint is null)
+        {
+            _logger.LogWarning("Complaint Invaild Id ,Id {ComplaintId}", id);
+            return Result.NotFound(["Complaint Invaild Id"]);
+        }
 
-//		return Result.Success(ComplaintResponse);
-//	}
+        _dbContext.Complaints.Remove(Complaint);
+        await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("Complaint removed successfully in the database");
+        return Result.SuccessWithMessage("Complaint removed successfully");
+    }
+    ///<inheritdoc/>
 
-//	///<inheritdoc/>
-//	public async Task<Result> DeleteComplaintAsync(int id)
-//	{
-//		var Complaint = await _dbContext.Complaints.FindAsync(id);
+    public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetComplaintsForSpecificCustomerAsync(string customerId, int itemCount, int index)
+    {
+        var Complaints = await _dbContext.Complaints
+              .Where(s => s.Contact.Id == customerId)
+              .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
+              .GetAllWithPagination(itemCount, index);
 
-//		if (Complaint is null)
-//		{
-//			_logger.LogWarning("Complaint Invaild Id ,Id {ComplaintId}", id);
-//			return Result.NotFound(["Complaint Invaild Id"]);
-//		}
+        _logger.LogInformation("Fetching Complaints. Total count: {Complaints}.", Complaints.Data.Count);
+        return Result.Success(Complaints);
+    }
 
-//		_dbContext.Complaints.Remove(Complaint);
-//		await _dbContext.SaveChangesAsync();
-//		_logger.LogInformation("Complaint removed successfully in the database");
-//		return Result.SuccessWithMessage("Complaint removed successfully");
-//	}
 
-//	///<inheritdoc/>
-//	public async Task<Result<List<ComplaintResponseDto>>> SearchComplaintByTextAsync(Status text)
-//	{
-//		var Complaints = await _dbContext.Complaints
-//			.ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
-//			.Where(n => n.ComplaintStatus.Equals(text))
-//			.ToListAsync();
-//		_logger.LogInformation("Fetching search Complaint by name . Total count: {Complaint}.", Complaints.Count);
-//		return Result.Success(Complaints);
-//	}
+    public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetComplaintsForSpecificBranchAsync(int BranchId, int itemCount, int index)
+    {
+        var Complaints = await _dbContext.Complaints
+         .Where(s => s.Branch.Id == BranchId)
+         .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
+         .GetAllWithPagination(itemCount, index);
 
-//	///<inheritdoc/>
-//	public async Task<Result<List<ComplaintResponseDto>>> GetComplaintsByCustomerAsync(string customerId)
-//	{
-//		var complaints = await _dbContext.Complaints
-//			  .Where(s => s.Id == customerId)
-//			  .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
-//			  .ToListAsync();
+        _logger.LogInformation("Fetching Complaints. Total count: {Complaints}.", Complaints.Data.Count);
+        return Result.Success(Complaints);
+    }
 
-//		_logger.LogInformation("Fetching complaints. Total count: {complaints}.", complaints.Count);
 
-//		return Result.Success(complaints);
-//	}
-//}
+    public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetComplaintsForSpecificServiceAsync(string serviceProviderId, int itemCount, int index)
+    {
+        var Complaints = await _dbContext.Complaints
+               .Where(s => s.ServiceProvider.Id == serviceProviderId)
+               .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
+                .GetAllWithPagination(itemCount, index);
 
+        _logger.LogInformation("Fetching Complaints. Total count: {Complaints}.", Complaints.Data.Count);
+        return Result.Success(Complaints);
+    }
+}

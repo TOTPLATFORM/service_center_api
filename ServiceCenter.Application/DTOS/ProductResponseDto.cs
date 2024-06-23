@@ -1,5 +1,4 @@
-﻿using ServiceCenter.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,8 +12,4 @@ public class ProductResponseDto
     public string ProductName { get; set; } = "";
     public string ProductDescription { get; set; } = "";
     public int ProductPrice { get; set; }
-
-    public virtual ICollection<FeedbackResponseDto?> Feedbacks { get; set; } = new HashSet<FeedbackResponseDto>();
-  
-    
 }

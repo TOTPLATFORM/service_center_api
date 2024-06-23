@@ -8,8 +8,7 @@ public static class SalesMapping
 {
     public static void AddSalesMapping(this MappingProfiles map)
     {
-        map.CreateMap<SalesRequestDto, Sales>()
-            .ForMember(dest => dest.PhoneNumber, src => src.MapFrom(src => src.Phone));
+        map.CreateMap<SalesRequestDto, Sales>();
 
         map.CreateMap<Sales, SalesResponseDto>()
             .ForMember(dest => dest.SalesFirstName, src => src.MapFrom(src => src.FirstName))

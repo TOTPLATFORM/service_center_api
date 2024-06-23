@@ -111,10 +111,10 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		return Result.SuccessWithMessage("Service added successfully");
 	}
 	///<inheritdoc/>
-	public async Task<Result<PaginationResult<ServiceResponseDto>>> GetAllServiceAsync(int itemCount , int index)
+	public async Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetAllServiceAsync(int itemCount , int index)
 	{
 		var result = await _dbContext.Services
-			 .ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
+			 .ProjectTo<ServiceGetByIdResponseDto>(_mapper.ConfigurationProvider)
 			 .GetAllWithPagination(itemCount,index);
 
 		_logger.LogInformation("Fetching all  Service. Total count: { Service}.", result.Data.Count);
@@ -122,10 +122,10 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		return Result.Success(result);
 	}
 	///<inheritdoc/>
-	public async Task<Result<ServiceResponseDto>> GetServiceByIdAsync(int id)
+	public async Task<Result<ServiceGetByIdResponseDto>> GetServiceByIdAsync(int id)
 	{
 		var result = await _dbContext.Services
-			.ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
+			.ProjectTo<ServiceGetByIdResponseDto>(_mapper.ConfigurationProvider)
 			.FirstOrDefaultAsync(p => p.Id == id);
 
 		if (result is null)
@@ -140,7 +140,7 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		return Result.Success(result);
 	}
 	///<inheritdoc/>
-	public async Task<Result<ServiceResponseDto>> UpdateServiceAsync(int id, ServiceRequestDto ServiceRequestDto)
+	public async Task<Result<ServiceGetByIdResponseDto>> UpdateServiceAsync(int id, ServiceRequestDto ServiceRequestDto)
 	{
 		var result = await _dbContext.Services.FindAsync(id);
 
@@ -156,7 +156,7 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
 		await _dbContext.SaveChangesAsync();
 
-		var ServiceResponse = _mapper.Map<ServiceResponseDto>(result);
+		var ServiceResponse = _mapper.Map<ServiceGetByIdResponseDto>(result);
 		if (ServiceResponse is null)
 		{
 			_logger.LogError("Failed to map ServiceRequestDto to ServiceResponseDto. ServiceRequestDto: {@ServiceRequestDto}", ServiceResponse);
@@ -191,10 +191,10 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		return Result.SuccessWithMessage("Service removed successfully");
 	}
 	///<inheritdoc/>
-	public async Task<Result<List<ServiceResponseDto>>> SearchServiceByTextAsync(string text)
+	public async Task<Result<List<ServiceGetByIdResponseDto>>> SearchServiceByTextAsync(string text)
 	{
 		var names = await _dbContext.Services
-		.ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
+		.ProjectTo<ServiceGetByIdResponseDto>(_mapper.ConfigurationProvider)
 		.Where(n => n.ServiceName.Contains(text))
 		.ToListAsync();
 		_logger.LogInformation("Fetching search Service by name . Total count: {Prouct}.", names.Count);
@@ -215,7 +215,7 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		return Result.Success(packages);
 	}
 
-	public async Task<Result<List<ServiceResponseDto>>> AssignServiceToPackagesAsync(int serviceId, int servicePackageId)
+	public async Task<Result<List<ServiceGetByIdResponseDto>>> AssignServiceToPackagesAsync(int serviceId, int servicePackageId)
 	{
 		var service = await _dbContext.Services.FindAsync(serviceId);
 
@@ -244,10 +244,10 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
 	}
 
-	public async Task<Result<List<ServiceResponseDto>>> GetServicesByPackageAsync(int servicePackageId)
+	public async Task<Result<List<ServiceGetByIdResponseDto>>> GetServicesByPackageAsync(int servicePackageId)
 	{
         var pacakge = await _dbContext.Services.Where(s => s.ServicePackages.Select(p => p.Id).First() == servicePackageId)
-            .ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<ServiceGetByIdResponseDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
 
         if (pacakge is null)
@@ -263,10 +263,10 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
 	}
     ///<inheritdoc/>
-    public async Task<Result<PaginationResult<ServiceResponseDto>>> GetServicesByCategoryAsync(int categoryId, int itemCount, int index)
+    public async Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetServicesByCategoryAsync(int categoryId, int itemCount, int index)
     {
         var category = await _dbContext.Services.Where(s => s.ServiceCategoryId == categoryId)
-			.ProjectTo<ServiceResponseDto>(_mapper.ConfigurationProvider)
+			.ProjectTo<ServiceGetByIdResponseDto>(_mapper.ConfigurationProvider)
 			.GetAllWithPagination(itemCount,index);
 
         if (category.Data.Count ==0)

@@ -8,9 +8,15 @@ public static class ComplaintMapping
 {
     public static void AddCompliantMapping(this MappingProfiles map)
     {
-        map.CreateMap<ComplaintRequestDto, Complaint>().ReverseMap();
+  
+        map.CreateMap<ComplaintRequestDto, Complaint>()
+          .ForPath(dest => dest.ServiceProvider.Id, src => src.MapFrom(src => src.ServiceProviderId))
+          .ForPath(dest => dest.Branch.Id, src => src.MapFrom(src => src.BranchId))
+          .ForPath(dest => dest.ServiceProvider.Id, src => src.MapFrom(src => src.ServiceProviderId))
+           .ReverseMap();
 
         map.CreateMap<Complaint,ComplaintResponseDto>()
+            .ForMember(dest => dest.ContactName, src => src.MapFrom(src => src.Contact.FirstName))
             .ReverseMap();
 
     

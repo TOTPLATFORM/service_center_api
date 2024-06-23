@@ -24,20 +24,20 @@ public interface IProductService : IApplicationService, IScopedService
     /// function to get all product  
     /// </summary>
     /// <returns>list all Product  response dto </returns>
-    public Task<Result<PaginationResult<ProductResponseDto>>> GetAllProductAsync(int itemCount, int index);
+    public Task<Result<PaginationResult<ProductGetByIdResponseDto>>> GetAllProductAsync(int itemCount, int index);
     /// <summary>
     /// function to get  product  by id that take   Product id
     /// </summary>
     /// <param name="id"> product  id</param>
     /// <returns> product  response dto</returns>
-    public Task<Result<ProductResponseDto>> GetProductByIdAsync(int id);
+    public Task<Result<ProductGetByIdResponseDto>> GetProductByIdAsync(int id);
     /// <summary>
     /// function to update Product  that take ProductRequestDto   
     /// </summary>
     /// <param name="id">Product id</param>
     /// <param name="productRequestDto">Product dto</param>
     /// <returns>Updated Product </returns>
-    public Task<Result<ProductResponseDto>> UpdateProductAsync(int id, ProductRequestDto productRequestDto);
+    public Task<Result<ProductGetByIdResponseDto>> UpdateProductAsync(int id, ProductRequestDto productRequestDto);
     /// <summary>
     /// function to delete product  that take product  id   
     /// </summary>
@@ -49,13 +49,13 @@ public interface IProductService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">Product name</param>
     /// <returns>Product response dto </returns>
-    public Task<Result<PaginationResult<ProductResponseDto>>> SearchProductByTextAsync(string text, int itemCount, int index);
+    public Task<Result<PaginationResult<ProductGetByIdResponseDto>>> SearchProductByTextAsync(string text, int itemCount, int index);
     /// <summary>
     /// function to search by Product   that take  Product category name
     /// </summary>
     /// <param name="text">Product  name</param>
     /// <returns>Product response dto </returns>
-    public Task<PaginationResult<ProductResponseDto>> GetProductsForProductCategoryAsync(int categoryId, int itemCount, int index);
+    public Task<PaginationResult<ProductGetByIdResponseDto>> GetProductsForProductCategoryAsync(int categoryId, int itemCount, int index);
     ///// <summary>
     ///// function to search by Product   that take  Product name
     ///// </summary>

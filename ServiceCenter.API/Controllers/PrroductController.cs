@@ -37,8 +37,8 @@ public class ProductController(IProductService productService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    [ProducesResponseType(typeof(Result<PaginationResult<ProductResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<PaginationResult<ProductResponseDto>>> GetAllProduct(int itemCount, int index)
+    [ProducesResponseType(typeof(Result<PaginationResult<ProductGetByIdResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<PaginationResult<ProductGetByIdResponseDto>>> GetAllProduct(int itemCount, int index)
     {
         return await _productService.GetAllProductAsync(itemCount, index);
     }
@@ -52,9 +52,9 @@ public class ProductController(IProductService productService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(Result<ProductResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<ProductGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<ProductResponseDto>> GetProductById(int id)
+    public async Task<Result<ProductGetByIdResponseDto>> GetProductById(int id)
     {
         return await _productService.GetProductByIdAsync(id);
     }
@@ -68,9 +68,9 @@ public class ProductController(IProductService productService) : BaseController
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin ,Manager,WarehouseManager")]
-    [ProducesResponseType(typeof(Result<ProductResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<ProductGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<ProductResponseDto>> UpdateProduct(int id, ProductRequestDto ProductRequestDto)
+    public async Task<Result<ProductGetByIdResponseDto>> UpdateProduct(int id, ProductRequestDto ProductRequestDto)
     {
         return await _productService.UpdateProductAsync(id, ProductRequestDto);
     }
@@ -99,17 +99,17 @@ public class ProductController(IProductService productService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpGet("search/{text}")]
-    [ProducesResponseType(typeof(Result<PaginationResult<ProductResponseDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<PaginationResult<ProductGetByIdResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<PaginationResult<ProductResponseDto>>> SearchProductByText(string text, int itemCount, int index)
+    public async Task<Result<PaginationResult<ProductGetByIdResponseDto>>> SearchProductByText(string text, int itemCount, int index)
     {
         return await _productService.SearchProductByTextAsync(text, itemCount, index);
     }
     [HttpGet("searchByProductCategory/{categoryId}")]
     [Authorize(Roles = "Admin,Manager")]
-    [ProducesResponseType(typeof(Result<PaginationResult<ProductResponseDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<PaginationResult<ProductGetByIdResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<PaginationResult<ProductResponseDto>>> SearchProductByProductCategory(int categoryId, int itemCount, int index)
+    public async Task<Result<PaginationResult<ProductGetByIdResponseDto>>> SearchProductByProductCategory(int categoryId, int itemCount, int index)
     {
         return await _productService.GetProductsForProductCategoryAsync(categoryId,  itemCount,  index);
     }

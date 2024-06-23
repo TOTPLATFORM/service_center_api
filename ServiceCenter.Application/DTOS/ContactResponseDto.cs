@@ -18,6 +18,8 @@ public class ContactResponseDto
 
     public string ContactEmail { get; set; } = "";
 
+    public string ContactPhoneNumber { get; set; } = "";
+
     public string Gender { get; set; } = "";
 
     public string City { get; set; } = "";

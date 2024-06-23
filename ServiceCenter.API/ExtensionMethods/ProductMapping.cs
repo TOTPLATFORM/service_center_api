@@ -11,9 +11,9 @@ public static class ProductMapping
         map.CreateMap<ProductRequestDto, Product>()
             .ForPath(dest => dest.ProductCategory.Id, src => src.MapFrom(src => src.CategoryId))
            .ReverseMap();
-        map.CreateMap<Product, ProductResponseDto>()
-            .ReverseMap();
         map.CreateMap<Product, ProductGetByIdResponseDto>()
+            .ReverseMap();
+        map.CreateMap<Product, ProductResponseDto>()
           .ReverseMap();
     }
 }

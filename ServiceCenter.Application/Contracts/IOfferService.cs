@@ -58,6 +58,6 @@ public interface IOfferService : IApplicationService, IScopedService
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of products response DTOs.</returns>
 
-    public Task<Result<PaginationResult<ProductResponseDto>>> GetProductsByOffer(int offerId,int itemCount,int index);
+    public Task<Result<PaginationResult<ProductGetByIdResponseDto>>> GetProductsByOffer(int offerId,int itemCount,int index);
 
 }

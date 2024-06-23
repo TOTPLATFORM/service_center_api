@@ -61,6 +61,6 @@ public interface IComplaintService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="customerId">the unique identifier of the customer to retrieve its complaints.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all complaints by customer id operation.</returns>
-	public Task<Result<List<ComplaintResponseDto>>> GetComplaintsByCustomerAsync(string customerId);
+	//public Task<Result<List<ComplaintResponseDto>>> GetComplaintsByCustomerAsync(string customerId);
 
 }

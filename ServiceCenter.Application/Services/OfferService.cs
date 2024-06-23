@@ -175,11 +175,11 @@ public class OfferService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
     }
 
     ///<inheritdoc/>
-    public async Task<Result<PaginationResult<ProductResponseDto>>> GetProductsByOffer(int productId,int itemCount,int index)
+    public async Task<Result<PaginationResult<ProductGetByIdResponseDto>>> GetProductsByOffer(int productId,int itemCount,int index)
     {
         var products = await _dbContext.Offers
             .Where(O => O.Product.Id == productId)
-            .ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider).GetAllWithPagination(itemCount,index);
+            .ProjectTo<ProductGetByIdResponseDto>(_mapper.ConfigurationProvider).GetAllWithPagination(itemCount,index);
 
         _logger.LogInformation("Fetching all  products. Total count: { product}.", products.Data.Count);
         return Result.Success(products);
