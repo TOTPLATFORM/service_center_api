@@ -10,14 +10,11 @@ namespace ServiceCenter.Application.DTOS;
 
 public class ComplaintRequestDto
 {
-    [Required]
-    public DateOnly ComplaintDate { get; set; }
-    [Required]
+   [Required]
     public string ComplaintDescription { get; set; } = "";
-
     [Required]
     public string ContactId { get; set; } = "";
     public Status ComplaintStatus { get; set; }=Status.Pending;
-    public int ServiceProviderId { get; set; }
+    public string ServiceProviderId { get; set; } = "";
     public int BranchId { get; set; }
 }

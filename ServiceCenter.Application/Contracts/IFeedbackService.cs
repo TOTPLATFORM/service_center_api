@@ -19,7 +19,7 @@ public interface IFeedbackService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="feedbackRequestDto">the feedback data transfer object containing the details necessary for creation.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the feedback addition.</returns>
-    public Task<Result> AddFeedbackAsync(FeedbackRequestDto FeedbackRequestDto);
+    public Task<Result> AddFeedbackAsync(FeedbackRequestDto feedbackRequestDto);
     /// <summary>
     /// asynchronously retrieves all feedbacks in the system.
     /// </summary>
@@ -37,7 +37,7 @@ public interface IFeedbackService : IApplicationService, IScopedService
     /// <param name="id">the unique identifier of the feedback to update.</param>
     /// <param name="feedbackRequestDto">the feedback data transfer object containing the updated details.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
-    public Task<Result<FeedbackResponseDto>> UpdateFeedbackAsync(int id, FeedbackRequestDto FeedbackRequestDto);
+    public Task<Result<FeedbackResponseDto>> UpdateFeedbackDescAsync(int id, String feedbackDesc);
     /// <summary>
     /// asynchronously deletes a feedback from the system by their unique identifier.
     /// </summary>
@@ -50,6 +50,16 @@ public interface IFeedbackService : IApplicationService, IScopedService
     /// <param name="customerId">the unique identifier of the customer to retrieve its feedbacks.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all feedbacks by customer id operation.</returns>
     public Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificCustomerAsync(string customerId, int itemCount, int index);
-    public Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificProductAsync(int ProductId, int itemCount, int index);
-    public Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificServiceAsync(int ProductId, int itemCount, int index);
+    /// <summary>
+    /// asynchronously retrieves feedbacks by product unique identifier.
+    /// </summary>
+    /// <param name="productId">the unique identifier of the product to retrieve its feedbacks.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all feedbacks by product id operation.</returns>
+    public Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificProductAsync(int productId, int itemCount, int index);
+    /// <summary>
+    /// asynchronously retrieves feedbacks by service unique identifier.
+    /// </summary>
+    /// <param name="serviceId">the unique identifier of the service to retrieve its feedbacks.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all feedbacks by service id operation.</returns>
+    public Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificServiceAsync(int serviceId, int itemCount, int index);
 }

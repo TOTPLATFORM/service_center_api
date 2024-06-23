@@ -3,12 +3,14 @@ using AutoMapper.QueryableExtensions;
 using Castle.Core.Resource;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Mysqlx.Crud;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.ExtensionForServices;
 using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
+using ServiceCenter.Domain.Enums;
 using ServiceCenter.Infrastructure.BaseContext;
 using System;
 using System.Collections.Generic;
@@ -36,7 +38,7 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
             var Branch = await _dbContext.Branches.FirstOrDefaultAsync(o => o.Id == ComplaintRequestDto.BranchId);
             result.Branch = Branch;
         }
-        if (ComplaintRequestDto.ServiceProviderId > 1)
+        if (ComplaintRequestDto.ServiceProviderId ==null)
         {
             var serviceProvider= await _dbContext.ServiceProviders.FirstOrDefaultAsync(o => o.Id == ComplaintRequestDto.ServiceProviderId);
             result.ServiceProvider= serviceProvider;
@@ -64,7 +66,7 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
         return Result.SuccessWithMessage("Complaint added successfully");
     }
     ///<inheritdoc/>
-    public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetAllComplaintAsync(int itemCount, int index)
+    public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetAllComplaintsAsync(int itemCount, int index)
     {
         var result = await _dbContext.Complaints
              .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
@@ -93,34 +95,22 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
         return Result.Success(result);
     }
     ///<inheritdoc/>
-    public async Task<Result<ComplaintResponseDto>> UpdateComplaintAsync(int id, ComplaintRequestDto ComplaintRequestDto)
+    public async Task<Result<ComplaintResponseDto>> UpdateComplaintStatusAsync(int id, Status complaintStatus)
     {
         var result = await _dbContext.Complaints.FindAsync(id);
-        if (ComplaintRequestDto.BranchId > 0)
-        {
-            var Branch = await _dbContext.Branches.FirstOrDefaultAsync(o => o.Id == ComplaintRequestDto.BranchId);
-            result.Branch = Branch;
-           Branch.Complaints.Add(result);
-        }
-        if (ComplaintRequestDto.ServiceProviderId ==null)
-        {
-            var serviceProvider= await _dbContext.Services.FirstOrDefaultAsync(o => o.Id == ComplaintRequestDto.ServiceProviderId);
-            result.ServiceProvider= serviceProvider;
-            serviceProvider.Complaints.Add(result);
-        }
-
         if (result is null)
         {
             _logger.LogWarning("Complaint Id not found,Id {ComplaintId}", id);
             return Result.NotFound(["Complaint not found"]);
         }
+        result.ComplaintStatus = complaintStatus;
 
         result.ModifiedBy = _userContext.Email;
 
-        _mapper.Map(result, ComplaintRequestDto);
+        _mapper.Map(result, complaintStatus);
 
         await _dbContext.SaveChangesAsync();
-
+   
         var ComplaintResponse = _mapper.Map<ComplaintResponseDto>(result);
         if (ComplaintResponse is null)
         {
@@ -139,6 +129,7 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 
         return Result.Success(ComplaintResponse);
     }
+    
     ///<inheritdoc/>
     public async Task<Result> DeleteComplaintAsync(int id)
     {
@@ -156,7 +147,6 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
         return Result.SuccessWithMessage("Complaint removed successfully");
     }
     ///<inheritdoc/>
-
     public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetComplaintsForSpecificCustomerAsync(string customerId, int itemCount, int index)
     {
         var Complaints = await _dbContext.Complaints
@@ -167,12 +157,11 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
         _logger.LogInformation("Fetching Complaints. Total count: {Complaints}.", Complaints.Data.Count);
         return Result.Success(Complaints);
     }
-
-
-    public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetComplaintsForSpecificBranchAsync(int BranchId, int itemCount, int index)
+    ///<inheritdoc/>
+    public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetComplaintsForSpecificBranchAsync(int branchId, int itemCount, int index)
     {
         var Complaints = await _dbContext.Complaints
-         .Where(s => s.Branch.Id == BranchId)
+         .Where(s => s.Branch.Id == branchId)
          .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
          .GetAllWithPagination(itemCount, index);
 
@@ -180,13 +169,24 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
         return Result.Success(Complaints);
     }
 
-
-    public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetComplaintsForSpecificServiceAsync(string serviceProviderId, int itemCount, int index)
+    ///<inheritdoc/>
+    public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetComplaintsForSpecificServiceProviderAsync(string serviceProviderId, int itemCount, int index)
     {
         var Complaints = await _dbContext.Complaints
                .Where(s => s.ServiceProvider.Id == serviceProviderId)
                .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
                 .GetAllWithPagination(itemCount, index);
+
+        _logger.LogInformation("Fetching Complaints. Total count: {Complaints}.", Complaints.Data.Count);
+        return Result.Success(Complaints);
+    }
+    ///<inheritdoc/>
+    public async Task<Result<PaginationResult<ComplaintResponseDto>>> SearchComplaintByStatusAsync(Status text, int itemCount, int index)
+    {
+        var Complaints = await _dbContext.Complaints
+         .Where(s => s.ComplaintStatus ==text )
+         .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
+         .GetAllWithPagination(itemCount, index);
 
         _logger.LogInformation("Fetching Complaints. Total count: {Complaints}.", Complaints.Data.Count);
         return Result.Success(Complaints);

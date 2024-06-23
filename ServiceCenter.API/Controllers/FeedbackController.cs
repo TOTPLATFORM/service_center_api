@@ -71,9 +71,9 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     [Authorize(Roles = "Admin,Customer")]
     [ProducesResponseType(typeof(Result<FeedbackResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<FeedbackResponseDto>> UpdateFeedback(int id, FeedbackRequestDto FeedbackRequestDto)
+    public async Task<Result<FeedbackResponseDto>> UpdateFeedbackDesc(int id, string feedbackDesc)
     {
-        return await _FeedbackService.UpdateFeedbackAsync(id, FeedbackRequestDto);
+        return await _FeedbackService.UpdateFeedbackDescAsync(id, feedbackDesc);
     }
     /// <summary>
     /// delete  Feedback  by id from the system.
@@ -97,7 +97,7 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpGet("searchByFeedbacks/{customerId}")]
+    [HttpGet("searchByCustomer/{customerId}")]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<FeedbackResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -111,7 +111,7 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpGet("searchByFeedbacks/{productId}")]
+    [HttpGet("searchByProduct/{productId}")]
     [Authorize(Roles = "Admin,Customer,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<FeedbackResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -125,7 +125,7 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpGet("searchByFeedbacks/{serviceId}")]
+    [HttpGet("searchByService/{serviceId}")]
     [Authorize(Roles = "Admin,Customer,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<FeedbackResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]

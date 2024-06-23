@@ -10,7 +10,7 @@ namespace ServiceCenter.Domain.Entities;
 public class Rating : AuditableEntity
 {
     public int RatingValue { get; set; }
-    public virtual ICollection<Contact> Contact { get; set; }=new HashSet<Contact>();
-    public virtual ICollection<Service?> Services { get; set; } = new HashSet<Service?>();
-    public virtual ICollection<Product?> Products { get; set; } = new HashSet<Product?>();
+   public virtual Contact Contact { get; set; } = default;
+    public virtual Product? Product { get; set; } = default;
+    public virtual Service? Service { get; set; } = default;
 }

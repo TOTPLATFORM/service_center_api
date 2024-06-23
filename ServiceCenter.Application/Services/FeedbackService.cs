@@ -31,17 +31,52 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
         var result = _mapper.Map<Feedback>(feedbackRequestDto);
         result.Product = null;
         result.Service = null;
-        if (feedbackRequestDto.ProductId > 1)
-        {
-            var product = await _dbContext.Products.FirstOrDefaultAsync(o => o.Id == feedbackRequestDto.ProductId);
-            result.Product = product;
-        }
-        if (feedbackRequestDto.ServiceId > 1)
-        {
-            var service = await _dbContext.Services.FirstOrDefaultAsync(o => o.Id == feedbackRequestDto.ServiceId);
-            result.Service = service;
-        }
         var contact = await _dbContext.Contacts.FirstOrDefaultAsync(m => m.Id == feedbackRequestDto.ContactId);
+        if (contact == null)
+        {
+            _logger.LogError("No contact found in the database.");
+            return Result.Invalid(new List<ValidationError>
+            {
+                new ValidationError
+                {
+                     ErrorMessage = "No contact found in the database."
+                }
+
+            });
+        }
+
+
+        var product = await _dbContext.Products.FirstOrDefaultAsync(o => o.Id == feedbackRequestDto.ProductId);
+
+        var service = await _dbContext.Services.FirstOrDefaultAsync(o => o.Id == feedbackRequestDto.ServiceId);
+
+        if (product == null && service == null)
+            {
+                _logger.LogError("Product with Id {ProductId} not found.", feedbackRequestDto.ProductId);
+
+                return Result.Invalid(new List<ValidationError>
+            {
+                 new ValidationError { ErrorMessage = "Product not found" }
+            });
+            }
+            result.Product = product;
+            
+
+        
+    
+                     
+           // if (service == null)
+            //{
+            //    _logger.LogError("Service  with Id {ServiceId} not found.", feedbackRequestDto.ServiceId);
+
+            //    return Result.Invalid(new List<ValidationError>
+            //{
+            //     new ValidationError { ErrorMessage = "Service  not found" }
+            //});
+            //}
+            result.Service = service;
+
+        
       
         if (result is null)
         {
@@ -93,32 +128,21 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
         return Result.Success(result);
     }
     ///<inheritdoc/>
-    public async Task<Result<FeedbackResponseDto>> UpdateFeedbackAsync(int id, FeedbackRequestDto feedbackRequestDto)
+    public async Task<Result<FeedbackResponseDto>> UpdateFeedbackDescAsync(int id,  String feedbackDesc)
     {
         var result = await _dbContext.Feedbacks.FindAsync(id);
-        if (feedbackRequestDto.ProductId > 0)
-        {
-            var product = await _dbContext.Products.FirstOrDefaultAsync(o => o.Id == feedbackRequestDto.ProductId);
-            result.Product = product;
-        }
-        if (feedbackRequestDto.ServiceId > 0)
-        {
-            var service = await _dbContext.Services.FirstOrDefaultAsync(o => o.Id == feedbackRequestDto.ServiceId);
-            result.Service = service;
-        }
-
+       
         if (result is null)
         {
             _logger.LogWarning("Feedback Id not found,Id {FeedbackId}", id);
             return Result.NotFound(["Feedback not found"]);
         }
-
+        result.FeedbackDescription = feedbackDesc;
         result.ModifiedBy = _userContext.Email;
-
-        _mapper.Map(result,feedbackRequestDto);
-
+        _mapper.Map(result, feedbackDesc);
         await _dbContext.SaveChangesAsync();
-
+  
+           
         var FeedbackResponse = _mapper.Map<FeedbackResponseDto>(result);
         if (FeedbackResponse is null)
         {
