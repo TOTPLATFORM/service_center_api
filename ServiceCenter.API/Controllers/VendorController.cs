@@ -95,20 +95,5 @@ public class VendorController(IVendorService vendorService) : BaseController
     {
         return await _vendorService.SearchVendorByTextAsync(text,  itemcount,  index);
     }
-    /// <summary>
-    /// delete  vendor by id from the system.
-    /// </summary>
-    ///<param name="id">id</param>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin,Manager")]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result> DeleteVendorAsycn(string id)
-    {
-        return await _vendorService.DeleteVendorAsync(id);
+ 
     }
-}

@@ -101,11 +101,11 @@ public class ProductCategoryController(IProductCategoryService productCategorySe
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpGet("search/{text}")]
-    [ProducesResponseType(typeof(Result<ProductCategoryResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<PaginationResult<ProductCategoryResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<ProductCategoryResponseDto>>> SearchProductCategoryByText(string text)
+    public async Task<Result<PaginationResult<ProductCategoryResponseDto>>> SearchProductCategoryByText(string text,int itemCount,int index)
     {
-        return await _productCategoryService.SearchProductCategoryByTextAsync(text);
+        return await _productCategoryService.SearchProductCategoryByTextAsync(text,itemCount,index );
     }
     [HttpGet("assign")]
     [Authorize(Roles = "Admin,Manager,WarehouseManager")]

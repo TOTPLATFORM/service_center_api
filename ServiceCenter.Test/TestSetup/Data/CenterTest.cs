@@ -19,13 +19,6 @@ public static class CenterTest
             OpeningHours = 10,
             Specialty = "center1",
 
-        },
-        new Center
-        {
-
-            Id = 2,
-            OpeningHours = 12,
-            Specialty = "center2",
         }
         );
     }

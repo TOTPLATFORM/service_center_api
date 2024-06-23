@@ -34,7 +34,7 @@ public interface IContactService : IApplicationService, IScopedService
     /// <param name="id">the unique identifier of the contact to update its status.</param>
     /// <param name="status">The updated status</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
-	public Task<Result<ContactResponseDto>> UpdateContactStatusAsync(int id, ContactStatus status);
+	public Task<Result<ContactResponseDto>> UpdateContactStatusAsync(string id, ContactStatus status);
 
 	/// <summary>
 	/// asynchronously register contact as customer to the database.

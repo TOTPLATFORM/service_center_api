@@ -16,13 +16,13 @@ public static class ComplaintTest
         context.Complaints.AddRange(
         new Complaint
         {
-            Id = 1,
+            Id = 9,
             ComplaintDescription = "Desc1",
             ComplaintStatus = Status.Approved
         },
         new Complaint
         {
-            Id = 2,
+            Id = 6,
             ComplaintDescription = "Desc2",
             ComplaintStatus = Status.Cancelled
         }

@@ -49,6 +49,6 @@ public interface IProductCategoryService :IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">ProductCategory name</param>
     /// <returns>ProductCategory response dto </returns>
-    public Task<Result<List<ProductCategoryResponseDto>>> SearchProductCategoryByTextAsync(string text);
+    public Task<Result<PaginationResult<ProductCategoryResponseDto>>> SearchProductCategoryByTextAsync(string text,int itemCount,int index);
     public Task<Result<List<ProductCategoryResponseDto>>> AssignProductCategoryToProductBrandAsync(int productCategoryId, int productBrandId);
 }

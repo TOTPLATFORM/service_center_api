@@ -50,10 +50,5 @@ public interface IVendorService : IApplicationService, IScopedService
     /// <returns>all vendores that contain this text </returns>
     public Task<Result<PaginationResult<VendorResponseDto>>> SearchVendorByTextAsync(string text, int itemcount, int index);
 
-    /// <summary>
-    /// function to delete Vendor that take VendorDto   
-    /// </summary>
-    /// <param name="id">departmnet id</param>
-    /// <returns>Vendor removed successfully </returns>
-    public Task<Result> DeleteVendorAsync(string id);
+    
 }

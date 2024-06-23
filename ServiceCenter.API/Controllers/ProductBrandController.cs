@@ -74,11 +74,11 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
     /// <param name="text">ProductBrand name</param>
     /// <returns>ProductBrand response dto </returns>
     [HttpGet("search /{text}")]
-    [ProducesResponseType(typeof(Result<ProductBrandResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<PaginationResult<ProductBrandResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<List<ProductBrandResponseDto>>> SearchProductBrandByTextAsync(string text)
+    public async Task<Result<PaginationResult<ProductBrandResponseDto>>> SearchProductBrandByTextAsync(string text,int itemCount,int index)
     {
-        return await _productBrandService.SearchProductBrandByTextAsync(text);
+        return await _productBrandService.SearchProductBrandByTextAsync(text,itemCount,index);
     }
     [HttpGet("assign")]
     [Authorize(Roles = "Admin,Manager,WarehouseManager")]

@@ -17,11 +17,11 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Services;
 
-public class WareHousManagerService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<WareHousManagerService> logger, IUserContextService userContext, IAuthService authService) : IWareHousManagerService
+public class WareHouseManagerService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<WareHouseManagerService> logger, IUserContextService userContext, IAuthService authService) : IWareHouseManagerService
 {
     private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
     private readonly IMapper _mapper = mapper;
-    private readonly ILogger<WareHousManagerService> _logger = logger;
+    private readonly ILogger<WareHouseManagerService> _logger = logger;
     private readonly IUserContextService _userContext = userContext;
 	private readonly IAuthService _authService = authService;
 
@@ -71,23 +71,7 @@ public class WareHousManagerService(ServiceCenterBaseDbContext dbContext, IMappe
 
        
     }
-    ///<inheritdoc/>
-    public async Task<Result> DeleteWareHouseManagerServiceAsync(string id)
-    {
-        var wareHouseManager = await _dbContext.WareHouseManagers.FirstOrDefaultAsync(W => W.Id == id);
-
-        if (wareHouseManager is null)
-        {
-            _logger.LogInformation("wareHouseManager  not found");
-            return Result.Error("wareHouseManager not found in database");
-        }
-
-        _dbContext.WareHouseManagers.Remove(wareHouseManager);
-        await _dbContext.SaveChangesAsync();
-
-        _logger.LogInformation("wareHouseManager remove successfully to the database");
-        return Result.SuccessWithMessage("wareHouseManager remove successfully");
-    }
+  
     ///<inheritdoc/>
     public async Task<Result<PaginationResult<WareHouseManagerResponseDto>>> GetAllWareHouseManagerServicesAsync(int itemcount, int index)
     {

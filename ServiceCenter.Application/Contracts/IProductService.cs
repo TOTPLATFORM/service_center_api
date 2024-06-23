@@ -55,7 +55,8 @@ public interface IProductService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">Product  name</param>
     /// <returns>Product response dto </returns>
-    public Task<PaginationResult<ProductGetByIdResponseDto>> GetProductsForProductCategoryAsync(int categoryId, int itemCount, int index);
+    public Task<Result<PaginationResult<ProductGetByIdResponseDto>>> GetProductsForProductCategoryAsync(int categoryId, int itemCount, int index);
+   
     ///// <summary>
     ///// function to search by Product   that take  Product name
     ///// </summary>

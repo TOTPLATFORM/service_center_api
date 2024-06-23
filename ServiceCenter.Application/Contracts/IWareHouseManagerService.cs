@@ -11,7 +11,7 @@ namespace ServiceCenter.Application.Contracts;
 /// <summary>
 /// provides an interface for warehouse-related services that manages warehouse data across the application. Inherits from IApplicationService and IScopedService.
 /// </summary>
-public interface IWareHousManagerService : IApplicationService , IScopedService
+public interface IWareHouseManagerService : IApplicationService , IScopedService
 {
     /// <summary>
     /// asynchronously adds a new warehouse to the database.
@@ -37,12 +37,7 @@ public interface IWareHousManagerService : IApplicationService , IScopedService
     /// <param name="ratingRequestDto">the warehouse data transfer object containing the updated details.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
     public Task<Result<WareHouseManagerResponseDto>> UpdateWareHouseManagerServiceAsync(string id, WareHouseManagerRequestDto wareHouseManagerRequestDto);
-    /// <summary>
-    /// asynchronously deletes a warehouse from the system by their unique identifier.
-    /// </summary>
-    /// <param name="id">the unique identifier of the warehouse to delete.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
-    public Task<Result> DeleteWareHouseManagerServiceAsync(string id);
+  
 
     /// <summary>
     /// asynchronously searches for warehouse based on the provided text.

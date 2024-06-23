@@ -132,13 +132,13 @@ public class ProductBrandService(ServiceCenterBaseDbContext dbContext, IMapper m
     }
     //<inheritdoc/>
 
-    public async Task<Result<List<ProductBrandResponseDto>>> SearchProductBrandByTextAsync(string text)
+    public async Task<Result<PaginationResult<ProductBrandResponseDto>>> SearchProductBrandByTextAsync(string text,int itemCount,int index)
     {
         var names = await _dbContext.ProductBrands
             .ProjectTo<ProductBrandResponseDto>(_mapper.ConfigurationProvider)
             .Where(n => n.BrandName.Contains(text))
-            .ToListAsync();
-        _logger.LogInformation("Fetching search ProductBrand by name . Total count: {ProductBrand}.", names.Count);
+            .GetAllWithPagination(itemCount,index);
+        _logger.LogInformation("Fetching search ProductBrand by name . Total count: {ProductBrand}.", names.Data.Count);
         return Result.Success(names);
     }
     public async Task<Result<List<ProductBrandResponseDto>>> AssignProductBrandToInventoryAsync(int inventoryId, int productBrandId)

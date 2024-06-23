@@ -15,7 +15,7 @@ public class WareHouseManagerRequestDto : BaseUserRequestDto
     [Required]
     public DateOnly StartDate { get; set; }
     [Required]
-    public DateOnly EndtDate { get; set; }
+    public DateOnly EndDate { get; set; }
     public int? InventoryId { get; set; }
     [Required]
     public int DepartmentId { get; set; }
