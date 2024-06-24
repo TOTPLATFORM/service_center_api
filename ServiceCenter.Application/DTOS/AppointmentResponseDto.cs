@@ -16,6 +16,6 @@ public class AppointmentResponseDto
     public AppointmentStatus Status { get; set; }
     public string Description { get; set; } = "";
     public ContactResponseDto Contact { get; set; }
-    public ServiceProviderResponseDto ServiceProvider { get; set; }
+    public ServiceResponseDto Service { get; set; }
     public int ScheduleId { get; set; }
 }

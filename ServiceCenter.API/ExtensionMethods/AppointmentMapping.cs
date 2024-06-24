@@ -10,7 +10,7 @@ public static class AppointmentMapping
     {
         map.CreateMap<AppointmentRequestDto, Appointment>();
         map.CreateMap<Appointment, AppointmentResponseDto>()
-            .ForMember(dest => dest.ServiceProvider, src => src.MapFrom(src => src.Schedule.ServiceProvider))
+            .ForMember(dest => dest.Service, src => src.MapFrom(src => src.Schedule.Service))
             .ForMember(dest => dest.StartTime, src => src.MapFrom(src => src.Schedule.StartTime))
             .ForMember(dest => dest.EndTime, src => src.MapFrom(src => src.Schedule.EndTime));
     }

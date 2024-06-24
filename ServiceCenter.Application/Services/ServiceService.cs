@@ -76,11 +76,21 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
 		result.Center = center;
 
-		if (serviceRequestDto.ItemIds != null && serviceRequestDto.ItemIds.Any())
+		if (serviceRequestDto.ItemServices != null && serviceRequestDto.ItemServices.Any())
 		{
-			var items = await _dbContext.Items.Where(i => serviceRequestDto.ItemIds.Contains(i.Id)).ToListAsync();
+			var items = await _dbContext.Items.Where(i => serviceRequestDto.ItemServices.Select(i => i.ItemId).Contains(i.Id)).ToListAsync();
+            foreach (var item in serviceRequestDto.ItemServices)
+            {
+				_dbContext.ItemServices.Add(new ItemServices 
+				{
+					
+					Service = result,
+					ItemId = item.ItemId,
+					QuantityItem = item.QuantityItem
+                });
+            }
 
-			if (items.Count != serviceRequestDto.ItemIds.Count)
+            if (items.Count != serviceRequestDto.ItemServices.Count)
 			{
 				  _logger.LogError("Some items were not found in the database.");
 
@@ -89,7 +99,6 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 				          new ValidationError { ErrorMessage = "Some items were not found in the database." }
 			        });
 			}
-
 			result.Item = items; 
 		}
 

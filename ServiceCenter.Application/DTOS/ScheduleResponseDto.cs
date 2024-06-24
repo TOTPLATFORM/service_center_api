@@ -12,6 +12,6 @@ public class ScheduleResponseDto
     public DayOfWeek DayOfWeek { get; set; }
     public TimeOnly StartTime { get; set; }
     public TimeOnly EndTime { get; set; }
-    public string ServiceProviderId { get; set; } = "";
-    public string ServiceProviderName { get; set; } = "";
+    public int ServiceId { get; set; } 
+    public string ServiceName { get; set; } = "";
 }

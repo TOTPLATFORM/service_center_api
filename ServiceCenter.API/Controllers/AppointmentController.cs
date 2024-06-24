@@ -19,7 +19,7 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     /// </summary>
     /// <returns>A result containing a list of appointment response DTOs.</returns>
     [HttpGet]
-    [Authorize(Roles = "Admin, ServiceProvider, Contact")]
+    [Authorize(Roles = "Admin, Service, Contact")]
     [ProducesResponseType(typeof(Result<List<AppointmentResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAllAppointments(int itemCount, int index)
@@ -28,17 +28,17 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     }
 
     /// <summary>
-    /// Retrieves appointments by serviceprovider ID asynchronously.
+    /// Retrieves appointments by service ID asynchronously.
     /// </summary>
-    /// <param name="serviceproviderId">The ID of the serviceprovider whose appointments to retrieve.</param>
+    /// <param name="serviceId">The ID of the service whose appointments to retrieve.</param>
     /// <returns>A result containing a list of appointment response DTOs.</returns>
-    [HttpGet("serviceprovider/{serviceproviderId}")]
-    [Authorize(Roles = "Admin, ServiceProvider, Contact")]
+    [HttpGet("service/{serviceId}")]
+    [Authorize(Roles = "Admin, Service, Contact")]
     [ProducesResponseType(typeof(Result<List<AppointmentResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceProviderId(string serviceproviderId, int itemCount, int index)
+    public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceId(int serviceId, int itemCount, int index)
     {
-        return await _appointmentService.GetAppointmentsByServiceProviderIdAsync(serviceproviderId, itemCount, index);
+        return await _appointmentService.GetAppointmentsByServiceIdAsync(serviceId, itemCount, index);
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     /// <param name="contactId">The ID of the contact whose appointments to retrieve.</param>
     /// <returns>A result containing a list of appointment response DTOs.</returns>
     [HttpGet("contact/{contactId}")]
-    [Authorize(Roles = "Admin, ServiceProvider, Contact")]
+    [Authorize(Roles = "Admin, Service, Contact")]
     [ProducesResponseType(typeof(Result<List<AppointmentResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByContactId(string contactId, int itemCount, int index)
@@ -61,7 +61,7 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     /// <param name="id">The ID of the appointment to retrieve.</param>
     /// <returns>A result containing the appointment response DTO.</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "Admin, ServiceProvider, Contact")]
+    [Authorize(Roles = "Admin, Service, Contact")]
     [ProducesResponseType(typeof(Result<AppointmentResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<AppointmentResponseDto>> GetAppointmentById(int id)
@@ -75,7 +75,7 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     /// <param name="appointmentRequestDto">The DTO representing the appointment to book.</param>
     /// <returns>A result indicating the outcome of the booking operation.</returns>
     [HttpPost]
-    [Authorize(Roles = "Admin, ServiceProvider, Contact")]
+    [Authorize(Roles = "Admin, Service, Contact")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> BookAppointment(AppointmentRequestDto appointmentRequestDto)
@@ -89,7 +89,7 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     /// <param name="id">The ID of the appointment to cancel.</param>
     /// <returns>A result indicating the outcome of the cancellation operation.</returns>
     [HttpPost("cancel/{id}")]
-    [Authorize(Roles = "Admin, ServiceProvider, Contact")]
+    [Authorize(Roles = "Admin, Service, Contact")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> CancelAppointment(int id)
@@ -100,12 +100,12 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     /// <summary>
     /// Changes the status of an appointment.
     /// </summary>
-    /// <remarks>Available to users with roles: Admin, ServiceProvider.</remarks>
+    /// <remarks>Available to users with roles: Admin, Service.</remarks>
     /// <param name="id">The ID of the appointment to change the status of.</param>
     /// <param name="status">The new status of the appointment.</param>
     /// <returns>A Result indicating the outcome of the update operation.</returns>
     [HttpPut("{id}/status/{status}")]
-    [Authorize(Roles = "Admin, ServiceProvider, Contact")]
+    [Authorize(Roles = "Admin, Service, Contact")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> ChangeAppointmentStatus(int id, AppointmentStatus status)
@@ -114,30 +114,30 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     }
 
     /// <summary>
-    /// Retrieves appointments by serviceprovider ID and status.
+    /// Retrieves appointments by service ID and status.
     /// </summary>
-    /// <remarks>Available to users with roles: Admin, ServiceProvider.</remarks>
-    /// <param name="serviceproviderId">The ID of the serviceprovider whose appointments to retrieve.</param>
+    /// <remarks>Available to users with roles: Admin, Service.</remarks>
+    /// <param name="serviceId">The ID of the service whose appointments to retrieve.</param>
     /// <param name="status">The status of the appointments to filter by.</param>
     /// <returns>A Result containing a list of appointment response DTOs.</returns>
-    [HttpGet("serviceprovider/{serviceproviderId}/status/{status}")]
-    [Authorize(Roles = "Admin, ServiceProvider, Contact")]
+    [HttpGet("service/{serviceId}/status/{status}")]
+    [Authorize(Roles = "Admin, Service, Contact")]
     [ProducesResponseType(typeof(Result<List<AppointmentResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceProviderAndStatus(string serviceproviderId, AppointmentStatus status, int itemCount, int index)
+    public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceAndStatus(int serviceId, AppointmentStatus status, int itemCount, int index)
     {
-        return await _appointmentService.GetAppointmentsByServiceProviderIdAndStatusAsync(serviceproviderId, status, itemCount, index);
+        return await _appointmentService.GetAppointmentsByServiceIdAndStatusAsync(serviceId, status, itemCount, index);
     }
 
     /// <summary>
     /// Retrieves appointments by contact ID and status.
     /// </summary>
-    /// <remarks>Available to users with roles: Admin, ServiceProvider, Contact.</remarks>
+    /// <remarks>Available to users with roles: Admin, Service, Contact.</remarks>
     /// <param name="contactId">The ID of the contact whose appointments to retrieve.</param>
     /// <param name="status">The status of the appointments to filter by.</param>
     /// <returns>A Result containing a list of appointment response DTOs.</returns>
     [HttpGet("contact/{contactId}/status/{status}")]
-    [Authorize(Roles = "Admin, ServiceProvider, Contact")]
+    [Authorize(Roles = "Admin, Service, Contact")]
     [ProducesResponseType(typeof(Result<List<AppointmentResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByContactAndStatus(string contactId, AppointmentStatus status, int itemCount, int index)

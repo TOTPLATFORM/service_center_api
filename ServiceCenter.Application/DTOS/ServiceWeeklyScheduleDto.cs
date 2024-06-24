@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class ServiceProviderWeeklyScheduleDto
+public class ServiceWeeklyScheduleDto
 {
-    public string ServiceProviderId { get; set; } = "";
-    public string ServiceProviderName { get; set; } = "";
+    public int ServiceId { get; set; } 
+    public string ServiceName { get; set; } = "";
     public DayOfWeek DayOfWeek { get; set; }
     public DateTime Date { get; set; }
     public TimeOnly StartTime { get; set; }

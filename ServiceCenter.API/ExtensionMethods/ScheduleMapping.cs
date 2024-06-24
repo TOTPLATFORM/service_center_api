@@ -10,6 +10,6 @@ public static class ScheduleMapping
     {
         map.CreateMap<ScheduleRequestDto, Schedule>().ReverseMap();
         map.CreateMap<Schedule, ScheduleResponseDto>()
-            .ForMember(dest => dest.ServiceProviderName, src => src.MapFrom(src => src.ServiceProvider.FirstName + " " + src.ServiceProvider.LastName));
+            .ForMember(dest => dest.ServiceName, src => src.MapFrom(src => src.Service.ServiceName));
     }
 }

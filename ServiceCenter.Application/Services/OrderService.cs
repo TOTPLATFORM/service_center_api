@@ -1,37 +1,37 @@
-﻿//using servicecenter.core.result;
-//using automapper;
-//using automapper.queryableextensions;
-//using servicecenter.application.contracts;
-//using microsoft.entityframeworkcore;
-//using microsoft.extensions.logging;
-//using servicecenter.infrastructure.basecontext;
-//using servicecenter.application.dtos;
-//using servicecenter.domain.entities;
-//using servicecenter.domain.enums;
+﻿
+//using ServiceCenter.Application.Services;
+//using ServiceCenter.Infrastructure.BaseContext;
+//using AutoMapper;
+//using Microsoft.Extensions.Logging;
+//using ServiceCenter.Application.Contracts;
+//using ServiceCenter.Core.Result;
+//using ServiceCenter.Application.DTOS;
+//using ServiceCenter.Domain.Enums;
+//using AutoMapper.QueryableExtensions;
 
 //namespace hmswithlayers.application.services;
 
-//public class orderservice(iitemservice itemservice, servicecenterbasedbcontext dbcontext, imapper mapper, ilogger<orderservice> logger, iusercontextservice usercontext) : iorderservice
+//public class orderservice(ItemService itemservice, ServiceCenterBaseDbContext dbcontext, IMapper mapper, ILogger<orderservice> logger, IUserContextService usercontext) : IOrderService
 //{
-//    private readonly iitemservice _itemservice = itemservice;
-//    private readonly servicecenterbasedbcontext _dbcontext = dbcontext;
-//    private readonly imapper _mapper = mapper;
-//    private readonly ilogger<orderservice> _logger = logger;
-//    private readonly iusercontextservice _usercontext = usercontext;
+//    private readonly ItemService _itemservice = itemservice;
+//    private readonly ServiceCenterBaseDbContext _dbcontext = dbcontext;
+//    private readonly IMapper _mapper = mapper;
+//    private readonly ILogger<orderservice> _logger = logger;
+//    private readonly IUserContextService _usercontext = usercontext;
 
-//    /<inheritdoc/>
-//    public async task<result<list<orderresponsedto>>> getallorderasync(status status)
+//    //<inheritdoc/>
+//    public async Task<Result<List<OrderResponseDto>>> GetAllOrderAsync(Status status)
 //    {
-//        var ordersresponsedto = await _dbcontext.orders
-//            .where(order => order.orderstatus == status)
-//            .projectto<orderresponsedto>(_mapper.configurationprovider)
+//        var ordersresponsedto = await _dbcontext.Orders
+//            .Where(order => order.OrderStatus == status)
+//            .ProjectTo<OrderResponseDto>(_mapper.ConfigurationProvider)
 //            .tolistasync();
 
 //        _logger.loginformation("fetching all orders. total count: {ordersresponsedto}.", ordersresponsedto.count);
 //        return result.success(ordersresponsedto);
 //    }
 
-//    /<inheritdoc/>
+//    //<inheritdoc/>
 //    public async task<result<orderresponsedto>> getorderbyidasync(int id)
 //    {
 //        var orderresponsedto = await _dbcontext.orders

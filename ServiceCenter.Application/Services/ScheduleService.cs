@@ -26,10 +26,10 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
     private readonly IUserContextService _userContext = userContext;
 
     ///<inheritdoc/>
-    public async Task<Result<PaginationResult<ScheduleResponseDto>>> GetAllSchedulesByServiceProviderIdAsync(string serviceproviderId, int itemCount, int index)
+    public async Task<Result<PaginationResult<ScheduleResponseDto>>> GetAllSchedulesByServiceIdAsync(int serviceId, int itemCount, int index)
     {
         var schedules = await _dbContext.Schedules
-            .Where(s => s.ServiceProviderId == serviceproviderId)
+            .Where(s => s.ServiceId == serviceId)
             .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
             .GetAllWithPagination(itemCount, index);
 
@@ -60,10 +60,10 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
     }
 
     ///<inheritdoc/>
-    private async Task<bool> HasConflictAsync(string serviceproviderId, DayOfWeek dayOfWeek, TimeOnly startTime, TimeOnly endTime, int? excludeScheduleId = null)
+    private async Task<bool> HasConflictAsync(int serviceId, DayOfWeek dayOfWeek, TimeOnly startTime, TimeOnly endTime, int? excludeScheduleId = null)
     {
         return await _dbContext.Schedules.AnyAsync(s =>
-            s.ServiceProviderId == serviceproviderId &&
+            s.ServiceId == serviceId &&
             s.DayOfWeek == dayOfWeek &&
             s.Id != excludeScheduleId &&
             ((s.StartTime < endTime && s.StartTime >= startTime) || (s.EndTime > startTime && s.EndTime <= endTime) || (s.StartTime <= startTime && s.EndTime >= endTime)));
@@ -97,18 +97,18 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
             });
         }
 
-        var serviceproviderExists = await _dbContext.ServiceProviders.AnyAsync(d => d.Id == scheduleRequestDto.ServiceProviderId);
-        if (!serviceproviderExists)
+        var serviceExists = await _dbContext.Services.AnyAsync(d => d.Id == scheduleRequestDto.ServiceId);
+        if (!serviceExists)
         {
-            _logger.LogError("ServiceProvider with ID {ServiceProviderId} not found.", scheduleRequestDto.ServiceProviderId);
+            _logger.LogError("Service with ID {ServiceId} not found.", scheduleRequestDto.ServiceId);
             return Result.NotFound(new[]
             {
-                "ServiceProvider not found."
+                "Service not found."
             });
         }
 
         var overlappingSchedules = await _dbContext.Schedules
-            .Where(s => s.ServiceProviderId == scheduleRequestDto.ServiceProviderId && s.DayOfWeek == scheduleRequestDto.DayOfWeek)
+            .Where(s => s.ServiceId == scheduleRequestDto.ServiceId && s.DayOfWeek == scheduleRequestDto.DayOfWeek)
             .ToListAsync();
 
         TimeOnly startTime = scheduleRequestDto.StartTime;
@@ -130,16 +130,16 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 
             if (isOverlapping)
             {
-                _logger.LogWarning("Overlapping schedule detected for serviceprovider {ServiceProviderId} on day {DayOfWeek}.", scheduleRequestDto.ServiceProviderId, scheduleRequestDto.DayOfWeek);
+                _logger.LogWarning("Overlapping schedule detected for service {ServiceId} on day {DayOfWeek}.", scheduleRequestDto.ServiceId, scheduleRequestDto.DayOfWeek);
                 return Result.Error(new[]
                 {
-                    "Overlapping schedule detected for this serviceprovider on the selected day."
+                    "Overlapping schedule detected for this service on the selected day."
                 });
             }
 
             var schedule = new Schedule
             {
-                ServiceProviderId = scheduleRequestDto.ServiceProviderId,
+                ServiceId = scheduleRequestDto.ServiceId,
                 DayOfWeek = scheduleRequestDto.DayOfWeek,
                 StartTime = startTime,
                 EndTime = intervalEndTime,
@@ -168,7 +168,7 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
             return Result.NotFound(new[] { "The schedule is not found" });
         }
 
-        if (await HasConflictAsync(scheduleRequestDto.ServiceProviderId, scheduleRequestDto.DayOfWeek, scheduleRequestDto.StartTime, scheduleRequestDto.EndTime, id))
+        if (await HasConflictAsync(scheduleRequestDto.ServiceId, scheduleRequestDto.DayOfWeek, scheduleRequestDto.StartTime, scheduleRequestDto.EndTime, id))
         {
             return Result.Invalid(new List<ValidationError>
             {
@@ -206,17 +206,17 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
     }
 
     ///<inheritdoc/>
-    public async Task<Result<List<ScheduleResponseDto>>> GetAvailableSchedulesForServiceProviderByWeekAsync(string serviceproviderId)
+    public async Task<Result<List<ScheduleResponseDto>>> GetAvailableSchedulesForServiceByWeekAsync(int serviceId)
     {
         var currentDate = DateTime.UtcNow.Date;
 
         var schedules = await _dbContext.Schedules
-            .Where(s => s.ServiceProviderId == serviceproviderId)
+            .Where(s => s.ServiceId == serviceId)
             .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
 
         var bookedSchedules = await _dbContext.Appointments
-            .Where(a => a.Schedule.ServiceProviderId == serviceproviderId)
+            .Where(a => a.Schedule.ServiceId == serviceId)
             .Select(a => new { a.ScheduleId, a.AppointmentDate })
             .ToListAsync();
 
@@ -224,22 +224,22 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
             .Where(s => !bookedSchedules.Any(b => b.ScheduleId == s.Id && b.AppointmentDate >= currentDate && b.AppointmentDate < currentDate.AddDays(7)))
             .ToList();
 
-        _logger.LogInformation("Fetching available schedules for serviceprovider {serviceproviderId}. Total available count: {count}.", serviceproviderId, availableSchedules.Count);
+        _logger.LogInformation("Fetching available schedules for service {serviceId}. Total available count: {count}.", serviceId, availableSchedules.Count);
         return Result.Success(availableSchedules);
     }
 
     ///<inheritdoc/>
-    public async Task<Result<List<ScheduleResponseDto>>> GetAvailableSchedulesForServiceProviderByDayAsync(string serviceproviderId, DayOfWeek dayOfWeek)
+    public async Task<Result<List<ScheduleResponseDto>>> GetAvailableSchedulesForServiceByDayAsync(int serviceId, DayOfWeek dayOfWeek)
     {
         var currentDate = DateTime.UtcNow.Date;
 
         var schedules = await _dbContext.Schedules
-            .Where(s => s.ServiceProviderId == serviceproviderId && s.DayOfWeek == dayOfWeek)
+            .Where(s => s.ServiceId == serviceId && s.DayOfWeek == dayOfWeek)
             .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
 
         var bookedSchedules = await _dbContext.Appointments
-            .Where(a => a.Schedule.ServiceProviderId == serviceproviderId)
+            .Where(a => a.Schedule.ServiceId == serviceId)
             .Select(a => new { a.ScheduleId, a.AppointmentDate })
             .ToListAsync();
 
@@ -247,31 +247,31 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
             .Where(s => !bookedSchedules.Any(b => b.ScheduleId == s.Id && b.AppointmentDate >= currentDate && b.AppointmentDate < currentDate.AddDays(7)))
             .ToList();
 
-        _logger.LogInformation("Fetching available schedules for serviceprovider {serviceproviderId}.", serviceproviderId);
+        _logger.LogInformation("Fetching available schedules for service {serviceId}.", serviceId);
         return Result.Success(availableSchedules);
     }
 
     ///<inheritdoc/>
-    public async Task<Result<List<ServiceProviderWeeklyScheduleDto>>> GetServiceProviderWeeklySchedulesAsync(string serviceproviderId)
+    public async Task<Result<List<ServiceWeeklyScheduleDto>>> GetServiceWeeklySchedulesAsync(int serviceId)
     {
-        var serviceprovider = await _dbContext.ServiceProviders
-            .Where(d => d.Id == serviceproviderId)
-            .Select(d => new { d.Id, d.FirstName, d.LastName })
+        var service = await _dbContext.Services
+            .Where(d => d.Id == serviceId)
+            .Select(d => new { d.Id, d.ServiceName })
             .FirstOrDefaultAsync();
 
-        if (serviceprovider == null)
+        if (service == null)
         {
-            _logger.LogWarning("ServiceProvider Id not found, Id {id}", serviceproviderId);
-            return Result.NotFound(new[] { "ServiceProvider not found" });
+            _logger.LogWarning("Service Id not found, Id {id}", serviceId);
+            return Result.NotFound(new[] { "Service not found" });
         }
 
         var schedules = await _dbContext.Schedules
-            .Where(s => s.ServiceProviderId == serviceproviderId)
+            .Where(s => s.ServiceId == serviceId)
             .GroupBy(s => s.DayOfWeek)
-            .Select(g => new ServiceProviderWeeklyScheduleDto
+            .Select(g => new ServiceWeeklyScheduleDto
             {
-                ServiceProviderId = serviceprovider.Id,
-                ServiceProviderName = serviceprovider.FirstName + " " + serviceprovider.LastName,
+                ServiceId = service.Id,
+                ServiceName = service.ServiceName,
                 DayOfWeek = g.Key,
                 Date = DateTime.UtcNow.Date.AddDays(((int)g.Key - (int)DateTime.UtcNow.DayOfWeek + 7) % 7),
                 StartTime = g.Min(s => s.StartTime),
@@ -285,23 +285,23 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
             .OrderBy(s => (int)s.DayOfWeek >= (int)today ? (int)s.DayOfWeek - (int)today : (int)s.DayOfWeek - (int)today + 7)
             .ToList();
 
-        _logger.LogInformation("Fetching schedules summary for serviceprovider {serviceproviderId}. Total count: {count}.", serviceproviderId, sortedSchedules.Count);
+        _logger.LogInformation("Fetching schedules summary for service {serviceId}. Total count: {count}.", serviceId, sortedSchedules.Count);
         return Result.Success(sortedSchedules);
     }
 
-    //public async Task<Result<List<ScheduleResponseDto>>> GetAvailableSchedulesForServiceProviderByDayAsync(string serviceproviderId, DayOfWeek dayOfWeek)
+    //public async Task<Result<List<ScheduleResponseDto>>> GetAvailableSchedulesForServiceByDayAsync(string serviceId, DayOfWeek dayOfWeek)
     //{
     //    var currentDate = DateTime.UtcNow.Date;
     //    var startOfWeek = currentDate.AddDays(-(int)currentDate.DayOfWeek);
     //    var selectedDay = startOfWeek.AddDays((int)dayOfWeek);
 
     //    var schedules = await _dbContext.Schedules
-    //        .Where(s => s.ServiceProviderId == serviceproviderId && s.DayOfWeek == dayOfWeek)
-    //        .ProjectTo<ScheduleResponseDto>(_mapper.ConfigurationProvider)
+    //        .Where(s => s.ServiceId == serviceId && s.DayOfWeek == dayOfWeek)
+    //        .ProjectTo<ScheduleResponseDto>(_mapper.Configuration)
     //        .ToListAsync();
 
     //    var bookedScheduleIds = await _dbContext.Appointments
-    //        .Where(a => a.Schedule.ServiceProviderId == serviceproviderId && a.AppointmentDate.Date == selectedDay && a.Status == AppointmentStatus.Scheduled)
+    //        .Where(a => a.Schedule.ServiceId == serviceId && a.AppointmentDate.Date == selectedDay && a.Status == AppointmentStatus.Scheduled)
     //        .Select(a => a.ScheduleId)
     //        .ToListAsync();
 
@@ -309,7 +309,7 @@ public class ScheduleService(ServiceCenterBaseDbContext dbContext, IMapper mappe
     //        .Where(s => !bookedScheduleIds.Contains(s.Id))
     //        .ToList();
 
-    //    _logger.LogInformation("Fetching available schedules for serviceprovider {serviceproviderId} on {dayOfWeek}. Total available count: {count}.", serviceproviderId, dayOfWeek, availableSchedules.Count);
+    //    _logger.LogInformation("Fetching available schedules for service {serviceId} on {dayOfWeek}. Total available count: {count}.", serviceId, dayOfWeek, availableSchedules.Count);
     //    return Result.Success(availableSchedules);
     //}
 }
