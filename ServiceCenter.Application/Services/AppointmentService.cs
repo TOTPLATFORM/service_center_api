@@ -164,11 +164,15 @@ public class AppointmentService(ServiceCenterBaseDbContext dbContext, IMapper ma
         if (status == AppointmentStatus.Completed)
         {
             var itemService = await _dbContext.ItemServices.Where(i => i.Service.Id == appointment.Schedule.ServiceId)
-                .Select(s => new { s.Item ,s.QuantityItem}).ToListAsync();
-            foreach (var item in itemService)
+                .Select(i => new Item { ItemStock = i.Item.ItemStock - i.QuantityItem }).ToListAsync();
+
+            /*foreach (var item in itemService)
             {
                 item.Item.ItemStock = item.Item.ItemStock-item.QuantityItem;
-            }
+            }*/
+
+            //itemService.Select(i => i.Item.ItemStock - i.QuantityItem);
+             _dbContext.Items.UpdateRange(itemService);
         }
 
         appointment.Status = status;
