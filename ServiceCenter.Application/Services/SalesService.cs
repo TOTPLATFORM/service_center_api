@@ -132,27 +132,7 @@ public class SalesService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
 		return Result.Success(sales);
 	}
 
-	///<inheritdoc/>
-
-	public async Task<Result> DeleteSalesAsync(string id)
-	{
-		var sales = await _dbContext.Sales.FindAsync(id);
-
-		if (sales is null)
-		{
-			_logger.LogWarning("sales Invaild Id ,Id {salesId}", id);
-
-			return Result.NotFound(["sales Invaild Id"]);
-		}
-
-		_dbContext.Sales.Remove(sales);
-
-		await _dbContext.SaveChangesAsync();
-
-		_logger.LogInformation("sales remove successfully in the database");
-
-		return Result.SuccessWithMessage("sales remove successfully ");
-	}
+	
 }
 
 

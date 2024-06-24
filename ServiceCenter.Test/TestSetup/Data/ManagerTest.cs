@@ -16,7 +16,7 @@ public static class ManagerTest
         context.Managers.AddRange(
         new Manager
         {
-            Id = "0d133c1a-804f-4548-8f7e-8c3f504844e0",
+            Id = "0d133c1a-804f-4548-8f7e-8c3f904804e0",
             DateOfBirth = DateOnly.Parse("2000/12/30"),
             Email = "agershaban7@gmail.com",
             FirstName = "hager",
@@ -31,7 +31,7 @@ public static class ManagerTest
         },
         new Manager
         {
-            Id = "sOB316984165",
+            Id = "sOB316984865",
             DateOfBirth = DateOnly.Parse("2000/12/30"),
             Email = "agershaban7@gmail.com",
             FirstName = "hager",

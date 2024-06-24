@@ -84,7 +84,7 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 	}
 
 	///<inheritdoc/>
-	public async Task<Result<ContactResponseDto>> UpdateContactStatusAsync(int id, ContactStatus status)
+	public async Task<Result<ContactResponseDto>> UpdateContactStatusAsync(string id, ContactStatus status)
 	{
 		var contact = await _dbContext.Contacts.FindAsync(id);
 

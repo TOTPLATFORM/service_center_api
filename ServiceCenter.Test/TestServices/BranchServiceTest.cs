@@ -12,10 +12,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceBranch.Test.TestServices;
+namespace ServiceCenter.Test.TestServices;
 [TestCaseOrderer(
-ordererTypeName: "ServiceBranch.Test.TestPriority.PriorityOrderer",
-ordererAssemblyName: "ServiceBranch.Test")]
+ordererTypeName: "ServiceCenter.Test.TestPriority.PriorityOrderer",
+ordererAssemblyName: "ServiceCenter.Test")]
 public class BranchServiceTest
 {
     private static BranchService _branchService;
@@ -70,20 +70,20 @@ public class BranchServiceTest
     /// <summary>
     /// fuction to get all  branches as a test case 
     /// </summary>
-    [Theory, TestPriority(1)]
-    [InlineData(3,3)]
-    public async Task GetAllBranch(int itemCount, int index)
+    [Fact, TestPriority(1)]
+    public async Task GetAllBranch()
     {
         // Arrange
         CheckService();
 
         // Act
-        var result = await _branchService.GetAllBranchesAsync(itemCount,index);
+        var result = await _branchService.GetAllBranchesAsync(2,1);
 
         // Assert
         Assert.True(result.IsSuccess);
 
     }
+   
 
     /// <summary>
     /// fuction to get branch by id as a test case 
@@ -109,11 +109,11 @@ public class BranchServiceTest
     }
 
     /// <summary>
-    /// fuction to update branch as a test case that take   Branch id , Branch number , Branch avaliability , branch id  
+    /// fuction to update branch as a test case that take   Branch id , Branch number ,Branch email address
     /// </summary>
-    /// <param name="BranchNumber">Branch number</param>
-    /// <param name="BranchAvaliabitlity">Branch availability</param>
-    /// <param name="branchId">Branch Type id</param>
+    /// <param name="branchPhoneNumber">Branch number</param>
+    /// <param name="emailAddress">Branch email address</param>
+    /// <param name="id">Branch  id</param>
     /// <param name="expectedResult">expected result</param>
     [Theory, TestPriority(3)]
     [InlineData(1, "branch1",  "012656268", "kjsaih@pojs.com", true)]

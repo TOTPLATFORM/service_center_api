@@ -9,9 +9,9 @@ using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
 
-public class WareHouseManagerController(IWareHousManagerService wareHousManager) : BaseController
+public class WareHouseManagerController(IWareHouseManagerService wareHousManager) : BaseController
 {
-    private readonly IWareHousManagerService _wareHousManager = wareHousManager;
+    private readonly IWareHouseManagerService _wareHousManager = wareHousManager;
 
     /// <summary>
     /// adds a new warehouse manager to the system.
@@ -74,24 +74,8 @@ public class WareHouseManagerController(IWareHousManagerService wareHousManager)
         return await _wareHousManager.UpdateWareHouseManagerServiceAsync(id, wareHouseManagerRequest);
     }
 
-    /// <summary>
-    /// deletes a warehouse manager  from the system by their unique identifier.
-    /// </summary>
-    /// <param name="id">the unique identifier of the warehouse manager  to delete.</param>
-    /// <remarks>
-    /// access is limited to users with the "Manager" role.
-    /// </remarks>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
-    [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager,Admin")]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result> DeleteWareHouseManager(string id)
-    {
-        return await _wareHousManager.DeleteWareHouseManagerServiceAsync(id);
-    }
-
-    /// <summary>
+   
+     /// <summary>
     /// search  warehouse manager by text in the system.
     /// </summary>
     ///<param name="text">id</param>

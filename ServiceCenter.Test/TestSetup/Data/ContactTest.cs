@@ -16,7 +16,7 @@ public static class ContactTest
         context.Contacts.AddRange(
         new Contact
         {
-            Id = "0d133c1a-804f-4548-8f7e-8c3f504844e0",
+            Id = "0d133c1a-804f-4548-8f7e-8c3f504844u0",
             DateOfBirth = DateOnly.Parse("2000/12/30"),
             Email = "agershaban7@gmail.com",
             FirstName = "hager",
@@ -27,7 +27,7 @@ public static class ContactTest
         },
         new Contact
         {
-            Id = "sOB316984165",
+            Id = "sOB316904165",
             DateOfBirth = DateOnly.Parse("2000/12/30"),
             Email = "agershaban7@gmail.com",
             FirstName = "hager",

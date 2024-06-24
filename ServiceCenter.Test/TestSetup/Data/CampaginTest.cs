@@ -17,7 +17,7 @@ public static class CampaginTest
             new Campagin
             {
                 Id = 3,
-                CampaginName = "A",
+                CampaginName = "Campagin1",
                 CampaginDescription = "B",
                 Status = CampaginStatus.Active,
                 Budget = 2,

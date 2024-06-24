@@ -34,7 +34,6 @@ public class ContextGenerator
             Context.AddBranch();
             Context.AddContact();
             Context.AddSubscription();
-            Context.AddEmployee();
             Context.AddOffer();
             Context.AddSchedule();
             Context.AddServicePackage();
@@ -50,7 +49,7 @@ public class ContextGenerator
             Context.AddWareHouseManager();
             Context.AddServiceProvider();   
             Context.AddVendor();
-
+        
             Context.SaveChanges();
         }
 

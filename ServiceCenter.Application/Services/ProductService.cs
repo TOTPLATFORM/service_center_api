@@ -139,7 +139,7 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         return Result.Success(names);
     }
 
-    public async Task<PaginationResult<ProductGetByIdResponseDto>> GetProductsForProductCategoryAsync(int categoryId, int itemCount, int index)
+    public async Task<Result<PaginationResult<ProductGetByIdResponseDto>>> GetProductsForProductCategoryAsync(int categoryId, int itemCount, int index)
     {
         var products = await _dbContext.Products
               .Where(s => s.ProductCategory.Id == categoryId)

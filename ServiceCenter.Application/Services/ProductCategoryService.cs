@@ -133,13 +133,13 @@ public class ProductCategoryService(ServiceCenterBaseDbContext dbContext, IMappe
     }
 
     ///<inheritdoc/>
-    public async  Task<Result<List<ProductCategoryResponseDto>>> SearchProductCategoryByTextAsync(string text)
+    public async  Task<Result<PaginationResult<ProductCategoryResponseDto>>> SearchProductCategoryByTextAsync(string text,int itemCount,int index)
     {
         var names = await _dbContext.ProductCategories
         .ProjectTo<ProductCategoryResponseDto>(_mapper.ConfigurationProvider)
         .Where(n => n.CategoryName.Contains(text))
-        .ToListAsync();
-        _logger.LogInformation("Fetching search ProductCategory by name . Total count: {ProductCategory}.", names.Count);
+        .GetAllWithPagination(itemCount,index);
+        _logger.LogInformation("Fetching search ProductCategory by name . Total count: {ProductCategory}.", names.Data.Count);
         return Result.Success(names);
     }
     public async Task<Result<List<ProductCategoryResponseDto>>> AssignProductCategoryToProductBrandAsync(int productCategoryId, int productBrandId)

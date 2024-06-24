@@ -16,7 +16,7 @@ public static  class VendorTest
         context.Vendors.AddRange(
         new Vendor
         {
-            Id = "0d133c1a-804f-4548-8f7e-8c3f504844e0",
+            Id = "0d133c1a-809f-4548-8f7e-8c3f504844e0",
             DateOfBirth = DateOnly.Parse("2000/12/30"),
             Email = "agershaban7@gmail.com",
             FirstName = "hager",
@@ -28,7 +28,7 @@ public static  class VendorTest
         },
         new Vendor
         {
-            Id = "sOB316984165",
+            Id = "sOBi16984165",
             DateOfBirth = DateOnly.Parse("2000/12/30"),
             Email = "agershaban7@gmail.com",
             FirstName = "hager",

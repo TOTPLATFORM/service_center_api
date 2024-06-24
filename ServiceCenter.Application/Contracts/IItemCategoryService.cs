@@ -53,7 +53,7 @@ public interface IItemCategoryService : IApplicationService, IScopedService
     /// <summary>
     /// function to search by inventory  that take  inventory name
     /// </summary>
-    /// <param name="inventoryName">inventory name</param>
+    /// <param name="inventoryId">inventory name</param>
     /// <returns>item category response dto </returns
     public Task<Result<PaginationResult<ItemCategoryResponseDto>>> GetAllItemsCategoryForSpecificInventory(int inventoryId, int itemCount, int index);
 }

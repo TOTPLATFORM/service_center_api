@@ -1,154 +1,209 @@
-﻿//using AutoMapper;
-//using Microsoft.Extensions.Logging;
-//using ServiceCenter.API.Mapping;
-//using ServiceCenter.Application.Contracts;
-//using ServiceCenter.Application.DTOS;
-//using ServiceCenter.Application.Services;
-//using ServiceCenter.Test.TestPriority;
-//using ServiceCenter.Test.TestSetup;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
+using ServiceCenter.API.Mapping;
+using ServiceCenter.Application.Contracts;
+using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.Services;
+using ServiceCenter.Domain.Enums;
+using ServiceCenter.Test.TestPriority;
+using ServiceCenter.Test.TestSetup;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace ServiceCenter.Test.TestServices;
-//[TestCaseOrderer(
-//ordererTypeName: "ServiceCenter.Test.TestPriority.PriorityOrderer",
-//ordererAssemblyName: "ServiceCenter.Test")]
-//public class RatingServiceServiceTest
-//{
-//    private static RatingServiceService _ratingServiceService;
-//    private string userEmail = "hagershaaban7@gmail.com";
-//    private RatingServiceService CreateRatingServiceService()
-//    {
+namespace ServiceCenter.Test.TestServices;
 
-//        if (_ratingServiceService is null)
-//        {
-//            var dbContext = ContextGenerator.Generator();
+[TestCaseOrderer(
+ordererTypeName: "ServiceCenter.Test.TestPriority.PriorityOrderer",
+ordererAssemblyName: "ServiceCenter.Test")]
+public class RatingServiceTest
+{
+    private static RatingService _RatingService;
+    private string userEmail = "Mariamabdeeen@gmail.com";
+    private RatingService CreateRatingService()
+    {
 
-//            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfiles>()).CreateMapper();
+        if (_RatingService is null)
+        {
+            var dbContext = ContextGenerator.Generator();
 
-//            ILogger<RatingServiceService> logger = new LoggerFactory().CreateLogger<RatingServiceService>();
+            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfiles>()).CreateMapper();
 
-//            IUserContextService userContext = new UserContextService();
+            ILogger<RatingService> logger = new LoggerFactory().CreateLogger<RatingService>();
 
-//            _ratingServiceService = new RatingServiceService(dbContext, mapper, logger, userContext);
-//        }
+            IUserContextService userContext = new UserContextService();
 
-//        return _ratingServiceService;
-//    }
-//    private void CheckService()
-//    {
-//        if (_ratingServiceService is null)
-//            _ratingServiceService = CreateRatingServiceService();
-//    }
+            _RatingService = new RatingService(dbContext, mapper, logger, userContext);
+        }
 
-//    /// <summary>
-//    /// fuction to get all  rating services as a test case 
-//    /// </summary>
-//    [Fact, TestPriority(1)]
-//    public async Task GetAllRatingService()
-//    {
-//        // Arrange
-//        CheckService();
+        return _RatingService;
+    }
+    private void CheckService()
+    {
+        if (_RatingService is null)
+            _RatingService = CreateRatingService();
+    }
 
-//        // Act
-//        var result = await _ratingServiceService.GetAllRatingServicesAsync();
+    /// <summary>
+    /// fuction to get all  Ratings as a test case 
+    /// </summary>
+    [Fact, TestPriority(1)]
+    public async Task GetAllRating()
+    {
+        // Arrange
+        CheckService();
 
-//        // Assert
-//        Assert.True(result.IsSuccess);
+        // Act
+        var result = await _RatingService.GetAllRatingAsync(2, 1);
 
-//    }
-//    /// <summary>
-//    /// fuction to get rating service by id as a test case 
-//    /// </summary>
-//    /// <param name="id"> RatingService id</param>
-//    [Theory, TestPriority(2)]
-//    [InlineData(1)]
-//    [InlineData(6)]
-//    public async Task GetByIdRatingService(int id)
-//    {
-//        // Arrange
-//        CheckService();
+        // Assert
+        Assert.True(result.IsSuccess);
 
-//        // Act
-//        var result = await _ratingServiceService.GetRatingServiceByIdAsync(id);
+    }
+    /// <summary>
+    /// fuction to get Rating by id as a test case 
+    /// </summary>
+    /// <param name="id"> Rating id</param>
+    [Theory, TestPriority(2)]
+    [InlineData(1)]
+    [InlineData(6)]
+    public async Task GetByIdRating(int id)
+    {
+        // Arrange
+        CheckService();
 
-//        // Assert
-//        if (result.IsSuccess)
-//            Assert.True(result.IsSuccess);
-//        else
-//            Assert.False(result.IsSuccess);
+        // Act
+        var result = await _RatingService.GetRatingByIdAsync(id);
 
-//    }
-//    /// <summary>
-//    /// fuction to add rating service as a test case that take  
-//    /// </summary>
+        // Assert
+        if (result.IsSuccess)
+            Assert.True(result.IsSuccess);
+        else
+            Assert.False(result.IsSuccess);
 
-//    [Theory, TestPriority(0)]
-//    [InlineData(5,"dnsx64984795-5148947-5489")]
-//    public async Task AddRatingService(int ratingValue , string customerId)
-//    {
-//        // Arrange
-//        CheckService();
-//        var ratingServiceRequestDto = new RatingServiceRequestDto { RatingValue = ratingValue ,CustomerId= customerId };
+    }
+    /// <summary>
+    /// fuction to add Rating as a test case that take  timeslot id ,created by user name
+    /// </summary>
 
-//        // Act
-//        var result = await _ratingServiceService.AddRatingServiceAsync(ratingServiceRequestDto);
+    [Theory, TestPriority(0)]
+    [InlineData(1, "0d133c1a-804f-4548-8f7e-8c3f504844u0", 1)]
+    public async Task AddRating(int ratingValue, string customerId, int serviceId)
+    {
+        // Arrange
+        CheckService();
+        var RatingRequestDto = new RatingRequestDto { RatingValue = ratingValue, ContactId = customerId, ServiceId = serviceId };
 
-//        // Assert
-//        if (result.IsSuccess)
-//            Assert.True(result.IsSuccess);
-//        else
-//            Assert.False(result.IsSuccess);
-//    }
-//    /// <summary>
-//    /// fuction to remove rating service as a test case that take RatingService id
-//    /// </summary>
-//    /// <param name="id"> rating service id</param>
-//    [Theory, TestPriority(4)]
-//    [InlineData(1)]
-//    [InlineData(50)]
-//    public async Task RemoveRatingService(int id)
-//    {
-//        // Arrange
-//        CheckService();
+        // Act
+        var result = await _RatingService.AddRatingAsync(RatingRequestDto);
 
-//        // Act
-//        var result = await _ratingServiceService.DeleteRatingServiceAsync(id);
+        // Assert
+        if (result.IsSuccess)
+            Assert.True(result.IsSuccess);
+        else
+            Assert.False(result.IsSuccess);
+    }
+    /// <summary>
+    /// fuction to remove Rating as a test case that take Rating id
+    /// </summary>
+    /// <param name="id"> Rating id</param>
+    [Theory, TestPriority(8)]
+    [InlineData(1)]
+    [InlineData(50)]
+    public async Task RemoveRating(int id)
+    {
+        // Arrange
+        CheckService();
 
-//        // Assert
-//        if (result.IsSuccess)
-//            Assert.True(result.IsSuccess);
-//        else
-//            Assert.False(result.IsSuccess);
+        // Act
+        var result = await _RatingService.DeleteRatingAsync(id);
 
-//    }
+        // Assert
+        if (result.IsSuccess)
+            Assert.True(result.IsSuccess);
+        else
+            Assert.False(result.IsSuccess);
 
-//    /// <summary>
-//    /// fuction to update rating service as a test case that take ,expected result
-//    /// </summary>
-//    /// <param name="id">rating service id</param>  
-//    [Theory, TestPriority(3)]
-//    [InlineData(2, 5,1, "0d133c1a-804f-4548-8f7e-8c3f504561954", true)]
-//    [InlineData(30, 5,1, "dnsx64984795-5148947-5489", false)]
-//    public async Task UpdateRatingService(int id, int ratingValue,int serviceId, string customerId, bool expectedResult)
-//    {
-//        // Arrange
-//        CheckService();
-//        var RatingServiceRequestDto = new RatingServiceRequestDto {RatingValue= ratingValue, ServiceId= serviceId, CustomerId = customerId };
+    }
 
-//        // Act
-//        var result = await _ratingServiceService.UpdateRatingServiceAsync(id, RatingServiceRequestDto);
+    /// <summary>
+    /// fuction to update Rating as a test case that take id Updated by user name,expected result
+    /// </summary>
+    /// <param name="id">Rating id</param>  
+    [Theory, TestPriority(3)]
+    [InlineData(1, 2, true)]
+    [InlineData(8, 3, false)]
+    public async Task UpdateRating(int id, int ratingValue, bool expectedResult)
+    {
+        // Arrange
+        CheckService();
 
-//        if (expectedResult)
-//        {
-//            Assert.True(result.IsSuccess); // Expecting successful update
-//        }
-//        else
-//        {
-//            Assert.False(result.IsSuccess); // Expecting unsuccessful update
-//        }
-//    }
-//}
+
+        // Act
+        var result = await _RatingService.UpdateRatingValueAsync(id, ratingValue);
+
+        if (expectedResult)
+        {
+            Assert.True(result.IsSuccess); // Expecting successful update
+        }
+        else
+        {
+            Assert.False(result.IsSuccess); // Expecting unsuccessful update
+        }
+    }
+
+
+    /// <summary>
+    /// Tests the search functionality in the rating service to ensure it can find rating based on a search term.
+    /// </summary>
+    [Fact, TestPriority(5)]
+    public async Task GetRatingsForSpecificCustomer()
+    {
+        // Arrange
+        CheckService();
+        string customerId = "0d133c1a-804f-4548-8f7e-8c3f504844u0";
+
+        // Act
+        var result = await _RatingService.GetRatingsForSpecificCustomerAsync(customerId, 2, 1);
+
+        // Assert
+        Assert.True(result.IsSuccess);
+    }
+    /// <summary>
+    /// Tests the search functionality in the rating service to ensure it can find rating based on a search term.
+    /// </summary>
+    [Fact, TestPriority(6)]
+    public async Task GetRatingsForSpecificService()
+    {
+        // Arrange
+        CheckService();
+        int serviceId = 1;
+
+        // Act
+        var result = await _RatingService.GetRatingsForSpecificServiceAsync(serviceId, 2, 1);
+
+        // Assert
+        Assert.True(result.IsSuccess);
+    }
+    /// <summary>
+    /// Tests the search functionality in the rating service to ensure it can find rating based on a search term.
+    /// </summary>
+    [Fact, TestPriority(7)]
+    public async Task GetRatingsForSpecificProduct()
+    {
+        // Arrange
+        CheckService();
+        int productId = 1;
+
+        // Act
+        var result = await _RatingService.GetRatingsForSpecificProductAsync(productId, 2, 1);
+
+        // Assert
+        Assert.True(result.IsSuccess);
+    }
+
+
+}
+

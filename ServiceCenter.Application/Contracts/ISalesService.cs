@@ -50,10 +50,5 @@ public interface ISalesService : IApplicationService, IScopedService
     /// <returns>all saleses that contain this text </returns>
     public Task<Result<PaginationResult<SalesResponseDto>>> SearchSalesByTextAsync(string text, int itemCount, int index);
 
-    /// <summary>
-    /// function to delete Sales that take SalesDto   
-    /// </summary>
-    /// <param name="id">departmnet id</param>
-    /// <returns>Sales removed successfully </returns>
-    public Task<Result> DeleteSalesAsync(string id);
+    
 }

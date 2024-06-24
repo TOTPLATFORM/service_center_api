@@ -24,3 +24,4 @@ public class InMemoryUserStore
         return userManager;
     }
 }
+ 

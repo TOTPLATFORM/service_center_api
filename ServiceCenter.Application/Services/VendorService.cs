@@ -126,24 +126,5 @@ public class VendorService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         return Result.Success(vendor);
     }
 
-    ///<inheritdoc/>
-    public async Task<Result> DeleteVendorAsync(string id)
-    {
-        var vendor = await _dbContext.Vendors.FindAsync(id);
-
-        if (vendor is null)
-        {
-            _logger.LogWarning("vendor Invaild Id ,Id {vendorId}", id);
-
-            return Result.NotFound(["vendor Invaild Id"]);
-        }
-
-        _dbContext.Vendors.Remove(vendor);
-
-        await _dbContext.SaveChangesAsync();
-
-        _logger.LogInformation("vendor remove successfully in the database");
-
-        return Result.SuccessWithMessage("vendor remove successfully ");
-    }
+   
 }
