@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using System;
@@ -24,7 +25,7 @@ public interface IServicePackageService : IApplicationService, IScopedService
     /// function to get all ServicePackage  
     /// </summary>
     /// <returns>list all ServicePackage  response dto </returns>
-    public Task<Result<List<ServicePackageResponseDto>>> GetAllServicePackageAsync();
+    public Task<Result<PaginationResult<ServicePackageResponseDto>>> GetAllServicePackageAsync(int itemCount,int index);
     /// <summary>
     /// function to delete ServicePackage  that take ServicePackage  id   
     /// </summary>
@@ -49,5 +50,5 @@ public interface IServicePackageService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">ServicePackage name</param>
     /// <returns>ServicePackage response dto </returns>
-    public Task<Result<List<ServicePackageResponseDto>>> SearchServicePackageByTextAsync(string text);
+    public Task<Result<PaginationResult<ServicePackageResponseDto>>> SearchServicePackageByTextAsync(string text, int itemCount, int index);
 }

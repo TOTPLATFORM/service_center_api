@@ -37,7 +37,7 @@ public interface IServiceService : IApplicationService, IScopedService
 	/// function to get all Service that assign to package  
 	/// </summary>
 	/// <returns>list all Service  response dto </returns>
-	public Task<Result<List<ServiceGetByIdResponseDto>>> GetServicesByPackageAsync(int servicePackageId);
+	public Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetServicesByPackageAsync(int servicePackageId, int itemCount, int index);
 
 	/// <summary>
 	/// function to get  Service  by id that take   Service id
@@ -63,7 +63,7 @@ public interface IServiceService : IApplicationService, IScopedService
 	/// </summary>
 	/// <param name="text">Service name</param>
 	/// <returns>Service response dto </returns>
-	public Task<Result<List<ServiceGetByIdResponseDto>>> SearchServiceByTextAsync(string text);
+	public Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> SearchServiceByTextAsync(string text,int itemCount,int index);
 
     /// <summary>
     /// function to get all Service that assign to category  

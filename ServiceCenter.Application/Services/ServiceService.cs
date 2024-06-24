@@ -182,13 +182,13 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		return Result.SuccessWithMessage("Service removed successfully");
 	}
 	///<inheritdoc/>
-	public async Task<Result<List<ServiceGetByIdResponseDto>>> SearchServiceByTextAsync(string text)
+	public async Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> SearchServiceByTextAsync(string text, int itemCount, int index)
 	{
 		var names = await _dbContext.Services
 		.ProjectTo<ServiceGetByIdResponseDto>(_mapper.ConfigurationProvider)
 		.Where(n => n.ServiceName.Contains(text))
-		.ToListAsync();
-		_logger.LogInformation("Fetching search Service by name . Total count: {Prouct}.", names.Count);
+		.GetAllWithPagination(itemCount,index);
+		_logger.LogInformation("Fetching search Service by name . Total count: {Prouct}.", names.Data.Count);
 		return Result.Success(names);
 	}
 
@@ -235,11 +235,11 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
 	}
 
-	public async Task<Result<List<ServiceGetByIdResponseDto>>> GetServicesByPackageAsync(int servicePackageId)
+	public async Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetServicesByPackageAsync(int servicePackageId, int itemCount, int index)
 	{
         var pacakge = await _dbContext.Services.Where(s => s.ServicePackages.Select(p => p.Id).First() == servicePackageId)
             .ProjectTo<ServiceGetByIdResponseDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
+            .GetAllWithPagination(itemCount,index);
 
         if (pacakge is null)
 		{

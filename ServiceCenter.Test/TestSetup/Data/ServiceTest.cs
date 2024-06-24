@@ -22,7 +22,7 @@ public static class ServiceTest
             ServiceDescription="ServiceDesc1",
             Avaliable=Status.Pending,
             CenterId=1,
-            ServiceCategoryId=1
+            ServiceCategoryId=1 
         },
         new Service
         {
