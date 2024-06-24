@@ -42,5 +42,11 @@ public interface IContactService : IApplicationService, IScopedService
 	/// <param name="contactRequestDto">the contact data transfer object containing the details necessary for creation.</param>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the contact addition.</returns>
 	public Task<Result<ContactResponseDto>> RegisterCustomerAsync(CustomerRequestDto customerRequestDto);
+    /// <summary>
+    /// asynchronously retrieves a contact by their unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the contact to retrieve.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the contact response DTO.</returns>
+    public Task<Result<ContactResponseDto>> GetContacttByIdAsync(string id);
 
 }

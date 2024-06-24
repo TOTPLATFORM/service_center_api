@@ -58,9 +58,27 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		return Result.Success(result);
 	}
 
-	///<inheritdoc/>
+    public async Task<Result<ContactResponseDto>> GetContacttByIdAsync(string id)
+    {
+        var result = await _dbContext.Contacts
+                .ProjectTo<ContactResponseDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
-	public async Task<Result<ContactResponseDto>> RegisterCustomerAsync(CustomerRequestDto customerRequestDto)
+        if (result is null)
+        {
+            _logger.LogWarning("Contact Id not found,Id {ContactId}", id);
+
+            return Result.NotFound(["Contact not found"]);
+        }
+
+        _logger.LogInformation("Fetching Contact");
+
+        return Result.Success(result);
+    }
+
+    ///<inheritdoc/>
+
+    public async Task<Result<ContactResponseDto>> RegisterCustomerAsync(CustomerRequestDto customerRequestDto)
 	{
 		var contact = _mapper.Map<Contact>(customerRequestDto);
 

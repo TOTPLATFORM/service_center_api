@@ -19,7 +19,7 @@ public static class ScheduleTest
             DayOfWeek = 0,
             StartTime = new TimeOnly(02, 00, 00),
             EndTime = new TimeOnly(03, 30, 00),
-            ServiceProviderId = "0d133c1a-804f-4548-8f7e-8c3f504844e0"
+            ServiceId = 1,   
         },
         new Schedule
         {
@@ -27,7 +27,7 @@ public static class ScheduleTest
             DayOfWeek = 0,
             StartTime = new TimeOnly(04, 00, 00),
             EndTime = new TimeOnly(07, 30, 00),
-            ServiceProviderId = "0d133c1a-804f-4548-8f7e-8c3f504844e0"
+            ServiceId = 1,
         }
         ); ;
     }

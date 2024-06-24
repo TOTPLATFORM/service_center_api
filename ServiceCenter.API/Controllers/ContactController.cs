@@ -24,7 +24,7 @@ public class ContactController(IContactService contactService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPost]
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize(Roles = "Admin,Contact")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> AddContact(ContactRequestDto contactRequestDto)
@@ -54,7 +54,7 @@ public class ContactController(IContactService contactService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-    [Authorize(Roles = "Admin,Manager,Sales")]
+    [Authorize(Roles = "Admin,Contact,Sales")]
     [ProducesResponseType(typeof(Result<PaginationResult<ContactResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<PaginationResult<ContactResponseDto>>> GetAllContacts(int itemCount , int index)
 	{
@@ -76,4 +76,21 @@ public class ContactController(IContactService contactService) : BaseController
 	{
 		return await _contactService.UpdateContactStatusAsync(id, status);
 	}
+    /// <summary>
+    /// get contact in the system.
+    /// </summary>
+    ///<param name="id">id of contact.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpGet("{id}")]
+    [Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<ContactResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+    public async Task<Result<ContactResponseDto>> GetContactById(string id)
+    {
+        return await _contactService.GetContacttByIdAsync(id);
+    }
+
 }

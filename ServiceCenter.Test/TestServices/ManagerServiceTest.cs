@@ -137,7 +137,7 @@ public class ManagerServiceTest
     [Theory, TestPriority(2)]
     [InlineData("ksn56418942")]
     [InlineData("nksalknsdn")]
-    public async Task GetByIdCenter(string id)
+    public async Task GetByIdManager(string id)
     {
         // Arrange
         CheckService();
