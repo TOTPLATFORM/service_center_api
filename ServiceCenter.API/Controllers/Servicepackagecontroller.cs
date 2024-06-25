@@ -84,10 +84,10 @@ public class ServicePackageController(IServicePackageService ServicePackageServi
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "Manager,Admin")]
-    [ProducesResponseType(typeof(Result<ServicePackageResponseDto>), StatusCodes.Status200OK)]
+   // [Authorize(Roles = "Manager,Admin")]
+    [ProducesResponseType(typeof(Result<ServicePackageGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<ServicePackageResponseDto>> GetServicePackageById(int id)
+    public async Task<Result<ServicePackageGetByIdResponseDto>> GetServicePackageById(int id)
     {
         return await _ServicePackageService.GetServicePackageByIdAsync(id);
     }

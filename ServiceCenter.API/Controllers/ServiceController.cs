@@ -121,7 +121,7 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	}
 
 	[HttpGet("search/ByPackage/{servicePackageId}")]
-	[Authorize(Roles = "Admin")]
+	//[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<PaginationResult<ServiceGetByIdResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetServicesByPacakge(int servicePackageId, int itemCount, int index)
@@ -136,7 +136,7 @@ public class ServiceController(IServiceService ServiceService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpGet("search/ByCategory")]
-	[AllowAnonymous]
+	//[AllowAnonymous]
     [ProducesResponseType(typeof(Result<PaginationResult<ServiceGetByIdResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetServicesByCategory(int serviceCategoryId, int itemCount, int index)

@@ -117,10 +117,10 @@ public class ServicePackageService(ServiceCenterBaseDbContext dbContext, IMapper
         return Result.Success(ServicePackageResponse);
     }
     ///<inheritdoc/>
-    public async Task<Result<ServicePackageResponseDto>> GetServicePackageByIdAsync(int id)
+    public async Task<Result<ServicePackageGetByIdResponseDto>> GetServicePackageByIdAsync(int id)
     {
         var result = await _dbContext.ServicePackages
-            .ProjectTo<ServicePackageResponseDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<ServicePackageGetByIdResponseDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(p => p.Id == id);
 
         if (result is null)

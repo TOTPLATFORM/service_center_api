@@ -39,9 +39,9 @@ public interface IReportService : IApplicationService, IScopedService
     /// function to update Report  that take ReportRequestDto   
     /// </summary>
     /// <param name="id">Report id</param>
-    /// <param name="ReportRequestDto">Report dto</param>
+    /// <param name="task">task of report</param>
     /// <returns>Updated Report </returns>
-    public Task<Result<ReportResponseDto>> UpdateReportAsync(int id, ReportRequestDto ReportRequestDto);
+    public Task<Result<ReportResponseDto>> UpdateReportAsync(int id, string task);
     /// <summary>
     /// function to delete Report  that take Report  id   
     /// </summary>

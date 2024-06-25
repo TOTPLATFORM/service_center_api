@@ -30,7 +30,7 @@ public interface IServiceCategoryService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="id"> service category id</param>
     /// <returns> service category response dto</returns>
-    public Task<Result<ServiceCategoryResponseDto>> GetServiceCategoryByIdAsync(int id);
+    public Task<Result<ServiceCategoryGetByIdResponseDto>> GetServiceCategoryByIdAsync(int id);
     /// <summary>
     /// function to update service category that take service category request dto   
     /// </summary>
