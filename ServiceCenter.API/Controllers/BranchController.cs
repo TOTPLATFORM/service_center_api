@@ -37,8 +37,8 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// </summary>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-	[ProducesResponseType(typeof(Result<PaginationResult<BranchResponseDto>>), StatusCodes.Status200OK)]
-	public async Task<Result<PaginationResult<BranchResponseDto>>> GetAllBranches(int itemCount,int index)
+	[ProducesResponseType(typeof(Result<PaginationResult<BranchGetByIdResponseDto>>), StatusCodes.Status200OK)]
+	public async Task<Result<PaginationResult<BranchGetByIdResponseDto>>> GetAllBranches(int itemCount,int index)
 	{
 		return await _branchService.GetAllBranchesAsync(itemCount,index);
 	}
@@ -52,9 +52,9 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
 	//[Authorize(Roles = "Admin,Manager")]
-	[ProducesResponseType(typeof(Result<BranchResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<BranchGetByIdResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<BranchResponseDto>> GetBranchById(int id)
+	public async Task<Result<BranchGetByIdResponseDto>> GetBranchById(int id)
 	{
 		return await _branchService.GetBranchByIdAsync(id);
 	}
@@ -71,9 +71,9 @@ public class BranchController(IBranchService branchService) : BaseController
 
 	[HttpPut("{id}")]
 	[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<BranchResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<BranchGetByIdResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<BranchResponseDto>> UpdateBranch(int id, BranchRequestDto branchRequestDto)
+	public async Task<Result<BranchGetByIdResponseDto>> UpdateBranch(int id, BranchRequestDto branchRequestDto)
 	{
 		return await _branchService.UpdateBranchAsync(id, branchRequestDto);
 	}
@@ -88,9 +88,9 @@ public class BranchController(IBranchService branchService) : BaseController
 
 	[HttpGet("search/{text}")]
 	//[Authorize(Roles = "Admin,Manager,Customer")]
-	[ProducesResponseType(typeof(Result<BranchResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<BranchGetByIdResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<PaginationResult<BranchResponseDto>>> SerachBranchByText(string text,int itemCount,int index)
+	public async Task<Result<PaginationResult<BranchGetByIdResponseDto>>> SerachBranchByText(string text,int itemCount,int index)
 	{
 		return await _branchService.SearchBranchByTextAsync(text,  itemCount,  index);
 	}

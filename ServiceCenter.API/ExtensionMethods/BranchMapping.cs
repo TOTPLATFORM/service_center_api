@@ -11,10 +11,15 @@ public static class BranchMapping
 		map.CreateMap<BranchRequestDto, Branch>();
 			  
 
-		map.CreateMap<Branch, BranchResponseDto>()
+		map.CreateMap<Branch, BranchGetByIdResponseDto>()
 			.ForMember(dest => dest.Country, src => src.MapFrom(src => src.Address.Country))
 			.ForMember(dest => dest.PostalCode, src => src.MapFrom(src => src.Address.PostalCode))
 			.ForMember(dest => dest.City, src => src.MapFrom(src => src.Address.City))
 			.ReverseMap();
-	}
+        map.CreateMap<Branch, BranchResponseDto>()
+            .ForMember(dest => dest.Country, src => src.MapFrom(src => src.Address.Country))
+            .ForMember(dest => dest.PostalCode, src => src.MapFrom(src => src.Address.PostalCode))
+            .ForMember(dest => dest.City, src => src.MapFrom(src => src.Address.City))
+            .ReverseMap();
+    }
 }

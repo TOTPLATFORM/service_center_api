@@ -9,17 +9,17 @@ public static class ComplaintMapping
     public static void AddCompliantMapping(this MappingProfiles map)
     {
   
-        map.CreateMap<ComplaintRequestDto, Complaint>()
-           .ForPath(dest => dest.Contact.Id, src => src.MapFrom(src => src.ContactId))
-          .ForPath(dest => dest.ServiceProvider.Id, src => src.MapFrom(src => src.ServiceProviderId))
-          .ForPath(dest => dest.Branch.Id, src => src.MapFrom(src => src.BranchId))
-          .ForMember(dest =>dest.ComplaintStatus,src=>src.MapFrom(src => src.ComplaintStatus))
+        map.CreateMap<Complaint,ComplaintRequestDto>()
+           .ForPath(dest => dest.ContactId, src => src.MapFrom(src => src.Contact.Id))
+          .ForPath(dest => dest.ServiceProviderId, src => src.MapFrom(src => src.ServiceProvider.Id))
+          .ForPath(dest => dest.BranchId, src => src.MapFrom(src => src.Branch.Id))
+         // .ForMember(dest => dest.ComplaintStatus, opt => opt.MapFrom(src => src.ComplaintStatus))
            .ReverseMap();
 
-        map.CreateMap<Complaint,ComplaintResponseDto>()
-            .ForMember(dest => dest.ContactName, src => src.MapFrom(src => src.Contact.FirstName))
-            .ForMember(dest => dest.ComplaintDate, opt => opt.MapFrom(src => src.CreatedDate))
-             .ForMember(dest => dest.ComplaintStatus, src => src.MapFrom(src => src.ComplaintStatus))
+        map.CreateMap<ComplaintResponseDto,Complaint>()
+            .ForPath(dest => dest.Contact.FirstName, src => src.MapFrom(src => src.ContactName))
+            .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.ComplaintDate))
+
             .ReverseMap();
        
     }

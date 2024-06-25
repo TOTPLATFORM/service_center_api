@@ -107,8 +107,6 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 
         result.ModifiedBy = _userContext.Email;
 
-        _mapper.Map(result, complaintStatus);
-
         await _dbContext.SaveChangesAsync();
    
         var ComplaintResponse = _mapper.Map<ComplaintResponseDto>(result);

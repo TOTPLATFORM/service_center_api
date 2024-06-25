@@ -62,10 +62,10 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
     }
 
 	///<inheritdoc/>
-	public async Task<Result<PaginationResult<BranchResponseDto>>> GetAllBranchesAsync(int itemCount, int index)
+	public async Task<Result<PaginationResult<BranchGetByIdResponseDto>>> GetAllBranchesAsync(int itemCount, int index)
 	{
 		var result = await _dbContext.Branches
-				 .ProjectTo<BranchResponseDto>(_mapper.ConfigurationProvider)
+				 .ProjectTo<BranchGetByIdResponseDto>(_mapper.ConfigurationProvider)
 				 .GetAllWithPagination( itemCount,  index);
 
 		_logger.LogInformation("Fetching all Branches. Total count: {Branch}.", result.Data.Count);
@@ -73,10 +73,10 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 		return Result.Success(result);
 	}
 	///<inheritdoc/>
-	public async Task<Result<BranchResponseDto>> GetBranchByIdAsync(int id)
+	public async Task<Result<BranchGetByIdResponseDto>> GetBranchByIdAsync(int id)
 	{
 		var result = await _dbContext.Branches
-				.ProjectTo<BranchResponseDto>(_mapper.ConfigurationProvider)
+				.ProjectTo<BranchGetByIdResponseDto>(_mapper.ConfigurationProvider)
 				.FirstOrDefaultAsync(timeslot => timeslot.Id == id);
 
 		if (result is null)
@@ -93,7 +93,7 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 
 	///<inheritdoc/>
 
-	public async Task<Result<BranchResponseDto>> UpdateBranchAsync(int id, BranchRequestDto branchRequestDto)
+	public async Task<Result<BranchGetByIdResponseDto>> UpdateBranchAsync(int id, BranchRequestDto branchRequestDto)
 	{
 		var result = await _dbContext.Branches.FindAsync(id);
 
@@ -109,7 +109,7 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 
 		await _dbContext.SaveChangesAsync();
 
-		var branch = _mapper.Map<BranchResponseDto>(result);
+		var branch = _mapper.Map<BranchGetByIdResponseDto>(result);
 
 		if (branch is null)
 		{
@@ -130,7 +130,7 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 	}
 
 	///<inheritdoc/>
-	public async Task<Result<PaginationResult<BranchResponseDto>>> SearchBranchByTextAsync(string text, int itemCount, int index)
+	public async Task<Result<PaginationResult<BranchGetByIdResponseDto>>> SearchBranchByTextAsync(string text, int itemCount, int index)
 	{
 
 
@@ -148,7 +148,7 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 		//}
 
 		var Days = await _dbContext.Branches
-					   .ProjectTo<BranchResponseDto>(_mapper.ConfigurationProvider)
+					   .ProjectTo<BranchGetByIdResponseDto>(_mapper.ConfigurationProvider)
 					   .Where(n => n.BranchName.Contains(text)||n.PostalCode.Contains(text)||n.EmailAddress.Contains(text))
 					   .GetAllWithPagination( itemCount,  index);
 
