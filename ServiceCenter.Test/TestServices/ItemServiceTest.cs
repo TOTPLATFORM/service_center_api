@@ -137,7 +137,7 @@ public class ItemServiceTest
     /// fuction to remove Item as a test case.
     /// </summary>
     /// <param name="id">Item id</param>
-    [Theory, TestPriority(4)]
+    [Theory, TestPriority(7)]
     [InlineData(3)]
     [InlineData(30)]
     public async Task RemoveItem(int id)
@@ -154,6 +154,22 @@ public class ItemServiceTest
         else
             Assert.False(result.IsSuccess);
 
+    }
+    /// <summary>
+    /// Tests the search functionality in the item service to ensure it can find item based on a search term.
+    /// </summary>
+    [Fact, TestPriority(4)]
+    public async Task SearchItems()
+    {
+        // Arrange
+        CheckService();
+        string text = "Item1";
+
+        // Act
+        var result = await _itemService.SearchItemByTextAsync(text, 2, 1);
+
+        // Assert
+        Assert.True(result.IsSuccess);
     }
 }
 

@@ -18,8 +18,8 @@ public static class ItemTest
         new Item
         {
             Id = 1,
-            ItemName = "Medical Mask",
-            ItemDescription = "Disposable medical face mask",
+            ItemName = "Item 1",
+            ItemDescription = "Desc Of Item 1",
             ItemStock = 1000,
             ItemPrice = 50,
           
@@ -27,8 +27,8 @@ public static class ItemTest
         new Item
         {
             Id = 2,
-            ItemName = "Antibiotic Ointment",
-            ItemDescription = "Topical antibiotic for minor cuts and wounds",
+            ItemName = "Item 2",
+            ItemDescription = "Desc Of Item 2",
             ItemStock = 500,
             ItemPrice = 20,
           
@@ -36,8 +36,8 @@ public static class ItemTest
         new Item
         {
             Id = 3,
-            ItemName = "Digital Thermometer",
-            ItemDescription = "Digital thermometer for measuring body temperature",
+            ItemName = "Item 3",
+            ItemDescription = "Desc Of Item 3",
             ItemStock = 200,
             ItemPrice = 30,
           
