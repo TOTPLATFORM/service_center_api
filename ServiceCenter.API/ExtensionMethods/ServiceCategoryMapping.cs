@@ -11,5 +11,7 @@ public static class ServiceCategoryMapping
         map.CreateMap<ServiceCategoryRequestDto, ServiceCategory>().ReverseMap();
         map.CreateMap<ServiceCategory, ServiceCategoryResponseDto>()
             .ReverseMap();
+        map.CreateMap<ServiceCategory, ServiceCategoryGetByIdResponseDto>()
+          .ReverseMap();
     }
 }

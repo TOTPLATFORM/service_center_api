@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -53,13 +55,13 @@ public class ServicePackageService(ServiceCenterBaseDbContext dbContext, IMapper
         return Result.SuccessWithMessage("ServicePackage added successfully");
     }
     ///<inheritdoc/>
-    public async Task<Result<List<ServicePackageResponseDto>>> GetAllServicePackageAsync()
+    public async Task<Result<PaginationResult<ServicePackageResponseDto>>> GetAllServicePackageAsync(int itemCount,int index)
     {
         var result = await _dbContext.ServicePackages
              .ProjectTo<ServicePackageResponseDto>(_mapper.ConfigurationProvider)
-             .ToListAsync();
+             .GetAllWithPagination(itemCount,index);
 
-        _logger.LogInformation("Fetching all  ServicePackage. Total count: { ServicePackage}.", result.Count);
+        _logger.LogInformation("Fetching all  ServicePackage. Total count: { ServicePackage}.", result.Data.Count);
 
         return Result.Success(result);
     }
@@ -115,10 +117,10 @@ public class ServicePackageService(ServiceCenterBaseDbContext dbContext, IMapper
         return Result.Success(ServicePackageResponse);
     }
     ///<inheritdoc/>
-    public async Task<Result<ServicePackageResponseDto>> GetServicePackageByIdAsync(int id)
+    public async Task<Result<ServicePackageGetByIdResponseDto>> GetServicePackageByIdAsync(int id)
     {
         var result = await _dbContext.ServicePackages
-            .ProjectTo<ServicePackageResponseDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<ServicePackageGetByIdResponseDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(p => p.Id == id);
 
         if (result is null)
@@ -133,13 +135,13 @@ public class ServicePackageService(ServiceCenterBaseDbContext dbContext, IMapper
         return Result.Success(result);
     }
     ///<inheritdoc/>
-    public async Task<Result<List<ServicePackageResponseDto>>> SearchServicePackageByTextAsync(string text)
+    public async Task<Result<PaginationResult<ServicePackageResponseDto>>> SearchServicePackageByTextAsync(string text, int itemCount, int index)
     {
         var names = await _dbContext.ServicePackages
         .ProjectTo<ServicePackageResponseDto>(_mapper.ConfigurationProvider)
         .Where(n => n.PackageName.Contains(text))
-        .ToListAsync();
-        _logger.LogInformation("Fetching search ServicePackage by name . Total count: {Prouct}.", names.Count);
+        .GetAllWithPagination(itemCount,index);
+        _logger.LogInformation("Fetching search ServicePackage by name . Total count: {Prouct}.", names.Data.Count);
         return Result.Success(names);
     }
 

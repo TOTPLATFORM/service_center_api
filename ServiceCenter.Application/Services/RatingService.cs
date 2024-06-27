@@ -133,7 +133,6 @@ public class RatingService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         }
         result.RatingValue = ratingValue;
         result.ModifiedBy = _userContext.Email;
-        _mapper.Map(result.RatingValue, ratingValue);
         await _dbContext.SaveChangesAsync();
 
 

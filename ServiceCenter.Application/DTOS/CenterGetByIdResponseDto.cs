@@ -12,7 +12,7 @@ public class CenterGetByIdResponseDto
     public string CenterName { get; set; } = "";
     public int OpeningHours { get; set; }
     public string Specialty { get; set; } = "";
-    public ICollection<BranchResponseDto> Branches { get; set; } = new HashSet<BranchResponseDto>();
+    public ICollection<BranchGetByIdResponseDto> Branches { get; set; } = new HashSet<BranchGetByIdResponseDto>();
     public ICollection<DepartmentResponseDto> Departments { get; set; } = new HashSet<DepartmentResponseDto>();
 
     public ICollection<ServiceResponseDto> Services { get; set; } = new HashSet<ServiceResponseDto>();

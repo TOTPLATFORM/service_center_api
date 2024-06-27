@@ -96,11 +96,11 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-	[ProducesResponseType(typeof(Result<ServiceGetByIdResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<PaginationResult<ServiceGetByIdResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-	public async Task<Result<List<ServiceGetByIdResponseDto>>> SearchServiceByText(string text)
+	public async Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> SearchServiceByText(string text, int itemCount, int index)
 	{
-		return await _ServiceService.SearchServiceByTextAsync(text);
+		return await _ServiceService.SearchServiceByTextAsync(text,itemCount,index);
 	}
 
 	/// <summary>
@@ -121,23 +121,22 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	}
 
 	[HttpGet("search/ByPackage/{servicePackageId}")]
-	[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<List<ServiceGetByIdResponseDto>>), StatusCodes.Status200OK)]
+	//[Authorize(Roles = "Admin")]
+	[ProducesResponseType(typeof(Result<PaginationResult<ServiceGetByIdResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<List<ServiceGetByIdResponseDto>>> GetServicesByPacakge(int servicePackageId)
+	public async Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetServicesByPacakge(int servicePackageId, int itemCount, int index)
 	{
-		return await _ServiceService.GetServicesByPackageAsync(servicePackageId);
+		return await _ServiceService.GetServicesByPackageAsync(servicePackageId,itemCount,index);
 	}
     /// <summary>
-    ///<param name="id">id of Service.</param>
-    ///<param name="ServiceRequestDto">Service dto.</param>
+    ///<param name="serviceCategoryId">Service category id.</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpGet("search/ByCategory")]
-	[AllowAnonymous]
+	//[AllowAnonymous]
     [ProducesResponseType(typeof(Result<PaginationResult<ServiceGetByIdResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetServicesByCategory(int serviceCategoryId, int itemCount, int index)

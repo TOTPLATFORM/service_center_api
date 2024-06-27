@@ -16,19 +16,20 @@ public static class ScheduleTest
         new Schedule
         {
             Id = 1,
-            DayOfWeek = DayOfWeek.Sunday,
-            StartTime =TimeOnly.Parse("10:30:00"),
-            EndTime = TimeOnly.Parse("10:30:00"),
-            ServiceProviderId = "0d133c1a-804f-4548-8f7e-8c3f504844e0"
+            DayOfWeek = 0,
+            StartTime = new TimeOnly(02, 00, 00),
+            EndTime = new TimeOnly(03, 30, 00),
+            ServiceId = 1,   
         },
         new Schedule
         {
             Id = 2,
-            DayOfWeek = DayOfWeek.Monday,
-            StartTime = TimeOnly.Parse("10:30:00"),
-            EndTime = TimeOnly.Parse("10:30:00"),
-            ServiceProviderId = "0d133c1a-804f-4548-8f7e-8c3f504844e0"
+            DayOfWeek = 0,
+            StartTime = new TimeOnly(04, 00, 00),
+            EndTime = new TimeOnly(07, 30, 00),
+            ServiceId = 1,
         }
         ); ;
     }
+    
 }

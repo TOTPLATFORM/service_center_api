@@ -137,7 +137,7 @@ public class ManagerServiceTest
     [Theory, TestPriority(2)]
     [InlineData("ksn56418942")]
     [InlineData("nksalknsdn")]
-    public async Task GetByIdCenter(string id)
+    public async Task GetByIdManager(string id)
     {
         // Arrange
         CheckService();
@@ -161,7 +161,7 @@ public class ManagerServiceTest
     /// <param name="centerId">Center Type id</param>
     /// <param name="expectedResult">expected result</param>
     [Theory, TestPriority(3)]
-    [InlineData("0d133c1a-804f-4548-8f7e-8c3f904804e0", "2000-12-20", "Mariam@gmail.com", "hager", "shaban", "0987654", 1, 1, "respon1", 3, true)]
+    [InlineData("sOB316984865", "2000-12-20", "Mariam@gmail.com", "hager", "shaban", "0987654", 1, 1, "respon1", 3, true)]
     [InlineData("ja1651666", "2000-12-30", "agershaban7@gmail.com", "hager", "shaban", "0987654", 1,1,"respon1",1, false)]
     public async Task UpdateManager(string id, string dateOfBirth, string email, string firstName, string lastName, string phoneNumber, int departmentId, int branchId,string respon,int experience, bool expectedResult)
     {

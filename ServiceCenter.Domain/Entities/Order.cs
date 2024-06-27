@@ -10,7 +10,7 @@ namespace ServiceCenter.Domain.Entities;
 
 public class Order : AuditableEntity
 {
-    public Contact Contact { get; set; }
+    public virtual  Contact Contact { get; set; }
     public Status OrderStatus { get; set; }
     public virtual ICollection<ItemOrder> ItemOrders { get; set; } = new HashSet<ItemOrder>();
 

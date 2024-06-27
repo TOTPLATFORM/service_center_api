@@ -139,7 +139,6 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
         }
         result.FeedbackDescription = feedbackDesc;
         result.ModifiedBy = _userContext.Email;
-        _mapper.Map(result, feedbackDesc);
         await _dbContext.SaveChangesAsync();
   
            

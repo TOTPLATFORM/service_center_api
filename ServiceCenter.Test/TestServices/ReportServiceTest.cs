@@ -89,7 +89,7 @@ public class ReportServiceTest
     /// </summary>
 
     [Theory, TestPriority(0)]
-    [InlineData("Desc1", "Product", "2000-12-30", "53ae72a7-589e-4f0b-81ed-40381")]
+    [InlineData("Desc1", "Product", "2000-12-30", "0d133c1a-804f-4508-8f7e-8c3f504844e0")]
     public async Task AddReport(string task, string priority, string dueDate, string salesId)
     {
         // Arrange
@@ -109,7 +109,7 @@ public class ReportServiceTest
     /// fuction to remove report as a test case that take report id
     /// </summary>
     /// <param name="id"> report id</param>
-    [Theory, TestPriority(6)]
+    [Theory, TestPriority(7)]
     [InlineData(1)]
     [InlineData(50)]
     public async Task RemoveReport(int id)
@@ -138,10 +138,10 @@ public class ReportServiceTest
     {
         // Arrange
         CheckService();
-        var reportRequestDto = new ReportRequestDto { Task = "task", Priority = "priority", DueDate = DateTime.Parse("2000-12-30"), SalesId = "53ae72a7-589e-4f0b-81ed-40381" };
+        var reportRequestDto = new ReportRequestDto { Task = "task", Priority = "priority", DueDate = DateTime.Parse("2000-12-30") };
 
         // Act
-        var result = await _reportService.UpdateReportAsync(id, reportRequestDto);
+        var result = await _reportService.UpdateReportAsync(id, "reportRequestDto");
 
         if (expectedResult)
         {
@@ -157,7 +157,7 @@ public class ReportServiceTest
     /// </summary>
     /// <param name="id">Report id</param>  
     [Theory, TestPriority(4)]
-    [InlineData(9, ReportStatus.Good, true)]
+    [InlineData(1, ReportStatus.Bad, true)]
     [InlineData(78, ReportStatus.Bad, false)]
     public async Task UpdateReportStatus(int id, ReportStatus reportStatus, bool expectedResult)
     {

@@ -69,12 +69,12 @@ public class ReportController(IReportService ReportService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Manager,Admin,Sales")]
+    [Authorize(Roles = "Admin,Sales")]
     [ProducesResponseType(typeof(Result<ReportResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<ReportResponseDto>> UpdateReport(int id, ReportRequestDto ReportRequestDto)
+    public async Task<Result<ReportResponseDto>> UpdateReport(int id, string task)
     {
-        return await _ReportService.UpdateReportAsync(id, ReportRequestDto);
+        return await _ReportService.UpdateReportAsync(id,task );
     }
     /// <summary>
     /// delete  Report  by id from the system.

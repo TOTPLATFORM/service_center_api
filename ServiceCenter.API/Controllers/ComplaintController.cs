@@ -70,7 +70,7 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
-    [HttpPut("{id}")]
+    [HttpPut("complaintId/{id}/status/{ComplaintStatus}")]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<ComplaintResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]

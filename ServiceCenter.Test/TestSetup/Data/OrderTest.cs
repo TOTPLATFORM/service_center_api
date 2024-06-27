@@ -17,18 +17,15 @@ public static class OrderTest
         new Order
         {
             Id = 1,
-            From = "Supplier A",
+           // From = "Supplier A",
             OrderStatus = Status.Pending,
-            OrderDate = DateTime.Parse("2024-03-14"),
-            OrderArrivalDate = DateTime.Parse("2024-03-20")
+           // OrderDate = DateTime.Parse("2024-03-14"),
+            //OrderArrivalDate = DateTime.Parse("2024-03-20")
         },
         new Order
         {
             Id = 2,
-            From = "Supplier B",
-            OrderStatus = Status.Approved,
-            OrderDate = DateTime.Parse("2024-03-14"),
-            OrderArrivalDate = DateTime.Parse("2024-03-20")
+           
         }
         );
     }
