@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Services;
 
-public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<ComplaintService> logger, IUserContextService  userContext) : IComplaintService
+public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<ComplaintService> logger, IUserContextService userContext) : IComplaintService
 {
     private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
     private readonly IMapper _mapper = mapper;
@@ -32,16 +32,16 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
     {
         var result = _mapper.Map<Complaint>(ComplaintRequestDto);
         result.Branch = null;
-        result.ServiceProvider= null;
+        result.ServiceProvider = null;
         if (ComplaintRequestDto.BranchId > 1)
         {
             var Branch = await _dbContext.Branches.FirstOrDefaultAsync(o => o.Id == ComplaintRequestDto.BranchId);
             result.Branch = Branch;
         }
-        if (ComplaintRequestDto.ServiceProviderId ==null)
+        if (ComplaintRequestDto.ServiceProviderId == null)
         {
-            var serviceProvider= await _dbContext.ServiceProviders.FirstOrDefaultAsync(o => o.Id == ComplaintRequestDto.ServiceProviderId);
-            result.ServiceProvider= serviceProvider;
+            var serviceProvider = await _dbContext.ServiceProviders.FirstOrDefaultAsync(o => o.Id == ComplaintRequestDto.ServiceProviderId);
+            result.ServiceProvider = serviceProvider;
         }
         var contact = await _dbContext.Contacts.FirstOrDefaultAsync(m => m.Id == ComplaintRequestDto.ContactId);
 
@@ -110,7 +110,6 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
         _mapper.Map(result, complaintStatus);
 
         await _dbContext.SaveChangesAsync();
-   
         var ComplaintResponse = _mapper.Map<ComplaintResponseDto>(result);
         if (ComplaintResponse is null)
         {
@@ -129,7 +128,6 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 
         return Result.Success(ComplaintResponse);
     }
-    
     ///<inheritdoc/>
     public async Task<Result> DeleteComplaintAsync(int id)
     {
@@ -184,7 +182,7 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
     public async Task<Result<PaginationResult<ComplaintResponseDto>>> SearchComplaintByStatusAsync(Status text, int itemCount, int index)
     {
         var Complaints = await _dbContext.Complaints
-         .Where(s => s.ComplaintStatus ==text )
+         .Where(s => s.ComplaintStatus == text)
          .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
          .GetAllWithPagination(itemCount, index);
 
