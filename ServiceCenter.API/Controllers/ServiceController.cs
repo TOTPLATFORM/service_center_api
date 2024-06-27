@@ -36,8 +36,8 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-	[ProducesResponseType(typeof(Result<PaginationResult<ServiceGetByIdResponseDto>>), StatusCodes.Status200OK)]
-	public async Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetAllService(int itemCount , int index)
+	[ProducesResponseType(typeof(Result<PaginationResult<ServiceResponseDto>>), StatusCodes.Status200OK)]
+	public async Task<Result<PaginationResult<ServiceResponseDto>>> GetAllService(int itemCount , int index)
 	{
 		return await _ServiceService.GetAllServiceAsync(itemCount,index);
 	}
@@ -66,9 +66,9 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 
 	[HttpPut("{id}")]
 	[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<ServiceGetByIdResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<ServiceResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<ServiceGetByIdResponseDto>> UpdateService(int id, ServiceRequestDto ServiceRequestDto)
+	public async Task<Result<ServiceResponseDto>> UpdateService(int id, ServiceRequestDto ServiceRequestDto)
 	{
 		return await _ServiceService.UpdateServiceAsync(id, ServiceRequestDto);
 	}
@@ -96,9 +96,9 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-	[ProducesResponseType(typeof(Result<PaginationResult<ServiceGetByIdResponseDto>>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<PaginationResult<ServiceResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-	public async Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> SearchServiceByText(string text, int itemCount, int index)
+	public async Task<Result<PaginationResult<ServiceResponseDto>>> SearchServiceByText(string text, int itemCount, int index)
 	{
 		return await _ServiceService.SearchServiceByTextAsync(text,itemCount,index);
 	}
@@ -121,10 +121,10 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	}
 
 	[HttpGet("search/ByPackage/{servicePackageId}")]
-	//[Authorize(Roles = "Admin")]
-	[ProducesResponseType(typeof(Result<PaginationResult<ServiceGetByIdResponseDto>>), StatusCodes.Status200OK)]
+	//[Authorize(Roles = "AdminServiceResponseDto
+	[ProducesResponseType(typeof(Result<PaginationResult<ServiceResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetServicesByPacakge(int servicePackageId, int itemCount, int index)
+	public async Task<Result<PaginationResult<ServiceResponseDto>>> GetServicesByPacakge(int servicePackageId, int itemCount, int index)
 	{
 		return await _ServiceService.GetServicesByPackageAsync(servicePackageId,itemCount,index);
 	}
@@ -135,11 +135,11 @@ public class ServiceController(IServiceService ServiceService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
-    [HttpGet("search/ByCategory")]
+    [HttpGet("search/ByCategory/{serviceCategoryId}")]
 	//[AllowAnonymous]
-    [ProducesResponseType(typeof(Result<PaginationResult<ServiceGetByIdResponseDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<PaginationResult<ServiceResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetServicesByCategory(int serviceCategoryId, int itemCount, int index)
+    public async Task<Result<PaginationResult<ServiceResponseDto>>> GetServicesByCategory(int serviceCategoryId, int itemCount, int index)
     {
         return await _ServiceService.GetServicesByCategoryAsync(serviceCategoryId,itemCount,index);
     }

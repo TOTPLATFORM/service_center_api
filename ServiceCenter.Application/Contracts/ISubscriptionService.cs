@@ -47,4 +47,10 @@ public interface ISubscriptionService : IApplicationService, IScopedService
     /// <param name="id">the unique identifier of the contract to delete.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
     public Task<Result> DeleteSubscriptionAsync(int id);
+    /// <summary>
+    /// function to search by Product   that take  Product category name
+    /// </summary>
+    /// <param name="text">Product  name</param>
+    /// <returns>Product response dto </returns>
+    public Task<Result<PaginationResult<SubscriptionResponseDto>>> GetSubscriptionsForSpecificCustomerAsync(string customerId, int itemCount, int index);
 }

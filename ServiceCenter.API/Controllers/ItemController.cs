@@ -77,7 +77,7 @@ public class ItemController(IItemService itemService) : BaseController
     /// <param name="index">Item index</param>
     /// <returns>Item response dto </returns>
 
-    [HttpGet("search")]
+    [HttpGet("search/{text}")]
     [Authorize(Roles = "ServiceProvider,Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result<ItemResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]

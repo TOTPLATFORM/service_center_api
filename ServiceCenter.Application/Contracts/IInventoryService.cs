@@ -32,7 +32,7 @@ public interface IInventoryService : IApplicationService ,IScopedService
 	/// </summary>
 	/// <param name="id">inventory id</param>
 	/// <returns>inventory response dto</returns>
-	public Task<Result<InventoryResponseDto>> GetInventoryByIdAsync(int id);
+	public Task<Result<InventoryGetByIdResponseDto>> GetInventoryByIdAsync(int id);
 
 	/// <summary>
 	/// function to update inventory that take InventoryRequestDto   
@@ -40,7 +40,7 @@ public interface IInventoryService : IApplicationService ,IScopedService
 	/// <param name="id">inventory id</param>
 	/// <param name="InventoryRequestDto">inventory dto</param>
 	/// <returns>Updated Inventory </returns>
-	public Task<Result<InventoryResponseDto>> UpdateInventoryAsync(int id, InventoryRequestDto InventoryRequestDto);
+	public Task<Result<InventoryResponseDto>> UpdateInventoryAsync(int id, InventoryUpdatedRequestDto InventoryRequestDto);
 
 
 	/// <summary>

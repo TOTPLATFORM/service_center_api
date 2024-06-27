@@ -10,8 +10,12 @@ public static class InventoryMapping
 	{
 		map.CreateMap<InventoryRequestDto, Inventory>()
 			.ReverseMap();
+        map.CreateMap<InventoryUpdatedRequestDto, Inventory>()
+            .ReverseMap();
 
-		map.CreateMap<Inventory, InventoryResponseDto>()
+        map.CreateMap<Inventory, InventoryResponseDto>()
 		   	.ReverseMap();
-	}
+        map.CreateMap<Inventory, InventoryGetByIdResponseDto>()
+               .ReverseMap();
+    }
 }

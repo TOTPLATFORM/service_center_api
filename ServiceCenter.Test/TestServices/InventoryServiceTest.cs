@@ -77,7 +77,7 @@ public class InventoryServiceTest
     {
         //Arrange
         CheckService();
-        var inventoryRequestDto = new InventoryRequestDto
+        var inventoryRequestDto = new InventoryUpdatedRequestDto
         {
             InventoryName = inventoryName
         };

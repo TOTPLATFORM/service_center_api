@@ -5,6 +5,7 @@ using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Core.Entities;
+using ServiceCenter.Application.Contracts;
 
 namespace ServiceCenter.API.Controllers;
 
@@ -93,5 +94,12 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
     {
         return await _SubscriptionService.DeleteSubscriptionAsync(id);
     }
-
+    [HttpGet("searchByCustomer/{subscriptionId}")]
+    [Authorize(Roles = "Admin,Manager")]
+    [ProducesResponseType(typeof(Result<PaginationResult<SubscriptionResponseDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+    public async Task<Result<PaginationResult<SubscriptionResponseDto>>> SearchSubscriptionByrelation(string customerId, int itemCount, int index)
+    {
+        return await _SubscriptionService.GetSubscriptionsForSpecificCustomerAsync(customerId, itemCount, index);
+    }
 }

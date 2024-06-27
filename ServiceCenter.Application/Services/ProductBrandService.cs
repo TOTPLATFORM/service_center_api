@@ -62,10 +62,10 @@ public class ProductBrandService(ServiceCenterBaseDbContext dbContext, IMapper m
  
 
     ///<inheritdoc/>
-    public async Task<Result<ProductBrandResponseDto>> GetProductBrandByIdAsync(int id)
+    public async Task<Result<ProductBrandGetByIdResponseDto>> GetProductBrandByIdAsync(int id)
     {
         var result = await _dbContext.ProductBrands
-                .ProjectTo<ProductBrandResponseDto>(_mapper.ConfigurationProvider)
+                .ProjectTo<ProductBrandGetByIdResponseDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(ProductBrand => ProductBrand.Id == id);
 
         if (result is null)

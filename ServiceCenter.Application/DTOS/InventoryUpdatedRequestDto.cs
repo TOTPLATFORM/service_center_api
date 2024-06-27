@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class SubscriptionRequestDto
+public class InventoryUpdatedRequestDto
 {
     [Required]
-    public DateOnly Duration { get; set; } 
+    public string InventoryName { get; set; } = "";
     [Required]
-    public int ServicePackageId { get; set; }
+    public string InventoryLocation { get; set; } = "";
     [Required]
-    public string CustomerId { get; set; }
+    public int InventoryCapacity { get; set; }
 }

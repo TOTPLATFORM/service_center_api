@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceCenter.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,4 +12,5 @@ public class SubscriptionResponseDto
     public int Id { get; set; }
     public DateOnly Duration { get; set; } 
    public ServicePackageGetByIdResponseDto Package { get; set; }
+    public  ContactResponseDto Contact { get; set; } 
 }
