@@ -23,7 +23,7 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
     /// </remarks>
     /// <returns>result for Subscription  added successfully.</returns>
     [HttpPost]
-    [Authorize(Roles = "Manager,Admin")]
+    [Authorize(Roles = "Manager,customer,ServiceProvider")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddSubscription(SubscriptionRequestDto SubscriptionDto)
@@ -40,7 +40,7 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
     /// </remarks> 
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize(Roles = "Admin,Manager,customer,ServiceProvider")]
     [ProducesResponseType(typeof(Result<PaginationResult<SubscriptionResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<PaginationResult<SubscriptionResponseDto>>> GetAllSubscription(int itemCount, int index)
     {
@@ -55,7 +55,7 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "Employee,Manager,Admin")]
+    [Authorize(Roles = "Manager,Admin,customer,ServiceProvider")]
     [ProducesResponseType(typeof(Result<SubscriptionResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<SubscriptionResponseDto>> GetSubscriptionById(int id)
@@ -71,7 +71,7 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Employee,Manager,Admin")]
+    [Authorize(Roles = "Manager,customer,ServiceProvider")]
     [ProducesResponseType(typeof(Result<SubscriptionResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<SubscriptionResponseDto>> UpdateSubscription(int id, SubscriptionRequestDto SubscriptionRequestDto)
@@ -87,7 +87,7 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager,Admin")]
+    [Authorize(Roles = "Manager,customer,ServiceProvider")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> DeleteSubscriptionAsycn(int id)
@@ -95,7 +95,7 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
         return await _SubscriptionService.DeleteSubscriptionAsync(id);
     }
     [HttpGet("searchByCustomer/{subscriptionId}")]
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize(Roles = "Manager,customer,ServiceProvider")]
     [ProducesResponseType(typeof(Result<PaginationResult<SubscriptionResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<PaginationResult<SubscriptionResponseDto>>> SearchSubscriptionByrelation(string customerId, int itemCount, int index)
