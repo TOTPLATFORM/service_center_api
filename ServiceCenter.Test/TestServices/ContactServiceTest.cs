@@ -87,11 +87,11 @@ public class ContactServiceTest
     /// <param name="centerId">Center Type id</param>
     [Theory, TestPriority(0)]
     [InlineData("hagershabaan7@gmail.com")]
-    public async Task AddContact(string contactEmail)
+    public async Task AddContact(string name)
     {
         // Arrange
         CheckService();
-        var contactRequestDto = new ContactRequestDto { Email = contactEmail };
+        var contactRequestDto = new ContactRequestDto {FirstName=name };
         // Act
         var result = await _contactService.AddContactAsync(contactRequestDto);
 
