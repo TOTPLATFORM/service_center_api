@@ -118,7 +118,7 @@ public class VendorService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
     {
         var vendor = await _dbContext.Vendors
                        .ProjectTo<VendorResponseDto>(_mapper.ConfigurationProvider)
-                       .Where(n => n.VendorFirstName.Contains(text))
+                       .Where(n => n.Contact.FirstName.Contains(text))
                        .GetAllWithPagination(itemcount,index);
 
         _logger.LogInformation("Fetching search branch by name . Total count: {branch}.", vendor.Data.Count);

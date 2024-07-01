@@ -10,9 +10,7 @@ public static class SalesMapping
     {
         map.CreateMap<SalesRequestDto, Sales>();
 
-        map.CreateMap<Sales, SalesResponseDto>()
-            .ForMember(dest => dest.SalesPhoneNumber, src => src.MapFrom(src => src.PhoneNumber))
-            .ForMember(dest => dest.SalesEmail, src => src.MapFrom(src => src.Email));
+        map.CreateMap<Sales, SalesResponseDto>();
 
     }
 }

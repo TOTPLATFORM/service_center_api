@@ -11,10 +11,5 @@ namespace ServiceCenter.Application.DTOS;
 public class SalesResponseDto
 {
     public string Id { get; set; } = "";
-    public string SalesEmail { get; set; } = "";
-    public string SalesFirstName { get; set; } = "";
-    public string SalesLastName { get; set; } = "";
-    public string SalesPhoneNumber { get; set; } = "";
-    public Gender Gender { get; set; }
-    public string UserName { get; set; } = "";
+    public EmployeeResponseDto Employee { get; set; } = default;
 }

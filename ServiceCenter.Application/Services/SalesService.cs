@@ -124,7 +124,7 @@ public class SalesService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
 
 		var sales = await _dbContext.Sales
 					   .ProjectTo<SalesResponseDto>(_mapper.ConfigurationProvider)
-					   .Where(n => n.SalesFirstName.Contains(text) )
+					   .Where(n => n.Employee.Contact.FirstName.Contains(text) )
 					   .GetAllWithPagination(itemCount,index);
 
 		_logger.LogInformation("Fetching search branch by name . Total count: {branch}.", sales.Data.Count);

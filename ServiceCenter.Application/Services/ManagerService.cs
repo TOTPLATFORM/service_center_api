@@ -90,7 +90,7 @@ public class ManagerService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
 		    var result = await _dbContext.Managers
 				.ProjectTo<ManagerResponseDto>(_mapper.ConfigurationProvider)
-				.Where(n => n.ManagerFirstName.Contains(text) || n.ManagerLastName.Contains(text))
+				.Where(n => n.Employee.Contact.FirstName.Contains(text) || n.Employee.Contact.LastName.Contains(text))
 				.GetAllWithPagination(itemCount,index);
 
 		_logger.LogInformation("Fetching search manager by name . Total count: {managers}.", result.Data.Count);
