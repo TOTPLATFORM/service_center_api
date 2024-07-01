@@ -12,6 +12,7 @@ using ServiceCenter.Application.ExtensionForServices;
 using ServiceCenter.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using ServiceCenter.Domain.Entities;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace hmswithlayers.application.services;
 
@@ -99,6 +100,16 @@ public class OrderService(ServiceCenterBaseDbContext dbcontext, IMapper mapper, 
             .Where(n => n.OrderStatus.Equals(text))
             .GetAllWithPagination(ItemCount,Index);
         _logger.LogInformation("fetching search order by name . total count: {order}.", orders.Data.Count);
+        return Result.Success(orders);
+    }
+
+    public async Task<Result<PaginationResult<OrderResponseDto>>> GetOrdersByCustomerId(string customerId, int ItemCount, int Index)
+    {
+        var orders = await _dbcontext.Orders
+            .Where(n => n.Customer.Id == customerId)
+            .ProjectTo<OrderResponseDto>(_mapper.ConfigurationProvider)
+            .GetAllWithPagination(ItemCount, Index);
+        _logger.LogInformation("fetching orders by customer id. total count: {order}.", orders.Data.Count);
         return Result.Success(orders);
     }
 }

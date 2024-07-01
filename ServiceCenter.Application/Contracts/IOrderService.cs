@@ -47,4 +47,10 @@ public interface IOrderService : IApplicationService, IScopedService
     /// <returns>order response dto </returns>
     public Task<Result<PaginationResult<OrderResponseDto>>> SearchOrderByTextAsync(Status text,int ItemCount,int Index);
 
+    /// <summary>
+    /// function to get orders by customer unique identifier.
+    /// </summary>
+    /// <param name="customerId">customer's unique identifier</param>
+    /// <returns>order response dto </returns>
+    public Task<Result<PaginationResult<OrderResponseDto>>> GetOrdersByCustomerId(string customerId, int ItemCount, int Index);
 }

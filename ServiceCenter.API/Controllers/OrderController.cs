@@ -75,4 +75,18 @@ public class OrderController(IOrderService orderService) : BaseController
     {
         return await _orderService.UpdateOrderStatusAsync(id, status);
     }
+
+    /// <summary>
+    /// action for get orders by customer id.
+    /// </summary>
+    /// <returns>result of the order response dto after updated successfully</returns>
+    [HttpPut("GetOrdersByCustomerId")]
+    [Authorize(Roles = "Customer")]
+    [ProducesResponseType(typeof(Result<PaginationResult<OrderResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<PaginationResult<OrderResponseDto>>> GetOrdersByCustomerId(int ItemCount, int Index)
+    {
+        var customerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        return await _orderService.GetOrdersByCustomerId(customerId, ItemCount, Index);
+    }
 }
