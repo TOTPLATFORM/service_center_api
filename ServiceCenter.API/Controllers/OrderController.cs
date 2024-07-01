@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using ServiceCenter.Core.Entities;
 
 namespace ServiceCenter.API.Controllers;
 
@@ -17,14 +18,16 @@ public class OrderController(IOrderService orderService) : BaseController
     /// action for Get all  orders based on the status that take status.
     /// </summary>
     /// <param name="status">The status of orders to retrieve</param>
+    /// <param name="ItemCount">item count of orders to retrieve</param>
+    /// <param name="Index">index of orders to retrieve</param>
     /// <returns>result of list from order response dto.</returns>
 
-    [HttpGet("{status}")]
+    [HttpGet()]
     [Authorize(Roles = "Admin,Employee")]
-    [ProducesResponseType(typeof(Result<List<OrderResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<List<OrderResponseDto>>> GetAllOrders(Status status)
+    [ProducesResponseType(typeof(Result<PaginationResult<OrderResponseDto>>), StatusCodes.Status200OK)]
+    public async Task<Result<PaginationResult<OrderResponseDto>>> GetAllOrders(Status status,int ItemCount,int Index)
     {
-        return await _orderService.GetAllOrderAsync(status);
+        return await _orderService.GetAllOrderAsync(status,ItemCount,Index);
     }
 
     /// <summary>
