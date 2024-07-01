@@ -70,6 +70,8 @@ public class MappingProfiles : Profile
 		this.AddCampaginMapping();
 
 		this.AddServiceProviderMapping();
+		this.AddExpenseMapping();
+		this.AddRevenueMapping();
 	}
 
 }

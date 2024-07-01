@@ -49,6 +49,8 @@ public class ContextGenerator
             Context.AddServiceProvider();   
             Context.AddVendor();
             Context.AddReport();
+            Context.AddRevenue();
+            Context.AddExpenses();
             Context.SaveChanges();
         }
 
