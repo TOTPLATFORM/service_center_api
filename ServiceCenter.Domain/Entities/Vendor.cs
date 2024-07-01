@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 namespace ServiceCenter.Domain.Entities;
 
 	public class Vendor : ApplicationUser
-	{
+{
+    public virtual Contact Contact { get; set; }
+    public int ContactId { get; set; }
     public DateOnly ContractStartDate { get; set; }
     public DateOnly ContractEndDate { get; set; }
     public virtual Center Center { get; set; }

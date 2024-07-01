@@ -32,7 +32,7 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 	{
 		
        // var role = "Contact";
-        var contact = _mapper.Map<Contact>(contactRequestDto);
+        var result = _mapper.Map<Contact>(contactRequestDto);
 
        //var contactAdded = await _authService.RegisterUserWithRoleAsync(contact, contactRequestDto.Password, role);
 
@@ -40,6 +40,25 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
        // {
        //     return Result.Error(contactAdded.Errors.FirstOrDefault());
        // }
+
+       
+        if (result is null)
+        {
+            _logger.LogError("Failed to map ContactRequestDto to Contact. ContactRequestDto: {@ContactRequestDto}", contactRequestDto);
+
+            return Result.Invalid(new List<ValidationError>
+            {
+                new ValidationError
+                {
+                    ErrorMessage = "Validation Errror"
+                }
+            });
+        }
+        result.CreatedBy = _userContext.Email;
+
+        _dbContext.Contacts.Add(result);
+
+        await _dbContext.SaveChangesAsync();
 
         _logger.LogInformation("Contact added successfully in the database");
 

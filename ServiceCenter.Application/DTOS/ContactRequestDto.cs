@@ -9,9 +9,13 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class ContactRequestDto : BaseUserRequestDto
+public class ContactRequestDto 
 {
-	public Address Address { get; set; } = default;
+    public string FirstName { get; set; } = "";
+    public string LastName { get; set; } = "";
+    public DateOnly DateOfBirth { get; set; }
+    public Gender Gender { get; set; }
+    public Address Address { get; set; } = default;
     public ContactStatus Status { get; set; } =  ContactStatus.Opportunity;
 
 }
