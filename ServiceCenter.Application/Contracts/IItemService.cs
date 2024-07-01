@@ -54,14 +54,14 @@ public interface IItemService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="orderedItems">Collection of The ordered items with ordered quantity.</param>
     /// <returns>The Result of the decrease items quantity attempt</returns>
-    public  Task<Result> DecreaseItemsQuantity(ICollection<ItemOrderRequestDto> orderedItems);
+    //public  Task<Result> DecreaseItemsQuantity(ICollection<ProductOrderRequestDto> orderedItems);
 
     /// <summary>
     /// Increases items quantity asynchronously.
     /// </summary>
     /// <param name="orderedItems">Collection of The ordered items with ordered quantity.</param>
     /// <returns>The Result of the increase items quantity attempt</returns>
-    public Task<Result> IncreaseItemsQuantity(ICollection<ItemOrderRequestDto> orderedItems);
+    //public Task<Result> IncreaseItemsQuantity(ICollection<ProductOrderRequestDto> orderedItems);
 
 
 }
