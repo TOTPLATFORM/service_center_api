@@ -6,13 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
-  
-   public class ItemOrderRequestDto
+public class ProductOrderResponseDto
 {
-    [Required]
-    public int ItemId { get; set; }
-    [Required]
-    [Range(1, int.MaxValue)]
+    public int Id { get; set; }
     public int Quantity { get; set; }
+    public ProductResponseDto Product { get; set; }
 }
 
