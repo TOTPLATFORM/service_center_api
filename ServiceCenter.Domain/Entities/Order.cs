@@ -12,6 +12,6 @@ public class Order : AuditableEntity
 {
     public virtual  Customer Customer { get; set; }
     public Status OrderStatus { get; set; }
-    public virtual ICollection<ProductOrder> ItemOrders { get; set; } = new HashSet<ProductOrder>();
+    public virtual ICollection<ProductOrder> ProductOrders { get; set; } = new HashSet<ProductOrder>();
 
 }

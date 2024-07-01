@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Enums;
 using System;
@@ -24,7 +25,7 @@ public interface IOrderService : IApplicationService, IScopedService
     /// </summary>
     ///   <param name="status">order status</param>
     /// <returns>list all order response dto </returns>
-    public Task<Result<List<OrderResponseDto>>> GetAllOrderAsync(Status status);
+    public Task<Result<PaginationResult<OrderResponseDto>>> GetAllOrderAsync(Status status,int ItemCount,int Index);
     /// <summary>
     /// function to get  order by id that take   order id
     /// </summary>
@@ -44,6 +45,12 @@ public interface IOrderService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">order status</param>
     /// <returns>order response dto </returns>
-    public Task<Result<List<OrderResponseDto>>> SearchOrderByTextAsync(Status text);
+    public Task<Result<PaginationResult<OrderResponseDto>>> SearchOrderByTextAsync(Status text,int ItemCount,int Index);
 
+    /// <summary>
+    /// function to get orders by customer unique identifier.
+    /// </summary>
+    /// <param name="customerId">customer's unique identifier</param>
+    /// <returns>order response dto </returns>
+    public Task<Result<PaginationResult<OrderResponseDto>>> GetOrdersByCustomerId(string customerId, int ItemCount, int Index);
 }

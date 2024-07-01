@@ -11,9 +11,9 @@ namespace ServiceCenter.Application.DTOS;
 public class OrderRequestDto
 {
     [Required]
-    public string ContactId { get; set; } = "";
+    public string CustomerId { get; set; } = "";
     [Required]
     public string OrderStatus { get; set; } = "";
-    public ICollection<ItemOrderRequestDto> ItemOrders { get; set; }
+    public ICollection<ProductOrderRequestDto> ProductOrders { get; set; }
 
 }
