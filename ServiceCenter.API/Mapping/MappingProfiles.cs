@@ -72,6 +72,13 @@ public class MappingProfiles : Profile
 		this.AddServiceProviderMapping();
 		this.AddExpenseMapping();
 		this.AddRevenueMapping();
+		this.AddRecruitmentMapping();
+		this.AddPreformanceMapping();
+		this.AddAttendanceMapping();
+		this.AddSalaryMapping();
+		this.AddApplicantMapping();
+		this.AddLeaveRequestMapping();
+		this.AddLeaveTypetMapping();
 	}
 
 }

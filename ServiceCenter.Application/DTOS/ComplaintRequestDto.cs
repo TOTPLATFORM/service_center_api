@@ -13,7 +13,7 @@ public class ComplaintRequestDto
    [Required]
     public string ComplaintDescription { get; set; } = "";
     [Required]
-    public string ContactId { get; set; } = "";
+    public string CustomerId { get; set; } = "";
     public Status ComplaintStatus { get; set; }=Status.Pending;
     public string ServiceProviderId { get; set; } = "";
     public int BranchId { get; set; }

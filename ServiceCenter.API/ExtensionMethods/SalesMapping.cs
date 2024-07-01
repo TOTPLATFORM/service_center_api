@@ -11,8 +11,6 @@ public static class SalesMapping
         map.CreateMap<SalesRequestDto, Sales>();
 
         map.CreateMap<Sales, SalesResponseDto>()
-            .ForMember(dest => dest.SalesFirstName, src => src.MapFrom(src => src.FirstName))
-            .ForMember(dest => dest.SalesLastName, src => src.MapFrom(src => src.LastName))
             .ForMember(dest => dest.SalesPhoneNumber, src => src.MapFrom(src => src.PhoneNumber))
             .ForMember(dest => dest.SalesEmail, src => src.MapFrom(src => src.Email));
 

@@ -13,14 +13,7 @@ public class EmployeeConfigurations : IEntityTypeConfiguration<Employee>
 {
 	public void Configure(EntityTypeBuilder<Employee> builder)
 	{
-		builder.Property(T => T.FirstName)
-			.HasColumnType("varchar")
-			.HasMaxLength(30);
-
-		builder.Property(T => T.LastName)
-			.HasColumnType("varchar")
-			.HasMaxLength(30);
-
-		builder.Property(T => T.Gender).IsRequired();
+		builder.ToTable("Employees");
+		
 	}
 }

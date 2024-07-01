@@ -43,7 +43,7 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
             var serviceProvider = await _dbContext.ServiceProviders.FirstOrDefaultAsync(o => o.Id == ComplaintRequestDto.ServiceProviderId);
             result.ServiceProvider = serviceProvider;
         }
-        var contact = await _dbContext.Contacts.FirstOrDefaultAsync(m => m.Id == ComplaintRequestDto.ContactId);
+        var contact = await _dbContext.Customers.FirstOrDefaultAsync(m => m.Id == ComplaintRequestDto.CustomerId);
 
         if (result is null)
         {
@@ -57,7 +57,7 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
     });
         }
         result.CreatedBy = _userContext.Email;
-        result.Contact = contact;
+        result.Customer = contact;
 
         _dbContext.Complaints.Add(result);
 
@@ -146,7 +146,7 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
     public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetComplaintsForSpecificCustomerAsync(string customerId, int itemCount, int index)
     {
         var Complaints = await _dbContext.Complaints
-              .Where(s => s.Contact.Id == customerId)
+              .Where(s => s.Customer.Id == customerId)
               .ProjectTo<ComplaintResponseDto>(_mapper.ConfigurationProvider)
               .GetAllWithPagination(itemCount, index);
 

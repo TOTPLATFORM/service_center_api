@@ -10,14 +10,14 @@ public static class ComplaintMapping
     {
   
         map.CreateMap<Complaint,ComplaintRequestDto>()
-           .ForPath(dest => dest.ContactId, src => src.MapFrom(src => src.Contact.Id))
+           .ForPath(dest => dest.CustomerId, src => src.MapFrom(src => src.Customer.Id))
           .ForPath(dest => dest.ServiceProviderId, src => src.MapFrom(src => src.ServiceProvider.Id))
           .ForPath(dest => dest.BranchId, src => src.MapFrom(src => src.Branch.Id))
          // .ForMember(dest => dest.ComplaintStatus, opt => opt.MapFrom(src => src.ComplaintStatus))
            .ReverseMap();
 
         map.CreateMap<ComplaintResponseDto,Complaint>()
-            .ForPath(dest => dest.Contact.FirstName, src => src.MapFrom(src => src.ContactName))
+            .ForPath(dest => dest.Customer.Contact.FirstName, src => src.MapFrom(src => src.CustomerName))
             .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.ComplaintDate))
 
             .ReverseMap();

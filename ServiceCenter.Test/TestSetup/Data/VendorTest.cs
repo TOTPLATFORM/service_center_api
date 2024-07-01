@@ -17,11 +17,7 @@ public static  class VendorTest
         new Vendor
         {
             Id = "0d133c1a-809f-4548-8f7e-8c3f504844e0",
-            DateOfBirth = DateOnly.Parse("2000/12/30"),
             Email = "agershaban7@gmail.com",
-            FirstName = "hager",
-            LastName = "shaban",
-            Gender = Gender.Female,
             PhoneNumber = "0621654984",
             ContractStartDate = DateOnly.Parse("2000/12/30"),
             ContractEndDate = DateOnly.Parse("2000/12/30"),
@@ -29,11 +25,7 @@ public static  class VendorTest
         new Vendor
         {
             Id = "sOBi16984165",
-            DateOfBirth = DateOnly.Parse("2000/12/30"),
             Email = "agershaban7@gmail.com",
-            FirstName = "hager",
-            LastName = "shaban",
-            Gender = Gender.Female,
             PhoneNumber = "0621654984",
             ContractStartDate = DateOnly.Parse("2000/12/30"),
             ContractEndDate = DateOnly.Parse("2000/12/30"),

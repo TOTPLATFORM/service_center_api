@@ -27,7 +27,7 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
     {
         var sales = await _dbContext.Sales.FirstOrDefaultAsync(s => s.Id == ReportRequestDto.SalesId);
         var Manager = await _dbContext.Managers.FirstOrDefaultAsync(s => s.Id == ReportRequestDto.ManagerId);
-        var Contact = await _dbContext.Contacts.FirstOrDefaultAsync(s => s.Id == ReportRequestDto.ContactId);
+        var Contact = await _dbContext.Customers.FirstOrDefaultAsync(s => s.Id == ReportRequestDto.CustomerId);
         var result = _mapper.Map<Report>(ReportRequestDto);
         if (result is null)
         {
@@ -42,7 +42,7 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         }
         result.CreatedBy = _userContext.Email;
         result.Manager=Manager;
-        result.Contact = Contact;
+        result.Customer = Contact;
         result.Sales = sales;
 
         _dbContext.Reports.Add(result);
@@ -147,10 +147,10 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         var role =await _dbContext.Roles.FirstOrDefaultAsync(r => r.Name == "Customer");
 
 
-        var contact = await _dbContext.Contacts.FindAsync(Report.Contact.Id);
+        var contact = await _dbContext.Customers.FindAsync(Report.Customer.Id);
         if (status == ReportStatus.Good)
         {
-            contact.Status = ContactStatus.Customer;
+            contact.Contact.Status = ContactStatus.Customer;
             var roleUser= await _dbContext.UserRoles.FirstOrDefaultAsync(u => u.UserId == contact.Id);
             var roleUserNew = new IdentityUserRole<string>
             {
@@ -162,10 +162,10 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         }
         if (status == ReportStatus.Bad)
         {
-             contact.Status = ContactStatus.Cancelled;
+             contact.Contact.Status = ContactStatus.Cancelled;
         }
         Report.ModifiedBy = _userContext.Email;
-        _dbContext.Contacts.Update(contact);
+        _dbContext.Customers.Update(contact);
         _dbContext.Reports.Update(Report);
         await _dbContext.SaveChangesAsync();
         var reportResponseDto = _mapper.Map<ReportResponseDto>(Report);

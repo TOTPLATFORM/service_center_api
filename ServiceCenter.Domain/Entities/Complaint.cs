@@ -12,7 +12,7 @@ public class Complaint : AuditableEntity
 {
     public string ComplaintDescription { get; set; } = "";
     public Status ComplaintStatus { get; set; }
-    public virtual Contact Contact { get; set; } = default;
+    public virtual Customer Customer { get; set; } = default;
     public virtual ServiceProvider? ServiceProvider { get; set; } = default;
     public virtual Branch? Branch { get; set; } = default;
 

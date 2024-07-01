@@ -14,21 +14,7 @@ public class UserConfigurations : IEntityTypeConfiguration<ApplicationUser>
     public void Configure(EntityTypeBuilder<ApplicationUser> builder)
     {
 
-        builder.UseTptMappingStrategy();
-
-        builder.Property(T => T.FirstName)
-            .HasColumnType("varchar")
-            .IsRequired()
-            .HasMaxLength(30);
-
-        builder.Property(T => T.LastName)
-            .HasColumnType("varchar")
-            .HasMaxLength(30);
-
-        builder.Property(T => T.Gender);
-
-        builder.Property(T => T.DateOfBirth)
-               .IsRequired();
+     
     }
 
 }

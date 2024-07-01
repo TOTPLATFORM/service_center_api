@@ -16,6 +16,6 @@ public class Report : AuditableEntity
     public DateTime DueDate { get; set; }
 
      public virtual Manager? Manager { get; set; } = default;
-    public virtual Contact Contact { get; set; } = default;
+    public virtual Customer Customer { get; set; } = default;
     public virtual Sales Sales { get; set; } = default;
 }

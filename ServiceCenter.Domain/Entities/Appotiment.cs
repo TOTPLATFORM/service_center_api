@@ -10,12 +10,12 @@ namespace ServiceCenter.Domain.Entities;
 
 public class Appointment : AuditableEntity
 {
-    public string ContactId { get; set; } = "";
+    public string CustomerId { get; set; } = "";
     public int ScheduleId { get; set; }
     public DateTime AppointmentDate { get; set; }
     public AppointmentStatus Status { get; set; } // E.g., Scheduled, Completed, Canceled
     public string Description { get; set; } = "";
-    public virtual Contact Contact { get; set; }
+    public virtual Customer Customer { get; set; }
     public virtual Schedule Schedule { get; set; }
 }
 

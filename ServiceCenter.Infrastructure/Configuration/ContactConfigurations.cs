@@ -13,6 +13,7 @@ public class ContactConfigurations :IEntityTypeConfiguration<Contact>
 {
 	public void Configure(EntityTypeBuilder<Contact> builder)
 	{
+		builder.ToTable("Contacts");
 		builder.Property(p => p.FirstName)
 		.HasColumnType("varchar")
 		.IsRequired()

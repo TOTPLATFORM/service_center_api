@@ -12,8 +12,6 @@ public static class WareHouseManagerMapping
         map.CreateMap<WareHouseManager, WareHouseManagerResponseDto>()
             .ForMember(d => d.WareHouseManagerEmail, o => o.MapFrom(s => s.Email))
             .ForMember(d => d.WareHouseManagerPhoneNumber, o => o.MapFrom(s => s.PhoneNumber))
-            .ForMember(d => d.WareHouseManagerFirstName, o => o.MapFrom(s => s.FirstName))
-            .ForMember(d => d.WareHouseManagerLastName, o => o.MapFrom(s => s.LastName))
             .ForMember(d => d.InventoryName, o => o.MapFrom(s => s.Inventory.InventoryName));
     }
 }

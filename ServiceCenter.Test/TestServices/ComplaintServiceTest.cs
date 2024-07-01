@@ -94,7 +94,7 @@ public class ComplaintServiceTest
     {
         // Arrange
         CheckService();
-        var ComplaintRequestDto = new ComplaintRequestDto { ComplaintDescription = ComplaintDesc, ComplaintStatus = status,ContactId=customerId ,BranchId=branchId};
+        var ComplaintRequestDto = new ComplaintRequestDto { ComplaintDescription = ComplaintDesc, ComplaintStatus = status,CustomerId=customerId ,BranchId=branchId};
 
         // Act
         var result = await _ComplaintService.AddComplaintAsync(ComplaintRequestDto);

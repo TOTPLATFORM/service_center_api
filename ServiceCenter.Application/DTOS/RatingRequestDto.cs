@@ -13,7 +13,7 @@ public class RatingRequestDto
     [Range(1, 5)]
     public int RatingValue { get; set; }
     [Required]
-    public string ContactId { get; set; } 
+    public string CustomerId { get; set; } 
     public int ProductId { get; set; }
     public int ServiceId { get; set; }
 

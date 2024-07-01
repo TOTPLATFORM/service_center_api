@@ -26,7 +26,7 @@ public class RatingService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         var result = _mapper.Map<Rating>(ratingRequestDto);
         result.Product = null;
         result.Service = null;
-        var contact = await _dbContext.Contacts.FirstOrDefaultAsync(m => m.Id == ratingRequestDto.ContactId);
+        var contact = await _dbContext.Customers.FirstOrDefaultAsync(m => m.Id == ratingRequestDto.CustomerId);
         if (contact == null)
         {
             _logger.LogError("No contact found in the database.");
@@ -84,7 +84,7 @@ public class RatingService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
     });
         }
         result.CreatedBy = _userContext.Email;
-        result.Contact = contact;
+        result.Customer = contact;
 
         _dbContext.Ratings.Add(result);
 
@@ -175,7 +175,7 @@ public class RatingService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
     public async Task<Result<PaginationResult<RatingResponseDto>>> GetRatingsForSpecificCustomerAsync(string customerId, int itemCount, int index)
     {
         var Ratings = await _dbContext.Ratings
-              .Where(s => s.Contact.Id == customerId)
+              .Where(s => s.Customer.Id == customerId)
               .ProjectTo<RatingResponseDto>(_mapper.ConfigurationProvider)
               .GetAllWithPagination(itemCount, index);
 

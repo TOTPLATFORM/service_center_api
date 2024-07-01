@@ -130,7 +130,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
         }
 
         _logger.LogInformation($"Successfully assigned {user.UserName} to role {roleName}");
-        return Result.SuccessWithMessage($"Successfully assigned {user.FirstName + " " + user.LastName} to role {roleName}");
+        return Result.SuccessWithMessage($"Successfully assigned  to role {roleName}");
     }
 
     /// <inheritdoc/>
@@ -175,7 +175,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
         }
 
         _logger.LogInformation($"Successfully delete user {user.UserName}");
-        return Result.SuccessWithMessage($"Successfully delete {user.FirstName + " " + user.LastName}, username: {user.UserName}");
+        return Result.SuccessWithMessage($"Successfully delete user, username: {user.UserName}");
     }
 
     /// <inheritdoc/>
@@ -195,10 +195,10 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
     {
         var user = new ApplicationUser
         {
-            FirstName = "AdminName",
-            DateOfBirth = DateOnly.MaxValue,
+            //FirstName = "AdminName",
+            //DateOfBirth = DateOnly.MaxValue,
             Email = "admin123@gmail.com",
-            Gender = Gender.Male,
+           // Gender = Gender.Male,
             UserName = "admin",
             PhoneNumber = "01140812059",
         };
@@ -219,7 +219,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Name, user.FirstName+" "+user.LastName ),
+            //new Claim(ClaimTypes.Name, user.FirstName+" "+user.LastName ),
             new Claim(ClaimTypes.Email, user.Email)
         };
 

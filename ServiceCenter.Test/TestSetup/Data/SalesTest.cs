@@ -17,11 +17,7 @@ public static class SalesTest
         new Sales
         {
             Id = "0d133c1a-804f-4508-8f7e-8c3f504844e0",
-            DateOfBirth = DateOnly.Parse("2000/12/30"),
             Email = "agershaban7@gmail.com",
-            FirstName = "hager",
-            LastName = "shaban",
-            Gender = Gender.Female,
             PhoneNumber = "0621654984",
 
 
@@ -29,11 +25,7 @@ public static class SalesTest
         new Sales
         {
             Id = "sOO316984165",
-            DateOfBirth = DateOnly.Parse("2000/12/30"),
             Email = "agershaban7@gmail.com",
-            FirstName = "hager",
-            LastName = "shaban",
-            Gender = Gender.Female,
             PhoneNumber = "0621654984"
 
         }

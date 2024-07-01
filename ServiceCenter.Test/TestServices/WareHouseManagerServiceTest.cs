@@ -28,8 +28,8 @@ public class WareHouseManagerServiceTest
     private string userEmail = "mariamabdeeen@gmail.com";
     private List<ApplicationUser> _users = new List<ApplicationUser>
         {
-            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f645630",FirstName="Hager",LastName="Shaban",DateOfBirth=new DateOnly(2000,12,30),Email="hagershaaban7@gmail.com" ,UserName="hager3012"},
-            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f654945",FirstName="Hager",LastName="Shaban",DateOfBirth=new DateOnly(2000,12,30),Email="hagershaaban7@gmail.com" ,UserName="hager1230"},
+            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f645630",Email="hagershaaban7@gmail.com" ,UserName="hager3012"},
+            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f654945",Email="hagershaaban7@gmail.com" ,UserName="hager1230"},
 
         };
 
@@ -93,15 +93,11 @@ public class WareHouseManagerServiceTest
         var warehousemanagerRequestDto = new WareHouseManagerRequestDto
         {
             PositionTitle =positionTitle ,
-            DateOfBirth = DateOnly.Parse(dateOfBirth),
-            StartDate = DateOnly.Parse(startDate),
+           StartDate = DateOnly.Parse(startDate),
             EndDate = DateOnly.Parse(endDate),
             DepartmentId = 1,
             InventoryId = 1,
             Email = email,
-            FirstName = firstName,
-            LastName = lastName,
-            PhoneNumber = phoneNumber,
         };
         // Act
         var result = await _warehousemanagerService.AddWareHouseManagerServiceAsync(warehousemanagerRequestDto);
@@ -170,15 +166,12 @@ public class WareHouseManagerServiceTest
         var warehousemanagerRequestDto = new WareHouseManagerRequestDto
         {  
             PositionTitle =positionTitle,
-            DateOfBirth = DateOnly.Parse(dateOfBirth),
-            StartDate = DateOnly.Parse(startDate),
+             StartDate = DateOnly.Parse(startDate),
             EndDate = DateOnly.Parse(endDate),
             DepartmentId=1,
             InventoryId=1,
             Email = email,
-            FirstName = firstName,
-            LastName = lastName,
-            PhoneNumber = phoneNumber,
+            
         };
 
         // Act

@@ -17,11 +17,7 @@ namespace ServiceCenter.Test.TestSetup.Data
             new WareHouseManager
             {
                 Id = "0d133cpa-804f-4548-8f7e-8c3f504844e0",
-                DateOfBirth = DateOnly.Parse("2000/12/30"),
                 Email = "agershaban7@gmail.com",
-                FirstName = "hager",
-                LastName = "shaban",
-                Gender = Gender.Female,
                 PhoneNumber = "0621654984",
                 PositionTitle="WareHouseManager1",
                 StartDate = DateOnly.Parse("2000/12/30"),
@@ -31,11 +27,7 @@ namespace ServiceCenter.Test.TestSetup.Data
             new WareHouseManager
             {
                 Id = "sOB31p984165",
-                DateOfBirth = DateOnly.Parse("2000/12/30"),
                 Email = "agershaban7@gmail.com",
-                FirstName = "hager",
-                LastName = "shaban",
-                Gender = Gender.Female,
                 PhoneNumber = "0621654984",
                 PositionTitle = "WareHouseManager2",
                 StartDate = DateOnly.Parse("2000/12/30"),

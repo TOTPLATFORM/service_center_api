@@ -21,6 +21,6 @@ public class ReportRequestDto
     [Required]
     public string SalesId { get; set; } = default;
     [Required]
-    public string ContactId { get; set; } = default;
+    public string CustomerId { get; set; } = default;
     public string ManagerId { get; set; } = default;
 }

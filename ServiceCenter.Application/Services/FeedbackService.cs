@@ -31,7 +31,7 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
         var result = _mapper.Map<Feedback>(feedbackRequestDto);
         result.Product = null;
         result.Service = null;
-        var contact = await _dbContext.Contacts.FirstOrDefaultAsync(m => m.Id == feedbackRequestDto.ContactId);
+        var contact = await _dbContext.Customers.FirstOrDefaultAsync(m => m.Id == feedbackRequestDto.CustomerId);
         if (contact == null)
         {
             _logger.LogError("No contact found in the database.");
@@ -90,7 +90,7 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
     });
         }
         result.CreatedBy = _userContext.Email;
-        result.Contact = contact;
+        result.Customer = contact;
 
         _dbContext.Feedbacks.Add(result);
 
@@ -181,7 +181,7 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
     public async Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificCustomerAsync(string customerId, int itemCount, int index)
     {
         var Feedbacks = await _dbContext.Feedbacks
-              .Where(s => s.Contact.Id == customerId)
+              .Where(s => s.Customer.Id == customerId)
               .ProjectTo<FeedbackResponseDto>(_mapper.ConfigurationProvider)
               .GetAllWithPagination(itemCount, index);
 

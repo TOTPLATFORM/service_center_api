@@ -133,7 +133,7 @@ public class SubscriptionService(ServiceCenterBaseDbContext dbContext, IMapper m
     public async Task<Result<PaginationResult<SubscriptionResponseDto>>> GetSubscriptionsForSpecificCustomerAsync(string customerId, int itemCount, int index)
     {
         var subscriptions= await _dbContext.Subscriptions
-              .Where(s => s.Contact.Id == customerId)
+              .Where(s => s.Customer.Id == customerId)
               .ProjectTo<SubscriptionResponseDto>(_mapper.ConfigurationProvider)
               .GetAllWithPagination(itemCount, index);
 

@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Domain.Entities;
 
-public class Contact : ApplicationUser
+public class Contact :BaseEntity
 {
-
+    public string FirstName { get; set; } = "";
+    public string LastName { get; set; } = "";
+    public DateOnly DateOfBirth { get; set; }
+    public Gender Gender { get; set; }
     public Address Address { get; set; } = default;
     public ContactStatus Status { get; set; } 
-    public virtual ICollection<Complaint?> Complaints { get; set; } = new HashSet<Complaint?>();
-    public virtual ICollection<Feedback?> Feedbacks { get; set; } = new HashSet<Feedback?>();
-    public virtual ICollection<Rating?> Ratings { get; set; } = new HashSet<Rating?>();
-    public virtual ICollection<Subscription?> Subscriptions { get; set; } = new HashSet<Subscription?>();
+  
 
 }

@@ -28,8 +28,8 @@ public class ServiceProviderServiceTest
     private string userEmail = "mariamabdeeen@gmail.com";
     private List<ApplicationUser> _users = new List<ApplicationUser>
         {
-            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f645630",FirstName="Hager",LastName="Shaban",DateOfBirth=new DateOnly(2000,12,30),Email="hagershaaban7@gmail.com" ,UserName="hager3012"},
-            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f654945",FirstName="Hager",LastName="Shaban",DateOfBirth=new DateOnly(2000,12,30),Email="hagershaaban7@gmail.com" ,UserName="hager1230"},
+            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f645630",Email="hagershaaban7@gmail.com" ,UserName="hager3012"},
+            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f654945",Email="hagershaaban7@gmail.com" ,UserName="hager1230"},
 
         };
 
@@ -92,13 +92,10 @@ public class ServiceProviderServiceTest
         CheckService();
         var serviceproviderRequestDto = new ServiceProviderRequestDto
         {
-            DateOfBirth = DateOnly.Parse(dateOfBirth),
+           
             DepartmentId = departmentId,
             Email = email,
-            FirstName = firstName,
-            LastName = lastName,
-            PhoneNumber = phoneNumber,
-            ServiceIds = [1]
+             ServiceIds = [1]
         };
         // Act
         var result = await _serviceproviderService.AddServiceProviderAsync(serviceproviderRequestDto);
@@ -167,12 +164,9 @@ public class ServiceProviderServiceTest
         CheckService();
         var serviceproviderRequestDto = new ServiceProviderRequestDto
         {
-            DateOfBirth = DateOnly.Parse(dateOfBirth),
+           
             DepartmentId = departmentId, 
             Email = email,
-            FirstName = firstName,
-             LastName = lastName,
-            PhoneNumber = phoneNumber,
             ServiceIds = serviceIds
         };
 

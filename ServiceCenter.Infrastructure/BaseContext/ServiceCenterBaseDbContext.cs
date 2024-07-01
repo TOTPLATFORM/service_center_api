@@ -61,4 +61,12 @@ public class ServiceCenterBaseDbContext : IdentityDbContext<ApplicationUser>
 	public DbSet<Rating> Ratings { get; set; }
     public DbSet<Revenue> Revenues { get; set; }
     public DbSet<Expense> Expenses { get; set; }
+    public DbSet<LeaveType> LeaveTypes { get; set; }
+    public DbSet<LeaveRequest> LeaveRequests { get; set; }
+    public DbSet<Applicant> Applicants { get; set; }
+    public DbSet<Salary> Salaries { get; set; }
+    public DbSet<Attendance> Attendances { get; set; }
+    public DbSet<PerformanceReview> PerformanceReviews { get; set; }
+    public DbSet<RecruitmentRecord> RecruitmentRecords { get; set; }
+    public DbSet<Customer> Customers { get; set; }
 }

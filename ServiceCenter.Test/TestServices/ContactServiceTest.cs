@@ -28,8 +28,8 @@ public class ContactServiceTest
     private string userEmail = "mariamabdeeen@gmail.com";
     private List<ApplicationUser> _users = new List<ApplicationUser>
         {
-            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f645630",FirstName="Hager",LastName="Shaban",DateOfBirth=new DateOnly(2000,12,30),Email="hagershaaban7@gmail.com" ,UserName="hager3012"},
-            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f654945",FirstName="Hager",LastName="Shaban",DateOfBirth=new DateOnly(2000,12,30),Email="hagershaaban7@gmail.com" ,UserName="hager1230"},
+            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f645630",Email="hagershaaban7@gmail.com" ,UserName="hager3012"},
+            new ApplicationUser() {Id = "53ae72a7-589e-4f0b-81ed-40389f654945", Email = "hagershaaban7@gmail.com", UserName = "hager1230"},
 
         };
     private ContactService CreateContactService()
@@ -86,12 +86,12 @@ public class ContactServiceTest
     /// <param name="CenterAvaliabitlity">Center availability</param>
     /// <param name="centerId">Center Type id</param>
     [Theory, TestPriority(0)]
-    [InlineData("hagershabaan7@gmail.com", "hager", "shaban", Gender.Female)]
-    public async Task AddContact(string contactEmail, string contactFirstName, string contactLastName, Gender gender)
+    [InlineData("hagershabaan7@gmail.com")]
+    public async Task AddContact(string contactEmail)
     {
         // Arrange
         CheckService();
-        var contactRequestDto = new ContactRequestDto { Email = contactEmail, FirstName = contactFirstName, LastName = contactLastName, Gender = Gender.Male };
+        var contactRequestDto = new ContactRequestDto { Email = contactEmail };
         // Act
         var result = await _contactService.AddContactAsync(contactRequestDto);
 

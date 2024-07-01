@@ -10,12 +10,12 @@ public static class ReportMapping
     {
         map.CreateMap<ReportRequestDto, Report>()
             .ForPath(dest => dest.Manager.Id, src => src.MapFrom(src => src.ManagerId))
-            .ForPath(dest => dest.Contact.Id, src => src.MapFrom(src => src.ContactId))
+            .ForPath(dest => dest.Customer.Contact.Id, src => src.MapFrom(src => src.CustomerId))
             .ForPath(dest => dest.Sales.Id, src => src.MapFrom(src => src.SalesId))
             .ReverseMap();
 
         map.CreateMap<Report, ReportResponseDto>()
-             .ForPath(dest => dest.ContactStatus, src => src.MapFrom(src => src.Contact.Status))
+             .ForPath(dest => dest.ContactStatus, src => src.MapFrom(src => src.Customer.Contact.Status))
             .ReverseMap();
 ;
     }

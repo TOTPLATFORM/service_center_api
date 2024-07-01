@@ -14,7 +14,6 @@ public static class AuthMapping
 	public static void AddAuthMapping(this MappingProfiles map)
 	{
 		map.CreateMap<ApplicationUser, LoginResponseDto>()
-			.ForMember(dest => dest.FullName, src => src.MapFrom(src => src.FirstName + " " + src.LastName))
 			.ForMember(dest => dest.UserId, src => src.MapFrom(src => src.Id));
 
 	}

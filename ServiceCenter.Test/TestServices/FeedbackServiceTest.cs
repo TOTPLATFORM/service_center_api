@@ -94,7 +94,7 @@ public class FeedbackServiceTest
     {
         // Arrange
         CheckService();
-        var FeedbackRequestDto = new FeedbackRequestDto { FeedbackDescription = FeedbackDesc, ContactId = customerId, ServiceId = serviceId };
+        var FeedbackRequestDto = new FeedbackRequestDto { FeedbackDescription = FeedbackDesc, CustomerId = customerId, ServiceId = serviceId };
 
         // Act
         var result = await _FeedbackService.AddFeedbackAsync(FeedbackRequestDto);

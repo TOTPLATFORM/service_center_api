@@ -16,24 +16,20 @@ public static class ContactTest
         context.Contacts.AddRange(
         new Contact
         {
-            Id = "0d133c1a-804f-4548-8f7e-8c3f504844u0",
+            Id = 1,
             DateOfBirth = DateOnly.Parse("2000/12/30"),
-            Email = "agershaban7@gmail.com",
             FirstName = "hager",
             LastName = "shaban",
-            PhoneNumber = "0621654984",
             Gender = Gender.Female,
             Status = ContactStatus.Lead
         },
         new Contact
         {
-            Id = "sOB316904165",
+            Id = 2,
             DateOfBirth = DateOnly.Parse("2000/12/30"),
-            Email = "agershaban7@gmail.com",
-            FirstName = "hager",
+           FirstName = "hager",
             LastName = "shaban",
             Gender = Gender.Female,
-            PhoneNumber = "0621654984",
             Status = ContactStatus.Cancelled
         }
         );

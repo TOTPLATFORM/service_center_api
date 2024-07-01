@@ -12,7 +12,7 @@ public class RatingResponseDto
     public int Id { get; set; }
     public int RatingValue { get; set; }
     public DateTime RatingDate { get; set; }
-    public string ContactName { get; set; } = "";
+    public string CustomerName { get; set; } = "";
     public ServiceResponseDto? Service { get; set; } = default;
     public ProductResponseDto? Product { get; set; } = default;
 }

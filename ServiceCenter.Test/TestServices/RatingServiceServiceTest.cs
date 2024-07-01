@@ -94,7 +94,7 @@ public class RatingServiceTest
     {
         // Arrange
         CheckService();
-        var RatingRequestDto = new RatingRequestDto { RatingValue = ratingValue, ContactId = customerId, ServiceId = serviceId };
+        var RatingRequestDto = new RatingRequestDto { RatingValue = ratingValue, CustomerId = customerId, ServiceId = serviceId };
 
         // Act
         var result = await _RatingService.AddRatingAsync(RatingRequestDto);

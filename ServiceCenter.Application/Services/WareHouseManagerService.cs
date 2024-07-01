@@ -101,7 +101,7 @@ public class WareHouseManagerService(ServiceCenterBaseDbContext dbContext, IMapp
     ///<inheritdoc/>
     public async Task<Result<PaginationResult<WareHouseManagerResponseDto>>> SearchWareHouseManagerByTextAsync(string text, int itemcount, int index)
     {
-        var wareHouseManagerResponseDto = await _dbContext.WareHouseManagers.Where(w => w.FirstName.Contains(text)|| w.LastName.Contains(text)|| w.Email.Contains(text)|| w.Inventory.InventoryName.Contains(text))
+        var wareHouseManagerResponseDto = await _dbContext.WareHouseManagers.Where(w =>  w.Email.Contains(text)|| w.Inventory.InventoryName.Contains(text))
             .ProjectTo<WareHouseManagerResponseDto>(_mapper.ConfigurationProvider)
             .GetAllWithPagination( itemcount,  index);
 

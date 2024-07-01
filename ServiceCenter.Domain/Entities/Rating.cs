@@ -10,7 +10,7 @@ namespace ServiceCenter.Domain.Entities;
 public class Rating : AuditableEntity
 {
     public int RatingValue { get; set; }
-   public virtual Contact Contact { get; set; } = default;
+   public virtual Customer Customer { get; set; } = default;
     public virtual Product? Product { get; set; } = default;
     public virtual Service? Service { get; set; } = default;
 }

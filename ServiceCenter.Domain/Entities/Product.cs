@@ -14,6 +14,6 @@ public class Product : AuditableEntity
     public int ProductPrice { get; set; } 
    public virtual ICollection<Feedback?> Feedbacks { get; set; } = new HashSet<Feedback?>();
    public virtual ProductCategory ProductCategory { get; set; } = default;
-    public virtual ICollection<Order?> Orders   { get; set; } = new HashSet<Order?>();
+    public virtual ICollection<ProductOrder?> ProductOrders   { get; set; } = new HashSet<ProductOrder?>();
     public virtual ICollection<Rating?> Ratings { get; set; } = new HashSet<Rating?>();
 }

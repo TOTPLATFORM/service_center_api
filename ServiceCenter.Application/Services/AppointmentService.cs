@@ -62,7 +62,7 @@ public class AppointmentService(ServiceCenterBaseDbContext dbContext, IMapper ma
     public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByContactIdAsync(string contactId, int itemCount, int index)
     {
         var appointments = await _dbContext.Appointments
-            .Where(a => a.ContactId == contactId)
+            .Where(a => a.CustomerId == contactId)
             .ProjectTo<AppointmentResponseDto>(_mapper.ConfigurationProvider)
             .GetAllWithPagination(itemCount, index);
 
@@ -202,7 +202,7 @@ public class AppointmentService(ServiceCenterBaseDbContext dbContext, IMapper ma
     public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByContactIdAndStatusAsync(string contactId, AppointmentStatus status, int itemCount, int index)
     {
         var appointments = await _dbContext.Appointments
-            .Where(a => a.ContactId == contactId && a.Status == status)
+            .Where(a => a.CustomerId == contactId && a.Status == status)
             .ProjectTo<AppointmentResponseDto>(_mapper.ConfigurationProvider)
             .GetAllWithPagination(itemCount, index);
 

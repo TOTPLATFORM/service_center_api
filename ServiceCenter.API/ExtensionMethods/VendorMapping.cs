@@ -12,8 +12,6 @@ public static class VendorMapping
             .ReverseMap();
 
         map.CreateMap<Vendor, VendorResponseDto>()
-            .ForMember(dest => dest.VendorFirstName, src => src.MapFrom(src => src.FirstName))
-            .ForMember(dest => dest.VendorLastName, src => src.MapFrom(src => src.LastName))
             .ForMember(dest => dest.VendorPhoneNumber, src => src.MapFrom(src => src.PhoneNumber))
             .ForMember(dest => dest.VendorEmail, src => src.MapFrom(src => src.Email))
             .ReverseMap();

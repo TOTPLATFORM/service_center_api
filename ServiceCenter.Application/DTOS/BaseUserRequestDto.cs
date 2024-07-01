@@ -11,16 +11,6 @@ namespace ServiceCenter.Application.DTOS;
 
 public class BaseUserRequestDto
 {
-	[Required]
-	public string FirstName { get; set; } = "";
-	[Required]
-	public string LastName { get; set; } = "";
-	[Required]
-	public DateOnly DateOfBirth { get; set; }
-	[Required]
-	public Gender Gender { get; set; } = Gender.Male;
-	[Required]
-	public string PhoneNumber { get; set; } = "";
 
 	[EmailAddress]
 	[Required]

@@ -31,15 +31,15 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 	public async Task<Result> AddContactAsync(ContactRequestDto contactRequestDto)
 	{
 		
-        var role = "Contact";
+       // var role = "Contact";
         var contact = _mapper.Map<Contact>(contactRequestDto);
 
-       var contactAdded = await _authService.RegisterUserWithRoleAsync(contact, contactRequestDto.Password, role);
+       //var contactAdded = await _authService.RegisterUserWithRoleAsync(contact, contactRequestDto.Password, role);
 
-        if (!contactAdded.IsSuccess)
-        {
-            return Result.Error(contactAdded.Errors.FirstOrDefault());
-        }
+       // if (!contactAdded.IsSuccess)
+       // {
+       //     return Result.Error(contactAdded.Errors.FirstOrDefault());
+       // }
 
         _logger.LogInformation("Contact added successfully in the database");
 
@@ -80,12 +80,9 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
     public async Task<Result<ContactResponseDto>> RegisterCustomerAsync(CustomerRequestDto customerRequestDto)
 	{
-		var contact = _mapper.Map<Contact>(customerRequestDto);
+		var contact = _mapper.Map<Customer>(customerRequestDto);
 
-		if (contact.Status != ContactStatus.Customer)
-		{
-			contact.Status = ContactStatus.Customer;
-		}
+		
 
 		var role = "Customer";
 

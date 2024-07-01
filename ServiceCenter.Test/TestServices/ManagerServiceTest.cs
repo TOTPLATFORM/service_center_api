@@ -28,8 +28,8 @@ public class ManagerServiceTest
     private string userEmail = "mariamabdeeen@gmail.com";
     private List<ApplicationUser> _users = new List<ApplicationUser>
         {
-            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f645630",FirstName="Hager",LastName="Shaban",DateOfBirth=new DateOnly(2000,12,30),Email="hagershaaban7@gmail.com" ,UserName="hager3012"},
-            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f654945",FirstName="Hager",LastName="Shaban",DateOfBirth=new DateOnly(2000,12,30),Email="hagershaaban7@gmail.com" ,UserName="hager1230"},
+            new ApplicationUser() { Id = "53ae72a7-589e-4f0b-81ed-40389f645630",Email="hagershaaban7@gmail.com" ,UserName="hager3012"},
+            new ApplicationUser() {Id = "53ae72a7-589e-4f0b-81ed-40389f654945", Email = "hagershaaban7@gmail.com", UserName = "hager1230"},
 
         };
 
@@ -92,11 +92,8 @@ public class ManagerServiceTest
         CheckService();
         var managerRequestDto = new ManagerRequestDto
         {
-            DateOfBirth = DateOnly.Parse(dateOfBirth),
+          
             Email = email,
-            FirstName = firstName,
-            LastName = lastName,
-            PhoneNumber = phoneNumber,
             DepartmentId = departmentId,
             BranchId = branchId,
             Responsibilities = respon,
@@ -169,11 +166,7 @@ public class ManagerServiceTest
         CheckService();
         var managerRequestDto = new ManagerRequestDto
         {
-            DateOfBirth = DateOnly.Parse(dateOfBirth),
             Email = email,
-            FirstName = firstName,
-            LastName = lastName,
-            PhoneNumber = phoneNumber,
             DepartmentId = departmentId,
             BranchId=branchId,
             Responsibilities = respon,
