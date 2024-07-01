@@ -10,4 +10,7 @@ public class DepartmentGetByIdResponseDto
 {
     public int Id { get; set; }
     public string DepartmentName { get; set; } = "";
+	public ICollection<EmployeeResponseDto> Employees { get; set; } = new HashSet<EmployeeResponseDto>();
+	public CenterResponseDto Center { get; set; }
+
 }

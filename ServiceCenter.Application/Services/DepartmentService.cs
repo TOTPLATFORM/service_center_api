@@ -136,11 +136,11 @@ public class DepartmentService(ServiceCenterBaseDbContext dbContext, IMapper map
 	}
 
 	///<inheritdoc/>
-	public async Task<Result<PaginationResult<DepartmentResponseDto>>> GetAllEmployeesForSpecificDepartmentAsync(int id, int itemCount, int index)
+	public async Task<Result<PaginationResult<EmployeeResponseDto>>> GetAllEmployeesForSpecificDepartmentAsync(int id, int itemCount, int index)
 	{
-		var employees = await _dbContext.Departments
-		   .Where(s => s.Id == id)
-		   .ProjectTo<DepartmentResponseDto>(_mapper.ConfigurationProvider)
+		var employees = await _dbContext.Employees
+		   .Where(s => s.Department.Id == id)
+		   .ProjectTo<EmployeeResponseDto>(_mapper.ConfigurationProvider)
 		   .GetAllWithPagination(itemCount,index);
 
 		_logger.LogInformation("Fetching employees. Total count: {employee}.", employees.Data.Count);
