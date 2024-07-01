@@ -11,6 +11,7 @@ public class Product : AuditableEntity
 {
     public string ProductName { get; set; } = "";
     public string ProductDescription { get; set; } = "";
+    public int ProductStock { get; set; }
     public int ProductPrice { get; set; } 
    public virtual ICollection<Feedback?> Feedbacks { get; set; } = new HashSet<Feedback?>();
    public virtual ProductCategory ProductCategory { get; set; } = default;
