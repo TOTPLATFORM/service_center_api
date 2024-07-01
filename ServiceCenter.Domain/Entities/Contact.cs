@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Domain.Entities;
 
-public class Contact :BaseEntity
+public class Contact : AuditableEntity
 {
     public string FirstName { get; set; } = "";
     public string LastName { get; set; } = "";

@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class EmployeeResponseDto
+public class CustomerResponseDto
 {
-   
     public string Id { get; set; } = "";
     public string Email { get; set; } = "";
     public string UserName { get; set; } = "";
-    public ContactResponseDto Contact { get; set; }
+    public  ContactResponseDto Contact { get; set; }
 }

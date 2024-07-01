@@ -10,8 +10,8 @@ namespace ServiceCenter.Application.DTOS;
 
 public class EmployeeRequestDto : BaseUserRequestDto
 {
-  
+    [Required]
+    public int ContactId { get; set; }
     [Required]
     public int DepartmentId { get; set; } 
-    public string? ServiceName { get; set; } 
 }

@@ -12,13 +12,9 @@ namespace ServiceCenter.Application.DTOS;
 public class ContactResponseDto
 {
     public string Id { get; set; } 
-    public string ContactFirstName { get; set; } = "";
+    public string FirstName { get; set; } = "";
 
-    public string ContactLastName { get; set; } = "";
-
-    public string ContactEmail { get; set; } = "";
-
-    public string ContactPhoneNumber { get; set; } = "";
+    public string LastName { get; set; } = "";
 
     public string Gender { get; set; } = "";
 

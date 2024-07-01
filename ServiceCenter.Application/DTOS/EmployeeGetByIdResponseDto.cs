@@ -9,10 +9,8 @@ namespace ServiceCenter.Application.DTOS;
 public class EmployeeGetByIdResponseDto
 {
     public string Id { get; set; } = "";
-    public string EmployeeEmail { get; set; } = "";
-    public string EmployeeFirstName { get; set; } = "";
-    public string EmployeeLastName { get; set; } = "";
-    public string EmployeePhoneNumber { get; set; } = "";
+    public string Email { get; set; } = "";
     public string UserName { get; set; } = "";
     public string DepartmentName { get; set; } = "";
+    public ContactResponseDto Contact { get; set; }
 }

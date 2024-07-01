@@ -9,7 +9,7 @@ namespace ServiceCenter.Domain.Entities;
 
 public class Manager:Employee
 {
-	public string Responsibilities { get; set; } = "";
+    public string Responsibilities { get; set; } = "";
 	public DateOnly HiringDate { get; set; }
 	public int WorkingHours { get; set; }
 	public int Experience { get; set; }

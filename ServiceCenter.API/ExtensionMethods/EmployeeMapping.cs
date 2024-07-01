@@ -11,13 +11,8 @@ public static class EmployeeMapping
 		map.CreateMap<EmployeeRequestDto, Employee>();
 
         map.CreateMap<Employee, EmployeeGetByIdResponseDto>()
-	
-			.ForMember(dest => dest.EmployeePhoneNumber, src => src.MapFrom(src => src.PhoneNumber))
-			.ForMember(dest => dest.EmployeeEmail, src => src.MapFrom(src => src.Email))
 			.ForMember(dest => dest.DepartmentName, src => src.MapFrom(src => src.Department.DepartmentName));
 
-		map.CreateMap<Employee, EmployeeResponseDto>()
-				 .ForMember(dest => dest.EmployeePhoneNumber, src => src.MapFrom(src => src.PhoneNumber))
-			 	.ForMember(dest => dest.EmployeeEmail, src => src.MapFrom(src => src.Email));
+		map.CreateMap<Employee, EmployeeResponseDto>();
     }
 }
