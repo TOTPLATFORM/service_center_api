@@ -83,7 +83,7 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         return Result.Success(result);
     }
     ///<inheritdoc/>
-    public async Task<Result<ReportResponseDto>> UpdateReportAsync(int id, ReportRequestDto ReportRequestDto)
+    public async Task<Result<ReportResponseDto>> UpdateReportAsync(int id, string task)
     {
         var result = await _dbContext.Reports.FindAsync(id);
 
@@ -92,12 +92,9 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
             _logger.LogWarning("Report Id not found,Id {ReportId}", id);
             return Result.NotFound(["Report not found"]);
         }
-
+        result.Task= task;
         result.ModifiedBy = _userContext.Email;
-
-        _mapper.Map(ReportRequestDto, result);
-
-        await _dbContext.SaveChangesAsync();
+         await _dbContext.SaveChangesAsync();
 
         var ReportResponse = _mapper.Map<ReportResponseDto>(result);
         if (ReportResponse is null)
@@ -132,6 +129,7 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         await _dbContext.SaveChangesAsync();
         _logger.LogInformation("Report removed successfully in the database");
         return Result.SuccessWithMessage("Report removed successfully");
+
     }
 
     ///<inheritdoc/>

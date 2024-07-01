@@ -59,10 +59,10 @@ public class ServiceCategoryService(ServiceCenterBaseDbContext dbContext, IMappe
 	}
 
 	///<inheritdoc/>
-	public async Task<Result<ServiceCategoryResponseDto>> GetServiceCategoryByIdAsync(int id)
+	public async Task<Result<ServiceCategoryGetByIdResponseDto>> GetServiceCategoryByIdAsync(int id)
     {
         var result = await _dbContext.ServiceCategories
-                .ProjectTo<ServiceCategoryResponseDto>(_mapper.ConfigurationProvider)
+                .ProjectTo<ServiceCategoryGetByIdResponseDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(ServiceCategory => ServiceCategory.Id == id);
 
         if (result is null)

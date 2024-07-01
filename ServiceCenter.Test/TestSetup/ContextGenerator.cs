@@ -41,7 +41,6 @@ public class ContextGenerator
             Context.AddProductBrand();
             Context.AddRating();
             Context.AddCampagin();
-            Context.AddOverview();
             Context.AddProductCategory();
             Context.AddServiceCategory();
             Context.AddSales();
@@ -49,7 +48,9 @@ public class ContextGenerator
             Context.AddWareHouseManager();
             Context.AddServiceProvider();   
             Context.AddVendor();
-        
+            Context.AddReport();
+            Context.AddRevenue();
+            Context.AddExpenses();
             Context.SaveChanges();
         }
 

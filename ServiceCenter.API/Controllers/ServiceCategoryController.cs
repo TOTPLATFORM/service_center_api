@@ -36,10 +36,10 @@ public class ServiceCategoryController(IServiceCategoryService itemCategoryServi
     /// </summary>
     /// <returns>result of ServiceCategory response dto</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<ServiceCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<ServiceCategoryResponseDto>> GetServiceCategoryById(int id)
+    public async Task<Result<ServiceCategoryGetByIdResponseDto>> GetServiceCategoryById(int id)
     {
         return await _itemCategoryService.GetServiceCategoryByIdAsync(id);
     }

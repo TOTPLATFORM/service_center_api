@@ -55,7 +55,7 @@ public interface IDepartmentService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="id">the unique identifier of the department to retrieve its employees.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all employees by department id operation.</returns>
-	public Task<Result<PaginationResult<DepartmentResponseDto>>> GetAllEmployeesForSpecificDepartmentAsync(int id, int itemCount, int index);
+	public Task<Result<PaginationResult<EmployeeResponseDto>>> GetAllEmployeesForSpecificDepartmentAsync(int id, int itemCount, int index);
     /// <summary>
     /// asynchronously deletes a department from the system by their unique identifier.
     /// </summary>

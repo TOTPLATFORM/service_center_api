@@ -4,6 +4,8 @@ using ServiceCenter.API.Mapping;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
 using ServiceCenter.Application.Services;
+using ServiceCenter.Domain.Entities;
+using ServiceCenter.Domain.Enums;
 using ServiceCenter.Test.TestPriority;
 using ServiceCenter.Test.TestSetup;
 using System;
@@ -56,7 +58,7 @@ public class BranchServiceTest
     {
         // Arrange
         CheckService();
-        var branchRequestDto = new BranchRequestDto { BranchName = branchName,  BranchPhoneNumber = branchPhoneNumber, EmailAddress = emailAddress };
+        var branchRequestDto = new BranchRequestDto { BranchName = branchName,  BranchPhoneNumber = branchPhoneNumber, EmailAddress = emailAddress,Address=new Address { City=City.Giza,Country=Country.Egypt,PostalCode="sl3"} };
         // Act
         var result = await _branchService.AddBranchAsync(branchRequestDto);
 
@@ -141,7 +143,7 @@ public class BranchServiceTest
     /// fuction to remove branch as a test case that take branch id
     /// </summary>
     /// <param name="id">branch id </param>
-    [Theory, TestPriority(4)]
+    [Theory, TestPriority(5)]
     [InlineData(2)]
     [InlineData(50)]
     public async Task RemoveBranch(int id)
@@ -158,5 +160,22 @@ public class BranchServiceTest
         else
             Assert.False(result.IsSuccess);
 
+    }
+    /// <summary>
+    /// Tests the search functionality in the branch service to ensure it can find branch based on a search term.
+    /// </summary>
+    [Fact, TestPriority(4)]
+    public async Task SearchBranches()
+    {
+        // Arrange
+        CheckService();
+        string text = "barnch1";
+
+        // Act
+        var result = await _branchService.SearchBranchByTextAsync(text, 2, 1);
+
+        // Assert
+
+        Assert.True(result.IsSuccess);
     }
 }

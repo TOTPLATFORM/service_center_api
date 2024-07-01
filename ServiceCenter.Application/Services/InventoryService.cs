@@ -96,10 +96,10 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 		return Result.Success(result);
 	}
 	///<inheritdoc/>
-	public async Task<Result<InventoryResponseDto>> GetInventoryByIdAsync(int id)
+	public async Task<Result<InventoryGetByIdResponseDto>> GetInventoryByIdAsync(int id)
 	{
 		var result = await _dbContext.Inventories
-				.ProjectTo<InventoryResponseDto>(_mapper.ConfigurationProvider)
+				.ProjectTo<InventoryGetByIdResponseDto>(_mapper.ConfigurationProvider)
 				.FirstOrDefaultAsync(inventory => inventory.Id == id);
 
 		if (result is null)
@@ -116,7 +116,7 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 
 	///<inheritdoc/>
 
-	public async Task<Result<InventoryResponseDto>> UpdateInventoryAsync(int id, InventoryRequestDto inventoryRequestDto)
+	public async Task<Result<InventoryResponseDto>> UpdateInventoryAsync(int id, InventoryUpdatedRequestDto inventoryRequestDto)
 	{
 		var result = await _dbContext.Inventories.FindAsync(id);
 

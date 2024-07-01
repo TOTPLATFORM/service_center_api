@@ -25,7 +25,7 @@ public interface IServiceService : IApplicationService, IScopedService
 	/// function to get all Service  
 	/// </summary>
 	/// <returns>list all Service  response dto </returns>
-	public Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetAllServiceAsync(int itemCount, int index);
+	public Task<Result<PaginationResult<ServiceResponseDto>>> GetAllServiceAsync(int itemCount, int index);
 
 	/// <summary>
 	/// function to get all Service that assign to package  
@@ -37,7 +37,7 @@ public interface IServiceService : IApplicationService, IScopedService
 	/// function to get all Service that assign to package  
 	/// </summary>
 	/// <returns>list all Service  response dto </returns>
-	public Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetServicesByPackageAsync(int servicePackageId, int itemCount, int index);
+	public Task<Result<PaginationResult<ServiceResponseDto>>> GetServicesByPackageAsync(int servicePackageId, int itemCount, int index);
 
 	/// <summary>
 	/// function to get  Service  by id that take   Service id
@@ -51,7 +51,7 @@ public interface IServiceService : IApplicationService, IScopedService
 	/// <param name="id">Service id</param>
 	/// <param name="ServiceRequestDto">Service dto</param>
 	/// <returns>Updated Service </returns>
-	public Task<Result<ServiceGetByIdResponseDto>> UpdateServiceAsync(int id, ServiceRequestDto ServiceRequestDto);
+	public Task<Result<ServiceResponseDto>> UpdateServiceAsync(int id, ServiceRequestDto ServiceRequestDto);
 	/// <summary>
 	/// function to delete Service  that take Service  id   
 	/// </summary>
@@ -63,11 +63,11 @@ public interface IServiceService : IApplicationService, IScopedService
 	/// </summary>
 	/// <param name="text">Service name</param>
 	/// <returns>Service response dto </returns>
-	public Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> SearchServiceByTextAsync(string text,int itemCount,int index);
+	public Task<Result<PaginationResult<ServiceResponseDto>>> SearchServiceByTextAsync(string text,int itemCount,int index);
 
     /// <summary>
     /// function to get all Service that assign to category  
     /// </summary>
     /// <returns>list all Service  response dto </returns>
-    public Task<Result<PaginationResult<ServiceGetByIdResponseDto>>> GetServicesByCategoryAsync(int categoryId,int itemCount,int index);
+    public Task<Result<PaginationResult<ServiceResponseDto>>> GetServicesByCategoryAsync(int categoryId,int itemCount,int index);
 }

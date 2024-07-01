@@ -111,7 +111,7 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<DepartmentResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-	public async Task<Result<PaginationResult<DepartmentResponseDto>>> SearchDepartmentByRelation(int id, int itemCount, int index)
+	public async Task<Result<PaginationResult<EmployeeResponseDto>>> SearchDepartmentByRelation(int id, int itemCount, int index)
 	{
 		return await _departmentService.GetAllEmployeesForSpecificDepartmentAsync(id,itemCount,index);
 	}

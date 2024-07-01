@@ -31,7 +31,7 @@ public interface IProductBrandService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="id"> product brand id</param>
     /// <returns> product brand response dto</returns>
-    public Task<Result<ProductBrandResponseDto>> GetProductBrandByIdAsync(int id);
+    public Task<Result<ProductBrandGetByIdResponseDto>> GetProductBrandByIdAsync(int id);
     /// <summary>
 		/// function to update product brand that take ProductBrandRequestDto   
 		/// </summary>

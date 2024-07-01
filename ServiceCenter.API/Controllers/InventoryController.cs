@@ -55,9 +55,9 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
 	[Authorize(Roles = "Admin,WarehouseManager,Manager")]
-	[ProducesResponseType(typeof(Result<InventoryResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<InventoryGetByIdResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-	public async Task<Result<InventoryResponseDto>> GetInventoryById(int id)
+	public async Task<Result<InventoryGetByIdResponseDto>> GetInventoryById(int id)
 	{
 		return await _inventoryService.GetInventoryByIdAsync(id);
 	}
@@ -76,7 +76,7 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<InventoryResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<InventoryResponseDto>> UpdateInventory(int id, InventoryRequestDto inventoryRequestDto)
+	public async Task<Result<InventoryResponseDto>> UpdateInventory(int id, InventoryUpdatedRequestDto inventoryRequestDto)
 	{
 		return await _inventoryService.UpdateInventoryAsync(id, inventoryRequestDto);
 	}

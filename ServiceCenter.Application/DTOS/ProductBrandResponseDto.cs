@@ -15,6 +15,4 @@ public class ProductBrandResponseDto
     public string BrandDescription { get; set; } = "";
     public Country CountryOfOrigin { get; set; } 
     public DateOnly FoundedYear { get; set; }
-    public  ICollection<ProductCategoryResponseDto> ProductCategories { get; set; } = new HashSet<ProductCategoryResponseDto>();
-    public  ICollection<InventoryResponseDto> Inventories { get; set; } = new HashSet<InventoryResponseDto>();
 }

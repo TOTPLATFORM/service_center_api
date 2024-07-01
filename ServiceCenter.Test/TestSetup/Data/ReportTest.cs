@@ -9,25 +9,25 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Test.TestSetup.Data;
 
-public static class OverviewTest
+public static class ReportTest
 {
-    public static void AddOverview(this ServiceCenterBaseDbContext context)
+    public static void AddReport(this ServiceCenterBaseDbContext context)
     {
         context.Reports.AddRange(
         new Report
         {
             Id = 1,
-            Task = "task1",
-            Priority = "priority1",
-            Status = ReportStatus.Good,
-            DueDate = DateTime.Parse("3/11/2024"),
+            Task="Report1",
+            Priority="Priority1",
+            Status=ReportStatus.Good,
+
         },
         new Report
         {
             Id = 2,
-            Task = "task2",
-            Priority = "priority2",
-            DueDate = DateTime.Parse("3/11/2024"),
+            Task = "Report1",
+            Priority = "Priority1",
+            Status = ReportStatus.Good,
         }
         );
     }

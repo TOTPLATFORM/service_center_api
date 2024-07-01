@@ -13,4 +13,6 @@ public class SubscriptionRequestDto
     public DateOnly Duration { get; set; } 
     [Required]
     public int ServicePackageId { get; set; }
+    [Required]
+    public string CustomerId { get; set; }
 }

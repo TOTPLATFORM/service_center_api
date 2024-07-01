@@ -8,7 +8,9 @@ public static class SubscriptionMapping
 {
     public static void AddSubscriptionMapping(this MappingProfiles map)
     {
-        map.CreateMap<SubscriptionRequestDto, Subscription>().ReverseMap();
+        map.CreateMap<SubscriptionRequestDto, Subscription>()
+            .ForPath(dest => dest.Contact.Id, src => src.MapFrom(src => src.CustomerId))
+            .ReverseMap();
         map.CreateMap<Subscription, SubscriptionResponseDto>()
             .ReverseMap();
     }

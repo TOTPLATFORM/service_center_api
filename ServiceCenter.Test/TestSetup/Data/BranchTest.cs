@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Domain.Entities;
+using ServiceCenter.Domain.Enums;
 using ServiceCenter.Infrastructure.BaseContext;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,8 @@ public static class BranchTest
             BranchName = "barnch1",
             BranchPhoneNumber = "03265652",
             EmailAddress = "hagershabaan7@gmail.com",
-        
+            Address = new Address { City = City.Giza, Country = Country.Egypt, PostalCode = "sl3" }
+
         },
         new Branch
         {
@@ -27,7 +29,8 @@ public static class BranchTest
             BranchName = "barnch2",
             BranchPhoneNumber = "03265652",
             EmailAddress = "hagershabaan8@gmail.com",
-        
+            Address = new Address { City = City.Giza, Country = Country.Egypt, PostalCode = "sl3" }
+
         }
         );
     }

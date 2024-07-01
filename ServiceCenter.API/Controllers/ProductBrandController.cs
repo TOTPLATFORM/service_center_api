@@ -40,9 +40,9 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
     /// </summary>
     /// <returns>result of product brand response dto</returns>
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(Result<ProductBrandResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<ProductBrandGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<ProductBrandResponseDto>> GetProductBrandById(int id)
+    public async Task<Result<ProductBrandGetByIdResponseDto>> GetProductBrandById(int id)
     {
         return await _productBrandService.GetProductBrandByIdAsync(id);
     }

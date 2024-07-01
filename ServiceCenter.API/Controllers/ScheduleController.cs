@@ -20,7 +20,7 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// <param name="scheduleRequestDto">The DTO representing the schedule to create.</param>
     /// <returns>A Result indicating the outcome of the add operation.</returns>
     [HttpPost]
-    [Authorize(Roles = "Admin, Service")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddSchedule(ScheduleRequestDto scheduleRequestDto)
@@ -31,11 +31,11 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// <summary>
     /// Retrieves all schedules for a specific service.
     /// </summary>
-    /// <remarks>Available to users with roles: Admin, Service, Contact.</remarks>
+    /// <remarks>Available to users with roles: Admin, Service, Customer.</remarks>
     /// <param name="serviceId">The ID of the service whose schedules to retrieve.</param>
     /// <returns>A Result containing a list of schedule response DTOs.</returns>
     [HttpGet("service/{serviceId}")]
-    [Authorize(Roles = "Admin, Service, Contact")]
+    [Authorize(Roles = "Admin, Manager, Customer")]
     [ProducesResponseType(typeof(Result<List<ScheduleResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<PaginationResult<ScheduleResponseDto>>> GetAllSchedulesForSpecificService(int serviceId, int itemCount, int index)
@@ -46,11 +46,11 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// <summary>
     /// Retrieves a schedule by its ID.
     /// </summary>
-    /// <remarks>Available to users with roles: Admin, Service, Contact.</remarks>
+    /// <remarks>Available to users with roles: Admin, Service, Customer.</remarks>
     /// <param name="id">The ID of the schedule to retrieve.</param>
     /// <returns>A Result containing the schedule response DTO, or error if not found.</returns>
     [HttpGet("{id}")]
-    [Authorize(Roles = "Admin, Service, Contact")]
+    [Authorize(Roles = "Admin, Manager, Customer")]
     [ProducesResponseType(typeof(Result<ScheduleResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ScheduleResponseDto>> GetScheduleById(int id)
@@ -66,7 +66,7 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// <param name="id">The ID of the schedule to update.</param>
     /// <returns>A Result containing the updated schedule response DTO.</returns>
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin, Service")]
+    [Authorize(Roles = "Admin, Manager")]
     [ProducesResponseType(typeof(Result<ScheduleResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ScheduleResponseDto>> UpdateSchedule(int id, ScheduleRequestDto scheduleRequestDto)
@@ -81,7 +81,7 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// <param name="id">The ID of the schedule to delete.</param>
     /// <returns>A Result indicating the outcome of the deletion operation.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin, Service")]
+    [Authorize(Roles = "Admin, Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> DeleteSchedule(int id)
@@ -92,11 +92,11 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// <summary>
     /// Retrieves all available schedules for a specific service.
     /// </summary>
-    /// <remarks>Available to users with roles: Admin, Service, Contact.</remarks>
+    /// <remarks>Available to users with roles: Admin, Service, Customer.</remarks>
     /// <param name="serviceId">The ID of the service whose available schedules to retrieve.</param>
     /// <returns>A Result containing a list of available schedule response DTOs.</returns>
     [HttpGet("available/service/{serviceId}")]
-    [Authorize(Roles = "Admin, Service, Contact")]
+    [Authorize(Roles = "Admin, Manager, Customer")]
     [ProducesResponseType(typeof(Result<List<ScheduleResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<ScheduleResponseDto>>> GetAvailableSchedulesForServiceByWeek(int serviceId)
@@ -107,12 +107,12 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// <summary>
     /// Retrieves all available schedules for a specific service on a specific day of the week.
     /// </summary>
-    /// <remarks>Available to users with roles: Admin, Service, Contact.</remarks>
+    /// <remarks>Available to users with roles: Admin, Service, Customer.</remarks>
     /// <param name="serviceId">The ID of the service whose available schedules to retrieve.</param>
     /// <param name="dayOfWeek">The day of the week to filter schedules by.</param>
     /// <returns>A Result containing a list of available schedule response DTOs.</returns>
     [HttpGet("available/service/{serviceId}/day/{dayOfWeek}")]
-    [Authorize(Roles = "Admin, Service, Contact")]
+    [Authorize(Roles = "Admin,Manager, Customer")]
     [ProducesResponseType(typeof(Result<List<ScheduleResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<ScheduleResponseDto>>> GetAvailableSchedulesForServiceByDay(int serviceId, DayOfWeek dayOfWeek)
@@ -123,11 +123,11 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// <summary>
     /// Retrieves a summary of schedules for a specific service.
     /// </summary>
-    /// <remarks>Available to users with roles: Admin, Service, Contact.</remarks>
+    /// <remarks>Available to users with roles: Admin, Service, Customer.</remarks>
     /// <param name="serviceId">The ID of the service.</param>
     /// <returns>A Result containing a list of service schedule summary DTOs.</returns>
     [HttpGet("service/weeklySchedule/{serviceId}")]
-    [Authorize(Roles = "Admin, Service, Contact")]
+    [Authorize(Roles = "Admin, Manager, Customer")]
     [ProducesResponseType(typeof(Result<List<ServiceWeeklyScheduleDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<ServiceWeeklyScheduleDto>>> GetServiceSchedulesSummary(int serviceId)

@@ -130,5 +130,14 @@ public class SubscriptionService(ServiceCenterBaseDbContext dbContext, IMapper m
         return Result.SuccessWithMessage("Subscription removed successfully");
     }
 
+    public async Task<Result<PaginationResult<SubscriptionResponseDto>>> GetSubscriptionsForSpecificCustomerAsync(string customerId, int itemCount, int index)
+    {
+        var subscriptions= await _dbContext.Subscriptions
+              .Where(s => s.Contact.Id == customerId)
+              .ProjectTo<SubscriptionResponseDto>(_mapper.ConfigurationProvider)
+              .GetAllWithPagination(itemCount, index);
 
+        _logger.LogInformation("Fetching products. Total count: {products}.", subscriptions.Data.Count);
+        return Result.Success(subscriptions);
+    }
 }

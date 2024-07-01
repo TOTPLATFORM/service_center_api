@@ -24,7 +24,7 @@ public class ContactController(IContactService contactService) : BaseController
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPost]
-    [Authorize(Roles = "Admin,Contact")]
+    [Authorize(Roles = "Admin,Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> AddContact(ContactRequestDto contactRequestDto)
@@ -54,7 +54,7 @@ public class ContactController(IContactService contactService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-    [Authorize(Roles = "Admin,Contact,Sales")]
+    [Authorize(Roles = "Admin,Customer,Sales")]
     [ProducesResponseType(typeof(Result<PaginationResult<ContactResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<PaginationResult<ContactResponseDto>>> GetAllContacts(int itemCount , int index)
 	{
