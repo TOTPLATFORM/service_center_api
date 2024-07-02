@@ -20,7 +20,8 @@ public class ServiceCategoryConfigurations : IEntityTypeConfiguration<ServiceCat
 
         builder.Property(T => T.ServiceCategoryDescription)
               .IsRequired()
-              .HasColumnType("varchar");
+              .HasColumnType("varchar")
+              .HasMaxLength(250);
 
 	}
 }
