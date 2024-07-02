@@ -14,5 +14,4 @@ public class ApplicationUser : IdentityUser
 	public string LastName { get; set; } = "";
 	public DateOnly DateOfBirth { get; set; }
 	public Gender Gender { get; set; }
-	public Address Address { get; set; } = default;
 }

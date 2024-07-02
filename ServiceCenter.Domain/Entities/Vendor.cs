@@ -11,8 +11,8 @@ namespace ServiceCenter.Domain.Entities;
 
 public class Vendor : ApplicationUser
 {
-
-	public DateOnly ContractStartDate { get; set; }
+    public Address Address { get; set; } = default;
+    public DateOnly ContractStartDate { get; set; }
     public DateOnly ContractEndDate { get; set; }
     public virtual Center Center { get; set; }
     public virtual ICollection<Transaction?> Transactions { get; set; } = new HashSet<Transaction>();

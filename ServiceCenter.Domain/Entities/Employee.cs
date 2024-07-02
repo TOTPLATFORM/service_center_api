@@ -4,7 +4,8 @@ namespace ServiceCenter.Domain.Entities;
 
 public class Employee : ApplicationUser
 {
-	public int DepartmentId { get; set; }
+    public Address Address { get; set; } = default;
+    public int DepartmentId { get; set; }
     public decimal BaseSalary { get; set; }
     public virtual Department Department { get; set; }
     public virtual ICollection<Salary> Salaries { get; set; }
