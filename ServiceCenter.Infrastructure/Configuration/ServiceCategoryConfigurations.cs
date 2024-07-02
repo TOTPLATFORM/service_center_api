@@ -18,10 +18,9 @@ public class ServiceCategoryConfigurations : IEntityTypeConfiguration<ServiceCat
                .HasColumnType("varchar")
 			   .HasMaxLength(50);
 
-		builder.Property(T=>T.ServiceCategoryDescription)
+        builder.Property(T => T.ServiceCategoryDescription)
               .IsRequired()
-              .HasColumnType("varchar")
-			  .HasMaxLength(50);
+              .HasColumnType("varchar");
 
 	}
 }
