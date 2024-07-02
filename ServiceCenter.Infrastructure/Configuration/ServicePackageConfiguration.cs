@@ -17,10 +17,9 @@ public class ServicePackageConfiguration : IEntityTypeConfiguration<ServicePacka
             .IsRequired()
             .HasColumnType("varchar")
 			.HasMaxLength(50);
-		builder.Property(T => T.PackageDescription)
+        builder.Property(T => T.PackageDescription)
            .IsRequired()
-           .HasColumnType("varchar")
-		   .HasMaxLength(50);
+           .HasColumnType("varchar");
 
 		builder.Property(T => T.PackagePrice)
           .IsRequired();
