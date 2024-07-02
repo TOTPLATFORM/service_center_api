@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class ProductGetByIdResponseDto
+public class ProductGetByIdResponseDto : ProductResponseDto
 {
-    public int Id { get; set; }
-    public string ProductName { get; set; } = "";
-    public string ProductDescription { get; set; } = "";
-    public int ProductPrice { get; set; }
-
+    public int ProducrStock { get; set; }
     public virtual ICollection<FeedbackResponseDto?> Feedbacks { get; set; } = new HashSet<FeedbackResponseDto>();
   
     
