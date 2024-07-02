@@ -96,8 +96,7 @@ public class WareHouseManagerServiceTest
            StartDate = DateOnly.Parse(startDate),
             EndDate = DateOnly.Parse(endDate),
             DepartmentId = 1,
-            InventoryId = 1,
-            Email = email,
+            InventoryId = 1
         };
         // Act
         var result = await _warehousemanagerService.AddWareHouseManagerServiceAsync(warehousemanagerRequestDto);
@@ -170,7 +169,6 @@ public class WareHouseManagerServiceTest
             EndDate = DateOnly.Parse(endDate),
             DepartmentId=1,
             InventoryId=1,
-            Email = email,
             
         };
 

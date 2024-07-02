@@ -11,11 +11,15 @@ namespace ServiceCenter.Application.DTOS;
 
 public class BaseUserRequestDto
 {
-
-	[EmailAddress]
 	[Required]
-	public string Email { get; set; } = "";
-	public string? UserName { get; set; }
-	[PasswordPropertyText]
-	public string? Password { get; set; }
+	public string UserName { get; set; } = "";
+    [PasswordPropertyText]
+	[Required]
+	public string Password { get; set; }
+	[Required]
+	[Phone]
+    public string PhoneNumber { get; set; }
+    [Required]
+	[EmailAddress]
+    public string Email { get; set; }
 }

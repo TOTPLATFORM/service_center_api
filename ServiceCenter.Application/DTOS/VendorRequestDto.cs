@@ -10,8 +10,6 @@ namespace ServiceCenter.Application.DTOS;
 public class VendorRequestDto : BaseUserRequestDto
 {
     [Required]
-    public int ContactId { get; set; }
-    [Required]
     public DateOnly ContractStartDate { get; set; }
     [Required]
     public DateOnly ContractEndDate { get; set; }

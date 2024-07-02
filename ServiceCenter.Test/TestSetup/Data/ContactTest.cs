@@ -16,7 +16,7 @@ public static class ContactTest
         context.Contacts.AddRange(
         new Contact
         {
-            Id = 1,
+            Id = new Guid(),
             DateOfBirth = DateOnly.Parse("2000/12/30"),
             FirstName = "hager",
             LastName = "shaban",
@@ -25,7 +25,7 @@ public static class ContactTest
         },
         new Contact
         {
-            Id = 2,
+            Id = new Guid(),
             DateOfBirth = DateOnly.Parse("2000/12/30"),
            FirstName = "hager",
             LastName = "shaban",

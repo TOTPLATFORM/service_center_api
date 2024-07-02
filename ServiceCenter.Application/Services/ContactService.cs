@@ -12,6 +12,7 @@ using ServiceCenter.Domain.Enums;
 using ServiceCenter.Infrastructure.BaseContext;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,19 +31,22 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 	///<inheritdoc/>
 	public async Task<Result> AddContactAsync(ContactRequestDto contactRequestDto)
 	{
-		
-       // var role = "Contact";
-        var result = _mapper.Map<Contact>(contactRequestDto);
+		if (_dbContext.Contacts.Any(u => u.Email == contactRequestDto.Email))
+		{
+			_logger.LogError("Email is already in use. Email: {@Email}", contactRequestDto.Email);
 
-       //var contactAdded = await _authService.RegisterUserWithRoleAsync(contact, contactRequestDto.Password, role);
+			return Result.Invalid(new List<ValidationError>
+			{
+				new ValidationError
+				{
+					ErrorMessage = "Email is already in use."
+				}
+			});
+		}
 
-       // if (!contactAdded.IsSuccess)
-       // {
-       //     return Result.Error(contactAdded.Errors.FirstOrDefault());
-       // }
+		var result = _mapper.Map<Contact>(contactRequestDto);
 
-       
-        if (result is null)
+		if (result is null)
         {
             _logger.LogError("Failed to map ContactRequestDto to Contact. ContactRequestDto: {@ContactRequestDto}", contactRequestDto);
 
@@ -54,7 +58,6 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
                 }
             });
         }
-        result.CreatedBy = _userContext.Email;
 
         _dbContext.Contacts.Add(result);
 
@@ -99,20 +102,20 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
     public async Task<Result<ContactResponseDto>> RegisterCustomerAsync(CustomerRequestDto customerRequestDto)
 	{
-		var contact = _mapper.Map<Customer>(customerRequestDto);
+		//var contact = _mapper.Map<Customer>(customerRequestDto);
 
 		
 
-		var role = "Customer";
+		//var role = "Customer";
 
-		var contactAdded = await _authService.RegisterUserWithRoleAsync(contact, customerRequestDto.Password, role);
+		//var contactAdded = await _authService.RegisterUserWithRoleAsync(contact, customerRequestDto.Password, role);
 
-		if (!contactAdded.IsSuccess)
-		{
-			return Result.Error(contactAdded.Errors.FirstOrDefault());
-		}
+		//if (!contactAdded.IsSuccess)
+		//{
+		//	return Result.Error(contactAdded.Errors.FirstOrDefault());
+		//}
 
-		_logger.LogInformation("customer added successfully in the database");
+		//_logger.LogInformation("customer added successfully in the database");
 
 		return Result.SuccessWithMessage("Contact added successfully");
 	}
@@ -127,12 +130,6 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 			_logger.LogWarning($"Contact with id {id} was not found while attempting to update contact status by id");
 
 			return Result.NotFound(["The contact is not found"]);
-		}
-
-		if (status == ContactStatus.Cancelled)
-		{
-			 _dbContext.Contacts.Remove(contact);
-			 await _dbContext.SaveChangesAsync();
 		}
 
 		var previousContactStatus = contact.Status;

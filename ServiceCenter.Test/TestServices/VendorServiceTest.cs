@@ -94,7 +94,6 @@ public class VendorServiceTest
         {
             ContractStartDate = DateOnly.Parse(startDate),
            ContractEndDate = DateOnly.Parse(endDate),
-            Email = email,
            
           
         };
@@ -166,7 +165,6 @@ public class VendorServiceTest
         {
            ContractStartDate = DateOnly.Parse(startDate),
             ContractEndDate = DateOnly.Parse(endDate),
-            Email = email,
            
         };
 

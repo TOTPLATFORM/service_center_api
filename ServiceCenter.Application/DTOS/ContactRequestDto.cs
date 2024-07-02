@@ -11,11 +11,22 @@ namespace ServiceCenter.Application.DTOS;
 
 public class ContactRequestDto 
 {
+    [Required]
     public string FirstName { get; set; } = "";
+    [Required]
     public string LastName { get; set; } = "";
+    [Required]
     public DateOnly DateOfBirth { get; set; }
+    [Required]
     public Gender Gender { get; set; }
+    [Required]
     public Address Address { get; set; } = default;
-    public ContactStatus Status { get; set; } =  ContactStatus.Opportunity;
+    [EmailAddress]
+    [Required]
+	public string Email { get; set; } = "";
+    [Phone]
+    [Required]
+    public string WhatshappNumber { get; set; } = "";
+
 
 }
