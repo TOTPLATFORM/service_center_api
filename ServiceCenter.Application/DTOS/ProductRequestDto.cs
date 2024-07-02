@@ -20,5 +20,5 @@ public class ProductRequestDto
     public int ProductPrice { get; set; }
 
     [Required]
-    public int CategoryId { get; set; } 
+    public int ProductCategoryId { get; set; } 
 }

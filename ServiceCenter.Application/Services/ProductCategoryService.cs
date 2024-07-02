@@ -150,22 +150,29 @@ public class ProductCategoryService(ServiceCenterBaseDbContext dbContext, IMappe
         {
             _logger.LogWarning("ProductCategoryId Id not found,Id {id}", productCategoryId);
 
-            return Result.NotFound(["The Facility is not found"]);
+            return Result.NotFound(["The ProductCategory is not found"]);
         }
 
         var productBrand = await _dbContext.ProductBrands.FindAsync(productBrandId);
 
         if (productBrand is null)
         {
-            _logger.LogWarning("Property Id not found,Id {id}", productBrandId);
+            _logger.LogWarning("productBrand Id not found,Id {id}", productBrandId);
 
-            return Result.NotFound(["The Property is not found"]);
+            return Result.NotFound(["The productBrand is not found"]);
         }
 
-        productBrand.ProductCategories.Add(productCategory);
-        await _dbContext.SaveChangesAsync();
+        if (!productBrand.ProductCategories.Any(pc => pc.Id == productCategoryId))
+        {
+            productBrand.ProductCategories.Add(productCategory);
+            await _dbContext.SaveChangesAsync();
 
-        _logger.LogInformation("Successfully assigned productCategory to productBrand");
+            _logger.LogInformation("Successfully assigned productCategory to productBrand");
+        }
+        else
+        {
+            _logger.LogInformation("ProductCategory already assigned to productBrand");
+        }
 
         return Result.SuccessWithMessage("productCategory added successfully to productBrand");
 

@@ -9,7 +9,8 @@ namespace ServiceCenter.Application.DTOS;
 
 public class ProductGetByIdResponseDto : ProductResponseDto
 {
-    public int ProducrStock { get; set; }
+    public int ProductStock { get; set; }
+    public string CategoryName { get; set; } = "";
     public virtual ICollection<FeedbackResponseDto?> Feedbacks { get; set; } = new HashSet<FeedbackResponseDto>();
   
     
