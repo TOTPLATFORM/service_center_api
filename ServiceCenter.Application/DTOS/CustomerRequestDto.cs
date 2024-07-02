@@ -1,4 +1,5 @@
-﻿using ServiceCenter.Domain.Entities;
+﻿using Microsoft.AspNetCore.Identity;
+using ServiceCenter.Domain.Entities;
 using ServiceCenter.Domain.Enums;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class CustomerRequestDto : BaseUserRequestDto
+public class CustomerRequestDto
 {
-    [Required]
-    public int ContactId { get; set; }
+    public ContactRequestDto Contact { get; set; } = default;
+    public BaseUserRequestDto User { get; set; } = default;
+
 }

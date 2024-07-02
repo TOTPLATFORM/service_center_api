@@ -79,6 +79,7 @@ public class MappingProfiles : Profile
 		this.AddApplicantMapping();
 		this.AddLeaveRequestMapping();
 		this.AddLeaveTypetMapping();
+		this.AddCustomerMapping();
 	}
 
 }
