@@ -43,8 +43,20 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 				}
 			});
 		}
+        if (_dbContext.Contacts.Any(u => u.WhatshappNumber == contactRequestDto.WhatshappNumber))
+        {
+            _logger.LogError("PhoneNumber is already in use. PhoneNumber: {@WhatshappNumber}", contactRequestDto.WhatshappNumber);
 
-		var result = _mapper.Map<Contact>(contactRequestDto);
+            return Result.Invalid(new List<ValidationError>
+            {
+                new ValidationError
+                {
+                    ErrorMessage = "PhoneNumber is already in use."
+                }
+            });
+        }
+
+        var result = _mapper.Map<Contact>(contactRequestDto);
 
 		if (result is null)
         {
@@ -67,7 +79,6 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
         return Result.SuccessWithMessage("Contact added successfully");
     }
-
 	///<inheritdoc/>
 	public async Task<Result<PaginationResult<ContactResponseDto>>> GetAllContactsAsync(int itemCount,int index)
 	{
@@ -79,8 +90,8 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
 		return Result.Success(result);
 	}
-
-    public async Task<Result<ContactResponseDto>> GetContacttByIdAsync(string id)
+    ///<inheritdoc/>
+    public async Task<Result<ContactResponseDto>> GetContacttByIdAsync(Guid id)
     {
         var result = await _dbContext.Contacts
                 .ProjectTo<ContactResponseDto>(_mapper.ConfigurationProvider)
@@ -97,31 +108,56 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
         return Result.Success(result);
     }
-
     ///<inheritdoc/>
+    public async Task<Result<PaginationResult<ContactResponseDto>>> SearchContactByTextAsync(string text, int itemCount, int index)
+    {
+        var result = await _dbContext.Contacts
+              .ProjectTo<ContactResponseDto>(_mapper.ConfigurationProvider)
+              .Where(n => n.FirstName.Contains(text)||n.LastName.Contains(text))
+              .GetAllWithPagination(itemCount, index);
 
-    public async Task<Result<ContactResponseDto>> RegisterCustomerAsync(CustomerRequestDto customerRequestDto)
-	{
-		//var contact = _mapper.Map<Customer>(customerRequestDto);
+        _logger.LogInformation("Fetching search contact by name . Total count: {contacts}.", result.Data.Count);
 
-		
+        return Result.Success(result);
+    }
+    ///<inheritdoc/>
+    public async Task<Result<ContactResponseDto>> UpdateContactAsync(Guid id, ContactRequestDto contactRequestDto)
+    {
+        var result = await _dbContext.Contacts.FindAsync(id);
 
-		//var role = "Customer";
+        if (result is null)
+        {
+            _logger.LogWarning("Contact Id not found,Id {ContactId}", id);
+            return Result.NotFound(["Contact not found"]);
+        }
 
-		//var contactAdded = await _authService.RegisterUserWithRoleAsync(contact, customerRequestDto.Password, role);
+      //  result.ModifiedBy = _userContext.Email;
 
-		//if (!contactAdded.IsSuccess)
-		//{
-		//	return Result.Error(contactAdded.Errors.FirstOrDefault());
-		//}
+        _mapper.Map(contactRequestDto, result);
 
-		//_logger.LogInformation("customer added successfully in the database");
+        await _dbContext.SaveChangesAsync();
 
-		return Result.SuccessWithMessage("Contact added successfully");
-	}
+        var contact = _mapper.Map<ContactResponseDto>(result);
 
-	///<inheritdoc/>
-	public async Task<Result<ContactResponseDto>> UpdateContactStatusAsync(string id, ContactStatus status)
+        if (contact is null)
+        {
+            _logger.LogError("Failed to map ContactRequestDto to ContactResponseDto. ContactRequestDto: {@ContactRequestDto}", contact);
+
+            return Result.Invalid(new List<ValidationError>
+            {
+                    new ValidationError
+                    {
+                        ErrorMessage = "Validation Errror"
+                    }
+            });
+        }
+
+        _logger.LogInformation("Updated Contact , Id {Id}", id);
+
+        return Result.Success(contact);
+    }
+    ///<inheritdoc/>
+    public async Task<Result<ContactResponseDto>> UpdateContactStatusAsync(Guid id, ContactStatus status)
 	{
 		var contact = await _dbContext.Contacts.FindAsync(id);
 

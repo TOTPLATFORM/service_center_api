@@ -22,7 +22,6 @@ public class ContactController(IContactService contactService) : BaseController
 	/// Access is limited to users with the "Admin" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-
 	[HttpPost]
     [Authorize(Roles = "Admin,Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -30,22 +29,7 @@ public class ContactController(IContactService contactService) : BaseController
 	public async Task<Result> AddContact(ContactRequestDto contactRequestDto)
 	{
 		return await _contactService.AddContactAsync(contactRequestDto);
-	}
-
-	/// <summary>
-	/// Register a new customer  to the system.
-	/// </summary>
-	/// <param name="customerRequestDto">The data transfer object containing contact details for creation.</param>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-
-	[HttpPost("registerCustomer")]
-	[ProducesResponseType(typeof(Result<ContactResponseDto>), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<ContactResponseDto>> RegisterCustomer(CustomerRequestDto customerRequestDto)
-	{
-		return await _contactService.RegisterCustomerAsync(customerRequestDto);
-	}
-
+	}	
 	/// <summary>
 	/// get all contacts in the system.
 	/// </summary>
@@ -72,7 +56,7 @@ public class ContactController(IContactService contactService) : BaseController
     [Authorize(Roles = "Admin,Sales")]
 	[ProducesResponseType(typeof(Result<ContactResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<ContactResponseDto>> UpdateContactStatus(ContactStatus status, string id)
+	public async Task<Result<ContactResponseDto>> UpdateContactStatus(ContactStatus status, Guid id)
 	{
 		return await _contactService.UpdateContactStatusAsync(id, status);
 	}
@@ -88,9 +72,44 @@ public class ContactController(IContactService contactService) : BaseController
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<ContactResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<ContactResponseDto>> GetContactById(string id)
+    public async Task<Result<ContactResponseDto>> GetContactById(Guid id)
     {
         return await _contactService.GetContacttByIdAsync(id);
+    }
+    /// <summary>
+    /// update  contact in the system.
+    /// </summary>
+    ///<param name="id">id of contact.</param>
+    ///<param name="contactRequestDto">contact dto.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+    [HttpPut("{id}")]
+    [Authorize(Roles = "Admin,Manager")]
+    [ProducesResponseType(typeof(Result<ContactResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<ContactResponseDto>> UpdateContact(Guid id, ContactRequestDto contactRequestDto)
+    {
+        return await _contactService.UpdateContactAsync(id, contactRequestDto);
+    }
+    /// <summary>
+    /// search  contact by text in the system.
+    /// </summary>
+    ///<param name="text">id</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+    [HttpGet("search/{text}")]
+    [Authorize(Roles = "Admin,Manager")]
+    [ProducesResponseType(typeof(Result<PaginationResult<ContactResponseDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+    public async Task<Result<PaginationResult<ContactResponseDto>>> SerachContactByText(string text, int itemCount, int index)
+    {
+        return await _contactService.SearchContactByTextAsync(text, itemCount, index);
     }
 
 }

@@ -94,7 +94,7 @@ public class ServiceProviderServiceTest
         {
            
             DepartmentId = departmentId,
-            Email = email,
+            //Email = email,
              ServiceIds = [1]
         };
         // Act
@@ -166,7 +166,7 @@ public class ServiceProviderServiceTest
         {
            
             DepartmentId = departmentId, 
-            Email = email,
+           // Email = email,
             ServiceIds = serviceIds
         };
 

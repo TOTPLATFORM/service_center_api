@@ -11,8 +11,7 @@ public static class ProductMapping
         map.CreateMap<ProductRequestDto, Product>()
             .ForPath(dest => dest.ProductCategory.Id, src => src.MapFrom(src => src.ProductCategoryId));
 
-        map.CreateMap<Product, ProductGetByIdResponseDto>()
-            .ForMember(dest=>dest.CategoryName,src=>src.MapFrom(src=>src.ProductCategory.CategoryName));
+        map.CreateMap<Product, ProductGetByIdResponseDto>();
 
         map.CreateMap<Product, ProductResponseDto>();
         

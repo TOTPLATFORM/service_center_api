@@ -63,10 +63,10 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	}
 
 	/// <summary>
-	/// get  inventory by id in the system.
+	/// update  inventory in the system.
 	/// </summary>
 	///<param name="id">id of inventory.</param>
-	///<param name="InventoryRequestDto">inventory dto.</param>
+	///<param name="inventoryRequestDto">inventory dto.</param>
 	/// <remarks>
 	/// Access is limited to users with the "Admin" role.
 	/// </remarks>

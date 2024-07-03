@@ -34,19 +34,25 @@ public interface IContactService : IApplicationService, IScopedService
     /// <param name="id">the unique identifier of the contact to update its status.</param>
     /// <param name="status">The updated status</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
-	public Task<Result<ContactResponseDto>> UpdateContactStatusAsync(string id, ContactStatus status);
+	public Task<Result<ContactResponseDto>> UpdateContactStatusAsync(Guid id, ContactStatus status);
 
-	/// <summary>
-	/// asynchronously register contact as customer to the database.
-	/// </summary>
-	/// <param name="contactRequestDto">the contact data transfer object containing the details necessary for creation.</param>
-	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the contact addition.</returns>
-	public Task<Result<ContactResponseDto>> RegisterCustomerAsync(CustomerRequestDto customerRequestDto);
+    /// <summary>
+    /// asynchronously updates the data of an existing contact.
+    /// </summary>
+    /// <param name="id">the unique identifier of the contact to update.</param>
+    /// <param name="contactRequestDto">the contact data transfer object containing the updated details.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
+    public Task<Result<ContactResponseDto>> UpdateContactAsync(Guid id, ContactRequestDto contactRequestDto);
     /// <summary>
     /// asynchronously retrieves a contact by their unique identifier.
     /// </summary>
     /// <param name="id">the unique identifier of the contact to retrieve.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the contact response DTO.</returns>
-    public Task<Result<ContactResponseDto>> GetContacttByIdAsync(string id);
-
+    public Task<Result<ContactResponseDto>> GetContacttByIdAsync(Guid id);
+    /// <summary>
+    /// asynchronously searches for contacts based on the provided text.
+    /// </summary>
+    /// <param name="text">the text to search within contact data.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of contact response DTOs that match the search criteria.</returns>
+    public Task<Result<PaginationResult<ContactResponseDto>>> SearchContactByTextAsync(string text, int itemCount, int index);
 }

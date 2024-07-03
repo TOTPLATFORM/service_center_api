@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace ServiceCenter.Application.Services;
 
@@ -29,7 +30,19 @@ public class CustomerService(UserManager<ApplicationUser> userManager,ServiceCen
 	///<inheritdoc/>
 	public async Task<Result> RegisterCustomerAsync(CustomerRequestDto customerRequestDto)
 	{
-		var role = "Customer";
+        if (_dbContext.Customers.Any(u => u.UserName == customerRequestDto.User.UserName))
+        {
+            _logger.LogError("UserName is already in use. UserName: {@UserName}", customerRequestDto.User.UserName);
+
+            return Result.Invalid(new List<ValidationError>
+            {
+                new ValidationError
+                {
+                    ErrorMessage = "UserName is already in use."
+                }
+            });
+        }
+        var role = "Customer";
 		var customer = _mapper.Map<Customer>(customerRequestDto);
 		_mapper.Map<Contact>(customerRequestDto.Contact);
 		customer.Contact.Status = ContactStatus.Customer;
@@ -60,78 +73,56 @@ public class CustomerService(UserManager<ApplicationUser> userManager,ServiceCen
 		return Result.Success(result);
 	}
 
-	public Task<Result<CustomerResponseDto>> GetCustomertByIdAsync(string id)
-	{
-		throw new NotImplementedException();
+	public async Task<Result<CustomerResponseDto>> GetCustomertByIdAsync(string id)
+    {
+        var result = await _dbContext.Customers
+				.ProjectTo<CustomerResponseDto>(_mapper.ConfigurationProvider)
+				.FirstOrDefaultAsync(customer => customer.Id == id);
+
+		if (result is null)
+		{
+			_logger.LogWarning("Customer Id not found,Id {CustomerId}", id);
+
+			return Result.NotFound(["Customer not found"]);
+		}
+
+		_logger.LogInformation("Fetching Customer");
+
+		return Result.Success(result);
 	}
 
-	public Task<Result<CustomerResponseDto>> UpdateCustomerAsync(string id, BaseUserUpdateRequestDto User)
+
+    public Task<Result> RegisterCustomerWithExistContactAsync(BaseUserRequestDto user)
 	{
-		throw new NotImplementedException();
-	}
+        throw new NotImplementedException();
+    }
 
-	public Task<Result> RegisterCustomerWithExistContactAsync(BaseUserRequestDto user)
+
+	///<inheritdoc/>
+
+	public async Task<Result<CustomerResponseDto>> UpdateCustomerAsync(string id, BaseUserUpdateRequestDto customerDto)
 	{
-		
+		var customer = await _dbContext.Customers.FindAsync(id);
+
+		if (customer is null)
+		{
+			_logger.LogWarning("customer  Id not found,Id {id}", id);
+
+			return Result.NotFound(["The customer  is not found"]);
+		}
+        
+		_mapper.Map(customerDto, customer);
+
+		//var result = await _authService.UpdateUserAsync(customer);
+
+		//if (!result.IsSuccess)
+		//{
+		//	return Result.Error(result.Errors.FirstOrDefault());
+		//}
+
+		var updatedCustomer = _mapper.Map<CustomerResponseDto>(customer);
+
+		_logger.LogInformation("mananger  updated successfully");
+		return Result.Success(updatedCustomer, "customer  updated successfully");
 	}
-	/////<inheritdoc/>
-	//public async Task<Result<CustomerGetByIdResponseDto>> GetMangertByIdAsync(string id)
-	//{
-	//	var result = await _dbContext.Customers
-	//			.ProjectTo<CustomerGetByIdResponseDto>(_mapper.ConfigurationProvider)
-	//			.FirstOrDefaultAsync(customer => customer.Id == id);
-
-	//	if (result is null)
-	//	{
-	//		_logger.LogWarning("Customer Id not found,Id {CustomerId}", id);
-
-	//		return Result.NotFound(["Customer not found"]);
-	//	}
-
-	//	_logger.LogInformation("Fetching Customer");
-
-	//	return Result.Success(result);
-	//}
-
-	/////<inheritdoc/>
-	//public async Task<Result<PaginationResult<CustomerResponseDto>>> SearchCustomerByTextAsync(string text, int itemCount, int index)
-	//{
-
-	//	var result = await _dbContext.Customers
-	//		.ProjectTo<CustomerResponseDto>(_mapper.ConfigurationProvider)
-	//		.Where(n => n.Employee.Contact.FirstName.Contains(text) || n.Employee.Contact.LastName.Contains(text))
-	//		.GetAllWithPagination(itemCount, index);
-
-	//	_logger.LogInformation("Fetching search customer by name . Total count: {customers}.", result.Data.Count);
-
-	//	return Result.Success(result);
-
-	//}
-	/////<inheritdoc/>
-	//public async Task<Result<CustomerGetByIdResponseDto>> UpdateCustomerAsync(string id, CustomerRequestDto customerRequestDto)
-	//{
-	//	var customer = await _dbContext.Customers.FindAsync(id);
-
-	//	if (customer is null)
-	//	{
-	//		_logger.LogWarning("customer  Id not found,Id {id}", id);
-
-	//		return Result.NotFound(["The customer  is not found"]);
-	//	}
-	//	customerRequestDto.UserName = customer.UserName;
-
-	//	_mapper.Map(customerRequestDto, customer);
-
-	//	var result = await _authService.UpdateUserAsync(customer);
-
-	//	if (!result.IsSuccess)
-	//	{
-	//		return Result.Error(result.Errors.FirstOrDefault());
-	//	}
-
-	//	var updatedCustomer = _mapper.Map<CustomerGetByIdResponseDto>(customer);
-
-	//	_logger.LogInformation("mananger  updated successfully");
-	//	return Result.Success(updatedCustomer, "customer  updated successfully");
-	//}
 }

@@ -12,8 +12,7 @@ public class OrderRequestDto
 {
     [Required]
     public string CustomerId { get; set; } = "";
-    [Required]
-    public string OrderStatus { get; set; } = "";
+  
     public ICollection<ProductOrderRequestDto> ProductOrders { get; set; }
 
 }

@@ -54,12 +54,12 @@ public class ProductServiceTest
     /// <param name="productCategoryId">product category id</param>
     /// <param name="salesId">sales id</param>
     [Theory, TestPriority(0)]
-    [InlineData("Product1", "Product1 is good", 20, 1, 1, "js6549874965-54463651654")]
-    public async Task AddProduct(string productName, string productDescription, int productPrice, int productBrandId, int productCategoryId, string salesId)
+    [InlineData("Product1", "Product1 is good", 20, 1,  "js6549874965-54463651654")]
+    public async Task AddProduct(string productName, string productDescription, int productPrice, int productBrandId,  string salesId)
     {
         // Arrange
         CheckService();
-        var ProductRequestDto = new ProductRequestDto { ProductName = productName, ProductDescription = productDescription, ProductPrice = productPrice,  CategoryId = productCategoryId };
+        var ProductRequestDto = new ProductRequestDto { ProductName = productName, ProductDescription = productDescription, ProductPrice = productPrice };
         // Act
         var result = await _productService.AddProductAsync(ProductRequestDto);
 
@@ -120,13 +120,13 @@ public class ProductServiceTest
     /// <param name="productCategoryId">product category id</param>
     /// <param name="salesId">sales id</param>
     [Theory, TestPriority(3)]
-    [InlineData(1, "Product1", "Product1 is good", 20, 1, true)]
-    [InlineData(10, "Product1", "Product1 is good", 20, 1,  false)]
-    public async Task UpdateProduct(int id, string productName, string productDescription, int productPrice,  int productCategoryId, bool expectedResult)
+    [InlineData(1, "Product1", "Product1 is good", 20,  true)]
+    [InlineData(10, "Product1", "Product1 is good", 20,  false)]
+    public async Task UpdateProduct(int id, string productName, string productDescription, int productPrice,  bool expectedResult)
     {
         //Arrange
         CheckService();
-        var productRequestDto = new ProductRequestDto { ProductName = productName, ProductDescription = productDescription, ProductPrice = productPrice, CategoryId = productCategoryId};
+        var productRequestDto = new ProductRequestDto { ProductName = productName, ProductDescription = productDescription, ProductPrice = productPrice};
 
         // Act
         var result = await _productService.UpdateProductAsync(id, productRequestDto);
