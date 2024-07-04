@@ -110,7 +110,8 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-	[ProducesResponseType(typeof(Result<PaginationResult<CampaginResponseDto>>), StatusCodes.Status200OK)]
+    [Authorize(Roles = "Admin,Manager")]
+    [ProducesResponseType(typeof(Result<PaginationResult<CampaginResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<PaginationResult<CampaginResponseDto>>> SerachCampaginByText(string text, int itemCount, int index)
 	{

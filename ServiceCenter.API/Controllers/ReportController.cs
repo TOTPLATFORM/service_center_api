@@ -21,7 +21,7 @@ public class ReportController(IReportService ReportService) : BaseController
     /// </remarks>
     /// <returns>result for Report  added successfully.</returns>
     [HttpPost]
-    [Authorize(Roles = "Admin,Sales")]
+    [Authorize(Roles = "Sales")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddReport(ReportRequestDto ReportDto)
@@ -69,7 +69,7 @@ public class ReportController(IReportService ReportService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin,Sales")]
+    [Authorize(Roles = "Sales")]
     [ProducesResponseType(typeof(Result<ReportResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ReportResponseDto>> UpdateReport(int id, string task)
@@ -85,7 +85,7 @@ public class ReportController(IReportService ReportService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager,Admin,Sales")]
+    [Authorize(Roles = "Manager,Sales")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> DeleteReportAsycn(int id)
@@ -94,7 +94,7 @@ public class ReportController(IReportService ReportService) : BaseController
     }
 
     [HttpPut("reportId/{id}/status/{status}")]
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<ReportResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ReportResponseDto>> UpdateReportStatus( int id,ReportStatus status )

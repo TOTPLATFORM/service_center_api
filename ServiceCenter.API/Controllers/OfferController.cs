@@ -34,7 +34,6 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// <returns>result of list from Offer response dto.</returns>
 
     [HttpGet]
-     [Authorize(Roles = "Customer,Admin,Manager")]
     [ProducesResponseType(typeof(Result<List<OfferResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<PaginationResult<OfferResponseDto>>> GetAllOffersAsync(int itemCount,int index)
     {
@@ -81,7 +80,6 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpGet("search")]
-    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<OfferResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<PaginationResult<OfferResponseDto>>> SearchOfferByText(string text,int itemCount,int index)
@@ -111,7 +109,6 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// <returns>result of list from products response dto.</returns>
 
     [HttpGet("SearchByOffer")]
-    [Authorize(Roles = "Customer,Admin,Manager")]
     [ProducesResponseType(typeof(Result<List<ProductGetByIdResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<PaginationResult<ProductGetByIdResponseDto>>> GetProductsByOffer(int offerId,int itemCount,int index)
     {

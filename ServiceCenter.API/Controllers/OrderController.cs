@@ -23,7 +23,7 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <returns>result of list from order response dto.</returns>
 
     [HttpGet()]
-    [Authorize(Roles = "Admin,Employee")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<PaginationResult<OrderResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<PaginationResult<OrderResponseDto>>> GetAllOrders(Status status,int ItemCount,int Index)
     {
@@ -37,7 +37,7 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <returns>result of order response dto </returns>
 
     [HttpGet("{id:int}")]
-    [Authorize(Roles = "Admin,Employee")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<OrderResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<OrderResponseDto>> GetOrderById(int id)
@@ -52,7 +52,7 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <returns>result of the order added successfully</returns>
 
     [HttpPost]
-    [Authorize(Roles = "Admin,Employee,Customer")]
+    [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddOrder(OrderRequestDto orderDto)
@@ -68,7 +68,7 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <returns>result of the order response dto after updated successfully</returns>
 
     [HttpPut("orderId/{id}/status/{status}")]
-    [Authorize(Roles = "Admin,Employee")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<OrderResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<OrderResponseDto>> UpdateOrderStatus(Status status, int id)

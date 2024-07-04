@@ -22,7 +22,7 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     /// </remarks>
     /// <returns>result for Rating  added successfully.</returns>
     [HttpPost]
-    [Authorize(Roles = "Admin,Customer")]
+    [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddRating(RatingRequestDto RatingDto)
@@ -68,7 +68,7 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin,Customer")]
+    [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result<RatingResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<RatingResponseDto>> UpdateRatingValue(int id, int ratingValue)
@@ -98,7 +98,7 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("searchByCustomer/{customerId}")]
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize(Roles = "Admin,Manager,Customer")]
     [ProducesResponseType(typeof(Result<PaginationResult<RatingResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<PaginationResult<RatingResponseDto>>> GetRatingsForSpecificCustomer(string customerId, int itemCount, int index)
@@ -112,7 +112,6 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("searchByProduct/{productId}")]
-    [Authorize(Roles = "Admin,Customer,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<RatingResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<PaginationResult<RatingResponseDto>>> GetRatingsForSpecificProduct(int productId, int itemCount, int index)
@@ -126,7 +125,6 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("searchByService/{serviceId}")]
-    [Authorize(Roles = "Admin,Customer,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<RatingResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<PaginationResult<RatingResponseDto>>> GetRatingsForSpecificService(int serviceId, int itemCount, int index)

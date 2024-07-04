@@ -71,7 +71,7 @@ public class ServiceProviderController(IServiceProviderService serviceproviderSe
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Manager,ServiceProvider,Admin")]
+    [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<ServiceProviderResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ServiceProviderResponseDto>> UpdateServiceProvider(string id, ServiceProviderRequestDto serviceproviderRequestDto)

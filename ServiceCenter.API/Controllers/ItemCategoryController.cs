@@ -20,7 +20,7 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     /// <param name="itemCategoryDto">ItemCategory dto</param>
     /// <returns>result for ItemCategory added successfully.</returns>
     [HttpPost]
-    [Authorize(Roles = "Manager,WarehouseManager,Admin")]
+    [Authorize(Roles = "Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddItemCategory(ItemCategoryRequestDto itemCategoryDto)
@@ -48,7 +48,7 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
         return await _itemCategoryService.GetItemCategoryByIdAsync(id);
     }
     [HttpPut("{id}")]
-    [Authorize(Roles = "WarehouseManager,Admin,Manager")]
+    [Authorize(Roles = "WarehouseManager,Manager")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ItemCategoryResponseDto>> UpdateItemCategory(int id, ItemCategoryRequestDto itemCategoryDto)
@@ -61,7 +61,7 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     /// <param name="id">ItemCategory id</param>
     /// <returns>result of ItemCategory removed successfully </returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "WarehouseManager,Admin,Manager")]
+    [Authorize(Roles = "WarehouseManager,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> DeleteItemCategory(int id)
@@ -83,8 +83,13 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     {
         return await _itemCategoryService.SearchItemCategoryByTextAsync(text,itemCount,index);
     }
+    /// <summary>
+    /// function to search by Inventory  that take  ItemCategory name
+    /// </summary>
+    /// <param name="id">Inventory Id </param>
+    /// <returns>ItemCategory response dto </returns>
     [HttpGet("searchByRelation/{id}")]
-    [Authorize(Roles = "WarehouseManager,Admin")]
+    [Authorize(Roles = "WarehouseManager,Admin,Manager,ServiceProvider")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<PaginationResult<ItemCategoryResponseDto>>> SearchItemCategoryByRelation(int id, int itemCount, int index)

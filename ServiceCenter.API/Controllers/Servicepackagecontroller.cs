@@ -84,7 +84,6 @@ public class ServicePackageController(IServicePackageService ServicePackageServi
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
-   // [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<ServicePackageGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<ServicePackageGetByIdResponseDto>> GetServicePackageById(int id)
@@ -99,7 +98,6 @@ public class ServicePackageController(IServicePackageService ServicePackageServi
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpGet("search/{text}")]
-    //[Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<ServicePackageResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<PaginationResult<ServicePackageResponseDto>>> SearchServicePackageByText(string text,int itemCount,int index)
