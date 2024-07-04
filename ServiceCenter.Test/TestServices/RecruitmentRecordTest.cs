@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Test.TestServices;
 [TestCaseOrderer(
-ordererTypeName: "ServiceCenter.Test.TestPriority.PriorityOrderer",
+ordererTypeName: "ServiceCenter.Test.TestPriority.PriorityOrderer",  
 ordererAssemblyName: "ServiceCenter.Test")]
 public class RecruitmentRecordTest
 {

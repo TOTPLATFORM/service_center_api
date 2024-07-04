@@ -114,7 +114,7 @@ public class AttendanceServiceTest
     /// <param name="endTime">attendance end time</param>
     /// <param name="expectedResult">expected result</param>
     [Theory, TestPriority(3)]
-    [InlineData(1, "3/18/2024", "5:30:00", "6:30:00", "78ty72a7-589e-4f0b-81ed-40389f683616", true)]
+    [InlineData(1, "3/10/2024", "5:30:00", "10:30:00", "78ty72a7-589e-4f0b-81ed-40389f683616", true)]
     [InlineData(10, "3/11/2024", "5:30:00", "5:30:00", "78ty72a7-589e-4f0b-81ed-40389f683616", false)]
     public async Task UpdateAttendance(int id, string date, string startTime, string endTime, string empId, bool expectedResult)
     {

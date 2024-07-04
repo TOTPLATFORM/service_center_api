@@ -1,5 +1,4 @@
 ﻿using ServiceCenter.Domain.Entities;
-using ServiceCenter.Domain.Enums;
 using ServiceCenter.Infrastructure.BaseContext;
 using System;
 using System.Collections.Generic;
@@ -9,22 +8,26 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Test.TestSetup.Data;
 
-public static class OrderTest
+public static class LeaveTypeTest
 {
-    public static void AddOrder(this ServiceCenterBaseDbContext context)
+    public static void AddLeaveType(this ServiceCenterBaseDbContext context)
     {
-        context.Orders.AddRange(
-        new Order
+        context.LeaveTypes.AddRange(
+        new LeaveType
         {
             Id = 1,
-              OrderStatus = Status.Pending,
+
+            TypeName = "Sickkk"
+
         },
-        new Order
+        new LeaveType
         {
             Id = 2,
-           
-        }
 
-      );
+            TypeName = "Sickkk"
+
+        }
+        );
     }
+
 }

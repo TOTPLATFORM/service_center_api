@@ -9,22 +9,21 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Test.TestSetup.Data;
 
-public static class OrderTest
+public static class CustomerTest
 {
-    public static void AddOrder(this ServiceCenterBaseDbContext context)
+    public static void AddCustomer(this ServiceCenterBaseDbContext context)
     {
-        context.Orders.AddRange(
-        new Order
+        context.Customers.AddRange(
+        new Customer
         {
-            Id = 1,
-              OrderStatus = Status.Pending,
+            Id = "0d133c1t-804f-4548-8f7e-8c3f904804e0",
+            
         },
-        new Order
+        new Customer
         {
-            Id = 2,
-           
+            Id = "0d133c1u-804f-4548-8f7e-8c3f904804e0",
         }
-
-      );
+        );
     }
 }
+

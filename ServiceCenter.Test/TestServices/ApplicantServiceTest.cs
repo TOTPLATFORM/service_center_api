@@ -77,18 +77,15 @@ public class ApplicantServiceTest
     /// <param name="UserName">Applicant user name</param>
     /// <param name="expectedResult">expected result</param>
     [Theory, TestPriority(3)]
-    [InlineData("78ty72a7-589e-4f0b-81ed-40389f683610", "nejosif605@hisotyr.com", "Hager", "shaaban", "01065695783", true)]
-    [InlineData("45yi72a7-589e-4f0b-81ed-40389f683020", "nejosif605@hisotyr.com", "Hager", "shaaban", "01065695783", false)]
-    public async Task UpdateApplicantAsync(string id, string ApplicantEmail, string ApplicantFirstName, string ApplicantLastName, string ApplicantPhoneNumber, bool expectedResult)
+    [InlineData("78ty72a7-589e-4f0b-81ed-40389f683610",9 , true)]
+    [InlineData("45yi72a7-589e-4f0b-81ed-40389f683090", 5, false)]
+    public async Task UpdateApplicantAsync(string id,int departmenId , bool expectedResult)
     {
         //Arrange
         CheckService();
         var ApplicantRequestDto = new ApplicantRequestDto
         {
-            //Email = ApplicantEmail,
-            //FirstName = ApplicantFirstName,
-            //LastName = ApplicantLastName,
-            //PhoneNumber = ApplicantPhoneNumber
+            DepartmentId = departmenId,
         };
         // Act
         var result = await _applicantService.UpdateApplicantAsync(id, ApplicantRequestDto);

@@ -51,6 +51,14 @@ public class ContextGenerator
             Context.AddReport();
             Context.AddRevenue();
             Context.AddExpenses();
+            Context.AddSalary();
+            Context.AddPerformanceReview();
+            Context.AddRecruitmentRecord();
+            Context.AddApplicant();
+            Context.AddAttendance();
+            Context.AddLeaveRequest();
+            Context.AddLeaveType();
+            Context.AddCustomer();
             Context.SaveChanges();
         }
 
