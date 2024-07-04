@@ -80,6 +80,8 @@ public class MappingProfiles : Profile
 		this.AddLeaveRequestMapping();
 		this.AddLeaveTypetMapping();
 		this.AddCustomerMapping();
+		this.AddProductOrderMapping();
+		this.AddUserMapping();
 	}
 
 }

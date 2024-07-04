@@ -53,7 +53,7 @@ public class CenterController(ICenterService centerService) : BaseController
 	/// get  inventory by id in the system.
 	/// </summary>
 	///<param name="id">id of inventory.</param>
-	///<param name="CenterRequestDto">inventory dto.</param>
+	///<param name="centerRequestDto">inventory dto.</param>
 	/// <remarks>
 	/// Access is limited to users with the "Admin" role.
 	/// </remarks>
@@ -68,21 +68,5 @@ public class CenterController(ICenterService centerService) : BaseController
 		return await _centerService.UpdateCenterAsync(id, centerRequestDto);
 	}
 	
-	/// <summary>
-	/// delete  center by id from the system.
-	/// </summary>
-	///<param name="id">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	//[HttpDelete("{id}")]
-	//[Authorize(Roles = "Admin")]
-	//[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-	//[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	//public async Task<Result> DeleteCenterAsycn(int id)
-	//{
-	//	return await _centerService.DeleteCenterAsync(id);
-	//}
 }
 

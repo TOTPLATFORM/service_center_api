@@ -30,6 +30,7 @@ public class CustomerService(UserManager<ApplicationUser> userManager,ServiceCen
 	///<inheritdoc/>
 	public async Task<Result> RegisterCustomerAsync(CustomerRequestDto customerRequestDto)
 	{
+		var existsContact =await _dbContext.Contacts.FirstOrDefaultAsync(C => C.Email == customerRequestDto.Contact.Email || C.WhatshappNumber == customerRequestDto.Contact.WhatshappNumber);
         if (_dbContext.Customers.Any(u => u.UserName == customerRequestDto.User.UserName))
         {
             _logger.LogError("UserName is already in use. UserName: {@UserName}", customerRequestDto.User.UserName);
@@ -46,6 +47,16 @@ public class CustomerService(UserManager<ApplicationUser> userManager,ServiceCen
 		var customer = _mapper.Map<Customer>(customerRequestDto);
 		_mapper.Map<Contact>(customerRequestDto.Contact);
 		customer.Contact.Status = ContactStatus.Customer;
+		if(existsContact is not null)
+		{
+			customer.ContactId = existsContact.Id;
+			existsContact.FirstName = customerRequestDto.Contact.FirstName;
+			existsContact.LastName = customerRequestDto.Contact.LastName;
+			existsContact.DateOfBirth = customerRequestDto.Contact.DateOfBirth;
+			existsContact.Address = customerRequestDto.Contact.Address;
+			existsContact.Gender = customerRequestDto.Contact.Gender;
+			customer.Contact  = existsContact;
+		}
 		await _userManager.CreateAsync(customer, customerRequestDto.User.Password);
 		var customerAddResult = await  _userManager.AddToRoleAsync(customer, role);
 		if (!customerAddResult.Succeeded)
@@ -59,9 +70,7 @@ public class CustomerService(UserManager<ApplicationUser> userManager,ServiceCen
 		_logger.LogInformation($"Successfully registered a new user with username {customerRequestDto.User.UserName}");
 		return Result.SuccessWithMessage("Customer added successfully");
 	}
-
-
-	///<inheritdoc/>
+    ///<inheritdoc/>
 	public async Task<Result<PaginationResult<CustomerResponseDto>>> GetAllCustomersAsync(int itemCount, int index)
 	{
 		var result = await _dbContext.Customers
@@ -71,9 +80,9 @@ public class CustomerService(UserManager<ApplicationUser> userManager,ServiceCen
 		_logger.LogInformation("Fetching all Customers. Total count: {Customer}.", result.Data.Count);
 
 		return Result.Success(result);
-	}
-
-	public async Task<Result<CustomerResponseDto>> GetCustomertByIdAsync(string id)
+    } 
+	///<inheritdoc/>
+    public async Task<Result<CustomerResponseDto>> GetCustomertByIdAsync(string id)
     {
         var result = await _dbContext.Customers
 				.ProjectTo<CustomerResponseDto>(_mapper.ConfigurationProvider)
@@ -92,37 +101,7 @@ public class CustomerService(UserManager<ApplicationUser> userManager,ServiceCen
 	}
 
 
-    public Task<Result> RegisterCustomerWithExistContactAsync(BaseUserRequestDto user)
-	{
-        throw new NotImplementedException();
-    }
 
 
-	///<inheritdoc/>
-
-	public async Task<Result<CustomerResponseDto>> UpdateCustomerAsync(string id, BaseUserUpdateRequestDto customerDto)
-	{
-		var customer = await _dbContext.Customers.FindAsync(id);
-
-		if (customer is null)
-		{
-			_logger.LogWarning("customer  Id not found,Id {id}", id);
-
-			return Result.NotFound(["The customer  is not found"]);
-		}
-        
-		_mapper.Map(customerDto, customer);
-
-		//var result = await _authService.UpdateUserAsync(customer);
-
-		//if (!result.IsSuccess)
-		//{
-		//	return Result.Error(result.Errors.FirstOrDefault());
-		//}
-
-		var updatedCustomer = _mapper.Map<CustomerResponseDto>(customer);
-
-		_logger.LogInformation("mananger  updated successfully");
-		return Result.Success(updatedCustomer, "customer  updated successfully");
-	}
+	
 }

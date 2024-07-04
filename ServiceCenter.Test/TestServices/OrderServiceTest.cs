@@ -132,7 +132,7 @@ public class OrderServiceTest
     [Theory, TestPriority(3)]
     [InlineData(1, Status.Pending, true)]
     [InlineData(10, Status.Pending, false)]
-    public async Task UpdateSpectialization(int id, Status status, bool expectedResult)
+    public async Task UpdateOrder(int id, Status status, bool expectedResult)
     {
         //Arrange
         CheckService();

@@ -80,7 +80,7 @@ public class OrderController(IOrderService orderService) : BaseController
     /// action for get orders by customer id.
     /// </summary>
     /// <returns>result of the order response dto after updated successfully</returns>
-    [HttpPut("GetOrdersByCustomerId")]
+    [HttpGet("GetOrdersByCustomerId")]
     [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result<PaginationResult<OrderResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<PaginationResult<OrderResponseDto>>> GetOrdersByCustomerId(int ItemCount, int Index)

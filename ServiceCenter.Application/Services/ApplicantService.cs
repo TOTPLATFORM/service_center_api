@@ -84,7 +84,7 @@ public class ApplicantService(ServiceCenterBaseDbContext dbContext, IMapper mapp
     public async Task<Result<PaginationResult<ApplicantResponseDto>>> SearchApplicantByTextAsync(string text, int itemCount, int index)
     {
         var applicant = await _dbContext.Applicants.ProjectTo<ApplicantResponseDto>(_mapper.ConfigurationProvider)
-                                    .Where(d => d.FirstName.Contains(text)).GetAllWithPagination(itemCount, index);
+                                    .Where(d => d.UserName.Contains(text)).GetAllWithPagination(itemCount, index);
 
         if (index > applicant.TotalCount)
         {
