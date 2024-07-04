@@ -60,23 +60,7 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
             });
             }
             result.Product = product;
-            
-
-        
-    
-                     
-           // if (service == null)
-            //{
-            //    _logger.LogError("Service  with Id {ServiceId} not found.", feedbackRequestDto.ServiceId);
-
-            //    return Result.Invalid(new List<ValidationError>
-            //{
-            //     new ValidationError { ErrorMessage = "Service  not found" }
-            //});
-            //}
-            result.Service = service;
-
-        
+            result.Service = service;        
       
         if (result is null)
         {

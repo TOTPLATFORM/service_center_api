@@ -177,8 +177,9 @@ public class ServiceServiceTest
     public async Task GetServicesForSpecificServiceCategory()
     {
         // Arrange
-        CheckService();
         int ServiceCategoryId = 1;
+        CheckService();
+      
 
         // Act
         var result = await _serviceService.GetServicesByCategoryAsync(ServiceCategoryId, 2, 1);
