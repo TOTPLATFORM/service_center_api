@@ -13,6 +13,5 @@ public class Subscription : AuditableEntity
 
     public int ServicePackageId { get; set; }
     public virtual ServicePackage ServicePackage { get; set; } = default;
-    //public string CustomerId { get; set; }
     public virtual Customer Customer { get; set; } = default;
 }
