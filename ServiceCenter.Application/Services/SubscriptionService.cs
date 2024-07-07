@@ -67,6 +67,8 @@ public class SubscriptionService(ServiceCenterBaseDbContext dbContext, IMapper m
     public async Task<Result<PaginationResult<SubscriptionResponseDto>>> GetAllSubscriptionAsync(int itemCount, int index)
     {
         var result = await _dbContext.Subscriptions
+             .AsNoTracking()
+             
              .ProjectTo<SubscriptionResponseDto>(_mapper.ConfigurationProvider)
              .GetAllWithPagination(itemCount, index);
 
@@ -79,8 +81,10 @@ public class SubscriptionService(ServiceCenterBaseDbContext dbContext, IMapper m
     public async Task<Result<SubscriptionResponseDto>> GetSubscriptionByIdAsync(int id)
     {
         var result = await _dbContext.Subscriptions
-            .ProjectTo<SubscriptionResponseDto>(_mapper.ConfigurationProvider)
+			.AsNoTracking()
+			.ProjectTo<SubscriptionResponseDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(p => p.Id == id);
+			 
 
         if (result is null)
         {

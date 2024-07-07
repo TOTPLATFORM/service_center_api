@@ -67,6 +67,7 @@ public class CustomerService(UserManager<ApplicationUser> userManager,ServiceCen
 	public async Task<Result<PaginationResult<CustomerResponseDto>>> GetAllCustomersAsync(int itemCount, int index)
 	{
 		var result = await _dbContext.Customers
+			     .AsNoTracking()
 				 .ProjectTo<CustomerResponseDto>(_mapper.ConfigurationProvider)
 				 .GetAllWithPagination(itemCount, index);
 

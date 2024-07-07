@@ -12,7 +12,8 @@ public static class SubscriptionMapping
             .ForPath(dest => dest.Customer.Id, src => src.MapFrom(src => src.CustomerId))
             .ReverseMap();
         map.CreateMap<Subscription, SubscriptionResponseDto>()
-            .ReverseMap();
+            .ForMember(dest=>dest.Package,src=>src.MapFrom(src=>src.ServicePackage))
+            .ForMember(dest=>dest.Customer,src=>src.MapFrom(src=>src.Customer));
     }
 }
 
