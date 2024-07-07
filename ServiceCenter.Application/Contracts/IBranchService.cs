@@ -25,7 +25,7 @@ public interface IBranchService : IApplicationService, IScopedService
     /// asynchronously retrieves all branchs in the system.
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of branch response DTOs.</returns>
-	public Task<Result<PaginationResult<BranchGetByIdResponseDto>>> GetAllBranchesAsync(int itemCount, int index);
+	public Task<Result<PaginationResult<BranchResponseDto>>> GetAllBranchesAsync(int itemCount, int index);
 
     /// <summary>
     /// asynchronously retrieves a branch by their unique identifier.
@@ -48,7 +48,7 @@ public interface IBranchService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="text">the text to search within branch data.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of branch response DTOs that match the search criteria.</returns>
-	public Task<Result<PaginationResult<BranchGetByIdResponseDto>>> SearchBranchByTextAsync(string text, int itemCount, int index);
+	public Task<Result<PaginationResult<BranchResponseDto>>> SearchBranchByTextAsync(string text, int itemCount, int index);
 
     /// <summary>
     /// asynchronously deletes a branch from the system by their unique identifier.

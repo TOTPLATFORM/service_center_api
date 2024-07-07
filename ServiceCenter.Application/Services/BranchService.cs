@@ -31,12 +31,7 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 	{
 
         var branch = _mapper.Map<Branch>(branchRequestDto);
-		//var manager = await _dbContext.Managers.FirstOrDefaultAsync(m => m.Id == branchRequestDto.ManagerId);
 		var center = await _dbContext.Centers.FirstOrDefaultAsync();
-		//if(branchRequestDto.InventoryId is 0 || branchRequestDto.InventoryId is null)
-		//{
-		//	branch.Inventory = null;
-		//}
         if (branch == null)
         {
             _logger.LogError("Failed to map BranchRequestDto to Branch. BranchRequestDto: {@BranchRequestDto}", branchRequestDto);
@@ -50,7 +45,6 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
             });
         }
         branch.CreatedBy = _userContext.Email;
-		//branch.Manager = manager;
 		branch.Center = center;
         _dbContext.Branches.Add(branch);
 
@@ -62,10 +56,10 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
     }
 
 	///<inheritdoc/>
-	public async Task<Result<PaginationResult<BranchGetByIdResponseDto>>> GetAllBranchesAsync(int itemCount, int index)
+	public async Task<Result<PaginationResult<BranchResponseDto>>> GetAllBranchesAsync(int itemCount, int index)
 	{
 		var result = await _dbContext.Branches
-				 .ProjectTo<BranchGetByIdResponseDto>(_mapper.ConfigurationProvider)
+				 .ProjectTo<BranchResponseDto>(_mapper.ConfigurationProvider)
 				 .GetAllWithPagination( itemCount,  index);
 
 		_logger.LogInformation("Fetching all Branches. Total count: {Branch}.", result.Data.Count);
@@ -77,7 +71,7 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 	{
 		var result = await _dbContext.Branches
 				.ProjectTo<BranchGetByIdResponseDto>(_mapper.ConfigurationProvider)
-				.FirstOrDefaultAsync(timeslot => timeslot.Id == id);
+				.FirstOrDefaultAsync(b => b.Id == id);
 
 		if (result is null)
 		{
@@ -130,47 +124,33 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 	}
 
 	///<inheritdoc/>
-	public async Task<Result<PaginationResult<BranchGetByIdResponseDto>>> SearchBranchByTextAsync(string text, int itemCount, int index)
+	public async Task<Result<PaginationResult<BranchResponseDto>>> SearchBranchByTextAsync(string text, int itemCount, int index)
 	{
 
-
-		//if (string.IsNullOrWhiteSpace(text))
-		//{
-		//	_logger.LogError("Search text cannot be empty", text);
-
-		//	return new Result.Invalid(new List<ValidationError>
-		//	{
-		//		new ValidationError
-		//		{
-		//			ErrorMessage = "Validation Errror : Search text cannot be empty"
-		//		}
-		//	});
-		//}
-
-		var Days = await _dbContext.Branches
-					   .ProjectTo<BranchGetByIdResponseDto>(_mapper.ConfigurationProvider)
+		var branches = await _dbContext.Branches
+					   .ProjectTo<BranchResponseDto>(_mapper.ConfigurationProvider)
 					   .Where(n => n.BranchName.Contains(text)||n.PostalCode.Contains(text)||n.EmailAddress.Contains(text))
 					   .GetAllWithPagination( itemCount,  index);
 
-		_logger.LogInformation("Fetching search branch by name . Total count: {branch}.", Days.Data.Count);
+		_logger.LogInformation("Fetching search branch by name . Total count: {branch}.", branches.Data.Count);
 
-		return Result.Success(Days);
+		return Result.Success(branches);
 
 	}
 
 	///<inheritdoc/>
 	public async Task<Result> DeleteBranchAsync(int id)
 	{
-		var timeSlot = await _dbContext.Branches.FindAsync(id);
+		var branch = await _dbContext.Branches.FindAsync(id);
 
-		if (timeSlot is null)
+		if (branch is null)
 		{
 			_logger.LogWarning("Branch Invaild Id ,Id {BranchId}", id);
 
 			return Result.NotFound(["Branch Invaild Id"]);
 		}
 
-		_dbContext.Branches.Remove(timeSlot);
+		_dbContext.Branches.Remove(branch);
 
 		await _dbContext.SaveChangesAsync();
 

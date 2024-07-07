@@ -23,7 +23,7 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
     /// </remarks>
     /// <returns>result for Subscription  added successfully.</returns>
     [HttpPost]
-    [Authorize(Roles = "Manager,ServiceProvider")]
+    [Authorize(Roles = "Admin,Manager,ServiceProvider")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddSubscription(SubscriptionRequestDto SubscriptionDto)

@@ -22,7 +22,7 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <param name="Index">index of orders to retrieve</param>
     /// <returns>result of list from order response dto.</returns>
 
-    [HttpGet()]
+    [HttpGet]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<PaginationResult<OrderResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<PaginationResult<OrderResponseDto>>> GetAllOrders(Status status,int ItemCount,int Index)
@@ -52,7 +52,7 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <returns>result of the order added successfully</returns>
 
     [HttpPost]
-    [Authorize(Roles = "Customer")]
+    [Authorize(Roles = "Customer,Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddOrder(OrderRequestDto orderDto)

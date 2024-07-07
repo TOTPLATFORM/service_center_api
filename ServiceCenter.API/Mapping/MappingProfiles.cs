@@ -26,8 +26,6 @@ public class MappingProfiles : Profile
 
 		this.AddProductMapping();
 
-		this.AddOrderMapping();
-
 		this.AddEmployeeMapping();
 
 		this.AddBranchMapping();
