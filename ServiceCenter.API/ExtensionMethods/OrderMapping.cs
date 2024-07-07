@@ -15,7 +15,6 @@ public static class OrderMapping
 
         map.CreateMap<Order, OrderResponseDto>()
             .ForMember(dest => dest.CustomerId, src => src.MapFrom(src => src.Customer.Id))
-             .ForMember(dest => dest.TotalPrice, src => src.MapFrom(src => src.TotalPrice)) 
             .AfterMap((src, dest) =>
             {
                 dest.TotalPrice = src.ProductOrders.Sum(po => po.Quantity * po.Product.ProductPrice);

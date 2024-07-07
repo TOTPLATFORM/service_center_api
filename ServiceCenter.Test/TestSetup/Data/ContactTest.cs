@@ -16,7 +16,7 @@ public static class ContactTest
         context.Contacts.AddRange(
         new Contact
         {
-            Id = new Guid(),
+            Id = Guid.Parse("123e4567-e89b-12d3-a456-426614174000"),
             DateOfBirth = DateOnly.Parse("2000/12/30"),
             FirstName = "hager",
             LastName = "shaban",
