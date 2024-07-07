@@ -19,7 +19,6 @@ public static class PerformanceReviewTest
             Comments = "any",
             PerformanceDetails = "any",
             PerformanceRating = 5,
-            EmployeeId = "78ty72a7-589e-4f0b-81ed-40389f683616",
             ReviewDate = DateOnly.Parse("3/11/2024")
         },
        new PerformanceReview
@@ -28,7 +27,6 @@ public static class PerformanceReviewTest
            Comments = "any",
            PerformanceDetails = "any",
            PerformanceRating = 5,
-           EmployeeId = "45yi72a7-589e-4f0b-81ed-40389f683027",
            ReviewDate = DateOnly.Parse("3/11/2024")
        });
     }

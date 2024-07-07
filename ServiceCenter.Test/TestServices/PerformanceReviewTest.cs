@@ -51,12 +51,12 @@ public class PerformanceReviewTest
     /// <param name="performanceReviewAvaliabitlity">performanceReview availability</param>
     /// <param name="performanceReviewTypeId">performanceReview Type id</param>
     [Theory, TestPriority(0)]
-    [InlineData("any", "any", 3, "3/3/2014", "45yi72a7-589e-4f0b-81ed-40389f683027")]
-    public async Task AddperformanceReview(string per, string per1, decimal rate, string date, string empId)
+    [InlineData("any", "any", 3, "3/3/2014")]
+    public async Task AddperformanceReview(string per, string per1, decimal rate, string date)
     {
         // Arrange
         CheckService();
-        var performanceReviewRequestDto = new PerformanceReviewRequestDto { Comments = per, PerformanceDetails = per1, ReviewDate = DateOnly.Parse(date), PerformanceRating = rate, EmployeeId = empId };
+        var performanceReviewRequestDto = new PerformanceReviewRequestDto { Comments = per, PerformanceDetails = per1, ReviewDate = DateOnly.Parse(date), PerformanceRating = rate };
         // Act
         var result = await _performanceReviewService.AddPerformanceReviewAsync(performanceReviewRequestDto);
 
@@ -115,13 +115,13 @@ public class PerformanceReviewTest
     /// <param name="performanceReviewTypeId">performanceReview Type id</param>
     /// <param name="expectedResult">expected result</param>
     [Theory, TestPriority(3)]
-    [InlineData(1, "any", "any", 90, "3/3/2014", "45yi72a7-589e-4f0b-81ed-40389f683027", true)]
-    [InlineData(10, "any", "any", 3, "3/3/2014", "45yi72a7-589e-4f0b-81ed-40389f683027", false)]
-    public async Task UpdatePerformanceReview(int id, string per, string per1, decimal rate, string date, string empId, bool expectedResult)
+    [InlineData(1, "any", "any", 90, "3/3/2024", true)]
+    [InlineData(10, "any", "any", 3, "3/3/2014", false)]
+    public async Task UpdatePerformanceReview(int id, string per, string per1, decimal rate, string date, bool expectedResult)
     {
         //Arrange
         CheckService();
-        var performanceReviewRequestDto = new PerformanceReviewRequestDto { Comments = per, PerformanceDetails = per1, ReviewDate = DateOnly.Parse(date), PerformanceRating = rate, EmployeeId = empId };
+        var performanceReviewRequestDto = new PerformanceReviewRequestDto { Comments = per, PerformanceDetails = per1, ReviewDate = DateOnly.Parse(date), PerformanceRating = rate };
 
         // Act
         var result = await _performanceReviewService.UpdatePerformanceReviewAsync(id, performanceReviewRequestDto);

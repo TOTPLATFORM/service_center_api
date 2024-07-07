@@ -91,7 +91,7 @@ public class ManagerController(IManagerService managerService) : BaseController
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
-	[HttpGet("search")]
+	[HttpGet("search/{text}")]
 	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<PaginationResult<ManagerResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]

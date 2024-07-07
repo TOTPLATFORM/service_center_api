@@ -64,10 +64,10 @@ public class SalesService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
 	}
 
 	///<inheritdoc/>
-	public async Task<Result<SalesResponseDto>> GetSalesByIdAsync(string Id)
+	public async Task<Result<SalesGetByIdResponseDto>> GetSalesByIdAsync(string Id)
 	{
 		var sales = await _dbContext.Sales
-			.ProjectTo<SalesResponseDto>(_mapper.ConfigurationProvider)
+			.ProjectTo<SalesGetByIdResponseDto>(_mapper.ConfigurationProvider)
 			.FirstOrDefaultAsync(d => d.Id == Id);
 
 		if (sales is null)
@@ -82,7 +82,7 @@ public class SalesService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
 
 	///<inheritdoc/>
 
-	public async Task<Result<SalesResponseDto>> UpdateSalesAsync(string id, SalesRequestDto salesRequestDto)
+	public async Task<Result<SalesGetByIdResponseDto>> UpdateSalesAsync(string id, SalesRequestDto salesRequestDto)
 	{
 		var sales = await _dbContext.Sales.FindAsync(id);
 
@@ -97,7 +97,7 @@ public class SalesService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
 
 		await _dbContext.SaveChangesAsync();
 
-		var salesResponse = _mapper.Map<SalesResponseDto>(sales);
+		var salesResponse = _mapper.Map<SalesGetByIdResponseDto>(sales);
 
 		if (salesResponse is null)
 		{
@@ -124,7 +124,7 @@ public class SalesService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
 
 		var sales = await _dbContext.Sales
 					   .ProjectTo<SalesResponseDto>(_mapper.ConfigurationProvider)
-					   .Where(n => n.Employee.Contact.FirstName.Contains(text) )
+					   .Where(n => n.FirstName.Contains(text) )
 					   .GetAllWithPagination(itemCount,index);
 
 		_logger.LogInformation("Fetching search branch by name . Total count: {branch}.", sales.Data.Count);

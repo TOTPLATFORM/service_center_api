@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class EmployeeGetByIdResponseDto
+public class EmployeeGetByIdResponseDto:EmployeeResponseDto
 {
-    public string Id { get; set; } = "";
-    public string Email { get; set; } = "";
-    public string UserName { get; set; } = "";
-    public string DepartmentName { get; set; } = "";
-    public ContactResponseDto Contact { get; set; }
+    public decimal BaseSalary { get; set; }
+    public string Gender { get; set; } = "";
+    public string City { get; set; } = "";
+    public string Country { get; set; } = "";
+    public string PostalCode { get; set; } = "";
 }

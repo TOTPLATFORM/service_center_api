@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class ManagerRequestDto : BaseUserRequestDto
+public class ManagerRequestDto : EmployeeRequestDto
 { 
     public string Responsibilities { get; set; } = "";
     [Required]
@@ -19,6 +19,4 @@ public class ManagerRequestDto : BaseUserRequestDto
     public int Experience { get; set; }
     [Required]
     public int BranchId { get; set; }
-    [Required]
-    public int DepartmentId { get; set; }
 }

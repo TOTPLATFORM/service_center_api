@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class ServiceProviderRequestDto:BaseUserRequestDto
+public class ServiceProviderRequestDto:EmployeeRequestDto
 {
-    [Required]
-    public int DepartmentId { get; set; }
     [Required]
     public ICollection<int> ServiceIds { get; set; }
 }
