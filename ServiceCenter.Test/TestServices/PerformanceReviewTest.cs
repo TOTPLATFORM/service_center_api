@@ -121,7 +121,7 @@ public class PerformanceReviewTest
     {
         //Arrange
         CheckService();
-        var performanceReviewRequestDto = new PerformanceReviewRequestDto { Comments = per, PerformanceDetails = per1, ReviewDate = DateOnly.Parse(date), PerformanceRating = rate };
+        var performanceReviewRequestDto = new PerformanceReviewRequestDto { Comments = per, PerformanceDetails = per1, ReviewDate = DateOnly.Parse(date), PerformanceRating = rate, EmployeeId = "123e4567-e89b-12d3-a456-426614174000" };
 
         // Act
         var result = await _performanceReviewService.UpdatePerformanceReviewAsync(id, performanceReviewRequestDto);

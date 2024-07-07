@@ -120,7 +120,7 @@ public class AttendanceServiceTest
     {
         //Arrange
         CheckService();
-        var attendanceRequestDto = new AttendanceRequestDto { AttendanceDate = DateOnly.Parse(date), ClockInTime = TimeOnly.Parse(startTime), ClockOutTime = TimeOnly.Parse(endTime) };
+        var attendanceRequestDto = new AttendanceRequestDto { AttendanceDate = DateOnly.Parse(date), ClockInTime = TimeOnly.Parse(startTime), ClockOutTime = TimeOnly.Parse(endTime) ,EmployeeId= "123e4567-e89b-12d3-a456-426614174000" };
         // Act
         var result = await _attendanceService.UpdateAttendanceAsync(id, attendanceRequestDto);
         // Assert

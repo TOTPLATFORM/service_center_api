@@ -19,7 +19,8 @@ public static class PerformanceReviewTest
             Comments = "any",
             PerformanceDetails = "any",
             PerformanceRating = 5,
-            ReviewDate = DateOnly.Parse("3/11/2024")
+            ReviewDate = DateOnly.Parse("3/11/2024"),
+            EmployeeId = "123e4567-e89b-12d3-a456-426614174000"
         },
        new PerformanceReview
        {
