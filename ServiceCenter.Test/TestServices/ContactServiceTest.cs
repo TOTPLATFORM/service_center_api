@@ -127,15 +127,15 @@ public class ContactServiceTest
     /// <param name="centerId">Center Type id</param>
     /// <param name="expectedResult">expected result</param>
     [Theory, TestPriority(3)]
-    [InlineData("0d133c1a-804f-4548-8f7e-8c3f504844u0", ContactStatus.Customer, true)]
-    [InlineData("0d133y1a-804f-4548-8f7e-8c3f504844u0", ContactStatus.Lead, false)]
-    public async Task UpdateContact(Guid id, ContactStatus status, bool expectedResult)
+    [InlineData("123e4567-e89b-12d3-a456-426614174000", ContactStatus.Customer, true)]
+    [InlineData("123e4567-e89b-12d3-a456-426614174659", ContactStatus.Lead, false)]
+    public async Task UpdateContact(string id, ContactStatus status, bool expectedResult)
     {
         //Arrange
         CheckService();
-
+        Guid guid = Guid.Parse(id);
         // Act
-        var result = await _contactService.UpdateContactStatusAsync(id, status);
+        var result = await _contactService.UpdateContactStatusAsync(guid, status);
         // Assert
         if (expectedResult)
         {

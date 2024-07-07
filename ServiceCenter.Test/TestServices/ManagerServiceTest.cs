@@ -91,8 +91,11 @@ public class ManagerServiceTest
         // Arrange
         CheckService();
         var managerRequestDto = new ManagerRequestDto
-        {
-          
+        { 
+            FirstName = firstName,
+            LastName = lastName,
+            PhoneNumber = phoneNumber,
+            DateOfBirth = DateOnly.Parse(dateOfBirth),
             Email = email,
             DepartmentId = departmentId,
             BranchId = branchId,
