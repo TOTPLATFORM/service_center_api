@@ -16,7 +16,7 @@ public class CenterController(ICenterService centerService) : BaseController
 	/// <summary>
 	/// Adds a new center to the system.
 	/// </summary>
-	/// <param name="CenterRequestDto">The data transfer object containing center details for creation.</param>
+	/// <param name="centerRequestDto">The data transfer object containing center details for creation.</param>
 	/// <remarks>
 	/// Access is limited to users with the "Admin" role.
 	/// </remarks>
@@ -32,27 +32,26 @@ public class CenterController(ICenterService centerService) : BaseController
 	}
 
 	/// <summary>
-	/// get center by id  from the system.
+	/// get center from the system.
 	/// </summary>
-	///<param name="id">id of center.</param>
 	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
+	/// Access is not limited 
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-	[ProducesResponseType(typeof(Result<List<CenterResponseDto>>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<List<CenterGetByIdResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 
-	public async Task<Result<List<CenterResponseDto>>> GetCenter()
+	public async Task<Result<CenterGetByIdResponseDto>> GetCenter()
 	{
 		return await _centerService.GetCenterAsync();
 	}
 
 	/// <summary>
-	/// get  inventory by id in the system.
+	/// get  center by id in the system.
 	/// </summary>
-	///<param name="id">id of inventory.</param>
-	///<param name="centerRequestDto">inventory dto.</param>
+	///<param name="id">id of center.</param>
+	///<param name="centerRequestDto">center dto.</param>
 	/// <remarks>
 	/// Access is limited to users with the "Admin" role.
 	/// </remarks>

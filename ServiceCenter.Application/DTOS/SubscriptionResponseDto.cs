@@ -12,5 +12,5 @@ public class SubscriptionResponseDto
     public int Id { get; set; }
     public DateOnly Duration { get; set; } 
    public ServicePackageGetByIdResponseDto Package { get; set; }
-    public  ContactResponseDto Contact { get; set; } 
+    public  CustomerResponseDto Customer  { get; set; } 
 }

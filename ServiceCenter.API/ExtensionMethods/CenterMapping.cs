@@ -8,10 +8,9 @@ public static class CenterMapping
 {
 	public static void AddCenterMapping(this MappingProfiles map)
 	{
-		map.CreateMap<CenterRequestDto, Center>()
-			.ReverseMap();
-
-		map.CreateMap<Center, CenterResponseDto>()
-			.ReverseMap();
+		map.CreateMap<CenterRequestDto, Center>();
+		map.CreateMap<Center, CenterResponseDto>();
+		map.CreateMap<Center, CenterGetByIdResponseDto>();
+			
 	}
 }

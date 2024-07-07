@@ -10,6 +10,7 @@ public class ProductOrderResponseDto
 {
     public int Id { get; set; }
     public int Quantity { get; set; }
+    public int TotalPrice { get; set; }
     public ProductResponseDto Product { get; set; }
 }
 

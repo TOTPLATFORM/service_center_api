@@ -37,8 +37,8 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// </summary>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-	[ProducesResponseType(typeof(Result<PaginationResult<BranchGetByIdResponseDto>>), StatusCodes.Status200OK)]
-	public async Task<Result<PaginationResult<BranchGetByIdResponseDto>>> GetAllBranches(int itemCount,int index)
+	[ProducesResponseType(typeof(Result<PaginationResult<BranchResponseDto>>), StatusCodes.Status200OK)]
+	public async Task<Result<PaginationResult<BranchResponseDto>>> GetAllBranches(int itemCount,int index)
 	{
 		return await _branchService.GetAllBranchesAsync(itemCount,index);
 	}
@@ -64,7 +64,7 @@ public class BranchController(IBranchService branchService) : BaseController
 	///<param name="id">id of branch.</param>
 	///<param name="branchRequestDto">branch dto.</param>
 	/// <remarks>
-	/// access is limited to users with the "manager" role.
+	/// access is limited to users with the "admin" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
@@ -86,11 +86,11 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-	[ProducesResponseType(typeof(Result<BranchGetByIdResponseDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(Result<BranchResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	public async Task<Result<PaginationResult<BranchGetByIdResponseDto>>> SerachBranchByText(string text,int itemCount,int index)
+	public async Task<Result<PaginationResult<BranchResponseDto>>> SerachBranchByText(string text,int itemCount,int index)
 	{
-		return await _branchService.SearchBranchByTextAsync(text,  itemCount,  index);
+		return await _branchService.SearchBranchByTextAsync(text,itemCount,index);
 	}
 	/// <summary>
 	/// delete  branch by id from the system.

@@ -68,11 +68,11 @@ public class CenterService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 	}
 	
 	///<inheritdoc/>
-	public async Task<Result<List<CenterResponseDto>>> GetCenterAsync()
+	public async Task<Result<CenterGetByIdResponseDto>> GetCenterAsync()
 	{
 		var center = await _dbContext.Centers
-			.ProjectTo<CenterResponseDto>(_mapper.ConfigurationProvider)
-			.ToListAsync();
+			.ProjectTo<CenterGetByIdResponseDto>(_mapper.ConfigurationProvider)
+			.FirstOrDefaultAsync();
 
 		if (center == null)
 		{
@@ -90,6 +90,7 @@ public class CenterService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 		_logger.LogInformation("Center fetched successfully.");
 
 		return Result.Success(center);
+
 	}
 
 	///<inheritdoc/>
@@ -130,25 +131,6 @@ public class CenterService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 		return Result.Success(center);
 	}	
 
-	///<inheritdoc/>
-	//public async Task<Result> DeleteCenterAsync(int id)
-	//{
-	//	var center = await _dbContext.Centers.FindAsync(id);
-
-	//	if (center is null)
-	//	{
-	//		_logger.LogWarning("Center Invaild Id ,Id {CenterId}", id);
-
-	//		return Result.NotFound(["Center Invaild Id"]);
-	//	}
-
-	//	_dbContext.Centers.Remove(center);
-
-	//	await _dbContext.SaveChangesAsync();
-
-	//	_logger.LogInformation("Center removed successfully in the database");
-
-	//	return Result.SuccessWithMessage("Center removed successfully");
-	//}
+	
 
 }

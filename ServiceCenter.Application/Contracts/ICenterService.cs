@@ -21,10 +21,10 @@ public interface ICenterService : IApplicationService, IScopedService
 	public Task<Result> AddCenterAsync(CenterRequestDto centerRequestDto);
 
     /// <summary>
-    /// asynchronously retrieves a center by .
+    /// asynchronously retrieves a center  .
     /// </summary>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the center response DTO.</returns>
-	public Task<Result<List<CenterResponseDto>>> GetCenterAsync();
+	public Task<Result<CenterGetByIdResponseDto>> GetCenterAsync();
 
     /// <summary>
     /// asynchronously updates the data of an existing center.
@@ -34,10 +34,5 @@ public interface ICenterService : IApplicationService, IScopedService
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
 	public Task<Result<CenterResponseDto>> UpdateCenterAsync(int id, CenterRequestDto centerRequestDto);
 
-    /// <summary>
-    /// asynchronously deletes a center from the system by their unique identifier.
-    /// </summary>
-    /// <param name="id">the unique identifier of the center to delete.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
-	//public Task<Result> DeleteCenterAsync(int id);
+    
 }
