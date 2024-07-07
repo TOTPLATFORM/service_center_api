@@ -99,22 +99,29 @@ public class ServiceProviderService(ServiceCenterBaseDbContext dbContext, IMappe
             return Result.NotFound(["serviceprovider not found"]);
         }
 
-       serviceproviderRequestDto.UserName = serviceprovider.UserName;
+        _mapper.Map(serviceproviderRequestDto, serviceprovider);
 
-		_mapper.Map(serviceproviderRequestDto, serviceprovider);
+        await _dbContext.SaveChangesAsync();
 
-		var result = await _authService.UpdateUserAsync(serviceprovider);
+        var serviceproviderResponse = _mapper.Map<ServiceProviderGetByIdResponseDto>(serviceprovider);
 
-		if (!result.IsSuccess)
-		{
-			return Result.Error(result.Errors.FirstOrDefault());
-		}
+        if (serviceproviderResponse is null)
+        {
+            _logger.LogError("Failed to map serviceproviderRequestDto to serviceproviderResponseDto. serviceproviderRequestDto: {@serviceproviderRequestDto}", serviceproviderRequestDto);
 
-		var updatedServiceProvider = _mapper.Map<ServiceProviderGetByIdResponseDto>(serviceprovider);
+            return Result.Invalid(new List<ValidationError>
+            {
+                new ValidationError
+                {
+                    ErrorMessage = "Validation Errror"
+                }
+            });
+        }
 
-		_logger.LogInformation("mananger  updated successfully");
-		return Result.Success(updatedServiceProvider, "serviceprovider  updated successfully");
-	
+        _logger.LogInformation("Updated serviceprovider , Id {Id}", id);
+
+        return Result.Success(serviceproviderResponse);
+
     }
 
     ///<inheritdoc/>

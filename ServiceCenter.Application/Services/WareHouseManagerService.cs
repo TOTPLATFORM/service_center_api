@@ -84,10 +84,10 @@ public class WareHouseManagerService(ServiceCenterBaseDbContext dbContext, IMapp
         return Result.Success(wareHouseManager);
     }
     ///<inheritdoc/>
-    public async Task<Result<WareHouseManagerResponseDto>> GetWareHouseManagerServiceByIdAsync(string id)
+    public async Task<Result<WareHouseManagerGetByIdResponseDto>> GetWareHouseManagerServiceByIdAsync(string id)
     {
 
-        var wareHouseManagerResponseDto = await _dbContext.WareHouseManagers.ProjectTo<WareHouseManagerResponseDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(W => W.Id == id);
+        var wareHouseManagerResponseDto = await _dbContext.WareHouseManagers.ProjectTo<WareHouseManagerGetByIdResponseDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(W => W.Id == id);
 
         if (wareHouseManagerResponseDto is null)
         {
@@ -115,7 +115,7 @@ public class WareHouseManagerService(ServiceCenterBaseDbContext dbContext, IMapp
         return Result.Success(wareHouseManagerResponseDto);
     }
     ///<inheritdoc/>
-    public async Task<Result<WareHouseManagerResponseDto>> UpdateWareHouseManagerServiceAsync(string id, WareHouseManagerRequestDto wareHouseManagerRequestDto)
+    public async Task<Result<WareHouseManagerGetByIdResponseDto>> UpdateWareHouseManagerServiceAsync(string id, WareHouseManagerRequestDto wareHouseManagerRequestDto)
     {
         var wareHouseManagerResponseDto = await _dbContext.WareHouseManagers.FindAsync(id);
         var inventoryResponseDto = await _dbContext.Inventories.FindAsync(wareHouseManagerRequestDto.InventoryId);
@@ -130,7 +130,7 @@ public class WareHouseManagerService(ServiceCenterBaseDbContext dbContext, IMapp
         wareHouseManagerResponseDto.Inventory = inventoryResponseDto;
         await _dbContext.SaveChangesAsync();
 
-        var WareHouseManager = _mapper.Map<WareHouseManagerResponseDto>(wareHouseManagerResponseDto);
+        var WareHouseManager = _mapper.Map<WareHouseManagerGetByIdResponseDto>(wareHouseManagerResponseDto);
 
         if (WareHouseManager is null)
         {

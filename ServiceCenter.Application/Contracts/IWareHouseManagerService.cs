@@ -29,14 +29,14 @@ public interface IWareHouseManagerService : IApplicationService , IScopedService
     /// </summary>
     /// <param name="id">the unique identifier of the warehouse to retrieve.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the warehouse response DTO.</returns>
-    public Task<Result<WareHouseManagerResponseDto>> GetWareHouseManagerServiceByIdAsync(string id);
+    public Task<Result<WareHouseManagerGetByIdResponseDto>> GetWareHouseManagerServiceByIdAsync(string id);
     /// <summary>
     /// asynchronously updates the data of an existing warehouse.
     /// </summary>
     /// <param name="id">the unique identifier of the warehouse to update.</param>
-    /// <param name="ratingRequestDto">the warehouse data transfer object containing the updated details.</param>
+    /// <param name="wareHouseManagerRequestDto">the warehouse data transfer object containing the updated details.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
-    public Task<Result<WareHouseManagerResponseDto>> UpdateWareHouseManagerServiceAsync(string id, WareHouseManagerRequestDto wareHouseManagerRequestDto);
+    public Task<Result<WareHouseManagerGetByIdResponseDto>> UpdateWareHouseManagerServiceAsync(string id, WareHouseManagerRequestDto wareHouseManagerRequestDto);
   
 
     /// <summary>

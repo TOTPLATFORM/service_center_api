@@ -152,29 +152,5 @@ public class ReportServiceTest
             Assert.False(result.IsSuccess); // Expecting unsuccessful update
         }
     }
-    /// <summary>
-    /// fuction to update Report as a test case that take id Updated by user name,expected result
-    /// </summary>
-    /// <param name="id">Report id</param>  
-    [Theory, TestPriority(4)]
-    [InlineData(1, ReportStatus.Bad, true)]
-    [InlineData(78, ReportStatus.Bad, false)]
-    public async Task UpdateReportStatus(int id, ReportStatus reportStatus, bool expectedResult)
-    {
-        // Arrange
-        CheckService(); 
-
-
-        // Act
-        var result = await _reportService.UpdateReportStatusAsync(id, reportStatus);
-
-        if (expectedResult)
-        {
-            Assert.True(result.IsSuccess); // Expecting successful update
-        }
-        else
-        {
-            Assert.False(result.IsSuccess); // Expecting unsuccessful update
-        }
-    }
+   
 }

@@ -11,6 +11,5 @@ public class ServiceProviderGetByIdResponseDto:EmployeeGetByIdResponseDto
 {
     public string Id { get; set; } = "";
     public virtual ICollection<ServiceResponseDto> Services { get; set; }
-    public virtual ICollection<ScheduleResponseDto> Schedules { get; set; }
     public virtual ICollection<ComplaintResponseDto> Complaints { get; set; }
 }

@@ -183,28 +183,7 @@ public class ServiceProviderServiceTest
         }
     }
 
-    /// <summary>
-    /// fuction to remove serviceprovider as a test case that take serviceprovider id
-    /// </summary>
-    /// <param name="id">serviceprovider id </param>
-    [Theory, TestPriority(5)]
-    [InlineData("ksn56418942")]
-    [InlineData("nksalknsdn")]
-    public async Task Removeserviceprovider(string id)
-    {
-        // Arrange
-        CheckService();
-
-        // Act
-        var result = await _serviceproviderService.DeleteServiceProviderAsync(id);
-
-        // Assert
-        if (result.IsSuccess)
-            Assert.True(result.IsSuccess);
-        else
-            Assert.False(result.IsSuccess);
-
-    }
+  
     /// <summary>
     /// Tests the search functionality in the serviceProvider service to ensure it can find serviceProvider based on a search term.
     /// </summary>

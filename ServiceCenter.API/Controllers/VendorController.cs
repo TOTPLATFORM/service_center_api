@@ -53,9 +53,9 @@ public class VendorController(IVendorService vendorService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin,Manager")]
-    [ProducesResponseType(typeof(Result<VendorResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<VendorGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<VendorResponseDto>> GetVendorById(string id)
+    public async Task<Result<VendorGetByIdResponseDto>> GetVendorById(string id)
     {
         return await _vendorService.GetVendorByIdAsync(id);
     }
@@ -72,9 +72,9 @@ public class VendorController(IVendorService vendorService) : BaseController
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
-    [ProducesResponseType(typeof(Result<VendorResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<VendorGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<VendorResponseDto>> UpdateVendor(string id, VendorRequestDto vendorRequestDto)
+    public async Task<Result<VendorGetByIdResponseDto>> UpdateVendor(string id, VendorRequestDto vendorRequestDto)
     {
         return await _vendorService.UpdateVendorAsync(id, vendorRequestDto);
     }

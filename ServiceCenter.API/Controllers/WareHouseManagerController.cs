@@ -48,9 +48,9 @@ public class WareHouseManagerController(IWareHouseManagerService wareHousManager
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the warehouse manager category details.</returns>
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
-    [ProducesResponseType(typeof(Result<WareHouseManagerResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result<WareHouseManagerResponseDto>), StatusCodes.Status400BadRequest)]
-    public async Task<Result<WareHouseManagerResponseDto>> GetWareHouseManagerById(string id)
+    [ProducesResponseType(typeof(Result<WareHouseManagerGetByIdResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<WareHouseManagerGetByIdResponseDto>), StatusCodes.Status400BadRequest)]
+    public async Task<Result<WareHouseManagerGetByIdResponseDto>> GetWareHouseManagerById(string id)
     {
         return await _wareHousManager.GetWareHouseManagerServiceByIdAsync(id);
     }
@@ -66,10 +66,10 @@ public class WareHouseManagerController(IWareHouseManagerService wareHousManager
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
-    [ProducesResponseType(typeof(Result<WareHouseManagerResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<WareHouseManagerGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<WareHouseManagerResponseDto>> UpdateWareHouseManager(string id, WareHouseManagerRequestDto wareHouseManagerRequest)
+    public async Task<Result<WareHouseManagerGetByIdResponseDto>> UpdateWareHouseManager(string id, WareHouseManagerRequestDto wareHouseManagerRequest)
     {
         return await _wareHousManager.UpdateWareHouseManagerServiceAsync(id, wareHouseManagerRequest);
     }

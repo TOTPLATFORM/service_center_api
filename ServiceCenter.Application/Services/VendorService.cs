@@ -61,10 +61,10 @@ public class VendorService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
     }
 
     ///<inheritdoc/>
-    public async Task<Result<VendorResponseDto>> GetVendorByIdAsync(string Id)
+    public async Task<Result<VendorGetByIdResponseDto>> GetVendorByIdAsync(string Id)
     {
         var vendor = await _dbContext.Vendors
-            .ProjectTo<VendorResponseDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<VendorGetByIdResponseDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(d => d.Id == Id);
 
         if (vendor is null)
@@ -78,7 +78,7 @@ public class VendorService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
     }
 
     ///<inheritdoc/>
-    public async Task<Result<VendorResponseDto>> UpdateVendorAsync(string id, VendorRequestDto vendorRequestDto)
+    public async Task<Result<VendorGetByIdResponseDto>> UpdateVendorAsync(string id, VendorRequestDto vendorRequestDto)
     {
         var vendor = await _dbContext.Vendors.FindAsync(id);
 
@@ -93,7 +93,7 @@ public class VendorService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 
         await _dbContext.SaveChangesAsync();
 
-        var vendorResponse = _mapper.Map<VendorResponseDto>(vendor);
+        var vendorResponse = _mapper.Map<VendorGetByIdResponseDto>(vendor);
 
         if (vendorResponse is null)
         {
@@ -118,7 +118,7 @@ public class VendorService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
     {
         var vendor = await _dbContext.Vendors
                        .ProjectTo<VendorResponseDto>(_mapper.ConfigurationProvider)
-                       .Where(n => n.Contact.FirstName.Contains(text))
+                       .Where(n => n.FirstName.Contains(text))
                        .GetAllWithPagination(itemcount,index);
 
         _logger.LogInformation("Fetching search branch by name . Total count: {branch}.", vendor.Data.Count);
