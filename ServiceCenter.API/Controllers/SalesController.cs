@@ -21,7 +21,7 @@ public class SalesController(ISalesService salesService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPost]
-    [Authorize(Roles = "Manager,Admin")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddSales(SalesRequestDto salesRequestDto)
@@ -53,9 +53,9 @@ public class SalesController(ISalesService salesService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
     [Authorize(Roles = "Manager,Sales,Admin")]
-    [ProducesResponseType(typeof(Result<SalesResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<SalesGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<SalesResponseDto>> GetSalesById(string id)
+    public async Task<Result<SalesGetByIdResponseDto>> GetSalesById(string id)
     {
         return await _salesService.GetSalesByIdAsync(id);
     }
@@ -71,10 +71,10 @@ public class SalesController(ISalesService salesService) : BaseController
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Manager,Sales,Admin")]
-    [ProducesResponseType(typeof(Result<SalesResponseDto>), StatusCodes.Status200OK)]
+    [Authorize(Roles = "Admin")]
+    [ProducesResponseType(typeof(Result<SalesGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<SalesResponseDto>> UpdateSales(string id, SalesRequestDto salesRequestDto)
+    public async Task<Result<SalesGetByIdResponseDto>> UpdateSales(string id, SalesRequestDto salesRequestDto)
     {
         return await _salesService.UpdateSalesAsync(id, salesRequestDto);
     }
@@ -87,7 +87,7 @@ public class SalesController(ISalesService salesService) : BaseController
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
-    [HttpGet("search")]
+    [HttpGet("search/{text}")]
     [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<SalesResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]

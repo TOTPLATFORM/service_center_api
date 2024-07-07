@@ -51,7 +51,6 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// </remarks>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
-	//[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<BranchGetByIdResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<BranchGetByIdResponseDto>> GetBranchById(int id)
@@ -87,7 +86,6 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]
-	//[Authorize(Roles = "Admin,Manager,Customer")]
 	[ProducesResponseType(typeof(Result<BranchGetByIdResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<PaginationResult<BranchGetByIdResponseDto>>> SerachBranchByText(string text,int itemCount,int index)

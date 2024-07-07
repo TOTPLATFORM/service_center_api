@@ -31,7 +31,7 @@ public interface IServiceProviderService:IApplicationService,IScopedService
     /// </summary>
     /// <param name="id">serviceprovider id</param>
     /// <returns>serviceprovider response dto</returns>
-    public Task<Result<ServiceProviderResponseDto>> GetServiceProviderByIdAsync(string id);
+    public Task<Result<ServiceProviderGetByIdResponseDto>> GetServiceProviderByIdAsync(string id);
 
     /// <summary>
     /// function to update serviceprovider that take ServiceProviderRequestDto   
@@ -39,7 +39,7 @@ public interface IServiceProviderService:IApplicationService,IScopedService
     /// <param name="id">serviceprovider id</param>
     /// <param name="serviceproviderRequestDto">serviceprovider dto</param>
     /// <returns>Updated ServiceProvider </returns>
-    public Task<Result<ServiceProviderResponseDto>> UpdateServiceProviderAsync(string id, ServiceProviderRequestDto serviceproviderRequestDto);
+    public Task<Result<ServiceProviderGetByIdResponseDto>> UpdateServiceProviderAsync(string id, ServiceProviderRequestDto serviceproviderRequestDto);
 
 
     /// <summary>
@@ -49,10 +49,5 @@ public interface IServiceProviderService:IApplicationService,IScopedService
     /// <returns>all serviceprovideres that contain this text </returns>
     public Task<Result<PaginationResult<ServiceProviderResponseDto>>> SearchServiceProviderByTextAsync(string text, int itemCount, int index);
 
-    /// <summary>
-    /// function to delete ServiceProvider that take ServiceProviderDto   
-    /// </summary>
-    /// <param name="id">departmnet id</param>
-    /// <returns>ServiceProvider removed successfully </returns>
-    public Task<Result> DeleteServiceProviderAsync(string id);
+   
 }

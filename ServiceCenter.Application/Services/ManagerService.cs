@@ -90,7 +90,7 @@ public class ManagerService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
 		    var result = await _dbContext.Managers
 				.ProjectTo<ManagerResponseDto>(_mapper.ConfigurationProvider)
-				.Where(n => n.Employee.Contact.FirstName.Contains(text) || n.Employee.Contact.LastName.Contains(text))
+			//	.Where(n => n.Employee.Contact.FirstName.Contains(text) || n.Employee.Contact.LastName.Contains(text))
 				.GetAllWithPagination(itemCount,index);
 
 		_logger.LogInformation("Fetching search manager by name . Total count: {managers}.", result.Data.Count);
@@ -101,28 +101,36 @@ public class ManagerService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 	///<inheritdoc/>
 	public async Task<Result<ManagerGetByIdResponseDto>> UpdateManagerAsync(string id, ManagerRequestDto managerRequestDto)
 	{
-		var manager = await _dbContext.Managers.FindAsync(id);
+        var manager = await _dbContext.Managers.FindAsync(id);
 
-		if (manager is null)
-		{
-			_logger.LogWarning("manager  Id not found,Id {id}", id);
+        if (manager is null)
+        {
+            _logger.LogWarning("manager Id not found,Id {managerId}", id);
 
-			return Result.NotFound(["The manager  is not found"]);
-		}
-		managerRequestDto.UserName = manager.UserName;
+            return Result.NotFound(["manager not found"]);
+        }
 
-		_mapper.Map(managerRequestDto, manager);
+        _mapper.Map(managerRequestDto, manager);
 
-		var result = await _authService.UpdateUserAsync(manager);
+        await _dbContext.SaveChangesAsync();
 
-		if (!result.IsSuccess)
-		{
-			return Result.Error(result.Errors.FirstOrDefault());
-		}
+        var managerResponse = _mapper.Map<ManagerGetByIdResponseDto>(manager);
 
-		var updatedManager = _mapper.Map<ManagerGetByIdResponseDto>(manager);
+        if (managerResponse is null)
+        {
+            _logger.LogError("Failed to map managerRequestDto to managerResponseDto. managerRequestDto: {@managerRequestDto}", managerRequestDto);
 
-		_logger.LogInformation("mananger  updated successfully");
-		return Result.Success(updatedManager, "manager  updated successfully");
-	}
+            return Result.Invalid(new List<ValidationError>
+            {
+                new ValidationError
+                {
+                    ErrorMessage = "Validation Errror"
+                }
+            });
+        }
+
+        _logger.LogInformation("Updated manager , Id {Id}", id);
+
+        return Result.Success(managerResponse);
+    }
 }

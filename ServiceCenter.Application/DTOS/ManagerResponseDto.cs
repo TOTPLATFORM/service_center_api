@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class ManagerResponseDto
+public class ManagerResponseDto:EmployeeResponseDto
 {
     public string Id { get; set; } = "";
     public string Responsibilities { get; set; } = "";
     public DateOnly HiringDate { get; set; }
     public int WorkingHours { get; set; }
     public int Experience { get; set; }
-    public EmployeeResponseDto Employee { get; set; } = default;
-
+    public string BranchName { get; set; } = "";
 }

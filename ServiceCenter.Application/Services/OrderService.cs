@@ -13,6 +13,9 @@ using ServiceCenter.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using ServiceCenter.Domain.Entities;
 using static System.Net.Mime.MediaTypeNames;
+using MySqlX.XDevAPI.Common;
+using Result = ServiceCenter.Core.Result.Result;
+using Castle.Core.Resource;
 
 namespace hmswithlayers.application.services;
 
@@ -55,14 +58,29 @@ public class OrderService(ServiceCenterBaseDbContext dbcontext, IMapper mapper, 
     public async Task<Result> AddOrderAsync(OrderRequestDto orderdto)
     {
         var order = _mapper.Map<Order>(orderdto);
+        var customer = await _dbcontext.Customers.FirstOrDefaultAsync(m => m.Id == orderdto.CustomerId);
+        if (customer == null)
+        {
+            _logger.LogError("No customer found in the database.");
+            return Result.Invalid(new List<ValidationError>
+            {
+                new ValidationError
+                {
+                     ErrorMessage = "No customer found in the database."
+                }
+
+            });
+        }
+
 
         foreach (var item in orderdto.ProductOrders)
         {
             var product =await _dbcontext.Products.FirstOrDefaultAsync(P => P.Id == item.ProductId);
             product.ProductStock = product.ProductStock - item.Quantity;
         }
-
+      
         order.CreatedBy = _usercontext.Email;
+        order.Customer = customer;
         _dbcontext.Orders.Add(order);
         await _dbcontext.SaveChangesAsync();
 

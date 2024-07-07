@@ -127,7 +127,7 @@ public class ScheduleController(IScheduleService scheduleService) : BaseControll
     /// <param name="serviceId">The ID of the service.</param>
     /// <returns>A Result containing a list of service schedule summary DTOs.</returns>
     [HttpGet("service/weeklySchedule/{serviceId}")]
-    [Authorize(Roles = "Admin, Manager, Customer")]
+    [Authorize(Roles = "Admin, Manager")]
     [ProducesResponseType(typeof(Result<List<ServiceWeeklyScheduleDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<List<ServiceWeeklyScheduleDto>>> GetServiceSchedulesSummary(int serviceId)

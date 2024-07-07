@@ -32,7 +32,7 @@ public interface IVendorService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="id">vendor id</param>
     /// <returns>vendor response dto</returns>
-    public Task<Result<VendorResponseDto>> GetVendorByIdAsync(string id);
+    public Task<Result<VendorGetByIdResponseDto>> GetVendorByIdAsync(string id);
 
     /// <summary>
     /// function to update vendor that take VendorRequestDto   
@@ -40,7 +40,7 @@ public interface IVendorService : IApplicationService, IScopedService
     /// <param name="id">vendor id</param>
     /// <param name="vendorRequestDto">vendor dto</param>
     /// <returns>Updated Vendor </returns>
-    public Task<Result<VendorResponseDto>> UpdateVendorAsync(string id, VendorRequestDto vendorRequestDto);
+    public Task<Result<VendorGetByIdResponseDto>> UpdateVendorAsync(string id, VendorRequestDto vendorRequestDto);
 
 
     /// <summary>

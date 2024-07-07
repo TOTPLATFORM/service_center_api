@@ -23,7 +23,6 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPost]
-	[Authorize(Roles = "Admin,Customer")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result> AddCustomer(CustomerRequestDto customerRequestDto)
@@ -41,28 +40,13 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
-	[Authorize(Roles = "Admin,Customer,Sales")]
+	[Authorize(Roles = "Admin,Manager,Sales")]
 	[ProducesResponseType(typeof(Result<PaginationResult<CustomerResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<PaginationResult<CustomerResponseDto>>> GetAllCustomers(int itemCount, int index)
 	{
 		return await _customerService.GetAllCustomersAsync(itemCount, index);
 	}
 
-	/// <summary>
-	/// action for update an customer status that take customer status and conatct id.
-	/// </summary>
-	/// <param name="id">customer id.</param>
-	/// <param name="status">customer status</param>
-	/// <returns>result of the customer response dto after updated successfully</returns>
-
-	//[HttpPut("customerId/{id}/status/{status}")]
-	//[Authorize(Roles = "Admin,Sales")]
-	//[ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
-	//[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-	//public async Task<Result<CustomerResponseDto>> UpdateCustomerStatus(CustomerStatus status, string id)
-	//{
-	//	return await _customerService.UpdateCustomerAsync(id, status);
-	//}
 	/// <summary>
 	/// get customer in the system.
 	/// </summary>
@@ -72,7 +56,7 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
-	[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Admin,Manager,Sales")]
 	[ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<CustomerResponseDto>> GetCustomerById(string id)

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class EmployeeGetByIdResponseDto:EmployeeResponseDto
+public class VendorGetByIdResponseDto:VendorResponseDto
 {
-    public decimal BaseSalary { get; set; }
     public string Gender { get; set; } = "";
     public string City { get; set; } = "";
     public string Country { get; set; } = "";

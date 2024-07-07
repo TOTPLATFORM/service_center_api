@@ -70,16 +70,30 @@ public class MappingProfiles : Profile
 		this.AddCampaginMapping();
 
 		this.AddServiceProviderMapping();
+		
 		this.AddExpenseMapping();
+		
 		this.AddRevenueMapping();
+		
 		this.AddRecruitmentMapping();
+		
 		this.AddPreformanceMapping();
+		
 		this.AddAttendanceMapping();
+		
 		this.AddSalaryMapping();
+		
 		this.AddApplicantMapping();
+		
 		this.AddLeaveRequestMapping();
+		
 		this.AddLeaveTypetMapping();
+		
 		this.AddCustomerMapping();
+		
+		this.AddProductOrderMapping();
+		
+		this.AddUserMapping();
 	}
 
 }

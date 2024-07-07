@@ -10,7 +10,7 @@ namespace ServiceCenter.Application.DTOS;
 public class OrderResponseDto
 {
     public int Id { get; set; }
-    public ContactResponseDto Contact { get; set; }
+    public string CustomerId { get; set; }
     public string OrderStatus { get; set; } = "";
     public DateTime OrderDate { get; set; }
     public ICollection<ProductOrderResponseDto> ProductOrders { get; set; }

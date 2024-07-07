@@ -27,6 +27,7 @@ public class ContextGenerator
             Context.AddItemCategory();
             Context.AddInventory();
             Context.AddDepartment();
+            Context.AddServiceCategory();
             Context.AddService();
             Context.AddFeedback();
             Context.AddComplaint();
@@ -42,7 +43,6 @@ public class ContextGenerator
             Context.AddRating();
             Context.AddCampagin();
             Context.AddProductCategory();
-            Context.AddServiceCategory();
             Context.AddSales();
             Context.AddManager();
             Context.AddWareHouseManager();

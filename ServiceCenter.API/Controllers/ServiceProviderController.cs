@@ -53,9 +53,9 @@ public class ServiceProviderController(IServiceProviderService serviceproviderSe
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
     [Authorize(Roles = "Manager,ServiceProvider,Admin")]
-    [ProducesResponseType(typeof(Result<ServiceProviderResponseDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<ServiceProviderGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<ServiceProviderResponseDto>> GetServiceProviderById(string id)
+    public async Task<Result<ServiceProviderGetByIdResponseDto>> GetServiceProviderById(string id)
     {
         return await _serviceproviderService.GetServiceProviderByIdAsync(id);
     }
@@ -71,10 +71,10 @@ public class ServiceProviderController(IServiceProviderService serviceproviderSe
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Manager,ServiceProvider,Admin")]
-    [ProducesResponseType(typeof(Result<ServiceProviderResponseDto>), StatusCodes.Status200OK)]
+    [Authorize(Roles = "Manager,Admin")]
+    [ProducesResponseType(typeof(Result<ServiceProviderGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<ServiceProviderResponseDto>> UpdateServiceProvider(string id, ServiceProviderRequestDto serviceproviderRequestDto)
+    public async Task<Result<ServiceProviderGetByIdResponseDto>> UpdateServiceProvider(string id, ServiceProviderRequestDto serviceproviderRequestDto)
     {
         return await _serviceproviderService.UpdateServiceProviderAsync(id, serviceproviderRequestDto);
     }
@@ -87,7 +87,7 @@ public class ServiceProviderController(IServiceProviderService serviceproviderSe
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
-    [HttpGet("search")]
+    [HttpGet("search/{text}")]
     [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<ServiceProviderResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -95,20 +95,5 @@ public class ServiceProviderController(IServiceProviderService serviceproviderSe
     {
         return await _serviceproviderService.SearchServiceProviderByTextAsync(text,itemCount,index);
     }
-    /// <summary>
-    /// delete  serviceprovider by id from the system.
-    /// </summary>
-    ///<param name="id">id</param>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-    [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager,Admin")]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result> DeleteServiceProviderAsycn(string id)
-    {
-        return await _serviceproviderService.DeleteServiceProviderAsync(id);
-    }
+
 }

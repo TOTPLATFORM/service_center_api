@@ -70,10 +70,10 @@ public class ServiceProviderService(ServiceCenterBaseDbContext dbContext, IMappe
     }
 
     ///<inheritdoc/>
-    public async Task<Result<ServiceProviderResponseDto>> GetServiceProviderByIdAsync(string Id)
+    public async Task<Result<ServiceProviderGetByIdResponseDto>> GetServiceProviderByIdAsync(string Id)
     {
         var serviceprovider = await _dbContext.ServiceProviders
-            .ProjectTo<ServiceProviderResponseDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<ServiceProviderGetByIdResponseDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(d => d.Id == Id);
 
         if (serviceprovider is null)
@@ -88,7 +88,7 @@ public class ServiceProviderService(ServiceCenterBaseDbContext dbContext, IMappe
 
     ///<inheritdoc/>
 
-    public async Task<Result<ServiceProviderResponseDto>> UpdateServiceProviderAsync(string id, ServiceProviderRequestDto serviceproviderRequestDto)
+    public async Task<Result<ServiceProviderGetByIdResponseDto>> UpdateServiceProviderAsync(string id, ServiceProviderRequestDto serviceproviderRequestDto)
     {
         var serviceprovider = await _dbContext.ServiceProviders.FindAsync(id);
 
@@ -103,7 +103,7 @@ public class ServiceProviderService(ServiceCenterBaseDbContext dbContext, IMappe
 
         await _dbContext.SaveChangesAsync();
 
-        var serviceproviderResponse = _mapper.Map<ServiceProviderResponseDto>(serviceprovider);
+        var serviceproviderResponse = _mapper.Map<ServiceProviderGetByIdResponseDto>(serviceprovider);
 
         if (serviceproviderResponse is null)
         {
@@ -121,6 +121,7 @@ public class ServiceProviderService(ServiceCenterBaseDbContext dbContext, IMappe
         _logger.LogInformation("Updated serviceprovider , Id {Id}", id);
 
         return Result.Success(serviceproviderResponse);
+
     }
 
     ///<inheritdoc/>
@@ -130,7 +131,7 @@ public class ServiceProviderService(ServiceCenterBaseDbContext dbContext, IMappe
 
         var serviceprovider = await _dbContext.ServiceProviders
                        .ProjectTo<ServiceProviderResponseDto>(_mapper.ConfigurationProvider)
-                       .Where(n => n.ServiceProviderFirstName.Contains(text))
+                       .Where(n => n.FirstName.Contains(text))
                        .GetAllWithPagination(itemCount, index);
 
         _logger.LogInformation("Fetching search branch by name . Total count: {branch}.", serviceprovider.Data.Count);
@@ -138,25 +139,5 @@ public class ServiceProviderService(ServiceCenterBaseDbContext dbContext, IMappe
         return Result.Success(serviceprovider);
     }
 
-    ///<inheritdoc/>
-
-    public async Task<Result> DeleteServiceProviderAsync(string id)
-    {
-        var serviceprovider = await _dbContext.ServiceProviders.FindAsync(id);
-
-        if (serviceprovider is null)
-        {
-            _logger.LogWarning("serviceprovider Invaild Id ,Id {serviceproviderId}", id);
-
-            return Result.NotFound(["serviceprovider Invaild Id"]);
-        }
-
-        _dbContext.ServiceProviders.Remove(serviceprovider);
-
-        await _dbContext.SaveChangesAsync();
-
-        _logger.LogInformation("serviceprovider remove successfully in the database");
-
-        return Result.SuccessWithMessage("serviceprovider remove successfully ");
-    }
+  
 }

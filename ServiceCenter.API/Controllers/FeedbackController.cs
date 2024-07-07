@@ -22,7 +22,7 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// </remarks>
     /// <returns>result for Feedback  added successfully.</returns>
     [HttpPost]
-    [Authorize(Roles = "Admin,Customer")]
+    [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddFeedback(FeedbackRequestDto FeedbackDto)
@@ -68,7 +68,7 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin,Customer")]
+    [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result<FeedbackResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<FeedbackResponseDto>> UpdateFeedbackDesc(int id, string feedbackDesc)
@@ -84,7 +84,7 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin,Customer,Manager")]
+    [Authorize(Roles = "Admin,Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result> DeleteFeedbackAsycn(int id)
@@ -98,7 +98,7 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("searchByCustomer/{customerId}")]
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize(Roles = "Admin,Manager,Customer")]
     [ProducesResponseType(typeof(Result<PaginationResult<FeedbackResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificCustomer(string customerId, int itemCount, int index)
@@ -112,7 +112,6 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("searchByProduct/{productId}")]
-    [Authorize(Roles = "Admin,Customer,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<FeedbackResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificProduct(int productId, int itemCount, int index)
@@ -126,7 +125,6 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("searchByService/{serviceId}")]
-    [Authorize(Roles = "Admin,Customer,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<FeedbackResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     public async Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificService(int serviceId, int itemCount, int index)

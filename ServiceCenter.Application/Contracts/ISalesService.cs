@@ -32,7 +32,7 @@ public interface ISalesService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="id">sales id</param>
     /// <returns>sales response dto</returns>
-    public Task<Result<SalesResponseDto>> GetSalesByIdAsync(string id);
+    public Task<Result<SalesGetByIdResponseDto>> GetSalesByIdAsync(string id);
 
     /// <summary>
     /// function to update sales that take SalesRequestDto   
@@ -40,7 +40,7 @@ public interface ISalesService : IApplicationService, IScopedService
     /// <param name="id">sales id</param>
     /// <param name="salesRequestDto">sales dto</param>
     /// <returns>Updated Sales </returns>
-    public Task<Result<SalesResponseDto>> UpdateSalesAsync(string id, SalesRequestDto salesRequestDto);
+    public Task<Result<SalesGetByIdResponseDto>> UpdateSalesAsync(string id, SalesRequestDto salesRequestDto);
 
 
     /// <summary>
