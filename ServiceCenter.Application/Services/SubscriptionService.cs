@@ -27,6 +27,21 @@ public class SubscriptionService(ServiceCenterBaseDbContext dbContext, IMapper m
     ///<inheritdoc/>
     public async Task<Result> AddSubscriptionAsync(SubscriptionRequestDto SubscriptionRequestDto)
     {
+        var contact = await _dbContext.Customers.FirstOrDefaultAsync(m => m.Id == SubscriptionRequestDto.CustomerId);
+        if (contact == null)
+        {
+            _logger.LogError("No contact found in the database.");
+            return Result.Invalid(new List<ValidationError>
+            {
+                new ValidationError
+                {
+                     ErrorMessage = "No contact found in the database."
+                }
+
+            });
+        }
+
+
         var result = _mapper.Map<Subscription>(SubscriptionRequestDto);
         if (result is null)
         {
@@ -40,7 +55,7 @@ public class SubscriptionService(ServiceCenterBaseDbContext dbContext, IMapper m
     });
         }
         result.CreatedBy = _userContext.Email;
-
+        result.Customer = contact;
         _dbContext.Subscriptions.Add(result);
 
         await _dbContext.SaveChangesAsync();

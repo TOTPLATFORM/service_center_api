@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class CenterGetByIdResponseDto
+public class CenterGetByIdResponseDto:CenterResponseDto
 {
-    public int Id { get; set; }
-    public string CenterName { get; set; } = "";
-    public int OpeningHours { get; set; }
-    public string Specialty { get; set; } = "";
-    public ICollection<BranchGetByIdResponseDto> Branches { get; set; } = new HashSet<BranchGetByIdResponseDto>();
+    public ICollection<BranchResponseDto> Branches { get; set; } = new HashSet<BranchResponseDto>();
     public ICollection<DepartmentResponseDto> Departments { get; set; } = new HashSet<DepartmentResponseDto>();
 
     public ICollection<ServiceResponseDto> Services { get; set; } = new HashSet<ServiceResponseDto>();

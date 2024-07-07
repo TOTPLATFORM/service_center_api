@@ -12,6 +12,7 @@ public static  class ProductOrderMapping
             .ReverseMap();
 
         map.CreateMap<ProductOrder,ProductOrderResponseDto>()
+            .ForMember(dest=>dest.TotalPrice,src=>src.MapFrom(src=>src.Quantity*src.Product.ProductPrice))
             .ReverseMap();
 
 

@@ -48,11 +48,11 @@ public class CenterServiceTest
     }
 
     /// <summary>
-    /// fuction to add Center as a test case that take   Center id , Center number , Center avaliability , center id  
+    /// fuction to add Center as a test case that take Center name , specialty ,opening hours
     /// </summary>
-    /// <param name="CenterNumber">Center number</param>
-    /// <param name="CenterAvaliabitlity">Center availability</param>
-    /// <param name="centerId">Center Type id</param>
+    /// <param name="centerName">Center name</param>
+    /// <param name="hours">opening hours</param>
+    /// <param name="specialty">specialty</param>
     [Theory, TestPriority(0)]
     [InlineData("center1", 2, "spec1")]
     public async Task AddCenter(string centerName, int hours, string specialty)
@@ -71,7 +71,7 @@ public class CenterServiceTest
     }
 
     /// <summary>
-    /// fuction to get all  Centers as a test case 
+    /// fuction to get Center as a test case 
     /// </summary>
     [Fact, TestPriority(1)]
     public async Task GetCenter()
@@ -87,18 +87,18 @@ public class CenterServiceTest
 
     }
 
-  
+
 
     /// <summary>
-    /// fuction to update Center as a test case that take   Center id , Center number , Center avaliability , center id  
+    /// fuction to update Center as a test case that take  Center id , Center name , specialty ,opening hours
     /// </summary>
-    /// <param name="CenterNumber">Center number</param>
-    /// <param name="CenterAvaliabitlity">Center availability</param>
-    /// <param name="centerId">Center Type id</param>
+    /// <param name="centerName">Center name</param>
+    /// <param name="hours">opening hours</param>
+    /// <param name="specialty">specialty</param>
     /// <param name="expectedResult">expected result</param>
     [Theory, TestPriority(3)]
     [InlineData(1, "center1", 2, "spec1", true)]
-    [InlineData(1, "center1", 2, "spec1", true)]
+    [InlineData(4, "center1", 2, "spec1", false)]
     public async Task UpdateCenter(int id, string centerName, int hours, string specialty, bool expectedResult)
     {
         //Arrange
