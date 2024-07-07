@@ -17,7 +17,7 @@ public static class ComplaintMapping
            .ReverseMap();
 
         map.CreateMap<ComplaintResponseDto,Complaint>()
-            .ForPath(dest => dest.Customer.Contact.FirstName, src => src.MapFrom(src => src.CustomerName))
+            .ForPath(dest => dest.Customer.FirstName, src => src.MapFrom(src => src.CustomerName))
             .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.ComplaintDate))
 
             .ReverseMap();

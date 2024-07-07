@@ -11,19 +11,15 @@ using System.Threading.Tasks;
 namespace ServiceCenter.Application.DTOS;
 
 public class EmployeeRequestDto : BaseUserRequestDto
-{
-    [Required]
-    public string FirstName { get; set; } = "";
-    [Required]
-    public string LastName { get; set; } = "";
-    [Required]
-    public DateOnly DateOfBirth { get; set; }
-    [Required]
-    public Gender Gender { get; set; }
-    [Required]
-    public Address Address { get; set; } = default;  
+{    
     [Required]
     public int DepartmentId { get; set; }
     [Required]
     public decimal BaseSalary { get; set; }
+
+    [Required]
+    public string UserName { get; set; }
+
+    [Required]
+    public string Password { get; set; }
 }

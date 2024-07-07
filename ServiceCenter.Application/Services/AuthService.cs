@@ -195,10 +195,10 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
     {
         var user = new ApplicationUser
         {
-            //FirstName = "AdminName",
-            //DateOfBirth = DateOnly.MaxValue,
+            FirstName = "AdminName",
+            DateOfBirth = DateOnly.MaxValue,
             Email = "admin123@gmail.com",
-           // Gender = Gender.Male,
+            Gender = Gender.Male,
             UserName = "admin",
             PhoneNumber = "01140812059",
         };

@@ -92,8 +92,6 @@ public class MappingProfiles : Profile
 		this.AddCustomerMapping();
 		
 		this.AddProductOrderMapping();
-		
-		this.AddUserMapping();
 	}
 
 }

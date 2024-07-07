@@ -16,7 +16,7 @@ public static class RatingMapping
 
 
         map.CreateMap<Rating, RatingResponseDto>()
-           .ForMember(dest => dest.CustomerName, src => src.MapFrom(src => src .Customer.Contact.FirstName))
+           .ForMember(dest => dest.CustomerName, src => src.MapFrom(src => src.Customer.FirstName))
            .ForMember(dest => dest.RatingDate, opt => opt.MapFrom(src => src.CreatedDate))
            .ReverseMap();
 

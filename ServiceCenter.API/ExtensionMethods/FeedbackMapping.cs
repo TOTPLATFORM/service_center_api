@@ -14,7 +14,7 @@ public static  class FeedbackMapping
            .ForPath(dest => dest.Product.Id, src => src.MapFrom(src => src.ProductId))
            .ReverseMap();
         map.CreateMap<Feedback, FeedbackResponseDto>()
-           .ForMember(dest => dest.CustomerName, src => src.MapFrom(src => src.Customer.Contact.FirstName))
+           .ForMember(dest => dest.CustomerName, src => src.MapFrom(src => src.Customer.FirstName))
            .ForMember(dest => dest.FeedbackDate, opt => opt.MapFrom(src => src.CreatedDate))
            .ReverseMap();
     }

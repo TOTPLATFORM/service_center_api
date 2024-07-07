@@ -150,7 +150,7 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         var contact = await _dbContext.Customers.FindAsync(Report.Customer.Id);
         if (status == ReportStatus.Good)
         {
-            contact.Contact.Status = ContactStatus.Customer;
+            contact.Status = ContactStatus.Customer;
             var roleUser= await _dbContext.UserRoles.FirstOrDefaultAsync(u => u.UserId == contact.Id);
             var roleUserNew = new IdentityUserRole<string>
             {
@@ -162,7 +162,7 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         }
         if (status == ReportStatus.Bad)
         {
-             contact.Contact.Status = ContactStatus.Cancelled;
+             contact.Status = ContactStatus.Cancelled;
         }
         Report.ModifiedBy = _userContext.Email;
         _dbContext.Customers.Update(contact);

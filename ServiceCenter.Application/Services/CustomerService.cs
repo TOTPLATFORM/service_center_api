@@ -30,10 +30,10 @@ public class CustomerService(UserManager<ApplicationUser> userManager,ServiceCen
 	///<inheritdoc/>
 	public async Task<Result> RegisterCustomerAsync(CustomerRequestDto customerRequestDto)
 	{
-		var existsContact =await _dbContext.Contacts.FirstOrDefaultAsync(C => C.Email == customerRequestDto.Contact.Email || C.WhatshappNumber == customerRequestDto.Contact.WhatshappNumber);
-        if (_dbContext.Customers.Any(u => u.UserName == customerRequestDto.User.UserName))
+		var existsContact =await _dbContext.Contacts.FirstOrDefaultAsync(C => C.Email == customerRequestDto.Email || C.WhatsAppNumber == customerRequestDto.WhatsAppNumber);
+        if (_dbContext.Customers.Any(u => u.UserName == customerRequestDto.UserName))
         {
-            _logger.LogError("UserName is already in use. UserName: {@UserName}", customerRequestDto.User.UserName);
+            _logger.LogError("UserName is already in use. UserName: {@UserName}", customerRequestDto.UserName);
 
             return Result.Invalid(new List<ValidationError>
             {
@@ -45,19 +45,12 @@ public class CustomerService(UserManager<ApplicationUser> userManager,ServiceCen
         }
         var role = "Customer";
 		var customer = _mapper.Map<Customer>(customerRequestDto);
-		_mapper.Map<Contact>(customerRequestDto.Contact);
-		customer.Contact.Status = ContactStatus.Customer;
-		if(existsContact is not null)
+		customer.Status = ContactStatus.Customer;
+        await _userManager.CreateAsync(customer, customerRequestDto.Password);
+        if (existsContact is not null)
 		{
-			customer.ContactId = existsContact.Id;
-			existsContact.FirstName = customerRequestDto.Contact.FirstName;
-			existsContact.LastName = customerRequestDto.Contact.LastName;
-			existsContact.DateOfBirth = customerRequestDto.Contact.DateOfBirth;
-			existsContact.Address = customerRequestDto.Contact.Address;
-			existsContact.Gender = customerRequestDto.Contact.Gender;
-			customer.Contact  = existsContact;
+			_dbContext.Contacts.Remove(existsContact);
 		}
-		await _userManager.CreateAsync(customer, customerRequestDto.User.Password);
 		var customerAddResult = await  _userManager.AddToRoleAsync(customer, role);
 		if (!customerAddResult.Succeeded)
 		{
@@ -67,7 +60,7 @@ public class CustomerService(UserManager<ApplicationUser> userManager,ServiceCen
 			return Result.Error(errors);
 		}
 
-		_logger.LogInformation($"Successfully registered a new user with username {customerRequestDto.User.UserName}");
+		_logger.LogInformation($"Successfully registered a new user with username {customerRequestDto.UserName}");
 		return Result.SuccessWithMessage("Customer added successfully");
 	}
     ///<inheritdoc/>

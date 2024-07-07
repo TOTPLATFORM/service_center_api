@@ -43,9 +43,9 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 				}
 			});
 		}
-        if (_dbContext.Contacts.Any(u => u.WhatshappNumber == contactRequestDto.WhatshappNumber))
+        if (_dbContext.Contacts.Any(u => u.WhatsAppNumber == contactRequestDto.WhatsAppNumber))
         {
-            _logger.LogError("PhoneNumber is already in use. PhoneNumber: {@WhatshappNumber}", contactRequestDto.WhatshappNumber);
+            _logger.LogError("PhoneNumber is already in use. PhoneNumber: {@WhatshappNumber}", contactRequestDto.WhatsAppNumber);
 
             return Result.Invalid(new List<ValidationError>
             {

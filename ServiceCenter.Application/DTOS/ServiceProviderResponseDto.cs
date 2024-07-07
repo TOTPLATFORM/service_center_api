@@ -9,6 +9,4 @@ namespace ServiceCenter.Application.DTOS;
 
 public class ServiceProviderResponseDto:EmployeeResponseDto
 {
-    public string Id { get; set; } = "";
-    
 }

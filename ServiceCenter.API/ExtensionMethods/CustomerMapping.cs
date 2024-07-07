@@ -9,9 +9,9 @@ public static class CustomerMapping
     public static void AddCustomerMapping(this MappingProfiles map)
     {
         map.CreateMap<CustomerRequestDto, Customer>()
-            .ForMember(d => d.PhoneNumber, o => o.MapFrom(s => s.User.PhoneNumber))
-            .ForMember(d => d.UserName, o => o.MapFrom(s => s.User.UserName))
-            .ForMember(d => d.Email, o => o.MapFrom(s => s.User.Email));
+            .ForMember(d => d.PhoneNumber, o => o.MapFrom(s => s.PhoneNumber))
+            .ForMember(d => d.UserName, o => o.MapFrom(s => s.UserName))
+            .ForMember(d => d.Email, o => o.MapFrom(s => s.Email));
 
         map.CreateMap<Customer, CustomerResponseDto>();
     }
