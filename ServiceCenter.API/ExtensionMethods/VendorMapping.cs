@@ -11,9 +11,6 @@ public static class VendorMapping
         map.CreateMap<VendorRequestDto, Vendor>();
 
         map.CreateMap<Vendor, VendorResponseDto>();
-        map.CreateMap<Vendor,VendorGetByIdResponseDto>()
-            .ForMember(dest=>dest.Country,src=>src.MapFrom(src=>src.Address.Country))
-            .ForMember(dest=>dest.City,src=>src.MapFrom(src=>src.Address.City))
-            .ForMember(dest=>dest.PostalCode,src=>src.MapFrom(src=>src.Address.PostalCode));
+        map.CreateMap<Vendor, VendorGetByIdResponseDto>();
     }
 }

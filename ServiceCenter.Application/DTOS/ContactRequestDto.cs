@@ -26,7 +26,7 @@ public class ContactRequestDto
 	public string Email { get; set; } = "";
     [Phone]
     [Required]
-    public string WhatshappNumber { get; set; } = "";
+    public string WhatsAppNumber { get; set; } = "";
 
 
 }

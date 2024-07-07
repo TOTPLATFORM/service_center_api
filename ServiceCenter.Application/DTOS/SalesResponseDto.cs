@@ -10,5 +10,4 @@ namespace ServiceCenter.Application.DTOS;
 
 public class SalesResponseDto: EmployeeResponseDto
 {
-    public string Id { get; set; } = "";
 }

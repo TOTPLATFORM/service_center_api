@@ -8,5 +8,5 @@ namespace ServiceCenter.Application.DTOS;
 
 public class SalesGetByIdResponseDto: EmployeeGetByIdResponseDto
 {
-    public string Id { get; set; } = "";
+
 }

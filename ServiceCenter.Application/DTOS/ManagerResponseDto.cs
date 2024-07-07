@@ -9,7 +9,6 @@ namespace ServiceCenter.Application.DTOS;
 
 public class ManagerResponseDto:EmployeeResponseDto
 {
-    public string Id { get; set; } = "";
     public string Responsibilities { get; set; } = "";
     public DateOnly HiringDate { get; set; }
     public int WorkingHours { get; set; }

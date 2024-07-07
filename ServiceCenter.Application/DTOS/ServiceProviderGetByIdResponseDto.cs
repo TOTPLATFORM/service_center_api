@@ -9,7 +9,6 @@ namespace ServiceCenter.Application.DTOS;
 
 public class ServiceProviderGetByIdResponseDto:EmployeeGetByIdResponseDto
 {
-    public string Id { get; set; } = "";
     public virtual ICollection<ServiceResponseDto> Services { get; set; }
     public virtual ICollection<ComplaintResponseDto> Complaints { get; set; }
 }

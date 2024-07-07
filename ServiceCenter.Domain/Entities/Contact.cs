@@ -19,7 +19,7 @@ public class Contact
     public Address Address { get; set; } = default;
     public ContactStatus Status { get; set; } = ContactStatus.Opportunity;
 	public string Email { get; set; } = "";
-	public string WhatshappNumber { get; set; } = "";
+	public string WhatsAppNumber { get; set; } = "";
 
 
 }

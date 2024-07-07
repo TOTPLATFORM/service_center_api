@@ -12,18 +12,13 @@ namespace ServiceCenter.Application.DTOS;
 public class VendorRequestDto : BaseUserRequestDto
 {
     [Required]
-    public string FirstName { get; set; } = "";
-    [Required]
-    public string LastName { get; set; } = "";
-    [Required]
-    public DateOnly DateOfBirth { get; set; }
-    [Required]
-    public Gender Gender { get; set; }
-    [Required]
-    public Address Address { get; set; } = default;
-    [Required]
     public DateOnly ContractStartDate { get; set; }
     [Required]
     public DateOnly ContractEndDate { get; set; }
-  
+
+    [Required]
+    public string UserName { get; set; }
+
+    [Required]
+    public string Password { get; set; }
 }

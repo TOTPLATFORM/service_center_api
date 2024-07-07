@@ -10,9 +10,17 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.DTOS;
 
-public class CustomerRequestDto
+public class CustomerRequestDto : BaseUserRequestDto
 {
-    public ContactRequestDto Contact { get; set; } = default;
-    public BaseUserRequestDto User { get; set; } = default;
+    [Required]
+    [Phone]
+    public string WhatsAppNumber { get; set; }
+    [Required]
+    public string UserName { get; set; } = "";
 
+    [Required]
+    public string Password { get; set; } = "";
+
+    [Required]
+    public Address Address { get; set; } = default;
 }
