@@ -46,20 +46,7 @@ public class AuthController(IAuthService authService) : BaseController
     {
         return await _authService.AddUserToRoleAsync(userId, roleName);
     }
-    /// <summary>
-    /// action for add a staff roles.
-    /// </summary>
-    /// <returns>result representing the adding the staff roles successfully.</returns>
-    [HttpPost("CreateRoles")]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result> CreateRoles(List<string> roles)
-    {
-        await _authService.CreateRoles(roles);
-
-        return Result.SuccessWithMessage("Create roles successfully");
-    }
-
+   
     /// <summary>
     /// action for add an admin account.
     /// </summary>
