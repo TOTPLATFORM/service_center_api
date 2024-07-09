@@ -18,7 +18,7 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	/// </summary>
 	/// <param name="inventoryRequestDto">The data transfer object containing developer details for creation.</param>
 	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
+	/// Access is limited to users with the "Admin,Manager" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
@@ -35,7 +35,7 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	/// get all inventories in the system.
 	/// </summary>
 	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
+	/// Access is limited to users with the "Admin,Manager" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
@@ -45,15 +45,15 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	{
 		return await _inventoryService.GetAllInventoriesAsync( itemCount,  index);
 	}
-	/// <summary>
-	/// get all inventories in the system.
-	/// </summary>
-	///<param name="id">id of inventory.</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpGet("{id}")]
+    /// <summary>
+    /// get all inventories in the system.
+    /// </summary>
+    ///<param name="id">id of inventory.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin,WarehouseManager,Manager" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpGet("{id}")]
 	[Authorize(Roles = "Admin,WarehouseManager,Manager")]
 	[ProducesResponseType(typeof(Result<InventoryGetByIdResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -62,17 +62,16 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 		return await _inventoryService.GetInventoryByIdAsync(id);
 	}
 
-	/// <summary>
-	/// update  inventory in the system.
-	/// </summary>
-	///<param name="id">id of inventory.</param>
-	///<param name="inventoryRequestDto">inventory dto.</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-
-	[HttpPut("{id}")]
+    /// <summary>
+    /// update  inventory in the system.
+    /// </summary>
+    ///<param name="id">id of inventory.</param>
+    ///<param name="inventoryRequestDto">inventory dto.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin,Manager" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
+    [HttpPut("{id}")]
 	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<InventoryResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -85,7 +84,7 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	/// </summary>
 	///<param name="text">id</param>
 	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
+	/// Access is limited to users with the "Admin,Manager" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
@@ -102,7 +101,7 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	/// </summary>
 	///<param name="id">id</param>
 	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
+	/// Access is limited to users with the "Admin,Manager" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpDelete("{id}")]

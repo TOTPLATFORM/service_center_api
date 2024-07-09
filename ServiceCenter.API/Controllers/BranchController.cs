@@ -18,7 +18,7 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// </summary>
 	/// <param name="branchRequestDto">the data transfer object containing developer details for creation.</param>
 	/// <remarks>
-	/// access is limited to users with the "admin" role.
+	/// access is limited to users with the "Admin" role.
 	/// </remarks>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
@@ -46,9 +46,6 @@ public class BranchController(IBranchService branchService) : BaseController
 	///get branch by id to the system.
 	/// </summary>
 	///<param name="id">id of branch.</param>
-	/// <remarks>
-	/// access is limited to users with the "manager" role.
-	/// </remarks>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
 	[ProducesResponseType(typeof(Result<BranchGetByIdResponseDto>), StatusCodes.Status200OK)]
@@ -64,9 +61,9 @@ public class BranchController(IBranchService branchService) : BaseController
 	///<param name="id">id of branch.</param>
 	///<param name="branchRequestDto">branch dto.</param>
 	/// <remarks>
-	/// access is limited to users with the "admin" role.
+	/// access is limited to users with the "Admin" role.
 	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
 	[HttpPut("{id}")]
 	[Authorize(Roles = "Admin")]
@@ -80,9 +77,6 @@ public class BranchController(IBranchService branchService) : BaseController
 	/// search  branch by text in the system.
 	/// </summary>
 	///<param name="text">id</param>
-	/// <remarks>
-
-	/// </remarks>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("search/{text}")]

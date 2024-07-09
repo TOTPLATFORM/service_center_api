@@ -14,8 +14,11 @@ public class ServiceCategoryController(IServiceCategoryService itemCategoryServi
     /// <summary>
     /// action for add ServiceCategory action that take  ServiceCategory dto   
     /// </summary>
-    /// <param name="itemCategoryDto">ServiceCategory dto</param>
-    /// <returns>result for ServiceCategory added successfully.</returns>
+    /// <param name="serviceCategoryRequestDto">ServiceCategory dto</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -42,13 +45,23 @@ public class ServiceCategoryController(IServiceCategoryService itemCategoryServi
     {
         return await _itemCategoryService.GetServiceCategoryByIdAsync(id);
     }
+    /// <summary>
+    /// Updates an existing service category by its ID.
+    /// </summary>
+    ///<param name="id">id of service category.</param>
+    ///<param name="serviceCategoryRequestDto">service category dto.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
+
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<ServiceCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<ServiceCategoryResponseDto>> UpdateServiceCategory(int id, ServiceCategoryRequestDto itemCategoryDto)
+    public async Task<Result<ServiceCategoryResponseDto>> UpdateServiceCategory(int id, ServiceCategoryRequestDto serviceCategoryRequestDto)
     {
-        return await _itemCategoryService.UpdateServiceCategoryAsync(id, itemCategoryDto);
+        return await _itemCategoryService.UpdateServiceCategoryAsync(id, serviceCategoryRequestDto);
     }
     /// <summary>
     ///  action for remove ServiceCategory that take ServiceCategory id   

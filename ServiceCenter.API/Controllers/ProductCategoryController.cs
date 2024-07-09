@@ -18,10 +18,10 @@ public class ProductCategoryController(IProductCategoryService productCategorySe
     /// action for add product category action that take  ProductCategory dto   
     /// </summary>
     /// <param name="productCategoryDto">product category dto</param>
- 	/// <remarks>
+    /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>result for product category added successfully.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -60,22 +60,22 @@ public class ProductCategoryController(IProductCategoryService productCategorySe
         return await _productCategoryService.GetProductCategoryByIdAsync(id);
     }
     /// <summary>
-    /// get  ProductCategory by id in the system.
+    /// get  product category by id in the system.
     /// </summary>
-    ///<param name="id">id of ProductCategory.</param>
-    ///<param name="ProductCategoryRequestDto">ProductCategory dto.</param>
+    ///<param name="id">id of product category.</param>
+    ///<param name="productCategoryRequestDto">product category dto.</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result<ProductCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<ProductCategoryResponseDto>> UpdateProductCategory(int id, ProductCategoryRequestDto ProductCategoryRequestDto)
+    public async Task<Result<ProductCategoryResponseDto>> UpdateProductCategory(int id, ProductCategoryRequestDto productCategoryRequestDto)
     {
-        return await _productCategoryService.UpdateProductCategoryAsync(id, ProductCategoryRequestDto);
+        return await _productCategoryService.UpdateProductCategoryAsync(id, productCategoryRequestDto);
     }
     /// <summary>
     /// delete  Product category by id from the system.

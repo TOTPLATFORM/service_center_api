@@ -6,11 +6,7 @@ using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
 
-/// <summary>
-/// Controller responsible for handling recruitment record-related HTTP requests.
-/// </summary>
-/// <param name="recruitmentRecordService">The service for performing recruitment record-related operations.</param>
-/// <seealso cref="BaseController"/>
+
 public class RecruitmentRecordController(IRecruitmentRecordService recruitmentRecordService) : BaseController
 {
     private readonly IRecruitmentRecordService _recruitmentRecordService = recruitmentRecordService;
@@ -47,9 +43,11 @@ public class RecruitmentRecordController(IRecruitmentRecordService recruitmentRe
     /// <summary>
     /// Adds a new recruitment record.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="recruitmentRecordDto">The DTO containing the recruitment record details.</param>
-    /// <returns>A result indicating the success of the operation.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -65,7 +63,7 @@ public class RecruitmentRecordController(IRecruitmentRecordService recruitmentRe
     /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="id">The ID of the recruitment record to update.</param>
     /// <param name="recruitmentRecordDto">The DTO containing the updated recruitment record details.</param>
-    /// <returns>A result containing the updated recruitment record response DTO.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<RecruitmentRecordResponseDto>), StatusCodes.Status200OK)]

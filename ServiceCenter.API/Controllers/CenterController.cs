@@ -34,9 +34,6 @@ public class CenterController(ICenterService centerService) : BaseController
 	/// <summary>
 	/// get center from the system.
 	/// </summary>
-	/// <remarks>
-	/// Access is not limited 
-	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
 	[ProducesResponseType(typeof(Result<List<CenterGetByIdResponseDto>>), StatusCodes.Status200OK)]
@@ -55,7 +52,7 @@ public class CenterController(ICenterService centerService) : BaseController
 	/// <remarks>
 	/// Access is limited to users with the "Admin" role.
 	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
 	[HttpPut("{id}")]
 	[Authorize(Roles = "Admin")]

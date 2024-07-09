@@ -18,7 +18,7 @@ public class WareHouseManagerController(IWareHouseManagerService wareHousManager
     /// </summary>
     /// <param name="wareHouseManagerRequest">the data transfer object containing warehouse manager details for creation.</param>
     /// <remarks>
-    /// access is limited to users with the "Manager" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
@@ -56,7 +56,7 @@ public class WareHouseManagerController(IWareHouseManagerService wareHousManager
     }
 
     /// <summary>
-    /// updates an existing warehouse manager's information.
+    /// updates an existing warehouse manager   by its ID.
     /// </summary>
     /// <param name="id">the unique identifier of the warehouse manager  to update.</param>
     /// <param name="wareHouseManagerRequest">the data transfer object containing updated details for the warehouse manager.</param>

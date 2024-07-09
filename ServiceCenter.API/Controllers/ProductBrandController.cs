@@ -18,7 +18,10 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
     /// action for add product brand action that take  productBrand dto   
     /// </summary>
     /// <param name="productBrandDto">product brand dto</param>
-    /// <returns>result for product brand added successfully.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin,WarehouseManager,Manager" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -46,6 +49,15 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
     {
         return await _productBrandService.GetProductBrandByIdAsync(id);
     }
+    /// <summary>
+    /// Updates an existing product brand  by its ID.
+    /// </summary>
+    ///<param name="id">id of product brand.</param>
+    ///<param name="productBrandDto">Product brand dto.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin,Manager,WareHouseManager" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result<ProductBrandResponseDto>), StatusCodes.Status200OK)]

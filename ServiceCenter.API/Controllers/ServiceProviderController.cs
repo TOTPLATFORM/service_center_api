@@ -16,7 +16,7 @@ public class ServiceProviderController(IServiceProviderService serviceproviderSe
     /// </summary>
     /// <param name="serviceproviderRequestDto">The data transfer object containing serviceprovider details for creation.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin,Manager" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
@@ -61,14 +61,14 @@ public class ServiceProviderController(IServiceProviderService serviceproviderSe
     }
 
     /// <summary>
-    /// get  serviceprovider by id in the system.
+    /// Updates an existing service provider by its ID.
     /// </summary>
     ///<param name="id">id of serviceprovider.</param>
     ///<param name="serviceproviderRequestDto">serviceprovider dto.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Manager,Admin")]

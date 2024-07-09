@@ -18,9 +18,9 @@ public class ProductController(IProductService productService) : BaseController
     /// </summary>
     /// <param name="productDto">product  dto</param>
  	/// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin,Manager,WarehouseManager" role.
     /// </remarks>
-    /// <returns>result for product  added successfully.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -58,21 +58,23 @@ public class ProductController(IProductService productService) : BaseController
     {
         return await _productService.GetProductByIdAsync(id);
     }
+    /// <summary>
+    /// Updates an existing product  by its ID.
     /// </summary>
-    ///<param name="id">id of Product.</param>
-    ///<param name="ProductRequestDto">Product dto.</param>
+    ///<param name="id">id of product.</param>
+    ///<param name="productRequestDto">product dto.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin,Manager,WareHouseManager" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin ,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result<ProductGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<ProductGetByIdResponseDto>> UpdateProduct(int id, ProductRequestDto ProductRequestDto)
+    public async Task<Result<ProductGetByIdResponseDto>> UpdateProduct(int id, ProductRequestDto productRequestDto)
     {
-        return await _productService.UpdateProductAsync(id, ProductRequestDto);
+        return await _productService.UpdateProductAsync(id, productRequestDto);
     }
     /// <summary>
     /// delete  Product  by id from the system.

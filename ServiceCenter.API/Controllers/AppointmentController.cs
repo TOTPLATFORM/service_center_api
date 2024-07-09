@@ -16,10 +16,13 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
 
     /// <summary>
     /// Retrieves all appointments asynchronously.
-    /// </summary>
-    /// <returns>A result containing a list of appointment response DTOs.</returns>
+    /// </summary>  
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all appointment.</returns>
     [HttpGet]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<List<AppointmentResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAllAppointments(int itemCount, int index)
@@ -31,7 +34,12 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     /// Retrieves appointments by service ID asynchronously.
     /// </summary>
     /// <param name="serviceId">The ID of the service whose appointments to retrieve.</param>
-    /// <returns>A result containing a list of appointment response DTOs.</returns>
+    /// <param name="itemCount"> item count of appoinments to retrieve</param>
+    ///<param name="index">index of appoinments to retrieve</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin,ServiceProvider" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of appointment  that match the search criteria.</returns>
     [HttpGet("service/{serviceId}")]
     [Authorize(Roles = "Admin, ServiceProvider")]
     [ProducesResponseType(typeof(Result<List<AppointmentResponseDto>>), StatusCodes.Status200OK)]
@@ -45,6 +53,9 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     /// Retrieves appointments by contact ID asynchronously.
     /// </summary>
     /// <param name="contactId">The ID of the contact whose appointments to retrieve.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Customer" role.
+    /// </remarks>
     /// <returns>A result containing a list of appointment response DTOs.</returns>
     [HttpGet("contact/{contactId}")]
     [Authorize(Roles = " Customer")]
@@ -58,7 +69,10 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     /// <summary>
     /// Retrieves an appointment by its ID asynchronously.
     /// </summary>
-    /// <param name="id">The ID of the appointment to retrieve.</param>
+    /// <param name="id">The ID of the appointment to retrieve.</param> 
+    /// <remarks>
+    /// Access is limited to users with the "Admin,ServiceProvider" role.
+    /// </remarks>
     /// <returns>A result containing the appointment response DTO.</returns>
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin, ServiceProvider")]
@@ -73,7 +87,10 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     /// Books a new appointment asynchronously.
     /// </summary>
     /// <param name="appointmentRequestDto">The DTO representing the appointment to book.</param>
-    /// <returns>A result indicating the outcome of the booking operation.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Customer" role.
+    /// </remarks>
+    //// <returns>a task that represents the asynchronous operation, which encapsulates the result of the booking process.</returns>
     [HttpPost]
     [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -87,9 +104,12 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     /// Cancels an appointment by its ID asynchronously.
     /// </summary>
     /// <param name="id">The ID of the appointment to cancel.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Customer,Manager" role.
+    /// </remarks>
     /// <returns>A result indicating the outcome of the cancellation operation.</returns>
     [HttpPost("cancel/{id}")]
-    [Authorize(Roles = "Admin, Customer")]
+    [Authorize(Roles = "Manager, Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> CancelAppointment(int id)
@@ -103,9 +123,12 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     /// <remarks>Available to users with roles: Admin, Service.</remarks>
     /// <param name="id">The ID of the appointment to change the status of.</param>
     /// <param name="status">The new status of the appointment.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Manager,ServiceProvider" role.
+    /// </remarks>
     /// <returns>A Result indicating the outcome of the update operation.</returns>
     [HttpPut("{id}/status/{status}")]
-    [Authorize(Roles = "Admin, ServiceProvider")]
+    [Authorize(Roles = "Manager, ServiceProvider")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> ChangeAppointmentStatus(int id, AppointmentStatus status)
@@ -119,9 +142,14 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     /// <remarks>Available to users with roles: Admin, Service.</remarks>
     /// <param name="serviceId">The ID of the service whose appointments to retrieve.</param>
     /// <param name="status">The status of the appointments to filter by.</param>
+    /// <param name="itemCount"> item count of appoinments to retrieve</param>
+    ///<param name="index">index of appoinments to retrieve</param>
+    /// <remarks>
+    /// Access is limited to users with the "Manager,ServiceProvider" role.
+    /// </remarks>
     /// <returns>A Result containing a list of appointment response DTOs.</returns>
     [HttpGet("service/{serviceId}/status/{status}")]
-    [Authorize(Roles = "Admin, ServiceProvider")]
+    [Authorize(Roles = "Manager, ServiceProvider")]
     [ProducesResponseType(typeof(Result<List<AppointmentResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByServiceAndStatus(int serviceId, AppointmentStatus status, int itemCount, int index)
@@ -135,9 +163,14 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     /// <remarks>Available to users with roles: Admin, Service, Customer.</remarks>
     /// <param name="contactId">The ID of the contact whose appointments to retrieve.</param>
     /// <param name="status">The status of the appointments to filter by.</param>
+    /// <param name="itemCount"> item count of appoinments to retrieve</param>
+    ///<param name="index">index of appoinments to retrieve</param>
+    /// <remarks>
+    /// Access is limited to users with the "Manager,Customer" role.
+    /// </remarks>
     /// <returns>A Result containing a list of appointment response DTOs.</returns>
     [HttpGet("contact/{contactId}/status/{status}")]
-    [Authorize(Roles = "Admin, Customer")]
+    [Authorize(Roles = "Manager, Customer")]
     [ProducesResponseType(typeof(Result<List<AppointmentResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<PaginationResult<AppointmentResponseDto>>> GetAppointmentsByCustomerAndStatus(string contactId, AppointmentStatus status, int itemCount, int index)
@@ -149,9 +182,12 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     /// Deletes an appointment by its ID asynchronously.
     /// </summary>
     /// <param name="id">The ID of the appointment to delete.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Manager" role.
+    /// </remarks>
     /// <returns>A result indicating the outcome of the deletion operation.</returns>
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> DeleteAppointment(int id)

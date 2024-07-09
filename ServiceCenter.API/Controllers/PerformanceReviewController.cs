@@ -6,11 +6,6 @@ using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
 
-/// <summary>
-/// Controller responsible for handling performance review-related HTTP requests.
-/// </summary>
-/// <param name="performanceReviewService">The service for performing performance review-related operations.</param>
-/// <seealso cref="BaseController"/>
 public class PerformanceReviewController(IPerformanceReviewService performanceReviewService) : BaseController
 {
     private readonly IPerformanceReviewService _performanceReviewService = performanceReviewService;
@@ -18,7 +13,9 @@ public class PerformanceReviewController(IPerformanceReviewService performanceRe
     /// <summary>
     /// Retrieves all performance reviews.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result containing a list of performance review response DTOs.</returns>
     [HttpGet]
     [Authorize(Roles = "Admin")]
@@ -32,8 +29,10 @@ public class PerformanceReviewController(IPerformanceReviewService performanceRe
     /// <summary>
     /// Retrieves a performance review by its ID.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="id">The ID of the performance review to retrieve.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result containing the performance review response DTO.</returns>
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
@@ -47,9 +46,11 @@ public class PerformanceReviewController(IPerformanceReviewService performanceRe
     /// <summary>
     /// Adds a new performance review.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="performanceReviewDto">The DTO containing the performance review details.</param>
-    /// <returns>A result indicating the success of the operation.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -62,10 +63,12 @@ public class PerformanceReviewController(IPerformanceReviewService performanceRe
     /// <summary>
     /// Updates an existing performance review by its ID.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="id">The ID of the performance review to update.</param>
     /// <param name="performanceReviewDto">The DTO containing the updated performance review details.</param>
-    /// <returns>A result containing the updated performance review response DTO.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<PerformanceReviewResponseDto>), StatusCodes.Status200OK)]
@@ -78,8 +81,10 @@ public class PerformanceReviewController(IPerformanceReviewService performanceRe
     /// <summary>
     /// Deletes a performance review by its ID.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="id">The ID of the performance review to delete.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result indicating the success of the deletion.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]

@@ -61,14 +61,14 @@ public class VendorController(IVendorService vendorService) : BaseController
     }
 
     /// <summary>
-    /// get  vendor by id in the system.
+    /// Updates an existing vendor by its ID.
     /// </summary>
     ///<param name="id">id of vendor.</param>
     ///<param name="vendorRequestDto">vendor dto.</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]

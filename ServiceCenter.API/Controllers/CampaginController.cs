@@ -19,7 +19,7 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 	/// </summary>
 	/// <param name="campaginRequestDto">the data transfer object containing developer details for creation.</param>
 	/// <remarks>
-	/// access is limited to users with the "manager" role.
+	/// access is limited to users with the "Admin,Manager" role.
 	/// </remarks>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
@@ -35,9 +35,6 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 	/// <summary>
 	/// get all campagins to the system.
 	/// </summary>
-	/// <remarks>
-	/// access is limited to users with the "manager , sales" role.
-	/// </remarks>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet]
@@ -52,9 +49,6 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 	/// get campagin by id to the system.
 	/// </summary>
 	/// <param name="id">id of campagin</param>
-	/// <remarks>
-	/// access is limited to users with the "manager , sales" role.
-	/// </remarks>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpGet("{id}")]
@@ -71,7 +65,7 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 	/// <param name="campaginRequestDto">the data transfer object containing campagin details for creation.</param>
 	/// <param name="id">id of campagin.</param>
 	/// <remarks>
-	/// Access is limited to users with the "Manager" role.
+	/// Access is limited to users with the "Manager,Admin" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpPut("{id}")]
@@ -89,9 +83,9 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 	/// <param name="status">The data transfer object containing campagin details for creation.</param>
 	/// <param name="id">id of campagin.</param>
 	/// <remarks>
-	/// access is limited to users with the "manager" role.
+	/// access is limited to users with the "Admin,Manager" role.
 	/// </remarks>
-	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 	[HttpPut("campaginId/{id}/status/{status}")]
 	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<CampaginGetByIdResposeDto>), StatusCodes.Status200OK)]
@@ -105,7 +99,7 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 	/// </summary>
 	///<param name="text">id</param>
 	/// <remarks>
-	/// access is limited to users with the "Manager,Sales" role.
+	/// access is limited to users with the "Manager,Admin" role.
 	/// </remarks>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
@@ -123,7 +117,7 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 	/// </summary>
 	///<param name="id">id</param>
 	/// <remarks>
-	/// access is limited to users with the "Manager" role.
+	/// access is limited to users with the "Manager,admin" role.
 	/// </remarks>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpDelete("{id}")]

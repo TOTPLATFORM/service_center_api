@@ -19,7 +19,7 @@ public class ReportController(IReportService ReportService) : BaseController
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>result for Report  added successfully.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "Sales")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -60,13 +60,15 @@ public class ReportController(IReportService ReportService) : BaseController
     {
         return await _ReportService.GetReportByIdAsync(id);
     }
+    /// <summary>
+    /// Updates an existing  report  by its ID.
     /// </summary>
     ///<param name="id">id of Report.</param>
-    ///<param name="ReportRequestDto">Report dto.</param>
+    ///<param name="task">task of Report .</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Sales" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Sales")]
@@ -92,7 +94,15 @@ public class ReportController(IReportService ReportService) : BaseController
     {
         return await _ReportService.DeleteReportAsync(id);
     }
-
+    /// <summary>
+    /// Updates an existing  report  by its ID.
+    /// </summary>
+    ///<param name="id">id of Report.</param>
+    ///<param name="status"> Report status .</param>
+    /// <remarks>
+    /// Access is limited to users with the "Manager" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
     [HttpPut("reportId/{id}/status/{status}")]
     [Authorize(Roles = "Manager")]
     [ProducesResponseType(typeof(Result<ReportResponseDto>), StatusCodes.Status200OK)]

@@ -61,14 +61,14 @@ public class SalesController(ISalesService salesService) : BaseController
     }
 
     /// <summary>
-    /// get  sales by id in the system.
+    /// Updates an existing sales by its ID.
     /// </summary>
     ///<param name="id">id of sales.</param>
     ///<param name="salesRequestDto">sales dto.</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]

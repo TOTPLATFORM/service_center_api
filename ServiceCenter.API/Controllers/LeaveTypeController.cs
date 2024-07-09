@@ -7,11 +7,6 @@ using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
 
-/// <summary>
-/// Controller responsible for handling leave type-related HTTP requests.
-/// </summary>
-/// <param name="leaveTypeService">The service for performing leave type-related operations.</param>
-/// <seealso cref="BaseController"/>
 public class LeaveTypeController(ILeaveTypeService leaveTypeService) : BaseController
 {
     private readonly ILeaveTypeService _leaveTypeService = leaveTypeService;
@@ -19,9 +14,11 @@ public class LeaveTypeController(ILeaveTypeService leaveTypeService) : BaseContr
     /// <summary>
     /// Adds a new leave type asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="leaveTypeDto">The DTO representing the leave type to create.</param>
-    /// <returns>A result indicating the outcome of the add operation.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -34,7 +31,9 @@ public class LeaveTypeController(ILeaveTypeService leaveTypeService) : BaseContr
     /// <summary>
     /// Retrieves all leave types asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result containing a list of leave type response DTOs.</returns>
     [HttpGet]
     [Authorize(Roles = "Admin")]
@@ -48,8 +47,10 @@ public class LeaveTypeController(ILeaveTypeService leaveTypeService) : BaseContr
     /// <summary>
     /// Retrieves a leave type by its ID asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="id">The ID of the leave type to retrieve.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result containing the leave type response DTO.</returns>
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
@@ -63,12 +64,14 @@ public class LeaveTypeController(ILeaveTypeService leaveTypeService) : BaseContr
     /// <summary>
     /// Updates an existing leave type by its ID asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the roles: Admin, LeaveType.</remarks>
     /// <param name="id">The ID of the leave type to update.</param>
     /// <param name="leaveTypeDto">The DTO representing the updated leave type.</param>
-    /// <returns>A result containing the updated leave type response DTO.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin,LeaveType")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<LeaveTypeResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<LeaveTypeResponseDto>> UpdateLeaveType(int id, LeaveTypeRequestDto leaveTypeDto)
@@ -79,8 +82,10 @@ public class LeaveTypeController(ILeaveTypeService leaveTypeService) : BaseContr
     /// <summary>
     /// Deletes a leave type by its ID asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="id">The ID of the leave type to delete.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result indicating the outcome of the deletion operation.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]
@@ -94,8 +99,10 @@ public class LeaveTypeController(ILeaveTypeService leaveTypeService) : BaseContr
     /// <summary>
     /// Searches for leave types by text asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="typeName">The text to search for in leave types.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result containing a list of leave type response DTOs matching the search text.</returns>
     [HttpGet("search/{typeName}")]
     [Authorize(Roles = "Admin")]

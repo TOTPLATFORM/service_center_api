@@ -12,15 +12,15 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 {
 	private readonly IServiceService _ServiceService = ServiceService;
 
-	/// <summary>
-	/// action for add Service  action that take  Service dto   
-	/// </summary>
-	/// <param name="ServiceDto">Service  dto</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>result for Service  added successfully.</returns>
-	[HttpPost]
+    /// <summary>
+    /// action for add Service  action that take  Service dto   
+    /// </summary>
+    /// <param name="ServiceDto">Service  dto</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    [HttpPost]
 	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -56,15 +56,17 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	{
 		return await _ServiceService.GetServiceByIdAsync(id);
 	}
-	/// </summary>
-	///<param name="id">id of Service.</param>
-	///<param name="ServiceRequestDto">Service dto.</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <summary>
+    /// Updates an existing service by its ID.
+    /// </summary>
+    ///<param name="id">id of Service.</param>
+    ///<param name="ServiceRequestDto">Service dto.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
-	[HttpPut("{id}")]
+    [HttpPut("{id}")]
 	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<ServiceResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]

@@ -21,7 +21,7 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>result for Subscription  added successfully.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "Admin,Manager,ServiceProvider")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -62,13 +62,15 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
     {
         return await _SubscriptionService.GetSubscriptionByIdAsync(id);
     }
+    /// <summary>
+    /// Updates an existing subscription  by its ID.
     /// </summary>
     ///<param name="id">id of Subscription.</param>
     ///<param name="SubscriptionRequestDto">Subscription dto.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Manager,Customer,ServiceProvider" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Manager,Customer,ServiceProvider")]

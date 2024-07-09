@@ -21,8 +21,6 @@ public class OfferRequestDto
     [Required]
     [Range(10, 90)]
     public int Discount { get; set; }
-
-
     public int ProductId { get; set; }
     public int ServiceId { get; set; }
 }

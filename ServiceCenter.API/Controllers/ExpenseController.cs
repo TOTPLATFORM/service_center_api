@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿  using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
@@ -16,6 +16,9 @@ public class ExpenseController(IExpenseService expenseService) : BaseController
     /// <summary>
     /// retrieves all expenses in the system.
     /// </summary>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all expenses.</returns>
     [HttpGet]
     [Authorize(Roles = "Admin")]
@@ -28,6 +31,9 @@ public class ExpenseController(IExpenseService expenseService) : BaseController
     /// <summary>
     /// retrieves all expenses based on transaction type.
     /// </summary>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of expenses.</returns>
     [HttpGet("TransactionType/{transactionType}")]
     [Authorize(Roles = "Admin")]
@@ -41,6 +47,9 @@ public class ExpenseController(IExpenseService expenseService) : BaseController
     /// searches expenses based on a query text.
     /// </summary>
     /// <param name="date">the search query date.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of expenses that match the search criteria.</returns>
     [HttpGet("Search/{date}")]
     [Authorize(Roles = "Admin")]
@@ -108,8 +117,12 @@ public class ExpenseController(IExpenseService expenseService) : BaseController
     /// </summary>
     /// <param name="startDate">the start date of the period from which to begin calculating expenses.</param>
     /// <param name="endDate">the end date of the period until which to calculate expenses.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the total expenses as a decimal for the specified period.</returns>
     [HttpGet("startDate/{startDate}/endDate/{endDate}")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<decimal>), StatusCodes.Status200OK)]
     public async Task<Result<decimal>> GetTotalExpenses(DateOnly startDate, DateOnly endDate)
     {
