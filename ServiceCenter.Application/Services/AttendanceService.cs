@@ -30,18 +30,6 @@ public class AttendanceService(ServiceCenterBaseDbContext dbContext, IMapper map
         var attendance = _mapper.Map<Attendance>(attendanceRequestDto);
         var employee = await _dbContext.Employees.FindAsync(attendanceRequestDto.EmployeeId);
 
-        if (attendance is null)
-        {
-            _logger.LogError("Failed to map attendanceRequestDto to Attendance. attendanceRequestDto: {@attendanceRequestDto}", attendanceRequestDto);
-            return Result.Invalid(new List<ValidationError>
-            {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Error"
-                }
-            });
-        }
-
         if (employee is null)
         {
             _logger.LogWarning("employee Invaild Id ,Id {employeeId}", attendanceRequestDto.EmployeeId);
@@ -68,13 +56,8 @@ public class AttendanceService(ServiceCenterBaseDbContext dbContext, IMapper map
             return Result.NotFound(["employee Invaild Id"]);
         }
 
-        //var existingClockIn = _dbContext.Attendances
-        //    .Any(a => a.EmployeeId == employeeId && a.AttendanceDate == DateOnly.FromDateTime(DateTime.Today) && a.ClockOutTime == default);
         var existingClockIn = _dbContext.Attendances
             .Any(a => a.EmployeeId == employeeId && a.AttendanceDate == DateOnly.FromDateTime(DateTime.Today) && a.ClockOutTime == default);
-
-        //var existingClockIn = _dbContext.Attendances
-        //    .FirstOrDefault(a => a.EmployeeId == employeeId && a.AttendanceDate == DateOnly.FromDateTime(DateTime.Today) && 
 
         if (existingClockIn)
         {
@@ -88,12 +71,9 @@ public class AttendanceService(ServiceCenterBaseDbContext dbContext, IMapper map
             });
         }
 
-
-
         var attendance = new Attendance
         {
             ClockInTime = TimeOnly.FromDateTime(DateTime.Now),
-            //ClockOutTime = TimeOnly.FromDateTime(DateTime.Now),
             EmployeeId = employeeId
         };
 
@@ -212,17 +192,6 @@ public class AttendanceService(ServiceCenterBaseDbContext dbContext, IMapper map
         await _dbContext.SaveChangesAsync();
 
         var attendanceResponse = _mapper.Map<AttendanceResponseDto>(attendance);
-        if (attendanceResponse is null)
-        {
-            _logger.LogError("Failed to map AttendanceRequestDto to attendanceResponseDto. AttendanceRequestDto: {@attendanceRequestDto}", attendanceRequestDto);
-            return Result.Invalid(new List<ValidationError>
-            {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-            });
-        }
 
         _logger.LogInformation("Updated attendance , Id {id}", id);
 

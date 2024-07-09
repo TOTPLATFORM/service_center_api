@@ -54,7 +54,10 @@ public class ApplicantService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 
     public async Task<Result<PaginationResult<ApplicantResponseDto>>> GetAllApplicantsAsync(int itemCount, int index)
     {
-        var applicants = await _dbContext.Applicants.ProjectTo<ApplicantResponseDto>(_mapper.ConfigurationProvider).GetAllWithPagination(itemCount, index);
+        var applicants = await _dbContext.Applicants
+            .ProjectTo<ApplicantResponseDto>(_mapper.ConfigurationProvider)
+            .GetAllWithPagination(itemCount, index);
+
         if (index > applicants.TotalCount)
         {
             applicants.End = applicants.TotalCount;
