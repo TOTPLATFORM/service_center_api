@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 
+
 /// <summary>
-/// Service interface for handling applicant-related operations.
+/// Service interface for handling applicant operations.
 /// </summary>
 public interface IApplicantService : IApplicationService, IScopedService
 {
@@ -34,12 +35,12 @@ public interface IApplicantService : IApplicationService, IScopedService
     /// <returns>The result containing the applicant response data transfer object.</returns>
     public Task<Result<ApplicantResponseDto>> GetApplicantByIdAsync(string id);
 
-    /// <summary>
-    /// function to search by applicant name  that take  applicant name
-    /// </summary>
-    /// <param name="text">applicant name</param>
-    /// <returns>applicant response dto </returns>
-    public Task<Result<PaginationResult<ApplicantResponseDto>>> SearchApplicantByTextAsync(string text, int itemCount, int index);
+	/// <summary>
+	/// function to search by applicant name  that take  applicant name
+	/// </summary>
+	/// <param name="text">applicant name</param>
+	/// <returns>The result containing applicant response data transfer object.</returns>
+	public Task<Result<PaginationResult<ApplicantResponseDto>>> SearchApplicantByTextAsync(string text, int itemCount, int index);
 
     /// <summary>
     /// Updates an applicant by their ID asynchronously.
