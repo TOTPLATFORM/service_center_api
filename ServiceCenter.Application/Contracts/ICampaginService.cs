@@ -22,10 +22,12 @@ public interface ICampaginService : IApplicationService, IScopedService
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the campaign addition.</returns>
 	public Task<Result> AddCampaginAsync(CampaginRequestDto campaginRequestDto);
 
-    /// <summary>
-    /// asynchronously retrieves all campaigns in the system.
-    /// </summary>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of campaign response DTOs.</returns>
+	/// <summary>
+	/// asynchronously retrieves all campaigns in the system.
+	/// </summary>
+	/// <param name = "itemCount" > item count of campagin to retrieve</param>
+	///<param name="index">index of campagin to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of campaign response DTOs.</returns>
 	public Task<Result<PaginationResult<CampaginResponseDto>>> GetAllCampaginsAsync(int itemCount, int index);
 
     /// <summary>
@@ -43,11 +45,13 @@ public interface ICampaginService : IApplicationService, IScopedService
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
 	public Task<Result<CampaginGetByIdResposeDto>> UpdateCampaginAsync(int id, CampaginRequestDto campaginRequestDto);
 
-    /// <summary>
-    /// asynchronously searches for campaigns based on the provided text.
-    /// </summary>
-    /// <param name="text">the text to search within campaign data.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of campaign response DTOs that match the search criteria.</returns>
+	/// <summary>
+	/// asynchronously searches for campaigns based on the provided text.
+	/// </summary>
+	/// <param name="text">the text to search within campaign data.</param>
+	/// <param name = "itemCount" > item count of campagin to retrieve</param>
+	///<param name="index">index of campagin to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of campaign response DTOs that match the search criteria.</returns>
 	public Task<Result<PaginationResult<CampaginResponseDto>>> SearchCampaginByTextAsync(string text, int itemCount, int index);
 
     /// <summary>

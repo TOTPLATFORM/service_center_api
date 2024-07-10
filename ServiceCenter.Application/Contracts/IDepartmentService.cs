@@ -21,10 +21,12 @@ public interface IDepartmentService : IApplicationService, IScopedService
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the department addition.</returns>
 	public Task<Result> AddDepartmentAsync(DepartmentRequestDto departmentRequestDto);
 
-    /// <summary>
-    /// asynchronously retrieves all departments in the system.
-    /// </summary>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of department response DTOs.</returns>
+	/// <summary>
+	/// asynchronously retrieves all departments in the system.
+	/// </summary>
+	/// <param name = "itemCount" > item count of departments to retrieve</param>
+	///<param name="index">index of departments to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of department response DTOs.</returns>
 	public Task<Result<PaginationResult<DepartmentResponseDto>>> GetAllDepartmentsAsync(int itemCount, int index);
 
     /// <summary>
@@ -43,18 +45,22 @@ public interface IDepartmentService : IApplicationService, IScopedService
 	public Task<Result<DepartmentGetByIdResponseDto>> UpdateDepartmentAsync(int id, DepartmentRequestDto departmentRequestDto);
 
 
-    /// <summary>
-    /// asynchronously searches for departments based on the provided text.
-    /// </summary>
-    /// <param name="text">the text to search within department data.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of department response DTOs that match the search criteria.</returns>
+	/// <summary>
+	/// asynchronously searches for departments based on the provided text.
+	/// </summary>
+	/// <param name="text">the text to search within department data.</param>
+	/// /// <param name = "itemCount" > item count of depatments to retrieve</param>
+	///<param name="index">index of departments to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of department response DTOs that match the search criteria.</returns>
 	public Task<Result<PaginationResult<DepartmentResponseDto>>> SearchDepartmentByTextAsync(string text, int itemCount, int index);
 
-    /// <summary>
-    /// asynchronously retrieves employees by department unique identifier.
-    /// </summary>
-    /// <param name="id">the unique identifier of the department to retrieve its employees.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all employees by department id operation.</returns>
+	/// <summary>
+	/// asynchronously retrieves employees by department unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the department to retrieve its employees.</param>
+	/// /// <param name = "itemCount" > item count of employees to retrieve</param>
+	///<param name="index">index of employees to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the get all employees by department id operation.</returns>
 	public Task<Result<PaginationResult<EmployeeResponseDto>>> GetAllEmployeesForSpecificDepartmentAsync(int id, int itemCount, int index);
     /// <summary>
     /// asynchronously deletes a department from the system by their unique identifier.

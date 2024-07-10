@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -9,44 +10,46 @@ using System.Threading.Tasks;
 namespace ServiceCenter.Application.Contracts;
 
 /// <summary>
-/// Service interface for handling salary-related operations.
+/// provides an interface for salary -related services that manages salary  data across the application. Inherits from IApplicationService and IScopedService.
 /// </summary>
 public interface ISalaryService : IApplicationService, IScopedService
 {
-    /// <summary>
-    /// Adds a new salary.
-    /// </summary>
-    /// <param name="salaryRequestDto">The data transfer object containing salary information.</param>
-    /// <returns>The result indicating the success of adding the salary.</returns>
-    public Task<Result> AddSalaryAsync(SalaryRequestDto salaryRequestDto);
+	/// <summary>
+	/// asynchronously adds a new salary  to the database.
+	/// </summary>
+	/// <param name="salaryRequestDto">the salary  data transfer object containing the details necessary for creation.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the salary  addition.</returns>
+	public Task<Result> AddSalaryAsync(SalaryRequestDto salaryRequestDto);
 
-    /// <summary>
-    /// Retrieves all salaries.
-    /// </summary>
-    /// <returns>The result containing a list of salary response data transfer objects.</returns>
-    public Task<Result<List<SalaryResponseDto>>> GetAllSalariesAsync();
+	/// <summary>
+	/// asynchronously retrieves all salary s in the system.
+	/// </summary>
+	/// <param name = "itemCount" > item count of salary  to retrieve</param>
+	///<param name="index">index of salary  to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of salary  response DTOs.</returns>
+	public Task<Result<PaginationResult<SalaryResponseDto>>> GetAllSalariesAsync(int itemCount,int index);
 
-    /// <summary>
-    /// Retrieves a salary by its ID.
-    /// </summary>
-    /// <param name="id">The ID of the salary to retrieve.</param>
-    /// <returns>The result containing the salary response data transfer object.</returns>
-    public Task<Result<SalaryResponseDto>> GetSalaryByIdAsync(int id);
+	/// <summary>
+	/// asynchronously retrieves a salary  by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the salary  to retrieve.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the salary  response DTO.</returns>
+	public Task<Result<SalaryResponseDto>> GetSalaryByIdAsync(int id);
 
-    /// <summary>
-    /// Updates a salary by its ID.
-    /// </summary>
-    /// <param name="id">The ID of the salary to update.</param>
-    /// <param name="salaryRequestDto">The data transfer object containing updated salary information.</param>
-    /// <returns>The result containing the updated salary response data transfer object.</returns>
-    public Task<Result<SalaryResponseDto>> UpdateSalaryAsync(int id, SalaryRequestDto salaryRequestDto);
+	/// <summary>
+	/// asynchronously updates the data of an existing salary .
+	/// </summary>
+	/// <param name="id">the unique identifier of the salary  to update.</param>
+	/// <param name="salaryRequestDto">the salary  data transfer object containing the updated details.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
+	public Task<Result<SalaryResponseDto>> UpdateSalaryAsync(int id, SalaryRequestDto salaryRequestDto);
 
-    /// <summary>
-    /// Removes a salary by its ID.
-    /// </summary>
-    /// <param name="id">The ID of the salary to remove.</param>
-    /// <returns>The result indicating the success of removing the salary.</returns>
-    public Task<Result> DeleteSalaryAsync(int id);
+	/// <summary>
+	/// asynchronously deletes a salary  from the system by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the salary  to delete.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
+	public Task<Result> DeleteSalaryAsync(int id);
 
     public Task<Result<SalaryResponseDto>> AddBonusOrDeductionAsync(int id, SalaryUpdateDto salaryUpdateDto);
 

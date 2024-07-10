@@ -24,6 +24,8 @@ public interface IInventoryService : IApplicationService ,IScopedService
 	/// <summary>
 	/// function to get all inventories 
 	/// </summary>
+	/// <param name = "itemCount" > item count of inventories to retrieve</param>
+	///<param name="index">index of inventories to retrieve</param>
 	/// <returns>list all inventoryResponseDto </returns>
 	public Task<Result<PaginationResult<InventoryResponseDto>>> GetAllInventoriesAsync(int itemCount, int index);
 
@@ -47,6 +49,8 @@ public interface IInventoryService : IApplicationService ,IScopedService
 	/// function to search inventory by text  that take text   
 	/// </summary>
 	/// <param name="text">text</param>
+	/// <param name = "itemCount" > item count of inventory to retrieve</param>
+	///<param name="index">index of inventory to retrieve</param>
 	/// <returns>all inventory that contain this text </returns>
 	public Task<Result<PaginationResult<InventoryResponseDto>>> SearchInventoryByTextAsync(string text, int itemCount, int index);
 

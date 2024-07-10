@@ -24,6 +24,8 @@ public interface ICustomerService : IApplicationService, IScopedService
 	/// <summary>
 	/// asynchronously retrieves all customers in the system.
 	/// </summary>
+	/// <param name = "itemCount" > item count of customers to retrieve</param>
+	///<param name="index">index of customers to retrieve</param>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of customer response DTOs.</returns>
 	public Task<Result<PaginationResult<CustomerResponseDto>>> GetAllCustomersAsync(int itemCount, int index);
 	/// <summary>

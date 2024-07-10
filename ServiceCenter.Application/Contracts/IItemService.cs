@@ -13,55 +13,53 @@ namespace ServiceCenter.Application.Contracts;
 /// provides an interface for item-related services that manages item data across the application. Inherits from IApplicationService and IScopedService.
 /// </summary>
 public interface IItemService : IApplicationService, IScopedService
-{/// <summary>
- /// function to add  item that take  ItemDto   
- /// </summary>
- /// <param name="itemRequestDto">item request dto</param>
- /// <returns> item added successfully </returns>
-    public Task<Result> AddItemAsync(ItemRequestDto itemRequestDto);
-    /// <summary>
-    /// function to get all item 
-    /// </summary>
-    /// <returns>list all item response dto </returns>
-    public Task<Result<PaginationResult<ItemResponseDto>>> GetAllItemAsync(int itemCount,int index);
-    /// <summary>
-    /// function to get  item by id that take   item id
-    /// </summary>
-    /// <param name="id"> item id</param>
-    /// <returns> item response dto</returns>
-    public Task<Result<ItemResponseDto>> GetItemByIdAsync(int id);
-    /// <summary>
-    /// function to update item that take ItemRequestDto   
-    /// </summary>
-    /// <param name="id">item id</param>
-    /// <param name="itemRequestDto">item dto</param>
-    /// <returns>Updated item </returns>
-    public Task<Result<ItemResponseDto>> UpdateItemAsync(int id, ItemRequestDto itemRequestDto);
-    /// <summary>
-    /// function to delete Item that take item id   
-    /// </summary>
-    /// <param name="id">item id</param>
-    /// <returns>Item removed successfully </returns>
-    public Task<Result> DeleteItemAsync(int id);
-    /// <summary>
-    /// function to search by item name  that take  item name
-    /// </summary>
-    /// <param name="text">item name</param>
-    /// <returns>Item response dto </returns>
-    public Task<Result<PaginationResult<ItemResponseDto>>> SearchItemByTextAsync(string text,int itemCount , int index);
-    /// <summary>
-    /// Decreases items quantity asynchronously.
-    /// </summary>
-    /// <param name="orderedItems">Collection of The ordered items with ordered quantity.</param>
-    /// <returns>The Result of the decrease items quantity attempt</returns>
-    //public  Task<Result> DecreaseItemsQuantity(ICollection<ProductOrderRequestDto> orderedItems);
+{
+	/// <summary>
+	/// asynchronously adds a new item to the database.
+	/// </summary>
+	/// <param name="itemRequestDto">item request dto</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the item addition.</returns>
+	public Task<Result> AddItemAsync(ItemRequestDto itemRequestDto);
+	/// <summary>
+	/// asynchronously retrieves all items in the system.
+	/// </summary>
+	/// <param name = "itemCount" > item count of items to retrieve</param>
+	///<param name="index">index of items to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of item response DTOs.</returns>
+	public Task<Result<PaginationResult<ItemResponseDto>>> GetAllItemAsync(int itemCount,int index);
 
-    /// <summary>
-    /// Increases items quantity asynchronously.
-    /// </summary>
-    /// <param name="orderedItems">Collection of The ordered items with ordered quantity.</param>
-    /// <returns>The Result of the increase items quantity attempt</returns>
-    //public Task<Result> IncreaseItemsQuantity(ICollection<ProductOrderRequestDto> orderedItems);
+	/// <summary>
+	/// asynchronously retrieves a item by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the item to retrieve.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the item response DTO.</returns>
+	public Task<Result<ItemResponseDto>> GetItemByIdAsync(int id);
+
+	/// <summary>
+	/// asynchronously updates the data of an existing item.
+	/// </summary>
+	/// <param name="id">the unique identifier of the item to update.</param>
+	/// <param name="itemRequestDto">the item data transfer object containing the updated details.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
+	public Task<Result<ItemResponseDto>> UpdateItemAsync(int id, ItemRequestDto itemRequestDto);
+
+	/// <summary>
+	/// asynchronously deletes a item from the system by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the item to delete.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
+	public Task<Result> DeleteItemAsync(int id);
+
+	
+	/// <summary>
+	/// asynchronously searches for items based on the provided text.
+	/// </summary>
+	/// <param name="text">the text to search within item data.</param>
+	/// <param name = "itemCount" > item count of items to retrieve</param>
+	///<param name="index">index of items to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of item response DTOs that match the search criteria.</returns>
+	public Task<Result<PaginationResult<ItemResponseDto>>> SearchItemByTextAsync(string text,int itemCount , int index);
+
 
 
 }

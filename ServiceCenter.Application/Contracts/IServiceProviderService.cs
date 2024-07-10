@@ -9,45 +9,49 @@ using System.Threading.Tasks;
 
 namespace ServiceCenter.Application.Contracts;
 /// <summary>
-/// provides an interface for serviceprovider-related services that manages serviceprovider data across the application. Inherits from IApplicationService and IScopedService.
+/// provides an interface for service provider-related services that manages service provider data across the application. Inherits from IApplicationService and IScopedService.
 /// </summary>
 public interface IServiceProviderService:IApplicationService,IScopedService
 {
-    /// <summary>
-    /// function to add serviceprovider that take serviceproviderDto   
-    /// </summary>
-    /// <param name="serviceproviderRequestDto">serviceprovider request dto</param>
-    /// <returns>ServiceProvider added successfully </returns>
-    public Task<Result> AddServiceProviderAsync(ServiceProviderRequestDto serviceproviderRequestDto);
+	/// <summary>
+	/// asynchronously adds a new service provider to the database.
+	/// </summary>
+	/// <param name="service providerRequestDto">the service provider data transfer object containing the details necessary for creation.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the service provider addition.</returns>
+	public Task<Result> AddServiceProviderAsync(ServiceProviderRequestDto serviceproviderRequestDto);
 
-    /// <summary>
-    /// function to get all serviceprovider 
-    /// </summary>
-    /// <returns>list all serviceproviderResponseDto </returns>
-    public Task<Result<PaginationResult<ServiceProviderResponseDto>>> GetAllServiceProviderAsync(int itemCount, int index);
+	/// <summary>
+	/// asynchronously retrieves all service providers in the system.
+	/// </summary>
+	/// <param name = "itemCount" > item count of service provideres to retrieve</param>
+	///<param name="index">index of service provideres to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of service provider response DTOs.</returns>
+	public Task<Result<PaginationResult<ServiceProviderResponseDto>>> GetAllServiceProviderAsync(int itemCount, int index);
 
-    /// <summary>
-    /// function to get serviceprovider by id that take  serviceprovider id
-    /// </summary>
-    /// <param name="id">serviceprovider id</param>
-    /// <returns>serviceprovider response dto</returns>
-    public Task<Result<ServiceProviderGetByIdResponseDto>> GetServiceProviderByIdAsync(string id);
+	/// <summary>
+	/// asynchronously retrieves a service provider by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the service provider to update.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the service provider response DTO.</returns>
+	public Task<Result<ServiceProviderGetByIdResponseDto>> GetServiceProviderByIdAsync(string id);
 
-    /// <summary>
-    /// function to update serviceprovider that take ServiceProviderRequestDto   
-    /// </summary>
-    /// <param name="id">serviceprovider id</param>
-    /// <param name="serviceproviderRequestDto">serviceprovider dto</param>
-    /// <returns>Updated ServiceProvider </returns>
-    public Task<Result<ServiceProviderGetByIdResponseDto>> UpdateServiceProviderAsync(string id, ServiceProviderRequestDto serviceproviderRequestDto);
+	/// <summary>
+	/// asynchronously updates the data of an existing service provider.
+	/// </summary>
+	/// <param name="id">the unique identifier of the service provider to update.</param>
+	/// <param name="service providerRequestDto">the service provider data transfer object containing the updated details.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
+	public Task<Result<ServiceProviderGetByIdResponseDto>> UpdateServiceProviderAsync(string id, ServiceProviderRequestDto serviceproviderRequestDto);
 
 
-    /// <summary>
-    /// function to search serviceprovider by text  that take text   
-    /// </summary>
-    /// <param name="text">text</param>
-    /// <returns>all serviceprovideres that contain this text </returns>
-    public Task<Result<PaginationResult<ServiceProviderResponseDto>>> SearchServiceProviderByTextAsync(string text, int itemCount, int index);
+	/// <summary>
+	/// asynchronously searches for service providers based on the provided text.
+	/// </summary>
+	/// <param name="text">text</param>
+	/// <param name = "itemCount" > item count of service provideres to retrieve</param>
+	///<param name="index">index of service provideres to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of service provider response DTOs that match the search criteria.</returns>
+	public Task<Result<PaginationResult<ServiceProviderResponseDto>>> SearchServiceProviderByTextAsync(string text, int itemCount, int index);
 
    
 }

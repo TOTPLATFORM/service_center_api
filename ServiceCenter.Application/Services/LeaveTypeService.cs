@@ -101,7 +101,7 @@ public class LeaveTypeService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 
     /// <inheritdoc/>
 
-    public async Task<Result<LeaveTypeResponseDto>> UpdateLeaveTypeAsycn(int id, LeaveTypeRequestDto leaveTypeRequestDto)
+    public async Task<Result<LeaveTypeResponseDto>> UpdateLeaveTypeAsync(int id, LeaveTypeRequestDto leaveTypeRequestDto)
     {
         var type = await _dbContext.LeaveTypes.FindAsync(id);
 

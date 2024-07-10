@@ -99,7 +99,7 @@ public class LeaveRequestService(ServiceCenterBaseDbContext dbContext, IMapper m
 
 
 
-    public async Task<Result<LeaveRequestResponseDto>> UpdateLeaveRequestAsycn(int id, LeaveRequestRequestDto leaveRequestDto)
+    public async Task<Result<LeaveRequestResponseDto>> UpdateLeaveRequestAsync(int id, LeaveRequestRequestDto leaveRequestDto)
     {
         var request = await _dbContext.LeaveRequests.FindAsync(id);
 

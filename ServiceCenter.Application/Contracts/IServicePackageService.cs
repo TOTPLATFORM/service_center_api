@@ -15,40 +15,49 @@ namespace ServiceCenter.Application.Contracts;
 /// </summary>
 public interface IServicePackageService : IApplicationService, IScopedService
 {
-    /// <summary>
-    /// function to add  ServicePackage  that take  ServicePackageDto   
-    /// </summary>
-    /// <param name="ServicePackageRequestDto">ServicePackage  request dto</param>
-    /// <returns> ServicePackage  added successfully </returns>
-    public Task<Result> AddServicePackageAsync(ServicePackageRequestDto ServicePackageRequestDto);
-    /// <summary>
-    /// function to get all ServicePackage  
-    /// </summary>
-    /// <returns>list all ServicePackage  response dto </returns>
-    public Task<Result<PaginationResult<ServicePackageResponseDto>>> GetAllServicePackageAsync(int itemCount,int index);
-    /// <summary>
-    /// function to delete ServicePackage  that take ServicePackage  id   
-    /// </summary>
-    /// <param name="id">ServicePackage  id</param>
-    /// <returns>ServicePackage  removed successfully </returns>
-    public Task<Result> DeleteServicePackageAsync(int id);
-    /// <summary>
-    /// function to update ServicePackage  that take ServicePackageRequestDto   
-    /// </summary>
-    /// <param name="id">ServicePackage id</param>
-    /// <param name="ServicePackageRequestDto">ServicePackage dto</param>
-    /// <returns>Updated ServicePackage </returns>
-    public Task<Result<ServicePackageResponseDto>> UpdateServicePackageAsync(int id, ServicePackageRequestDto ServicePackageRequestDto);
-    /// <summary>
-    /// function to get  ServicePackage  by id that take   ServicePackage id
-    /// </summary>
-    /// <param name="id"> ServicePackage  id</param>
-    /// <returns> ServicePackage  response dto</returns>
-    public Task<Result<ServicePackageGetByIdResponseDto>> GetServicePackageByIdAsync(int id);
-    /// <summary>
-    /// function to search by ServicePackage name  that take  ServicePackage name
-    /// </summary>
-    /// <param name="text">ServicePackage name</param>
-    /// <returns>ServicePackage response dto </returns>
-    public Task<Result<PaginationResult<ServicePackageResponseDto>>> SearchServicePackageByTextAsync(string text, int itemCount, int index);
+	/// <summary>
+	/// asynchronously adds a new service package to the database.
+	/// </summary>
+	/// <param name="service packageRequestDto">the service package data transfer object containing the details necessary for creation.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the service package addition.</returns>
+	public Task<Result> AddServicePackageAsync(ServicePackageRequestDto ServicePackageRequestDto);
+
+	/// <summary>
+	/// asynchronously retrieves all service packages in the system.
+	/// </summary>
+	/// <param name = "itemCount" > item count of service packagees to retrieve</param>
+	///<param name="index">index of service packagees to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of service package response DTOs.</returns>
+	public Task<Result<PaginationResult<ServicePackageResponseDto>>> GetAllServicePackageAsync(int itemCount,int index);
+
+	/// <summary>
+	/// asynchronously deletes a service package from the system by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the service package to delete.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
+	public Task<Result> DeleteServicePackageAsync(int id);
+
+	/// <summary>
+	/// asynchronously updates the data of an existing service package.
+	/// </summary>
+	/// <param name="id">the unique identifier of the service package to update.</param>
+	/// <param name="service packageRequestDto">the service package data transfer object containing the updated details.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
+	public Task<Result<ServicePackageResponseDto>> UpdateServicePackageAsync(int id, ServicePackageRequestDto ServicePackageRequestDto);
+
+	/// <summary>
+	/// asynchronously retrieves a service package by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the service package to retrieve.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the service package response DTO.</returns>
+	public Task<Result<ServicePackageGetByIdResponseDto>> GetServicePackageByIdAsync(int id);
+
+	/// <summary>
+	/// asynchronously searches for service packages based on the provided text.
+	/// </summary>
+	/// <param name="text">the text to search within service package data.</param>
+	/// <param name = "itemCount" > item count of service packagees to retrieve</param>
+	///<param name="index">index of service packagees to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of service package response DTOs that match the search criteria.</returns>
+	public Task<Result<PaginationResult<ServicePackageResponseDto>>> SearchServicePackageByTextAsync(string text, int itemCount, int index);
 }

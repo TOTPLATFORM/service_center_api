@@ -14,40 +14,49 @@ namespace ServiceCenter.Application.Contracts;
 /// </summary>
 public interface IServiceCategoryService : IApplicationService, IScopedService
 {
-    /// <summary>
-    /// function to add  service category that take  service category Dto   
-    /// </summary>
-    /// <param name="serviceCategoryRequestDto">service category request dto</param>
-    /// <returns> ServiceCategory added successfully </returns>
-    public Task<Result> AddServiceCategoryAsync(ServiceCategoryRequestDto serviceCategoryRequestDto);
-    /// <summary>
-    /// function to get all service category 
-    /// </summary>
-    /// <returns>list all service category response dto </returns>
-    public Task<Result<PaginationResult<ServiceCategoryResponseDto>>> GetAllServiceCategoryAsync(int itemCount, int index);
-    /// <summary>
-    /// function to get  service category by id that take   service category id
-    /// </summary>
-    /// <param name="id"> service category id</param>
-    /// <returns> service category response dto</returns>
-    public Task<Result<ServiceCategoryGetByIdResponseDto>> GetServiceCategoryByIdAsync(int id);
-    /// <summary>
-    /// function to update service category that take service category request dto   
-    /// </summary>
-    /// <param name="id">service category id</param>
-    /// <param name="ServiceCategoryRequestDto">service category dto</param>
-    /// <returns>Updated ServiceCategory </returns>
-    public Task<Result<ServiceCategoryResponseDto>> UpdateServiceCategoryAsync(int id, ServiceCategoryRequestDto ServiceCategoryRequestDto);
-    /// <summary>
-    /// function to delete service category that take service category id   
-    /// </summary>
-    /// <param name="id">service category id</param>
-    /// <returns>service category removed successfully </returns>
-    public Task<Result> DeleteServiceCategoryAsync(int id);
-    /// <summary>
-    /// function to search by service category name  that take  service category name
-    /// </summary>
-    /// <param name="text">service category name</param>
-    /// <returns>service category response dto </returns>
-    public Task<Result<PaginationResult<ServiceCategoryResponseDto>>> SearchServiceCategoryByTextAsync(string text, int itemCount, int index);
+	/// <summary>
+	/// asynchronously adds a new service category to the database.
+	/// </summary>
+	/// <param name="service categoryRequestDto">the service category data transfer object containing the details necessary for creation.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the service category addition.</returns>
+	public Task<Result> AddServiceCategoryAsync(ServiceCategoryRequestDto serviceCategoryRequestDto);
+
+	/// <summary>
+	/// asynchronously retrieves all service categorys in the system.
+	/// </summary>
+	/// <param name = "itemCount" > item count of service categories to retrieve</param>
+	///<param name="index">index of service categories to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of service category response DTOs.</returns>
+	public Task<Result<PaginationResult<ServiceCategoryResponseDto>>> GetAllServiceCategoryAsync(int itemCount, int index);
+
+	/// <summary>
+	/// asynchronously retrieves a service category by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the service category to retrieve.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the service category response DTO.</returns>
+	public Task<Result<ServiceCategoryGetByIdResponseDto>> GetServiceCategoryByIdAsync(int id);
+
+	/// <summary>
+	/// asynchronously updates the data of an existing service category.
+	/// </summary>
+	/// <param name="id">the unique identifier of the service category to update.</param>
+	/// <param name="service categoryRequestDto">the service category data transfer object containing the updated details.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
+	public Task<Result<ServiceCategoryResponseDto>> UpdateServiceCategoryAsync(int id, ServiceCategoryRequestDto ServiceCategoryRequestDto);
+
+	/// <summary>
+	/// asynchronously deletes a service category from the system by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the service category to delete.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
+	public Task<Result> DeleteServiceCategoryAsync(int id);
+
+	/// <summary>
+	/// asynchronously searches for service categorys based on the provided text.
+	/// </summary>
+	/// <param name="text">the text to search within service category data.</param>
+	/// <param name = "itemCount" > item count of service categories to retrieve</param>
+	///<param name="index">index of service categories to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of service category response DTOs that match the search criteria.</returns>
+	public Task<Result<PaginationResult<ServiceCategoryResponseDto>>> SearchServiceCategoryByTextAsync(string text, int itemCount, int index);
 }

@@ -77,13 +77,6 @@ public interface IAuthService : IApplicationService, IScopedService
     Task<Result> AddUserToRoleAsync(string userId, string roleName);
 
     /// <summary>
-    /// Creates the specified roles in the system.
-    /// </summary>
-    /// <param name="roles">A list of role names to be created.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    Task CreateRoles(List<string> roles);
-
-    /// <summary>
     /// Creates an administrator account with predefined settings.
     /// </summary>
     /// <returns>A task representing the asynchronous operation.</returns>

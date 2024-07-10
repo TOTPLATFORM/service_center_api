@@ -14,42 +14,58 @@ namespace ServiceCenter.Application.Contracts;
 /// </summary>
 public interface IProductBrandService : IApplicationService, IScopedService
 {
-    /// <summary>
-    /// function to add  product brand that take  productBrandDto   
-    /// </summary>
-    /// <param name=" productBrandRequestDto">product brand request dto</param>
-    /// <returns> product brand added successfully </returns>
-    public Task<Result> AddProductBrandAsync( ProductBrandRequestDto  productBrandRequestDto);
-    /// <summary>
-		/// function to get all productBrand 
-		/// </summary>
-		/// <returns>list all product brand response dto </returns>
-		public Task<Result<PaginationResult<ProductBrandResponseDto>>> GetAllProductBrandAsync(int itemCount, int index);
 
-    /// <summary>
-    /// function to get  product brand by id that take   product brand id
-    /// </summary>
-    /// <param name="id"> product brand id</param>
-    /// <returns> product brand response dto</returns>
-    public Task<Result<ProductBrandGetByIdResponseDto>> GetProductBrandByIdAsync(int id);
-    /// <summary>
-		/// function to update product brand that take ProductBrandRequestDto   
-		/// </summary>
-		/// <param name="id">product brand id</param>
-		/// <param name="ProductBrandRequestDto">product brand dto</param>
-		/// <returns>Updated product brand </returns>
-		public Task<Result<ProductBrandResponseDto>> UpdateProductBrandAsync(int id, ProductBrandRequestDto ProductBrandRequestDto);
-    /// <summary>
-    /// function to delete ProductBrand that take product brand id   
-    /// </summary>
-    /// <param name="id">product brand id</param>
-    /// <returns>ProductBrand removed successfully </returns>
-    public Task<Result> DeleteProductBrandAsync(int id);
-    /// <summary>
-    /// function to search by ProductBrand name  that take  ProductBrand name
-    /// </summary>
-    /// <param name="text">ProductBrand name</param>
-    /// <returns>ProductBrand response dto </returns>
-    public  Task<Result<PaginationResult<ProductBrandResponseDto>>> SearchProductBrandByTextAsync(string text,int itemCount,int index);
-    public Task<Result<List<ProductBrandResponseDto>>> AssignProductBrandToInventoryAsync(int inventoryId, int productBrandId);
+	/// <summary>
+	/// asynchronously adds a new product brand to the database.
+	/// </summary>
+	/// <param name="productBrandRequestDto">the product brand data transfer object containing the details necessary for creation.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the product brand addition.</returns>
+	public Task<Result> AddProductBrandAsync( ProductBrandRequestDto  productBrandRequestDto);
+
+	/// <summary>
+	/// asynchronously retrieves all product brands in the system.
+	/// </summary>
+	/// <param name = "itemCount" > item count of product brandes to retrieve</param>
+	///<param name="index">index of product brandes to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of product brand response DTOs.</returns>
+	public Task<Result<PaginationResult<ProductBrandResponseDto>>> GetAllProductBrandAsync(int itemCount, int index);
+
+	/// <summary>
+	/// asynchronously retrieves a product brand by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the product brand to retrieve.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the product brand response DTO.</returns>
+	public Task<Result<ProductBrandGetByIdResponseDto>> GetProductBrandByIdAsync(int id);
+
+	/// <summary>
+	/// asynchronously updates the data of an existing product brand.
+	/// </summary>
+	/// <param name="id">the unique identifier of the product brand to update.</param>
+	/// <param name="ProductBrandRequestDto">the product brand data transfer object containing the updated details.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
+	public Task<Result<ProductBrandResponseDto>> UpdateProductBrandAsync(int id, ProductBrandRequestDto ProductBrandRequestDto);
+
+	/// <summary>
+	/// asynchronously deletes a product brand from the system by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the product brand to delete.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
+	public Task<Result> DeleteProductBrandAsync(int id);
+
+	/// <summary>
+	/// asynchronously searches for product brands based on the provided text.
+	/// </summary>
+	/// <param name="text">the text to search within product brand data.</param>
+	/// <param name = "itemCount" > item count of product brandes to retrieve</param>
+	///<param name="index">index of product brandes to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of product brand response DTOs that match the search criteria.</returns>
+	public Task<Result<PaginationResult<ProductBrandResponseDto>>> SearchProductBrandByTextAsync(string text,int itemCount,int index);
+
+	/// <summary>
+	/// asynchronously updates the data of an existing inventory.
+	/// </summary>
+	/// <param name="id">the unique identifier of the inventory to update.</param>
+	/// <param name="productBrandId">the product category data transfer object containing the updated details.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
+	public Task<Result<List<ProductBrandResponseDto>>> AssignProductBrandToInventoryAsync(int inventoryId, int productBrandId);
 }

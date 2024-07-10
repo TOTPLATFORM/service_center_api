@@ -16,58 +16,71 @@ namespace ServiceCenter.Application.Contracts;
 public interface IServiceService : IApplicationService, IScopedService
 {
 	/// <summary>
-	/// function to add  Service  that take  ServiceDto   
+	/// asynchronously adds a new service to the database.
 	/// </summary>
-	/// <param name="ServiceRequestDto">Service  request dto</param>
-	/// <returns> Service  added successfully </returns>
-	public Task<Result> AddServiceAsync(ServiceRequestDto ServiceRequestDto);
-	/// <summary>
-	/// function to get all Service  
-	/// </summary>
-	/// <returns>list all Service  response dto </returns>
-	public Task<Result<PaginationResult<ServiceResponseDto>>> GetAllServiceAsync(int itemCount, int index);
+	/// <param name="serviceRequestDto">service request dto</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the service addition.</returns>
+	public Task<Result> AddServiceAsync(ServiceRequestDto serviceRequestDto);
 
 	/// <summary>
-	/// function to get all Service that assign to package  
+	/// asynchronously retrieves all services in the system.
 	/// </summary>
-	/// <returns>list all Service  response dto </returns>
+	/// <param name = "serviceCount" > service count of services to retrieve</param>
+	///<param name="index">index of services to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of service response DTOs.</returns>
+	public Task<Result<PaginationResult<ServiceResponseDto>>> GetAllServiceAsync(int serviceCount, int index);
+
+	/// <summary>
+	/// asynchronously retrieves a service by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the service to retrieve.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the service response DTO.</returns>
 	public Task<Result<List<ServiceGetByIdResponseDto>>> AssignServiceToPackagesAsync(int serviceId, int servicePackageId);
 
 	/// <summary>
 	/// function to get all Service that assign to package  
 	/// </summary>
 	/// <returns>list all Service  response dto </returns>
-	public Task<Result<PaginationResult<ServiceResponseDto>>> GetServicesByPackageAsync(int servicePackageId, int itemCount, int index);
+	public Task<Result<PaginationResult<ServiceResponseDto>>> GetServicesByPackageAsync(int servicePackageId, int serviceCount, int index);
 
 	/// <summary>
-	/// function to get  Service  by id that take   Service id
+	/// asynchronously retrieves a service by their unique identifier.
 	/// </summary>
-	/// <param name="id"> Service  id</param>
-	/// <returns> Service  response dto</returns>
+	/// <param name="id">the unique identifier of the service to retrieve.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the service response DTO.</returns>
 	public Task<Result<ServiceGetByIdResponseDto>> GetServiceByIdAsync(int id);
-	/// <summary>
-	/// function to update Service  that take ServiceRequestDto   
-	/// </summary>
-	/// <param name="id">Service id</param>
-	/// <param name="ServiceRequestDto">Service dto</param>
-	/// <returns>Updated Service </returns>
-	public Task<Result<ServiceResponseDto>> UpdateServiceAsync(int id, ServiceRequestDto ServiceRequestDto);
-	/// <summary>
-	/// function to delete Service  that take Service  id   
-	/// </summary>
-	/// <param name="id">Service  id</param>
-	/// <returns>Service  removed successfully </returns>
-	public Task<Result> DeleteServiceAsync(int id);
-	/// <summary>
-	/// function to search by Service name  that take  Service name
-	/// </summary>
-	/// <param name="text">Service name</param>
-	/// <returns>Service response dto </returns>
-	public Task<Result<PaginationResult<ServiceResponseDto>>> SearchServiceByTextAsync(string text,int itemCount,int index);
 
-    /// <summary>
-    /// function to get all Service that assign to category  
-    /// </summary>
-    /// <returns>list all Service  response dto </returns>
-    public Task<Result<PaginationResult<ServiceResponseDto>>> GetServicesByCategoryAsync(int categoryId,int itemCount,int index);
+	/// <summary>
+	/// asynchronously updates the data of an existing service.
+	/// </summary>
+	/// <param name="id">the unique identifier of the service to update.</param>
+	/// <param name="serviceRequestDto">the service data transfer object containing the updated details.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
+	public Task<Result<ServiceResponseDto>> UpdateServiceAsync(int id, ServiceRequestDto serviceRequestDto);
+
+
+	/// <summary>
+	/// asynchronously deletes a service from the system by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the service to delete.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
+	public Task<Result> DeleteServiceAsync(int id);
+
+	/// <summary>
+	/// asynchronously searches for services based on the provided text.
+	/// </summary>
+	/// <param name="text">the text to search within service data.</param>
+	/// <param name = "serviceCount" > service count of services to retrieve</param>
+	///<param name="index">index of services to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of service response DTOs that match the search criteria.</returns>
+	public Task<Result<PaginationResult<ServiceResponseDto>>> SearchServiceByTextAsync(string text,int serviceCount,int index);
+
+	/// <summary>
+	/// asynchronously searches for services based on the categoryId.
+	/// </summary>
+	/// <param name="categoryId">the text to search within category data.</param>
+	/// <param name = "serviceCount" > service count of services to retrieve</param>
+	///<param name="index">index of services to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of services response DTOs that match the search criteria.</returns>
+	public Task<Result<PaginationResult<ServiceResponseDto>>> GetServicesByCategoryAsync(int categoryId,int serviceCount,int index);
 }
