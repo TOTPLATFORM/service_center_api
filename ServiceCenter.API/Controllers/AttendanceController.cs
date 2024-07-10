@@ -7,11 +7,6 @@ using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
 
-/// <summary>
-/// Controller responsible for handling attendance-related HTTP requests.
-/// </summary>
-/// <param name="attendanceService">The service for performing attendance-related operations.</param>
-/// <seealso cref="BaseController"/>
 public class AttendanceController(IAttendanceService attendanceService) : BaseController
 {
     private readonly IAttendanceService _attendanceService = attendanceService;
@@ -19,8 +14,12 @@ public class AttendanceController(IAttendanceService attendanceService) : BaseCo
     /// <summary>
     /// Retrieves all attendances asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
-    /// <returns>A result containing a list of attendance response DTOs.</returns>
+    /// <param name="itemCount"> item count of appoinments to retrieve</param>
+    ///<param name="index">index of appoinments to retrieve</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all agent.</returns>
     [HttpGet]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<AttendanceResponseDto>>), StatusCodes.Status200OK)]
@@ -35,7 +34,10 @@ public class AttendanceController(IAttendanceService attendanceService) : BaseCo
     /// </summary>
     /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="id">The ID of the attendance to retrieve.</param>
-    /// <returns>A result containing the attendance response DTO.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the agent category details.</returns>
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<AttendanceResponseDto>), StatusCodes.Status200OK)]
@@ -50,7 +52,10 @@ public class AttendanceController(IAttendanceService attendanceService) : BaseCo
     /// </summary>
     /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="attendanceDto">The DTO representing the attendance to create.</param>
-    /// <returns>A result indicating the outcome of the add operation.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -65,7 +70,10 @@ public class AttendanceController(IAttendanceService attendanceService) : BaseCo
     /// </summary>
     /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="employeeId">The ID of the employee clocking in.</param>
-    /// <returns>A result indicating the outcome of the clock-in operation.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost("in/{employeeId}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -80,7 +88,10 @@ public class AttendanceController(IAttendanceService attendanceService) : BaseCo
     /// </summary>
     /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="employeeId">The ID of the employee clocking out.</param>
-    /// <returns>A result indicating the outcome of the clock-out operation.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost("out/{employeeId}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -96,7 +107,10 @@ public class AttendanceController(IAttendanceService attendanceService) : BaseCo
     /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="id">The ID of the attendance to update.</param>
     /// <param name="attendanceDto">The DTO representing the updated attendance.</param>
-    /// <returns>A result containing the updated attendance response DTO.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<AttendanceResponseDto>), StatusCodes.Status200OK)]
@@ -111,6 +125,9 @@ public class AttendanceController(IAttendanceService attendanceService) : BaseCo
     /// </summary>
     /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="id">The ID of the attendance to delete.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result indicating the outcome of the deletion operation.</returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -124,8 +141,12 @@ public class AttendanceController(IAttendanceService attendanceService) : BaseCo
     /// <summary>
     /// Retrieves all attendances for a specific employee asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="employeeId">The ID of the employee whose attendances to retrieve.</param>
+    /// <param name="itemCount"> item count of appoinments to retrieve</param>
+    ///<param name="index">index of appoinments to retrieve</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result containing a list of attendance response DTOs for the specific employee.</returns>
     [HttpGet("employeeId/{employeeId}")]
     [Authorize(Roles = "Admin")]

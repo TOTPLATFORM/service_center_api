@@ -6,11 +6,6 @@ using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
 
-/// <summary>
-/// Controller responsible for handling payroll-related HTTP requests.
-/// </summary>
-/// <param name="payrollService">The service for performing payroll-related operations.</param>
-/// <seealso cref="BaseController"/>
 public class PayrollController(IPayrollService payrollService) : BaseController
 {
     private readonly IPayrollService _payrollService = payrollService;
@@ -18,8 +13,10 @@ public class PayrollController(IPayrollService payrollService) : BaseController
     /// <summary>
     /// Retrieves the payroll details for a specific employee asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="employeeId">The ID of the employee for whom to retrieve payroll details.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result containing the payroll response DTO for the specified employee.</returns>
     [HttpGet("{employeeId}")]
     [Authorize(Roles = "Admin")]
@@ -33,10 +30,12 @@ public class PayrollController(IPayrollService payrollService) : BaseController
     /// <summary>
     /// Calculates the salary for a specific employee within a given period asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="employeeId">The ID of the employee for whom to calculate the salary.</param>
     /// <param name="startDate">The start date of the period.</param>
     /// <param name="endDate">The end date of the period.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result containing the payroll response DTO for the specified period.</returns>
     [HttpGet("calculate")]
     [Authorize(Roles = "Admin")]
@@ -50,10 +49,10 @@ public class PayrollController(IPayrollService payrollService) : BaseController
     /// <summary>
     /// Calculates the salary for a specific employee within a given period asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="employeeId">The ID of the employee for whom to calculate the salary.</param>
-    /// <param name="startDate">The start date of the period.</param>
-    /// <param name="endDate">The end date of the period.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result containing the payroll response DTO for the specified period.</returns>
     [HttpGet("month")]
     [Authorize(Roles = "Admin")]
@@ -67,10 +66,10 @@ public class PayrollController(IPayrollService payrollService) : BaseController
     /// <summary>
     /// Calculates the salary for a specific employee within a given period asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="employeeId">The ID of the employee for whom to calculate the salary.</param>
-    /// <param name="startDate">The start date of the period.</param>
-    /// <param name="endDate">The end date of the period.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result containing the payroll response DTO for the specified period.</returns>
     [HttpGet("allMonths")]
     [Authorize(Roles = "Admin")]

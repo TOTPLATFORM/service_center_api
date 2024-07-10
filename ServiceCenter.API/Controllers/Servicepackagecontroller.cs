@@ -19,10 +19,9 @@ public class ServicePackageController(IServicePackageService ServicePackageServi
     /// </summary>
     /// <param name="ServicePackageDto">ServicePackage  dto</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>result for ServicePackage  added successfully.</returns>
-    [HttpPost]
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>    [HttpPost]
     [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -58,14 +57,16 @@ public class ServicePackageController(IServicePackageService ServicePackageServi
     public async Task<Result> DeleteServicePackageAsycn(int id)
     {
         return await _ServicePackageService.DeleteServicePackageAsync(id);
-    }
+    }  
+    /// <summary>
+    /// Updates an existing service package by its ID.
     /// </summary>
     ///<param name="id">id of ServicePackage.</param>
     ///<param name="ServicePackageRequestDto">ServicePackage dto.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Manager,Admin")]

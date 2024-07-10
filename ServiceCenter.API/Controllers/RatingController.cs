@@ -20,7 +20,7 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>result for Rating  added successfully.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -48,7 +48,7 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     /// </summary>
     ///<param name="id">id of Rating.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin,Manager" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
@@ -59,13 +59,15 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     {
         return await _RatingService.GetRatingByIdAsync(id);
     }
+    /// <summary>
+    /// Updates an existing rating  by its ID.
     /// </summary>
-    ///<param name="id">id of Rating.</param>
-    ///<param name="RatingRequestDto">Rating dto.</param>
+    ///<param name="id">id of rating.</param>
+    ///<param name="ratingValue">rating value dto.</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Customer")]

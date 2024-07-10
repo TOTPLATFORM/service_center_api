@@ -44,7 +44,11 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
             result.ServiceProvider = serviceProvider;
         }
         var contact = await _dbContext.Customers.FirstOrDefaultAsync(m => m.Id == ComplaintRequestDto.CustomerId);
-
+        if (contact == null)
+        {
+            _logger.LogWarning("Customer Id not found,Id {CustomerId}", ComplaintRequestDto.CustomerId);
+			return Result.NotFound(["Customer not found"]);
+		}
         result.CreatedBy = _userContext.Email;
         result.Customer = contact;
 

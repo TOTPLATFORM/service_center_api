@@ -35,7 +35,7 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	/// get all departments in the system.
 	/// </summary>
 	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
+	/// Access is limited to users with the "Admin,Manager" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
@@ -50,7 +50,7 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	/// </summary>
 	///<param name="id">id of department.</param>
 	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
+	/// Access is limited to users with the "Admin,Manager" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]
@@ -62,17 +62,17 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 		return await _departmentService.GetDepartmentByIdAsync(id);
 	}
 
-	/// <summary>
-	/// get  department by id in the system.
-	/// </summary>
-	///<param name="id">id of department.</param>
-	///<param name="departmentRequestDto">department dto.</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <summary>
+    /// get  department by id in the system.
+    /// </summary>
+    ///<param name="id">id of department.</param>
+    ///<param name="departmentRequestDto">department dto.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
-	[HttpPut("{id}")]
+    [HttpPut("{id}")]
 	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<DepartmentResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -103,7 +103,7 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	/// </summary>
 	///<param name="text">id</param>
 	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
+	/// Access is limited to users with the "Admin,Manager" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 

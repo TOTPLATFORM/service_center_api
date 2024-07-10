@@ -8,11 +8,7 @@ using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
 
-/// <summary>
-/// Controller responsible for handling applicant-related HTTP requests.
-/// </summary>
-/// <param name="applicantService">The service for performing applicant-related operations.</param>
-/// <seealso cref="BaseController"/>
+
 public class ApplicantController(IApplicantService applicantService) : BaseController
 {
     private readonly IApplicantService _applicantService = applicantService;
@@ -20,9 +16,11 @@ public class ApplicantController(IApplicantService applicantService) : BaseContr
     /// <summary>
     /// Adds a new applicant asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="applicantDto">The DTO representing the applicant to create.</param>
-    /// <returns>A result indicating the outcome of the add operation.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns> a task that represents the asynchronous operation, which encapsulates the result of the addition process .</returns>
     [HttpPost]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -35,8 +33,12 @@ public class ApplicantController(IApplicantService applicantService) : BaseContr
     /// <summary>
     /// Retrieves all applicants asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
-    /// <returns>A result containing a list of applicant response DTOs.</returns>
+    /// <param name = "itemCount" > item count of appoinments to retrieve</param>
+    ///<param name="index">index of appoinments to retrieve</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>  
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all applicant.</returns>
     [HttpGet]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<ApplicantResponseDto>>), StatusCodes.Status200OK)]
@@ -49,9 +51,11 @@ public class ApplicantController(IApplicantService applicantService) : BaseContr
     /// <summary>
     /// Retrieves an applicant by its ID asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="id">The ID of the applicant to retrieve.</param>
-    /// <returns>A result containing the applicant response DTO.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>    
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the applicant category details.</returns>
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<ApplicantResponseDto>), StatusCodes.Status200OK)]
@@ -64,10 +68,12 @@ public class ApplicantController(IApplicantService applicantService) : BaseContr
     /// <summary>
     /// Updates an existing applicant by its ID asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="id">The ID of the applicant to update.</param>
     /// <param name="applicantDto">The DTO representing the updated applicant.</param>
-    /// <returns>A result containing the updated applicant response DTO.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>]
+  /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<ApplicantResponseDto>), StatusCodes.Status200OK)]
@@ -80,8 +86,12 @@ public class ApplicantController(IApplicantService applicantService) : BaseContr
     /// <summary>
     /// Searches for applicants by text asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="applicantName">The text to search for in applicant names.</param>
+    /// <param name="itemCount"> item count of appoinments to retrieve</param>
+    ///<param name="index">index of appoinments to retrieve</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result containing a list of applicant response DTOs that match the search criteria.</returns>
     [HttpGet("search/{applicantName}")]
     [Authorize(Roles = "Admin")]

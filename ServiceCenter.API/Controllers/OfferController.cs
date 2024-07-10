@@ -17,8 +17,10 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// action for Add new an Offer that take Offer request dto.
     /// </summary>
     /// <param name="OfferDto">Offer request dto.</param>
-    /// <returns>result of the Offer added successfully</returns>
-
+    ///  <remarks>
+	/// Access is limited to users with the "Admin,Manager" role.
+	/// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -59,7 +61,7 @@ public class OfferController(IOfferService OfferService) : BaseController
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin,Manager")]

@@ -17,9 +17,9 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     /// </summary>
     /// <param name="ComplaintDto">Complaint  dto</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Customer" role.
     /// </remarks>
-    /// <returns>result for Complaint  added successfully.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -33,7 +33,7 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     /// get all Complaint categories in the system.
     /// </summary>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin,Manager" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet]
@@ -49,7 +49,7 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     /// </summary>
     ///<param name="id">id of Complaint.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin,Manager" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
@@ -66,9 +66,9 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     ///<param name="id">id of Complaint.</param>
     ///<param name="ComplaintRequestDto">Complaint dto.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
     [HttpPut("complaintId/{id}/status/{ComplaintStatus}")]
     [Authorize(Roles = "Admin,Manager")]
@@ -84,7 +84,7 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     /// </summary>
     ///<param name="id">id</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin,Customer" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpDelete("{id}")]
@@ -100,7 +100,7 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
 	/// </summary>
 	///<param name="customerId">id</param>
 	/// <remarks>
-	/// access is limited to users with the "Manager,Admin" role.
+	/// access is limited to users with the "Manager,Admin,Customer" role.
 	/// </remarks>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
@@ -111,7 +111,15 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetComplaintsByCustomer(string customerId, int itemCount, int index)
     {
         return await _ComplaintService.GetComplaintsForSpecificCustomerAsync(customerId,  itemCount,  index);
-    }
+    } /// <summary>
+      /// search  complaint by branch in the system.
+      /// </summary>
+      ///<param name="branchId">id</param>
+      /// <remarks>
+      /// access is limited to users with the "Manager,Admin" role.
+      /// </remarks>
+      /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
     [HttpGet("searchByBranch/{branchId}")]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<ComplaintResponseDto>>), StatusCodes.Status200OK)]
@@ -119,7 +127,15 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetComplaintsByBranch(int branchId, int itemCount, int index)
     {
         return await _ComplaintService.GetComplaintsForSpecificBranchAsync(branchId, itemCount, index);
-    }
+    } /// <summary>
+      /// search  complaint by serviceProvider in the system.
+      /// </summary>
+      ///<param name="serviceProviderId">id</param>
+      /// <remarks>
+      /// access is limited to users with the "Manager,Admin" role.
+      /// </remarks>
+      /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
     [HttpGet("searchByServiceProvider/{serviceProviderId}")]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<ComplaintResponseDto>>), StatusCodes.Status200OK)]

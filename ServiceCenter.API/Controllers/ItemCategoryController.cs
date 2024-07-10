@@ -18,7 +18,10 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     /// action for add ItemCategory action that take  ItemCategory dto   
     /// </summary>
     /// <param name="itemCategoryDto">ItemCategory dto</param>
-    /// <returns>result for ItemCategory added successfully.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "WarehouseManager,Manager" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -27,7 +30,15 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     {
         return await _itemCategoryService.AddItemCategoryAsync(itemCategoryDto);
     }
-
+    /// <summary>
+    /// action for add ItemCategory action that take  ItemCategory dto   
+    /// </summary>
+    /// <param name="itemCount"> item count of appoinments to retrieve</param>
+    ///<param name="index">index of appoinments to retrieve</param>
+    /// <remarks>
+    /// Access is limited to users with the "WarehouseManager,Manager,Admin,ServiceProvider" role.
+    /// </remarks> 
+    /// <returns>result for ItemCategory added successfully.</returns>
     [HttpGet]
     [Authorize(Roles = "WarehouseManager,Admin,Manager,ServiceProvider")]
     [ProducesResponseType(typeof(Result<List<ItemCategoryResponseDto>>), StatusCodes.Status200OK)]
@@ -37,7 +48,11 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     }
     /// <summary>
     /// action for get ItemCategory by id that take ItemCategory id.  
-    /// </summary>
+    /// </summary> 
+    /// <param name="id">ItemCategory id</param>
+    /// <remarks>
+    /// Access is limited to users with the "WarehouseManager,Manager,Admin,ServiceProvider" role.
+    /// </remarks>
     /// <returns>result of ItemCategory response dto</returns>
     [HttpGet("{id}")]
     [Authorize(Roles = "WarehouseManager,Admin,Manager")]
@@ -47,6 +62,15 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     {
         return await _itemCategoryService.GetItemCategoryByIdAsync(id);
     }
+    /// <summary>
+    /// action for update ItemCategory by id that take ItemCategory id.  
+    /// </summary> 
+    /// <param name="id">ItemCategory id</param>
+    /// <param name="itemCategoryDto">ItemCategory dto</param>
+    /// <remarks>
+    /// Access is limited to users with the "WarehouseManager,Manager,Admin,ServiceProvider" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
     [HttpPut("{id}")]
     [Authorize(Roles = "WarehouseManager,Manager")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
@@ -59,6 +83,9 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     ///  action for remove ItemCategory that take ItemCategory id   
     /// </summary>
     /// <param name="id">ItemCategory id</param>
+    /// <remarks>
+    /// Access is limited to users with the "WarehouseManager,Manager" role.
+    /// </remarks>
     /// <returns>result of ItemCategory removed successfully </returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "WarehouseManager,Manager")]
@@ -73,6 +100,11 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     /// function to search by ItemCategory name  that take  ItemCategory name
     /// </summary>
     /// <param name="text">ItemCategory name</param>
+    /// <param name="itemCount"> item count of appoinments to retrieve</param>
+    ///<param name="index">index of appoinments to retrieve</param>
+    /// <remarks>
+    /// Access is limited to users with the "WarehouseManager,Manager,Admin,ServiceProvider" role.
+    /// </remarks>
     /// <returns>ItemCategory response dto </returns>
 
     [HttpGet("search/{text}")]
@@ -86,7 +118,10 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     /// <summary>
     /// function to search by Inventory  that take  ItemCategory name
     /// </summary>
-    /// <param name="id">Inventory Id </param>
+    /// <param name="id">Inventory Id </param>  
+    /// <remarks>
+    /// Access is limited to users with the "WarehouseManager,Manager,Admin,ServiceProvider" role.
+    /// </remarks>
     /// <returns>ItemCategory response dto </returns>
     [HttpGet("searchByRelation/{id}")]
     [Authorize(Roles = "WarehouseManager,Admin,Manager,ServiceProvider")]

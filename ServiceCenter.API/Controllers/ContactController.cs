@@ -19,7 +19,7 @@ public class ContactController(IContactService contactService) : BaseController
 	/// </summary>
 	/// <param name="contactRequestDto">The data transfer object containing contact details for creation.</param>
 	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
+	/// Access is limited to users with the "Admin,Manager" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpPost]
@@ -34,7 +34,7 @@ public class ContactController(IContactService contactService) : BaseController
 	/// get all contacts in the system.
 	/// </summary>
 	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
+	/// Access is limited to users with the "Admin,Manager" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
@@ -45,14 +45,17 @@ public class ContactController(IContactService contactService) : BaseController
 		return await _contactService.GetAllContactsAsync(itemCount,index);
 	}
 
-	/// <summary>
-	/// action for update an contact status that take contact status and conatct id.
-	/// </summary>
-	/// <param name="id">contact id.</param>
-	/// <param name="status">contact status</param>
-	/// <returns>result of the contact response dto after updated successfully</returns>
+    /// <summary>
+    /// action for update an contact status that take contact status and conatct id.
+    /// </summary>
+    /// <param name="id">contact id.</param>
+    /// <param name="status">contact status</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin,Sales,Manager" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
-	[HttpPut("contactId/{id}/status/{status}")]
+    [HttpPut("contactId/{id}/status/{status}")]
     [Authorize(Roles = "Admin,Sales,Manager")]
 	[ProducesResponseType(typeof(Result<ContactResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -65,7 +68,7 @@ public class ContactController(IContactService contactService) : BaseController
     /// </summary>
     ///<param name="id">id of contact.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin,MAnager" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("{id}")]
@@ -82,12 +85,12 @@ public class ContactController(IContactService contactService) : BaseController
     ///<param name="id">id of contact.</param>
     ///<param name="contactRequestDto">contact dto.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin,Manager,Customer")]
+    [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<ContactResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<ContactResponseDto>> UpdateContact(Guid id, ContactRequestDto contactRequestDto)
@@ -99,7 +102,7 @@ public class ContactController(IContactService contactService) : BaseController
     /// </summary>
     ///<param name="text">id</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Admin,Manager" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 

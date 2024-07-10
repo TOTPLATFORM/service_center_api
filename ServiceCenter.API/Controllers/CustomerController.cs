@@ -17,9 +17,6 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// Adds a new customer to the system.
 	/// </summary>
 	/// <param name="customerRequestDto">The data transfer object containing customer details for creation.</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
 	[HttpPost]
@@ -36,7 +33,7 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// get all customers in the system.
 	/// </summary>
 	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
+	/// Access is limited to users with the "Admin,Manager,Sales" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet]
@@ -52,7 +49,7 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	/// </summary>
 	///<param name="id">id of customer.</param>
 	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
+	/// Access is limited to users with the "Admin,Sales,Manager" role.
 	/// </remarks>
 	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 	[HttpGet("{id}")]

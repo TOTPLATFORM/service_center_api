@@ -7,11 +7,7 @@ using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
 
-/// <summary>
-/// Controller responsible for handling leave request-related HTTP requests.
-/// </summary>
-/// <param name="leaveRequestService">The service for performing leave request-related operations.</param>
-/// <seealso cref="BaseController"/>
+
 public class LeaveRequestController(ILeaveRequestService leaveRequestService) : BaseController
 {
     private readonly ILeaveRequestService _leaveRequestService = leaveRequestService;
@@ -19,9 +15,11 @@ public class LeaveRequestController(ILeaveRequestService leaveRequestService) : 
     /// <summary>
     /// Adds a new leave request asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="leaveRequestDto">The DTO representing the leave request to create.</param>
-    /// <returns>A result indicating the outcome of the add operation.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -34,7 +32,9 @@ public class LeaveRequestController(ILeaveRequestService leaveRequestService) : 
     /// <summary>
     /// Retrieves all leave requests asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result containing a list of leave request response DTOs.</returns>
     [HttpGet]
     [Authorize(Roles = "Admin")]
@@ -48,8 +48,10 @@ public class LeaveRequestController(ILeaveRequestService leaveRequestService) : 
     /// <summary>
     /// Retrieves a leave request by its ID asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="id">The ID of the leave request to retrieve.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result containing the leave request response DTO.</returns>
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
@@ -63,12 +65,14 @@ public class LeaveRequestController(ILeaveRequestService leaveRequestService) : 
     /// <summary>
     /// Updates an existing leave request by its ID asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the roles: Admin, LeaveRequest.</remarks>
     /// <param name="id">The ID of the leave request to update.</param>
     /// <param name="leaveRequestDto">The DTO representing the updated leave request.</param>
-    /// <returns>A result containing the updated leave request response DTO.</returns>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin,LeaveRequest")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<LeaveRequestResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<LeaveRequestResponseDto>> UpdateLeaveRequest(int id, LeaveRequestRequestDto leaveRequestDto)
@@ -79,8 +83,10 @@ public class LeaveRequestController(ILeaveRequestService leaveRequestService) : 
     /// <summary>
     /// Deletes a leave request by its ID asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="id">The ID of the leave request to delete.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks>
     /// <returns>A result indicating the outcome of the deletion operation.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]
@@ -94,11 +100,13 @@ public class LeaveRequestController(ILeaveRequestService leaveRequestService) : 
     /// <summary>
     /// Retrieves all leave requests for a specific employee asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the roles: Admin, LeaveRequest, Patient.</remarks>
     /// <param name="employeeId">The ID of the employee whose leave requests to retrieve.</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin,Customer" role.
+    /// </remarks>
     /// <returns>A result containing a list of leave request response DTOs for the specific employee.</returns>
     [HttpGet("employeeId/{employeeId}")]
-    [Authorize(Roles = "Admin,LeaveRequest,Patient")]
+    [Authorize(Roles = "Admin,Customer")]
     [ProducesResponseType(typeof(Result<List<LeaveRequestResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<PaginationResult<LeaveRequestResponseDto>>> GetAllLeaveRequestsForSpecificEmployee(string employeeId, int itemCount, int index)

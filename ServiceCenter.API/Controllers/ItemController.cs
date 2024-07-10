@@ -18,7 +18,7 @@ public class ItemController(IItemService itemService) : BaseController
     /// action for add item action that take  Item dto   
     /// </summary>
     /// <param name="itemDto">item dto</param>
-    /// <returns>result for item added successfully.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
     [Authorize(Roles = "WarehouseManager,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -46,7 +46,16 @@ public class ItemController(IItemService itemService) : BaseController
     public async Task<Result<ItemResponseDto>> GetItemById(int id)
     {
         return await _ItemService.GetItemByIdAsync(id);
-    }
+    } /// <summary>
+      /// action for update Item by id that take Item id.  
+      /// </summary> 
+      /// <param name="id">Item id</param>
+      /// <param name="itemDto">Item dto</param>
+      /// <remarks>
+      /// Access is limited to users with the "WarehouseManager,Manager" role.
+      /// </remarks>
+      /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
+
     [HttpPut("{id}")]
     [Authorize(Roles = "WarehouseManager,Manager")]
     [ProducesResponseType(typeof(Result<ItemResponseDto>), StatusCodes.Status200OK)]

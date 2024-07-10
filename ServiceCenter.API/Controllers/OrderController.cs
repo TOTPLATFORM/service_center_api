@@ -20,7 +20,10 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <param name="status">The status of orders to retrieve</param>
     /// <param name="ItemCount">item count of orders to retrieve</param>
     /// <param name="Index">index of orders to retrieve</param>
-    /// <returns>result of list from order response dto.</returns>
+    /// <remarks>
+	/// Access is limited to users with the "Admin" role.
+	/// </remarks>
+   /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
     [HttpGet]
     [Authorize(Roles = "Admin")]
@@ -52,7 +55,7 @@ public class OrderController(IOrderService orderService) : BaseController
     /// <returns>result of the order added successfully</returns>
 
     [HttpPost]
-    [Authorize(Roles = "Customer,Admin")]
+    [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result> AddOrder(OrderRequestDto orderDto)
@@ -65,7 +68,7 @@ public class OrderController(IOrderService orderService) : BaseController
     /// </summary>
     /// <param name="id">order id.</param>
     /// <param name="status">order status</param>
-    /// <returns>result of the order response dto after updated successfully</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
     [HttpPut("orderId/{id}/status/{status}")]
     [Authorize(Roles = "Admin")]
