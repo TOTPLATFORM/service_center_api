@@ -30,18 +30,6 @@ public class DepartmentService(ServiceCenterBaseDbContext dbContext, IMapper map
 	{
 		var result = _mapper.Map<Department>(departmentRequestDto);
 		var center = await _dbContext.Centers.FirstOrDefaultAsync();
-		if (result is null)
-		{
-			_logger.LogError("Failed to map DepartmentRequestDto to Department. DepartmentRequestDto: {DepartmentRequestDto}", departmentRequestDto);
-
-			return Result.Invalid(new List<ValidationError>
-			{
-				new ValidationError
-				{
-					ErrorMessage = "Validation Errror"
-				}
-			});
-		}
 		result.CreatedBy = _userContext.Email;
 		result.Center = center;
 		_dbContext.Departments.Add(result);
@@ -101,19 +89,6 @@ public class DepartmentService(ServiceCenterBaseDbContext dbContext, IMapper map
 		await _dbContext.SaveChangesAsync();
 
 		var inventory = _mapper.Map<DepartmentGetByIdResponseDto>(result);
-
-		if (inventory is null)
-		{
-			_logger.LogError("Failed to map DepartmentRequestDto to DepartmentResponseDto. DepartmentRequestDto: {@DepartmentRequestDto}", inventory);
-
-			return Result.Invalid(new List<ValidationError>
-			{
-					new ValidationError
-					{
-						ErrorMessage = "Validation Errror"
-					}
-			});
-		}
 
 		_logger.LogInformation("Updated Department , Id {Id}", id);
 

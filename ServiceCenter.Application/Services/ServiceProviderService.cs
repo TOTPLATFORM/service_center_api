@@ -105,19 +105,6 @@ public class ServiceProviderService(ServiceCenterBaseDbContext dbContext, IMappe
 
         var serviceproviderResponse = _mapper.Map<ServiceProviderGetByIdResponseDto>(serviceprovider);
 
-        if (serviceproviderResponse is null)
-        {
-            _logger.LogError("Failed to map serviceproviderRequestDto to serviceproviderResponseDto. serviceproviderRequestDto: {@serviceproviderRequestDto}", serviceproviderRequestDto);
-
-            return Result.Invalid(new List<ValidationError>
-            {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-            });
-        }
-
         _logger.LogInformation("Updated serviceprovider , Id {Id}", id);
 
         return Result.Success(serviceproviderResponse);

@@ -132,19 +132,6 @@ public class WareHouseManagerService(ServiceCenterBaseDbContext dbContext, IMapp
 
         var WareHouseManager = _mapper.Map<WareHouseManagerGetByIdResponseDto>(wareHouseManagerResponseDto);
 
-        if (WareHouseManager is null)
-        {
-            _logger.LogError("Failed to map wareHouseManagerRequestDto to wareHouseManagerResponseDto. wareHouseManagerRequestDto: {@wareHouseManagerRequestDto}", WareHouseManager);
-
-            return Result.Invalid(new List<ValidationError>
-            {
-                    new ValidationError
-                    {
-                        ErrorMessage = "Validation Errror"
-                    }
-            });
-        }
-
         _logger.LogInformation("Updated ware house manager , Id {Id}", id);
 
         return Result.Success(WareHouseManager);

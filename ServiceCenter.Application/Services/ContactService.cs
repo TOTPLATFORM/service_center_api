@@ -57,20 +57,6 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         }
 
         var result = _mapper.Map<Contact>(contactRequestDto);
-
-		if (result is null)
-        {
-            _logger.LogError("Failed to map ContactRequestDto to Contact. ContactRequestDto: {@ContactRequestDto}", contactRequestDto);
-
-            return Result.Invalid(new List<ValidationError>
-            {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-            });
-        }
-
         _dbContext.Contacts.Add(result);
 
         await _dbContext.SaveChangesAsync();
@@ -138,19 +124,6 @@ public class ContactService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         await _dbContext.SaveChangesAsync();
 
         var contact = _mapper.Map<ContactResponseDto>(result);
-
-        if (contact is null)
-        {
-            _logger.LogError("Failed to map ContactRequestDto to ContactResponseDto. ContactRequestDto: {@ContactRequestDto}", contact);
-
-            return Result.Invalid(new List<ValidationError>
-            {
-                    new ValidationError
-                    {
-                        ErrorMessage = "Validation Errror"
-                    }
-            });
-        }
 
         _logger.LogInformation("Updated Contact , Id {Id}", id);
 

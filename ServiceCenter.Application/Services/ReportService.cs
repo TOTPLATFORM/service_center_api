@@ -29,17 +29,6 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         var Manager = await _dbContext.Managers.FirstOrDefaultAsync(s => s.Id == ReportRequestDto.ManagerId);
         var Contact = await _dbContext.Customers.FirstOrDefaultAsync(s => s.Id == ReportRequestDto.CustomerId);
         var result = _mapper.Map<Report>(ReportRequestDto);
-        if (result is null)
-        {
-            _logger.LogError("Failed to map ReportRequestDto to Report. ReportRequestDto: {@ReportRequestDto}", ReportRequestDto);
-            return Result.Invalid(new List<ValidationError>
-            {
-                new ValidationError
-                    {
-                        ErrorMessage = "Validation Errror"
-                    }
-            });
-        }
         result.CreatedBy = _userContext.Email;
         result.Manager=Manager;
         result.Customer = Contact;
@@ -94,21 +83,9 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
         }
         result.Task= task;
         result.ModifiedBy = _userContext.Email;
-         await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync();
 
         var ReportResponse = _mapper.Map<ReportResponseDto>(result);
-        if (ReportResponse is null)
-        {
-            _logger.LogError("Failed to map ReportRequestDto to ReportResponseDto. ReportRequestDto: {@ReportRequestDto}", ReportResponse);
-
-            return Result.Invalid(new List<ValidationError>
-        {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-        });
-        }
 
         _logger.LogInformation("Updated Report , Id {Id}", id);
 
@@ -145,7 +122,6 @@ public class ReportService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 
         Report.Status = status;
         var role =await _dbContext.Roles.FirstOrDefaultAsync(r => r.Name == "Customer");
-
 
         var contact = await _dbContext.Customers.FindAsync(Report.Customer.Id);
         if (status == ReportStatus.Good)

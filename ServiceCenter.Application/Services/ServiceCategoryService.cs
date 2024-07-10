@@ -28,17 +28,6 @@ public class ServiceCategoryService(ServiceCenterBaseDbContext dbContext, IMappe
     public async Task<Result> AddServiceCategoryAsync(ServiceCategoryRequestDto ServiceCategoryRequestDto)
     {
         var result = _mapper.Map<ServiceCategory>(ServiceCategoryRequestDto);
-        if (result is null)
-        {
-            _logger.LogError("Failed to map ServiceCategoryRequestDto to ServiceCategory. ServiceCategoryRequestDto: {@ServiceCategoryRequestDto}", ServiceCategoryRequestDto);
-            return Result.Invalid(new List<ValidationError>
-            {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-            });
-        }
         result.CreatedBy = _userContext.Email;
         _dbContext.ServiceCategories.Add(result);
         await _dbContext.SaveChangesAsync();
@@ -94,18 +83,6 @@ public class ServiceCategoryService(ServiceCenterBaseDbContext dbContext, IMappe
         await _dbContext.SaveChangesAsync();
 
         var ServiceCategoryResponse = _mapper.Map<ServiceCategoryResponseDto>(result);
-        if (ServiceCategoryResponse is null)
-        {
-            _logger.LogError("Failed to map ServiceCategoryRequestDto to ServiceCategoryResponseDto. ServiceCategoryRequestDto: {@ServiceCategoryRequestDto}", ServiceCategoryResponse);
-
-            return Result.Invalid(new List<ValidationError>
-            {
-                    new ValidationError
-                    {
-                        ErrorMessage = "Validation Errror"
-                    }
-            });
-        }
 
         _logger.LogInformation("Updated ServiceCategory , Id {Id}", id);
 

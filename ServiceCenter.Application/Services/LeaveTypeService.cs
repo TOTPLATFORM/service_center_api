@@ -29,17 +29,6 @@ public class LeaveTypeService(ServiceCenterBaseDbContext dbContext, IMapper mapp
     {
         var leaveType = _mapper.Map<LeaveType>(leaveTypeRequestDto);
 
-        if (leaveType is null)
-        {
-            _logger.LogError("Failed to map leaveTypeRequestDto to leaveType. leaveTypeRequestDto: {@leaveTypeRequestDto}", leaveTypeRequestDto);
-            return Result.Invalid(new List<ValidationError>
-            {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Error"
-                }
-            });
-        }
         leaveType.CreatedBy = _userContext.Email;
         await _dbContext.LeaveTypes.AddAsync(leaveType);
         await _dbContext.SaveChangesAsync();
@@ -127,17 +116,6 @@ public class LeaveTypeService(ServiceCenterBaseDbContext dbContext, IMapper mapp
         await _dbContext.SaveChangesAsync();
 
         var typeResponse = _mapper.Map<LeaveTypeResponseDto>(type);
-        if (typeResponse is null)
-        {
-            _logger.LogError("Failed to map leaveTypeRequestDto to leaveTypeResponseDto. leaveTypeRequestDto: {@LeaveTypeRequestDto}", leaveTypeRequestDto);
-            return Result.Invalid(new List<ValidationError>
-                {
-                    new ValidationError
-                    {
-                        ErrorMessage = "Validation Errror"
-                    }
-                });
-        }
 
         _logger.LogInformation("Updated type , Id {Id}", id);
 

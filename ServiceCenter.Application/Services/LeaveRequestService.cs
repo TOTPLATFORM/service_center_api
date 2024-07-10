@@ -28,17 +28,6 @@ public class LeaveRequestService(ServiceCenterBaseDbContext dbContext, IMapper m
     {
         var leaveRequest = _mapper.Map<LeaveRequest>(leaveRequestDto);
 
-        if (leaveRequest is null)
-        {
-            _logger.LogError("Failed to map leaverequestRequestDto to leaveReques. leaveRequestDto: {@leaverequestRequestDto}", leaveRequestDto);
-            return Result.Invalid(new List<ValidationError>
-            {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Error"
-                }
-            });
-        }
         leaveRequest.CreatedBy = _userContext.Email;
         await _dbContext.LeaveRequests.AddAsync(leaveRequest);
         await _dbContext.SaveChangesAsync();
@@ -125,17 +114,6 @@ public class LeaveRequestService(ServiceCenterBaseDbContext dbContext, IMapper m
         await _dbContext.SaveChangesAsync();
 
         var requestResponse = _mapper.Map<LeaveRequestResponseDto>(request);
-        if (requestResponse is null)
-        {
-            _logger.LogError("Failed to map leaverequestRequestDto to leaverequestResponseDto. leaverequestRequestDto: {@LeaverequestRequestDto}", leaveRequestDto);
-            return Result.Invalid(new List<ValidationError>
-                {
-                    new ValidationError
-                    {
-                        ErrorMessage = "Validation Errror"
-                    }
-                });
-        }
 
         _logger.LogInformation("Updated request , Id {Id}", id);
 
