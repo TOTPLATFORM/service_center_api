@@ -10,42 +10,26 @@ namespace ServiceCenter.Application.ExtensionForServices;
 
 public static class IQueryableExtensions
 {
-    public static async Task<PaginationResult<T>> GetAllWithPagination<T>(this IQueryable<T> query, int itemCount, int index)
-    {
-        var totalCount = await query.CountAsync();
-        var endIndex = index + itemCount;
-        if (itemCount > totalCount)
-        {
-            itemCount = 0;
-        }
-        if (index > totalCount)
-        {
-            index = 0;
-        }
-        if (itemCount <= 0)
-        {
-            itemCount = totalCount;
-            endIndex = totalCount;
-        }
-        var result = new PaginationResult<T>();
+	public static async Task<PaginationResult<T>> GetAllWithPagination<T>(this IQueryable<T> query, int itemCount, int index)
+	{
+		var totalCount = await query.CountAsync();
+		itemCount = (itemCount <= 0 || itemCount > totalCount) ? totalCount : itemCount;
 
-        //var endIndex = index + totalCount -1;
-        var PageCount = (int)Math.Ceiling(totalCount / (double)itemCount);
-        if (itemCount == 0)
-        {
-            PageCount = 0;
-        }
-        if (endIndex >= totalCount)
-        {
-            endIndex = totalCount;
-        }
-        result.TotalCount = totalCount;
-        result.Data = await query.Skip(index).Take(itemCount).ToListAsync();
-        result.PageCount = PageCount;
-        result.HasNextPage = index + itemCount < totalCount;
-        result.HasPreviousPage = index > 0;
-        result.Start = index + 1;
-        result.End = endIndex;
-        return result;
-    }
+		index = (index < 0 || index >= totalCount) ? 0 : index;
+
+		var endIndex = index + itemCount;
+		endIndex = (endIndex > totalCount) ? totalCount : endIndex;
+
+		var result = new PaginationResult<T>
+		{
+			TotalCount = totalCount,
+			Data = await query.Skip(index).Take(itemCount).ToListAsync(),
+			PageCount = (int)Math.Ceiling(totalCount / (double)itemCount),
+			HasNextPage = index + itemCount < totalCount,
+			HasPreviousPage = index > 0,
+			Start = index + 1,
+			End = endIndex
+		};
+		return result;
+	}
 }
