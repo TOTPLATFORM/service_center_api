@@ -84,10 +84,10 @@ public class LeaveRequestServiceTest
     /// <param name="endDate">endDate</param>
     /// <param name="leaveTypeId">leaveType id</param>
     [Theory, TestPriority(3)]
-    [InlineData(1, Status.Pending, "3/10/2024", "3/11/2024", 1, true)]
-    [InlineData(10, Status.Pending, "3/10/2024", "3/11/2024", 1, false)]
+    [InlineData(1,  "3/10/2024", "3/11/2024", 1, true)]
+    [InlineData(10,  "3/10/2024", "3/11/2024", 1, false)]
 
-    public async Task UpdateLeaveRequestAsync(int id, Status status, string startDate, string endDate, int leaveTypeId, bool expectedResult)
+    public async Task UpdateLeaveRequestAsync(int id, string startDate, string endDate, int leaveTypeId, bool expectedResult)
     {
         //Arrange
         CheckService();
@@ -95,11 +95,10 @@ public class LeaveRequestServiceTest
         {
             StartDate = DateOnly.Parse(startDate),
             EndDate = DateOnly.Parse(endDate),
-            LeaveTypeId = leaveTypeId,
-            //Status =   status
+            LeaveTypeId = leaveTypeId
         };
         // Act
-        var result = await _leaveRequestService.UpdateLeaveRequestAsycn(id, leaveRequestDto);
+        var result = await _leaveRequestService.UpdateLeaveRequestAsync(id, leaveRequestDto);
         // Assert
         if (expectedResult)
         {

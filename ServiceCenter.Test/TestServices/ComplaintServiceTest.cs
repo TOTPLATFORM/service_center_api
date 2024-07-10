@@ -85,9 +85,12 @@ public class ComplaintServiceTest
 
     }
     /// <summary>
-    /// fuction to add Complaint as a test case that take  timeslot id ,created by user name
+    /// fuction to add Complaint as a test case that take  complaint desc ,branch id ,cuatomer id ,complaint status
     /// </summary>
-
+    ///<param name="branchId">branch id</param>
+    ///<param name="ComplaintDesc"> complaint desc</param>
+    ///<param name="customerId">customer id</param>
+    ///<param name="status"> complaint status</param>
     [Theory, TestPriority(0)]
     [InlineData("Desc1", "0d133c1a-804f-4548-8f7e-8c3f504844u0", 1, Status.Pending)]
     public async Task AddComplaint(string ComplaintDesc,  string customerId,int branchId,  Status status)
@@ -129,10 +132,11 @@ public class ComplaintServiceTest
     }
 
     /// <summary>
-    /// fuction to update Complaint as a test case that take id Updated by user name,expected result
+    /// fuction to update Complaint as a test case that take id Updated by complaint status,expected result
     /// </summary>
     /// <param name="id">Complaint id</param>  
-    [Theory, TestPriority(3)]
+    /// <param name="complaintStatus">complaint status</param>
+     [Theory, TestPriority(3)]
     [InlineData(9,Status.Cancelled, true)]
     [InlineData(78,Status.Approved, false)]
     public async Task UpdateComplaint(int id,Status complaintStatus, bool expectedResult)

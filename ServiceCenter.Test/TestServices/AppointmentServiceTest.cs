@@ -51,7 +51,7 @@ public class AppointmentServiceTest
     /// fuction to get all appointments as a test case 
     /// </summary>
     [Fact, TestPriority(1)]
-    public async Task GetAllAppointment()
+    public async Task GetAllAppointmenst()
     {
         // Arrange
         CheckService();
@@ -89,7 +89,6 @@ public class AppointmentServiceTest
     /// fuction to get appointment by id as a test case 
     /// </summary>
     /// <param name="id">appointmentid </param>
-    /// <returns>specific appointment</returns>
     [Theory, TestPriority(2)]
     [InlineData(1)]
     [InlineData(6)]
@@ -112,9 +111,10 @@ public class AppointmentServiceTest
     /// fuction to update appointment as a test case 
     /// </summary>
     /// <param name="id">appointment id</param>
-    /// <param name="date">appointment date</param>
-    /// <param name="startTime">appointment start time</param>
-    /// <param name="endTime">appointment end time</param>
+    /// <param name="contactId"> contact id</param>
+    /// <param name="scheduleId">  schedule id</param>
+    /// <param name="status">appointment status</param>
+    /// <param name="description">appointment description</param>
     /// <param name="expectedResult">expected result</param>
     [Theory, TestPriority(3)]
     [InlineData(1, "0d133c1a-804f-4548-8f7e-8c3f504844u0", 1, AppointmentStatus.Canceled, "03:00:00", true)]
@@ -140,7 +140,6 @@ public class AppointmentServiceTest
     /// fuction to remove appointment as a test case that take appointment id
     /// </summary>
     /// <param name="id"> appointment id </param>
-    /// <returns>appointment remove successfully</returns>
     [Theory, TestPriority(6)]
     [InlineData(2)]
     [InlineData(50)]
@@ -162,6 +161,7 @@ public class AppointmentServiceTest
     /// <summary>
     /// fuction to get all appointments for specific service as a test case 
     /// </summary>
+    /// <param name="serviceId">service id</param>
     [Theory, TestPriority(4)]
     [InlineData(1)]
     public async Task GetAllAppointmentForSpecificService(int serviceId)
@@ -177,8 +177,9 @@ public class AppointmentServiceTest
 
     }
     /// <summary>
-    /// fuction to get all appointments for specific service as a test case 
+    /// fuction to get all appointments for specific contact as a test case 
     /// </summary>
+    /// <param name="contactId">contact id</param>
     [Theory, TestPriority(5)]
     [InlineData("0d133c1a-804f-4548-8f7e-8c3f504844u0")]
     public async Task GetAllAppointmentForSpecificContact(string contactId)

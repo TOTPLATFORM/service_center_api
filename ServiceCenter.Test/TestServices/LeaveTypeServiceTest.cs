@@ -91,7 +91,7 @@ public class LeaveTypeServiceTest
             TypeName = typeName
         };
         // Act
-        var result = await _leaveTypeService.UpdateLeaveTypeAsycn(id, leaveTypeDto);
+        var result = await _leaveTypeService.UpdateLeaveTypeAsync(id, leaveTypeDto);
         // Assert
         if (expectedResult)
         {

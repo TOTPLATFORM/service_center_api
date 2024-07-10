@@ -118,7 +118,7 @@ public class CampaginServiceTest
 
     }
     /// <summary>
-    /// fuction to update Campagin as a test case that take  
+    /// fuction to update Campagin as a test case that take   campagin id , campagin budget,campagin status and expected result
     /// </summary>
     /// <param name="goals">goals of campagin</param>
     /// <param name="endDate">End Date</param>
@@ -153,9 +153,9 @@ public class CampaginServiceTest
             Assert.False(result.IsSuccess);
     }
     /// <summary>
-    /// fuction to update campagin as a test case that take  campagin id , campagin name , campagin descreiption , campagin dosage and campagin id and expected result
+    /// fuction to update campagin as a test case that take  campagin id , campagin status and expected result
     /// </summary>
-    /// <param name="from">campagin from</param>
+    /// <param name="id">campagin id</param>
     /// <param name="status">campagin status</param>
     [Theory, TestPriority(3)]
     [InlineData(3, CampaginStatus.Active, true)]
@@ -199,7 +199,7 @@ public class CampaginServiceTest
 
     }
     /// <summary>
-    /// Tests the search functionality in the city service to ensure it can find cities based on a search term.
+    /// Tests the search functionality in the campagin service to ensure it can find campagins based on a search term.
     /// </summary>
     [Fact, TestPriority(4)]
     public async Task SearchCampagin()

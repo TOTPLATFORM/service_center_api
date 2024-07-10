@@ -77,7 +77,7 @@ public class PerformanceReviewTest
         CheckService();
 
         // Act
-        var result = await _performanceReviewService.GetAllPerformanceReviewsAsync();
+        var result = await _performanceReviewService.GetAllPerformanceReviewsAsync(2,1);
 
         // Assert
         Assert.True(result.IsSuccess);

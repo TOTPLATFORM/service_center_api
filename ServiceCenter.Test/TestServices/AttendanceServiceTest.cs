@@ -44,29 +44,13 @@ public class AttendanceServiceTest
             _attendanceService = CreateAttendanceService();
     }
 
-    ///// <summary>
-    ///// fuction to get all attendances as a test case 
-    ///// </summary>
-    //[Fact, TestPriority(1)]
-    //public async Task GetAllAttendance()
-    //{
-    //    // Arrange
-    //    CheckService();
-
-    //    // Act
-    //    var result = await _attendanceService.GetAllAttendancesAsync();
-
-    //    // Assert
-    //    Assert.True(result.IsSuccess);
-
-    //}
-    /// <summary>
-    /// fuction to add attendance as a test case. 
-    /// </summary>
-    /// <param name="date">attendance date</param>
-    /// <param name="startTime">attendance start time</param>
-    /// <param name="endTime">attendance end time</param>
-    [Theory, TestPriority(0)]
+        /// <summary>
+        /// fuction to add attendance as a test case. 
+        /// </summary>
+        /// <param name="date">attendance date</param>
+        /// <param name="inTime">attendance in time</param>
+        /// <param name="outTime">attendance out time</param>
+        [Theory, TestPriority(0)]
     [InlineData("3/11/2024", "02:00:00", "03:00:00")]
     public async Task AddAttendance(string date, string inTime, string outTime)
     {
@@ -86,7 +70,6 @@ public class AttendanceServiceTest
     /// fuction to get attendance by id as a test case 
     /// </summary>
     /// <param name="id">attendanceid </param>
-    /// <returns>specific attendance</returns>
     [Theory, TestPriority(2)]
     [InlineData(1)]
     [InlineData(6)]
@@ -136,8 +119,7 @@ public class AttendanceServiceTest
     /// <summary>
     /// fuction to remove attendance as a test case that take attendance id
     /// </summary>
-    /// <param name="id"> attendance id </param>
-    /// <returns>attendance remove successfully</returns>
+    /// <param name="id"> attendance id </param>>
     [Theory, TestPriority(6)]
     [InlineData(2)]
     [InlineData(50)]

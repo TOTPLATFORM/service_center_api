@@ -78,7 +78,7 @@ public class RecruitmentRecordTest
         CheckService();
 
         // Act
-        var result = await _recruitmentRecordService.GetAllRecruitmentRecordsAsync();
+        var result = await _recruitmentRecordService.GetAllRecruitmentRecordsAsync(2,1);
 
         // Assert
         Assert.True(result.IsSuccess);

@@ -64,17 +64,10 @@ public class ApplicantServiceTest
             _applicantService = CreateApplicantService();
     }
     /// <summary>
-    /// fuction to update Applicant as a test case .
+    /// fuction to update applicant as a test case .
     /// </summary>
-    /// <param name="ApplicantEmail">Applicant email</param>
-    /// <param name="ApplicantFirstName">Applicant first name</param>
-    /// <param name="ApplicantLastName">Applicant last name</param> 
-    /// <param name="ApplicantPhoneNumber">Applicant phone number</param>
-    /// <param name="Gender">Applicant gender</param>
-    /// <param name="id">Applicant id</param>
-    /// <param name="Password">Applicant password</param>
-    /// <param name="SpecializationId">specialization id</param>
-    /// <param name="UserName">Applicant user name</param>
+    /// <param name="id">applicant id</param>
+    /// <param name="departmenId">department id</param>
     /// <param name="expectedResult">expected result</param>
     [Theory, TestPriority(3)]
     [InlineData("78ty72a7-589e-4f0b-81ed-40389f683610",9 , true)]
@@ -100,7 +93,7 @@ public class ApplicantServiceTest
         }
     }
     /// <summary>
-    /// fuction to get all  Applicant as a test case 
+    /// fuction to get all  applicant as a test case 
     /// </summary>
     [Fact, TestPriority(1)]
     public async Task GetAllApplicant()
@@ -116,13 +109,13 @@ public class ApplicantServiceTest
 
     }
     /// <summary>
-    /// fuction to get Applicant by id as a test case that take Applicant id
+    /// fuction to get applicant by id as a test case that take applicant id
     /// </summary>
     /// <param name="id"> Applicant id</param>
     [Theory, TestPriority(2)]
     [InlineData("53ae72a7-589e-4f0b-81ed-4038169498")]
     [InlineData("53ae72a7-589e-4f0b-81ed-40389f68302765165")]
-    public async Task GetByIdApplicant_ReturnResult(string id)
+    public async Task GetByIdApplicant(string id)
     {
         // Arrange
         CheckService();
