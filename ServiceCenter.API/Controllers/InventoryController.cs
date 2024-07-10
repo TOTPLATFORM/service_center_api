@@ -31,14 +31,16 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 		return await _inventoryService.AddInventoryAsync(inventoryRequestDto);
 	}
 
-	/// <summary>
-	/// get all inventories in the system.
-	/// </summary>
-	/// <remarks>
-	/// Access is limited to users with the "Admin,Manager" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpGet]
+    /// <summary>
+    /// retrieves all inventory in the system.
+    /// </summary>
+    /// <param name = "itemCount" > item count of inventory to retrieve</param>
+    ///<param name="index">index of inventory to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Admin,Manager" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all inventory.</returns> [HttpGet]
+    [HttpGet]
 	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<PaginationResult<InventoryResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<PaginationResult<InventoryResponseDto>>> GetAllInventories(int itemCount, int index)
@@ -46,13 +48,14 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 		return await _inventoryService.GetAllInventoriesAsync( itemCount,  index);
 	}
     /// <summary>
-    /// get all inventories in the system.
+    /// retrieves a inventory  by their unique identifier.
     /// </summary>
-    ///<param name="id">id of inventory.</param>
+    /// <param name="id">the unique identifier of the inventory .</param>
     /// <remarks>
     /// Access is limited to users with the "Admin,WarehouseManager,Manager" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the inventory category details.</returns>[HttpGet("{id}")]
+
     [HttpGet("{id}")]
 	[Authorize(Roles = "Admin,WarehouseManager,Manager")]
 	[ProducesResponseType(typeof(Result<InventoryGetByIdResponseDto>), StatusCodes.Status200OK)]
@@ -79,16 +82,18 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	{
 		return await _inventoryService.UpdateInventoryAsync(id, inventoryRequestDto);
 	}
-	/// <summary>
-	/// search  inventory by text in the system.
-	/// </summary>
-	///<param name="text">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin,Manager" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <summary>
+    /// searches inventory  based on a query text.
+    /// </summary>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of inventorys to retrieve</param>
+    ///<param name="index">index of inventorys to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Admin,Manager" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of inventory  that match the search criteria.</returns>
 
-	[HttpGet("search/{text}")]
+    [HttpGet("search/{text}")]
 	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<PaginationResult<InventoryResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -96,14 +101,15 @@ public class InventoryController(IInventoryService inventoryService) : BaseContr
 	{
 		return await _inventoryService.SearchInventoryByTextAsync(text,  itemCount,  index);
 	}
-	/// <summary>
-	/// delete  inventory by id from the system.
-	/// </summary>
-	///<param name="id">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin,Manager" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+    /// <summary>
+    /// deletes a inventory from the system by their unique identifier.
+    /// </summary>
+    /// <remarks>
+    /// access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <param name="id">the unique identifier of the inventory to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
 	[HttpDelete("{id}")]
 	[Authorize(Roles = "Manager,Admin")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]

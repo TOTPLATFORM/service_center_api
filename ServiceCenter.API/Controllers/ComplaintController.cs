@@ -30,28 +30,30 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     }
 
     /// <summary>
-    /// get all Complaint categories in the system.
+    /// retrieves all complaint in the system.
     /// </summary>
+    /// <param name = "itemCount" > item count of complaint to retrieve</param>
+    ///<param name="index">index of complaint to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin,Manager" role.
+    /// access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all complaint.</returns> [HttpGet]
     [HttpGet]
     [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<PaginationResult<ComplaintResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetAllComplaints( int itemCount, int index)
+    public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetAllComplaints(int itemCount, int index)
     {
-        return await _ComplaintService.GetAllComplaintsAsync( itemCount,  index);
+        return await _ComplaintService.GetAllComplaintsAsync(itemCount, index);
     }
 
     /// <summary>
-    /// get Complaint by id in the system.
+    /// retrieves a complaint  by their unique identifier.
     /// </summary>
-    ///<param name="id">id of Complaint.</param>
+    /// <param name="id">the unique identifier of the complaint .</param>
     /// <remarks>
     /// Access is limited to users with the "Admin,Manager" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the complaint category details.</returns>[HttpGet("{id}")]
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<ComplaintResponseDto>), StatusCodes.Status200OK)]
@@ -74,51 +76,56 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<ComplaintResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<ComplaintResponseDto>> UpdateComplaint(int id, Status  ComplaintStatus)
+    public async Task<Result<ComplaintResponseDto>> UpdateComplaint(int id, Status ComplaintStatus)
     {
         return await _ComplaintService.UpdateComplaintStatusAsync(id, ComplaintStatus);
     }
-  
+
+
     /// <summary>
-    /// delete  Complaint  by id from the system.
+    /// deletes a complaint from the system by their unique identifier.
     /// </summary>
-    ///<param name="id">id</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin,Customer" role.
+    /// access is limited to users with the "Admin,Customer" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name="id">the unique identifier of the complaint to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin,Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result> DeleteComplaintAsycn(int id)
+    public async Task<Result> DeleteComplaintAsync(int id)
     {
         return await _ComplaintService.DeleteComplaintAsync(id);
     }
     /// <summary>
-	/// search  complaint by customer in the system.
-	/// </summary>
-	///<param name="customerId">id</param>
-	/// <remarks>
-	/// access is limited to users with the "Manager,Admin,Customer" role.
-	/// </remarks>
-	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-
+    ///  retrieves complaint by their customer unique identifier.
+    /// </summary>
+    ///<param name="customerId">the unique identifier of the customer</param>
+    /// <param name = "itemCount" > item count of complaint to retrieve</param>
+    ///<param name="index">index of complaint to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Manager,Admin,Customer" role.
+    /// </remarks>
+    /// <returns>>a task that represents the asynchronous operation, which encapsulates the result containing the customer's complaint.</returns>
     [HttpGet("searchByCustomer/{customerId}")]
     [Authorize(Roles = "Customer,Admin,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<ComplaintResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetComplaintsByCustomer(string customerId, int itemCount, int index)
     {
-        return await _ComplaintService.GetComplaintsForSpecificCustomerAsync(customerId,  itemCount,  index);
-    } /// <summary>
-      /// search  complaint by branch in the system.
-      /// </summary>
-      ///<param name="branchId">id</param>
-      /// <remarks>
-      /// access is limited to users with the "Manager,Admin" role.
-      /// </remarks>
-      /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+        return await _ComplaintService.GetComplaintsForSpecificCustomerAsync(customerId, itemCount, index);
+    }
+    /// <summary>
+    /// retrieves complaint by their branch unique identifier.
+    /// </summary>
+    ///<param name="branchId">the unique identifier of the branch</param>  
+    /// <param name = "itemCount" > item count of complaint to retrieve</param>
+    ///<param name="index">index of complaint to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Manager,Admin" role.
+    /// </remarks>
+    /// <returns>>a task that represents the asynchronous operation, which encapsulates the result containing the branch's complaints.</returns>
 
     [HttpGet("searchByBranch/{branchId}")]
     [Authorize(Roles = "Admin,Manager")]
@@ -127,14 +134,17 @@ public class ComplaintController(IComplaintService ComplaintService) : BaseContr
     public async Task<Result<PaginationResult<ComplaintResponseDto>>> GetComplaintsByBranch(int branchId, int itemCount, int index)
     {
         return await _ComplaintService.GetComplaintsForSpecificBranchAsync(branchId, itemCount, index);
-    } /// <summary>
-      /// search  complaint by serviceProvider in the system.
-      /// </summary>
-      ///<param name="serviceProviderId">id</param>
-      /// <remarks>
-      /// access is limited to users with the "Manager,Admin" role.
-      /// </remarks>
-      /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    }
+    /// <summary>
+    /// retrieves complaint by their service provider unique identifier.
+    /// </summary>
+    ///<param name="serviceProviderId">the unique identifier of the service provider</param>  
+    /// <param name = "itemCount" > item count of complaint to retrieve</param>
+    ///<param name="index">index of complaint to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Manager,Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the service provider's complaint.</returns>
 
     [HttpGet("searchByServiceProvider/{serviceProviderId}")]
     [Authorize(Roles = "Admin,Manager")]

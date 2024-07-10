@@ -31,30 +31,32 @@ public class ManagerController(IManagerService managerService) : BaseController
 		return await _managerService.AddManagerAsync(managerRequestDto);
 	}
 
-	/// <summary>
-	/// get all Managers in the system.
-	/// </summary>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpGet]
+    /// <summary>
+    /// retrieves all manager in the system.
+    /// </summary>
+    /// <param name = "itemCount" > item count of manager to retrieve</param>
+    ///<param name="index">index of manager to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all manager.</returns> [HttpGet]
+    [HttpGet]
 	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<PaginationResult<ManagerResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<PaginationResult<ManagerResponseDto>>> GetAllManagers(int itemCount, int index)
 	{
 		return await _managerService.GetAllManagersAsync(itemCount, index);
 	}
+    /// <summary>
+    /// retrieves a manager  by their unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the manager .</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the manager category details.</returns>[HttpGet("{id}")]
 
-	/// <summary>
-	/// get manager in the system.
-	/// </summary>
-	///<param name="id">id of manager.</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpGet("{id}")]
+    [HttpGet("{id}")]
 	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<ManagerGetByIdResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -82,16 +84,18 @@ public class ManagerController(IManagerService managerService) : BaseController
 		return await _managerService.UpdateManagerAsync(id, managerRequestDto);
 	}
 
-	/// <summary>
-	/// search  manager by text in the system.
-	/// </summary>
-	///<param name="text">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <summary>
+    /// searches manager  based on a query text.
+    /// </summary>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of managers to retrieve</param>
+    ///<param name="index">index of managers to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of manager  that match the search criteria.</returns>
 
-	[HttpGet("search/{text}")]
+    [HttpGet("search/{text}")]
 	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<PaginationResult<ManagerResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]

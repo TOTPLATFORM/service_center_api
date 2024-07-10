@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
@@ -12,25 +13,32 @@ public class RecruitmentRecordController(IRecruitmentRecordService recruitmentRe
     private readonly IRecruitmentRecordService _recruitmentRecordService = recruitmentRecordService;
 
     /// <summary>
-    /// Retrieves all recruitment records.
+    /// retrieves all recruitment record in the system.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
-    /// <returns>A result containing a list of recruitment record response DTOs.</returns>
+    /// <param name = "itemCount" > item count of recruitment record to retrieve</param>
+    ///<param name="index">index of recruitment record to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all recruitment record.</returns> [HttpGet]
+
     [HttpGet]
     [Authorize(Roles = "Admin")]
-    [ProducesResponseType(typeof(Result<List<RecruitmentRecordResponseDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<PaginationResult<RecruitmentRecordResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<RecruitmentRecordResponseDto>>> GetAllRecruitmentRecords()
+    public async Task<Result<PaginationResult<RecruitmentRecordResponseDto>>> GetAllRecruitmentRecords(int itemCount, int index)
     {
-        return await _recruitmentRecordService.GetAllRecruitmentRecordsAsync();
+        return await _recruitmentRecordService.GetAllRecruitmentRecordsAsync( itemCount,  index);
     }
-
     /// <summary>
-    /// Retrieves a recruitment record by its ID.
+    /// retrieves a recruitment record  by their unique identifier.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
-    /// <param name="id">The ID of the recruitment record to retrieve.</param>
-    /// <returns>A result containing the recruitment record response DTO.</returns>
+    /// <param name="id">the unique identifier of the recruitment record .</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the recruitment record category details.</returns>[HttpGet("{id}")]
+
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<RecruitmentRecordResponseDto>), StatusCodes.Status200OK)]
@@ -73,12 +81,15 @@ public class RecruitmentRecordController(IRecruitmentRecordService recruitmentRe
         return await _recruitmentRecordService.UpdateRecruitmentRecordAsync(id, recruitmentRecordDto);
     }
 
+
     /// <summary>
-    /// Deletes a recruitment record by its ID.
+    /// deletes a recruitment record from the system by their unique identifier.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
-    /// <param name="id">The ID of the recruitment record to delete.</param>
-    /// <returns>A result indicating the success of the deletion.</returns>
+    /// <remarks>
+    /// access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <param name="id">the unique identifier of the recruitment record to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]

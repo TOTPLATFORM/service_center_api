@@ -30,12 +30,15 @@ public class LeaveRequestController(ILeaveRequestService leaveRequestService) : 
     }
 
     /// <summary>
-    /// Retrieves all leave requests asynchronously.
+    /// retrieves all leave request in the system.
     /// </summary>
+    /// <param name = "itemCount" > item count of leave request to retrieve</param>
+    ///<param name="index">index of leave request to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A result containing a list of leave request response DTOs.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all leave request.</returns> [HttpGet]
+
     [HttpGet]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<LeaveRequestResponseDto>>), StatusCodes.Status200OK)]
@@ -44,15 +47,15 @@ public class LeaveRequestController(ILeaveRequestService leaveRequestService) : 
     {
         return await _leaveRequestService.GetAllLeaveRequestsAsync(itemCount, index);
     }
-
     /// <summary>
-    /// Retrieves a leave request by its ID asynchronously.
+    /// retrieves a leave request  by their unique identifier.
     /// </summary>
-    /// <param name="id">The ID of the leave request to retrieve.</param>
+    /// <param name="id">the unique identifier of the leave request .</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A result containing the leave request response DTO.</returns>
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the leave request category details.</returns>[HttpGet("{id}")]
+
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<LeaveRequestResponseDto>), StatusCodes.Status200OK)]
@@ -80,14 +83,15 @@ public class LeaveRequestController(ILeaveRequestService leaveRequestService) : 
         return await _leaveRequestService.UpdateLeaveRequestAsycn(id, leaveRequestDto);
     }
 
+
     /// <summary>
-    /// Deletes a leave request by its ID asynchronously.
+    /// deletes a leave request from the system by their unique identifier.
     /// </summary>
-    /// <param name="id">The ID of the leave request to delete.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A result indicating the outcome of the deletion operation.</returns>
+    /// <param name="id">the unique identifier of the leave request to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -98,13 +102,16 @@ public class LeaveRequestController(ILeaveRequestService leaveRequestService) : 
     }
 
     /// <summary>
-    /// Retrieves all leave requests for a specific employee asynchronously.
+    /// retrieves facilities by their property unique identifier.
     /// </summary>
-    /// <param name="employeeId">The ID of the employee whose leave requests to retrieve.</param>
+    ///<param name="employeeId">the unique identifier of the property</param>  
+    /// <param name = "itemCount" > item count of leave request to retrieve</param>
+    ///<param name="index">index of leave request to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin,Customer" role.
+    /// access is limited to users with the "Manager,Admin" role.
     /// </remarks>
-    /// <returns>A result containing a list of leave request response DTOs for the specific employee.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the property's facilities.</returns>
+
     [HttpGet("employeeId/{employeeId}")]
     [Authorize(Roles = "Admin,Customer")]
     [ProducesResponseType(typeof(Result<List<LeaveRequestResponseDto>>), StatusCodes.Status200OK)]

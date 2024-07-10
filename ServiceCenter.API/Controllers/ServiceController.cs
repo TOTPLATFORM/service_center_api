@@ -28,28 +28,25 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	{
 		return await _ServiceService.AddServiceAsync(ServiceDto);
 	}
-	/// <summary>
-	/// get all Service  in the system.
-	/// </summary>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpGet]
+    /// <summary>
+    /// retrieves all service in the system.
+    /// </summary>
+    /// <param name = "itemCount" > item count of service to retrieve</param>
+    ///<param name="index">index of service to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all service.</returns> [HttpGet]
+    [HttpGet]
 	[ProducesResponseType(typeof(Result<PaginationResult<ServiceResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<PaginationResult<ServiceResponseDto>>> GetAllService(int itemCount , int index)
 	{
 		return await _ServiceService.GetAllServiceAsync(itemCount,index);
 	}
-	/// <summary>
-	/// get Service by id in the system.
-	/// </summary>
-	///<param name="id">id of Service.</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpGet("{id}")]
+    /// <summary>
+    /// retrieves a service  by their unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the service .</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the service category details.</returns>[HttpGet("{id}")]
+
+    [HttpGet("{id}")]
 	[ProducesResponseType(typeof(Result<ServiceGetByIdResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<ServiceGetByIdResponseDto>> GetServiceById(int id)
@@ -74,15 +71,16 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	{
 		return await _ServiceService.UpdateServiceAsync(id, ServiceRequestDto);
 	}
-	/// <summary>
-	/// delete  Service  by id from the system.
-	/// </summary>
-	///<param name="id">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpDelete("{id}")]
+
+    /// <summary>
+    /// deletes a service from the system by their unique identifier.
+    /// </summary>
+    /// <remarks>
+    /// access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <param name="id">the unique identifier of the service to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
+    [HttpDelete("{id}")]
 	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -90,14 +88,15 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	{
 		return await _ServiceService.DeleteServiceAsync(id);
 	}
-	/// <summary>
-	///<param name="text">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <summary>
+    /// searches service  based on a query text.
+    /// </summary>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of services to retrieve</param>
+    ///<param name="index">index of services to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of service  that match the search criteria.</returns>
 
-	[HttpGet("search/{text}")]
+    [HttpGet("search/{text}")]
 	[ProducesResponseType(typeof(Result<PaginationResult<ServiceResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
 	public async Task<Result<PaginationResult<ServiceResponseDto>>> SearchServiceByText(string text, int itemCount, int index)
@@ -105,15 +104,18 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 		return await _ServiceService.SearchServiceByTextAsync(text,itemCount,index);
 	}
 
-	/// <summary>
-	///<param name="id">id of Service.</param>
-	///<param name="ServiceRequestDto">Service dto.</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <summary>
+    /// assigns a service to service package.
+    /// </summary>
+    /// <remarks>
+    /// access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <param name="serviceId">the unique identifier of the service to assign.</param>
+    /// <param name="servicePackageId">the unique identifier of the service package to assign.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
-	[HttpGet("assign")]
+
+    [HttpGet("assign")]
 	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result<List<ServiceGetByIdResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -121,8 +123,15 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 	{
 		return await _ServiceService.AssignServiceToPackagesAsync(serviceId, servicePackageId);
 	}
+    /// <summary>
+    /// retrieves services by their service package unique identifier.
+    /// </summary>
+    ///<param name="servicePackageId">the unique identifier of the service package</param>  
+    /// <param name = "itemCount" > item count of service to retrieve</param>
+    ///<param name="index">index of service to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the service package's services.</returns>
 
-	[HttpGet("search/ByPackage/{servicePackageId}")]
+    [HttpGet("search/ByPackage/{servicePackageId}")]
 	[ProducesResponseType(typeof(Result<PaginationResult<ServiceResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<PaginationResult<ServiceResponseDto>>> GetServicesByPacakge(int servicePackageId, int itemCount, int index)
@@ -130,11 +139,12 @@ public class ServiceController(IServiceService ServiceService) : BaseController
 		return await _ServiceService.GetServicesByPackageAsync(servicePackageId,itemCount,index);
 	}
     /// <summary>
-    ///<param name="serviceCategoryId">Service category id.</param>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// retrieves services by their service category unique identifier.
+    /// </summary>
+    ///<param name="serviceCategoryId">the unique identifier of the service category</param>  
+    /// <param name = "itemCount" > item count of service to retrieve</param>
+    ///<param name="index">index of service to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the service category's services.</returns>
 
     [HttpGet("search/ByCategory/{serviceCategoryId}")]
     [ProducesResponseType(typeof(Result<PaginationResult<ServiceResponseDto>>), StatusCodes.Status200OK)]

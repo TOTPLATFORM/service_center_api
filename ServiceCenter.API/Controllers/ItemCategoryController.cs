@@ -31,14 +31,15 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
         return await _itemCategoryService.AddItemCategoryAsync(itemCategoryDto);
     }
     /// <summary>
-    /// action for add ItemCategory action that take  ItemCategory dto   
+    /// retrieves all item category in the system.
     /// </summary>
-    /// <param name="itemCount"> item count of appoinments to retrieve</param>
-    ///<param name="index">index of appoinments to retrieve</param>
+    /// <param name = "itemCount" > item count of item category to retrieve</param>
+    ///<param name="index">index of item category to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "WarehouseManager,Manager,Admin,ServiceProvider" role.
-    /// </remarks> 
-    /// <returns>result for ItemCategory added successfully.</returns>
+    /// access is limited to users with the "WarehouseManager,Admin,Manager,ServiceProvider" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all item category.</returns> [HttpGet]
+
     [HttpGet]
     [Authorize(Roles = "WarehouseManager,Admin,Manager,ServiceProvider")]
     [ProducesResponseType(typeof(Result<List<ItemCategoryResponseDto>>), StatusCodes.Status200OK)]
@@ -47,13 +48,14 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
         return await _itemCategoryService.GetAllItemCategoryAsync(itemCount,index);
     }
     /// <summary>
-    /// action for get ItemCategory by id that take ItemCategory id.  
-    /// </summary> 
-    /// <param name="id">ItemCategory id</param>
+    /// retrieves a item category  by their unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the item category .</param>
     /// <remarks>
-    /// Access is limited to users with the "WarehouseManager,Manager,Admin,ServiceProvider" role.
-    /// </remarks>
-    /// <returns>result of ItemCategory response dto</returns>
+    /// Access is limited to users with the "Admin,WarehouseManager,Manager" role.
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the item category category details.</returns>[HttpGet("{id}")]
+
     [HttpGet("{id}")]
     [Authorize(Roles = "WarehouseManager,Admin,Manager")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]
@@ -79,14 +81,15 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     {
         return await _itemCategoryService.UpdateItemCategoryAsync(id, itemCategoryDto);
     }
+
     /// <summary>
-    ///  action for remove ItemCategory that take ItemCategory id   
+    /// deletes a item category from the system by their unique identifier.
     /// </summary>
-    /// <param name="id">ItemCategory id</param>
     /// <remarks>
-    /// Access is limited to users with the "WarehouseManager,Manager" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>result of ItemCategory removed successfully </returns>
+    /// <param name="id">the unique identifier of the item category to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "WarehouseManager,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -95,17 +98,17 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
     {
         return await _itemCategoryService.DeleteItemCategoryAsync(id);
     }
-
     /// <summary>
-    /// function to search by ItemCategory name  that take  ItemCategory name
+    /// searches item category  based on a query text.
     /// </summary>
-    /// <param name="text">ItemCategory name</param>
-    /// <param name="itemCount"> item count of appoinments to retrieve</param>
-    ///<param name="index">index of appoinments to retrieve</param>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of item categorys to retrieve</param>
+    ///<param name="index">index of item categorys to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "WarehouseManager,Manager,Admin,ServiceProvider" role.
+    /// access is limited to users with the "WarehouseManager,Admin,Manager,ServiceProvider" role.
     /// </remarks>
-    /// <returns>ItemCategory response dto </returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of item category  that match the search criteria.</returns>
+
 
     [HttpGet("search/{text}")]
     [Authorize(Roles = "WarehouseManager,Admin,Manager,ServiceProvider")]
@@ -116,13 +119,16 @@ public class ItemCategoryController(IItemCategoryService itemCategoryService) : 
         return await _itemCategoryService.SearchItemCategoryByTextAsync(text,itemCount,index);
     }
     /// <summary>
-    /// function to search by Inventory  that take  ItemCategory name
+    /// retrieves facilities by their property unique identifier.
     /// </summary>
-    /// <param name="id">Inventory Id </param>  
+    ///<param name="id">the unique identifier of the property</param>  
+    /// <param name = "itemCount" > item count of item category to retrieve</param>
+    ///<param name="index">index of item category to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "WarehouseManager,Manager,Admin,ServiceProvider" role.
+    /// access is limited to users with the "Manager,Admin" role.
     /// </remarks>
-    /// <returns>ItemCategory response dto </returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the property's facilities.</returns>
+
     [HttpGet("searchByRelation/{id}")]
     [Authorize(Roles = "WarehouseManager,Admin,Manager,ServiceProvider")]
     [ProducesResponseType(typeof(Result<ItemCategoryResponseDto>), StatusCodes.Status200OK)]

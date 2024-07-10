@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ public interface IPerformanceReviewService : IApplicationService, IScopedService
     /// Retrieves all performanceReviews.
     /// </summary>
     /// <returns>The result containing a list of performanceReview response data transfer objects.</returns>
-    public Task<Result<List<PerformanceReviewResponseDto>>> GetAllPerformanceReviewsAsync();
+    public Task<Result<PaginationResult<PerformanceReviewResponseDto>>> GetAllPerformanceReviewsAsync(int itemCount ,int index);
 
     /// <summary>
     /// Retrieves a performanceReview by its ID.

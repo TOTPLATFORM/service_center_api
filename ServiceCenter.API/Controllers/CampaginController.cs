@@ -32,12 +32,14 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 		return await _campaginService.AddCampaginAsync(campaginRequestDto);
 	}
 
-	/// <summary>
-	/// get all campagins to the system.
-	/// </summary>
-	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <summary>
+    /// retrieves all campagin in the system.
+    /// </summary>
+    /// <param name = "itemCount" > item count of campagin to retrieve</param>
+    ///<param name="index">index of campagin to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all campagin.</returns> [HttpGet]
 
-	[HttpGet]
+    [HttpGet]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<PaginationResult<CampaginResponseDto>>> GetAllCampagins(int itemCount, int index)
@@ -45,13 +47,13 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 		return await _campaginService.GetAllCampaginsAsync( itemCount, index);
 	}
 
-	/// <summary>
-	/// get campagin by id to the system.
-	/// </summary>
-	/// <param name="id">id of campagin</param>
-	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <summary>
+    /// retrieves a campagin  by their unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the campagin .</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the campagin category details.</returns>[HttpGet("{id}")]
 
-	[HttpGet("{id}")]
+    [HttpGet("{id}")]
 	[ProducesResponseType(typeof(Result<CampaginGetByIdResposeDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 	public async Task<Result<CampaginGetByIdResposeDto>> GetCampaginById(int id)
@@ -80,7 +82,7 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 	/// <summary>
 	/// update campagin by id to the system.
 	/// </summary>
-	/// <param name="status">The data transfer object containing campagin details for creation.</param>
+	/// <param name="status">campagin status.</param>
 	/// <param name="id">id of campagin.</param>
 	/// <remarks>
 	/// access is limited to users with the "Admin,Manager" role.
@@ -94,16 +96,17 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 	{
 		return await _campaginService.UpdateCampaginStatusAsync(id, status);
 	}
-	/// <summary>
-	/// search  campagin by text in the system.
-	/// </summary>
-	///<param name="text">id</param>
+    /// <summary>
+    /// searches campagin  based on a query text.
+    /// </summary>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of appoinments to retrieve</param>
+    ///<param name="index">index of appoinments to retrieve</param>
 	/// <remarks>
 	/// access is limited to users with the "Manager,Admin" role.
 	/// </remarks>
-	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-
-	[HttpGet("search/{text}")]
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of compagin  that match the search criteria.</returns>
+    [HttpGet("search/{text}")]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<CampaginResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -112,14 +115,15 @@ public class CampaginController(ICampaginService campaginService) : BaseControll
 		return await _campaginService.SearchCampaginByTextAsync(text, itemCount, index);
 	}
 
-	/// <summary>
-	/// delete  campagin by id from the system.
-	/// </summary>
-	///<param name="id">id</param>
-	/// <remarks>
-	/// access is limited to users with the "Manager,admin" role.
-	/// </remarks>
-	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
+    /// <summary>
+    /// deletes a campagin from the system by their unique identifier.
+    /// </summary>
+    /// <remarks>
+    /// access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <param name="id">the unique identifier of the campagin to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
 	[HttpDelete("{id}")]
 	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]

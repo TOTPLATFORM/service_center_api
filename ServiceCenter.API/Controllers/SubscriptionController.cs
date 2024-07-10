@@ -31,14 +31,15 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
         return await _SubscriptionService.AddSubscriptionAsync(SubscriptionDto);
     }
 
-
     /// <summary>
-    /// get all Subscription in the system.
+    /// retrieves all subscription in the system.
     /// </summary>
+    /// <param name = "itemCount" > item count of subscription to retrieve</param>
+    ///<param name="index">index of subscription to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks> 
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all subscription.</returns> [HttpGet]
     [HttpGet]
     [Authorize(Roles = "Admin,Manager,ServiceProvider")]
     [ProducesResponseType(typeof(Result<PaginationResult<SubscriptionResponseDto>>), StatusCodes.Status200OK)]
@@ -47,13 +48,14 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
         return await _SubscriptionService.GetAllSubscriptionAsync(itemCount, index);
     }
     /// <summary>
-    /// get Subscription by id in the system.
+    /// retrieves a subscription  by their unique identifier.
     /// </summary>
-    ///<param name="id">id of Subscription.</param>
+    /// <param name="id">the unique identifier of the subscription .</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// Access is limited to users with the "Admin,Customer,Manager,ServiceProvider" role.
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the subscription category details.</returns>[HttpGet("{id}")]
+
     [HttpGet("{id}")]
     [Authorize(Roles = "Manager,Admin,Customer,ServiceProvider")]
     [ProducesResponseType(typeof(Result<SubscriptionResponseDto>), StatusCodes.Status200OK)]
@@ -80,14 +82,15 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
     {
         return await _SubscriptionService.UpdateSubscriptionAsync(id, SubscriptionRequestDto);
     }
+
     /// <summary>
-    /// delete  Subscription  by id from the system.
+    /// deletes a subscription from the system by their unique identifier.
     /// </summary>
-    ///<param name="id">id</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Manager,Customer" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name="id">the unique identifier of the subscription to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Manager,Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -96,6 +99,17 @@ public class SubscriptionController(ISubscriptionService SubscriptionService) : 
     {
         return await _SubscriptionService.DeleteSubscriptionAsync(id);
     }
+    /// <summary>
+    /// retrieves subscription by their customer unique identifier.
+    /// </summary>
+    ///<param name="customerId">the unique identifier of the customer</param>  
+    /// <param name = "itemCount" > item count of subscription to retrieve</param>
+    ///<param name="index">index of subscription to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Manager,Customer,ServiceProvider" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the customer's subscription.</returns>
+
     [HttpGet("searchByCustomer/{customerId}")]
     [Authorize(Roles = "Manager,Customer,ServiceProvider")]
     [ProducesResponseType(typeof(Result<PaginationResult<SubscriptionResponseDto>>), StatusCodes.Status200OK)]

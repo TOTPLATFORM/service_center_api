@@ -30,12 +30,14 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
         return await _FeedbackService.AddFeedbackAsync(FeedbackDto);
     }
     /// <summary>
-    /// get all Feedback categories in the system.
+    /// retrieves all feedback in the system.
     /// </summary>
+    /// <param name = "itemCount" > item count of feedback to retrieve</param>
+    ///<param name="index">index of feedback to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin,Manager" role.
+    /// access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all feedback.</returns> [HttpGet]
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<FeedbackResponseDto>>), StatusCodes.Status200OK)]
@@ -44,13 +46,14 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
         return await _FeedbackService.GetAllFeedbackAsync( itemCount,  index);
     }
     /// <summary>
-    /// get Feedback by id in the system.
+    /// retrieves a feedback  by their unique identifier.
     /// </summary>
-    ///<param name="id">id of Feedback.</param>
+    /// <param name="id">the unique identifier of the feedback .</param>
     /// <remarks>
     /// Access is limited to users with the "Admin,Manager" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the feedback category details.</returns>[HttpGet("{id}")]
+
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<FeedbackResponseDto>), StatusCodes.Status200OK)]
@@ -59,9 +62,11 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     {
         return await _FeedbackService.GetFeedbackByIdAsync(id);
     }
+    /// <summary>
+    /// updates an existing expense's information.
     /// </summary>
     ///<param name="id">id of Feedback.</param>
-    ///<param name="FeedbackRequestDto">Feedback dto.</param>
+    ///<param name="feedbackDesc">Feedback desc.</param>
     /// <remarks>
     /// Access is limited to users with the "Customer" role.
     /// </remarks>
@@ -75,14 +80,15 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     {
         return await _FeedbackService.UpdateFeedbackDescAsync(id, feedbackDesc);
     }
+
     /// <summary>
-    /// delete  Feedback  by id from the system.
+    /// deletes a feedback from the system by their unique identifier.
     /// </summary>
-    ///<param name="id">id</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin,Customer" role.
+    /// access is limited to users with the "Admin,Customer" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name="id">the unique identifier of the feedback to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin,Customer")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -91,14 +97,16 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     {
         return await _FeedbackService.DeleteFeedbackAsync(id);
     }
-     /// <summary>
-     /// search  feedback by customer in the system.
-     /// </summary>
-     ///<param name="customerId">customer id </param>
-     /// <remarks>
-     /// Access is limited to users with the "Admin,Customer,Manager" role.
-     /// </remarks>
-     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <summary>
+    /// retrieves feedbacks by their customer unique identifier.
+    /// </summary>
+    ///<param name="customerId">the unique identifier of the customer</param>  
+    /// <param name = "itemCount" > item count of feedback to retrieve</param>
+    ///<param name="index">index of feedback to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Manager,Admin,Customer" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the customer's feedback</returns>
     [HttpGet("searchByCustomer/{customerId}")]
     [Authorize(Roles = "Admin,Manager,Customer")]
     [ProducesResponseType(typeof(Result<PaginationResult<FeedbackResponseDto>>), StatusCodes.Status200OK)]
@@ -107,11 +115,14 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
     {
         return await _FeedbackService.GetFeedbacksForSpecificCustomerAsync(customerId, itemCount,  index);
     }
-    /// <summary>
-     /// search  feedback by product in the system.
-     /// </summary>
-     ///<param name="productId">product id  </param>
-     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <summary> 
+    /// retrieves feedbacks by their product unique identifier.
+    /// </summary>
+    ///<param name="productId">the unique identifier of the product</param>  
+    /// <param name = "itemCount" > item count of feedback to retrieve</param>
+    ///<param name="index">index of feedback to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the product's feedback</returns>
+
     [HttpGet("searchByProduct/{productId}")]
     [ProducesResponseType(typeof(Result<PaginationResult<FeedbackResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -120,10 +131,12 @@ public class FeedbackController(IFeedbackService FeedbackService) : BaseControll
         return await _FeedbackService.GetFeedbacksForSpecificProductAsync(productId, itemCount, index);
     }
     /// <summary>
-     /// search  feedback by service in the system.
-     /// </summary>
-     ///<param name="serviceId">service id </param>
-     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// retrieves feedbacks by their service unique identifier.
+    /// </summary>
+    ///<param name="serviceId">the unique identifier of the service</param>  
+    /// <param name = "itemCount" > item count of feedback to retrieve</param>
+    ///<param name="index">index of feedback to retrieve</param>
+    /// <returns>>a task that represents the asynchronous operation, which encapsulates the result containing the service's feedback.</returns>
     [HttpGet("searchByService/{serviceId}")]
     [ProducesResponseType(typeof(Result<PaginationResult<FeedbackResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]

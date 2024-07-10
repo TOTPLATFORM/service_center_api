@@ -15,12 +15,14 @@ public class AppointmentController(IAppointmentService appointmentService) : Bas
     private readonly IAppointmentService _appointmentService = appointmentService;
 
     /// <summary>
-    /// Retrieves all appointments asynchronously.
-    /// </summary>  
+    /// retrieves all applicant in the system.
+    /// </summary>
+    /// <param name = "itemCount" > item count of applicant to retrieve</param>
+    ///<param name="index">index of applicant to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all appointment.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all applicant.</returns> [HttpGet]
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<List<AppointmentResponseDto>>), StatusCodes.Status200OK)]

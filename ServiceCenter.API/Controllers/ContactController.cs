@@ -29,15 +29,17 @@ public class ContactController(IContactService contactService) : BaseController
 	public async Task<Result> AddContact(ContactRequestDto contactRequestDto)
 	{
 		return await _contactService.AddContactAsync(contactRequestDto);
-	}	
-	/// <summary>
-	/// get all contacts in the system.
-	/// </summary>
-	/// <remarks>
-	/// Access is limited to users with the "Admin,Manager" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpGet]
+	}
+    /// <summary>
+    /// retrieves all contact in the system.
+    /// </summary>
+    /// <param name = "itemCount" > item count of contact to retrieve</param>
+    ///<param name="index">index of contact to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Admin,Manager" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all contact.</returns> [HttpGet]
+    [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<ContactResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<PaginationResult<ContactResponseDto>>> GetAllContacts(int itemCount , int index)
@@ -64,13 +66,13 @@ public class ContactController(IContactService contactService) : BaseController
 		return await _contactService.UpdateContactStatusAsync(id, status);
 	}
     /// <summary>
-    /// get contact in the system.
+    /// retrieves a contact  by their unique identifier.
     /// </summary>
-    ///<param name="id">id of contact.</param>
+    /// <param name="id">the unique identifier of the contact .</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin,MAnager" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// Access is limited to users with the "Admin,Manager" role.
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the contact category details.</returns>[HttpGet("{id}")]
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<ContactResponseDto>), StatusCodes.Status200OK)]
@@ -98,13 +100,15 @@ public class ContactController(IContactService contactService) : BaseController
         return await _contactService.UpdateContactAsync(id, contactRequestDto);
     }
     /// <summary>
-    /// search  contact by text in the system.
+    /// searches contact  based on a query text.
     /// </summary>
-    ///<param name="text">id</param>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of contacts to retrieve</param>
+    ///<param name="index">index of contacts to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin,Manager" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of contact  that match the search criteria.</returns>
 
     [HttpGet("search/{text}")]
     [Authorize(Roles = "Admin,Manager")]

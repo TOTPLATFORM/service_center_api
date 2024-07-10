@@ -12,14 +12,14 @@ public class AttendanceController(IAttendanceService attendanceService) : BaseCo
     private readonly IAttendanceService _attendanceService = attendanceService;
 
     /// <summary>
-    /// Retrieves all attendances asynchronously.
+    /// retrieves all applicant in the system.
     /// </summary>
-    /// <param name="itemCount"> item count of appoinments to retrieve</param>
-    ///<param name="index">index of appoinments to retrieve</param>
+    /// <param name = "itemCount" > item count of applicant to retrieve</param>
+    ///<param name="index">index of applicant to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all agent.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all applicant.</returns> [HttpGet]
     [HttpGet]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<AttendanceResponseDto>>), StatusCodes.Status200OK)]
@@ -104,7 +104,6 @@ public class AttendanceController(IAttendanceService attendanceService) : BaseCo
     /// <summary>
     /// Updates an existing attendance by its ID asynchronously.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
     /// <param name="id">The ID of the attendance to update.</param>
     /// <param name="attendanceDto">The DTO representing the updated attendance.</param>
     /// <remarks>
@@ -121,14 +120,13 @@ public class AttendanceController(IAttendanceService attendanceService) : BaseCo
     }
 
     /// <summary>
-    /// Deletes an attendance by its ID asynchronously.
+    /// deletes a attendance from the system by their unique identifier.
     /// </summary>
-    /// <remarks>Available to users with the role: Admin.</remarks>
-    /// <param name="id">The ID of the attendance to delete.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A result indicating the outcome of the deletion operation.</returns>
+    /// <param name="id">the unique identifier of the attendance to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]

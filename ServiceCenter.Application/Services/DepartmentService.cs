@@ -30,6 +30,18 @@ public class DepartmentService(ServiceCenterBaseDbContext dbContext, IMapper map
 	{
 		var result = _mapper.Map<Department>(departmentRequestDto);
 		var center = await _dbContext.Centers.FirstOrDefaultAsync();
+		if (center == null)
+        {
+            _logger.LogError("No center found in the database.");
+            return Result.Invalid(new List<ValidationError>
+            {
+                new ValidationError
+                {
+                     ErrorMessage = "No center found in the database."
+                }
+
+            });
+        }
 		if (result is null)
 		{
 			_logger.LogError("Failed to map DepartmentRequestDto to Department. DepartmentRequestDto: {DepartmentRequestDto}", departmentRequestDto);

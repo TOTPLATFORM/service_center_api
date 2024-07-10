@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -73,12 +76,12 @@ public class RecruitmentRecordService(ServiceCenterBaseDbContext dbContext, IMap
     }
 
     /// <inheritdoc/>
-    public async Task<Result<List<RecruitmentRecordResponseDto>>> GetAllRecruitmentRecordsAsync()
+    public async Task<Result<PaginationResult<RecruitmentRecordResponseDto>>> GetAllRecruitmentRecordsAsync(int itemCount, int index)
     {
         var recruitmentRecords = await _dbContext.RecruitmentRecords
                   .ProjectTo<RecruitmentRecordResponseDto>(_mapper.ConfigurationProvider)
-                  .ToListAsync();
-        _logger.LogInformation("Fetching all recruitmentRecords. Total count: {recruitmentRecords}.", recruitmentRecords.Count);
+                  .GetAllWithPagination( itemCount,index);
+        _logger.LogInformation("Fetching all recruitmentRecords. Total count: {recruitmentRecords}.", recruitmentRecords.Data.Count);
         return Result.Success(recruitmentRecords);
     }
 

@@ -32,13 +32,14 @@ public class OrderController(IOrderService orderService) : BaseController
     {
         return await _orderService.GetAllOrderAsync(status,ItemCount,Index);
     }
-
     /// <summary>
-    /// action for Get an order by id that take order id.
-    /// </summary>
-    /// <param name="id">order id</param>
-    /// <returns>result of order response dto </returns>
-
+     /// retrieves a applicant  by their unique identifier.
+     /// </summary>
+     /// <param name="id">the unique identifier of the applicant .</param>
+     /// <remarks>
+     /// Access is limited to users with the "Admin" role.
+     /// </remarks> 
+     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the applicant category details.</returns>[HttpGet("{id}")]
     [HttpGet("{id:int}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<OrderResponseDto>), StatusCodes.Status200OK)]
@@ -80,16 +81,22 @@ public class OrderController(IOrderService orderService) : BaseController
     }
 
     /// <summary>
-    /// action for get orders by customer id.
-    /// </summary>
-    /// <returns>result of the order response dto after updated successfully</returns>
+    /// retrieves facilities by their property unique identifier.
+    /// </summary>  
+    /// <param name = "itemCount" > item count of applicant to retrieve</param>
+    ///<param name="index">index of applicant to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Customer" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the property's facilities.</returns>
+
     [HttpGet("GetOrdersByCustomerId")]
     [Authorize(Roles = "Customer")]
     [ProducesResponseType(typeof(Result<PaginationResult<OrderResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<PaginationResult<OrderResponseDto>>> GetOrdersByCustomerId(int ItemCount, int Index)
+    public async Task<Result<PaginationResult<OrderResponseDto>>> GetOrdersByCustomerId(int itemCount, int index)
     {
         var customerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        return await _orderService.GetOrdersByCustomerId(customerId, ItemCount, Index);
+        return await _orderService.GetOrdersByCustomerId(customerId, itemCount, index);
     }
 }

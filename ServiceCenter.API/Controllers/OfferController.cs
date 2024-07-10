@@ -42,11 +42,13 @@ public class OfferController(IOfferService OfferService) : BaseController
         return await _OfferService.GetAllOfferAsync(itemCount,index);
     }
     /// <summary>
-    /// action for Get an Offer by id that take Offer id.
+    /// retrieves a offer  by their unique identifier.
     /// </summary>
-    /// <param name="id">Offer id</param>
-    /// <returns>result of Offer response dto </returns>
-
+    /// <param name="id">the unique identifier of the offer .</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin,Manager" role.
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the offer category details.</returns>[HttpGet("{id}")]
     [HttpGet("{id:int}")]
     [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<OfferResponseDto>), StatusCodes.Status200OK)]
@@ -55,6 +57,8 @@ public class OfferController(IOfferService OfferService) : BaseController
     {
         return await _OfferService.GetOfferByIdAsync(id);
     }
+    /// <summary>
+    /// updates an existing offer  by id.
     /// </summary>
     ///<param name="id">id of Offer.</param>
     ///<param name="OfferRequestDto">Offer dto.</param>
@@ -71,15 +75,13 @@ public class OfferController(IOfferService OfferService) : BaseController
     {
         return await _OfferService.UpdateOfferAsync(id, OfferRequestDto);
     }
-
     /// <summary>
-    /// search  offer  by offfer name in the system.
+    /// searches offer  based on a query text.
     /// </summary>
-    ///<param name="text">offer name </param>
-    /// <remarks>
-    /// Access is limited to users with the "Manager" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of offers to retrieve</param>
+    ///<param name="index">index of offers to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of offer  that match the search criteria.</returns>
 
     [HttpGet("search")]
     [ProducesResponseType(typeof(Result<OfferResponseDto>), StatusCodes.Status200OK)]
@@ -88,14 +90,15 @@ public class OfferController(IOfferService OfferService) : BaseController
     {
         return await _OfferService.SearchOfferByTextAsync(text,itemCount,index);
     }
+
     /// <summary>
-    /// delete  Offer  by id from the system.
+    /// deletes a offer from the system by their unique identifier.
     /// </summary>
-    ///<param name="id">id</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name="id">the unique identifier of the offer to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -106,9 +109,13 @@ public class OfferController(IOfferService OfferService) : BaseController
     }
 
     /// <summary>
-    /// action for Get all  products based on the status that take status.
+    /// retrieves products by their offer unique identifier.
     /// </summary>
-    /// <returns>result of list from products response dto.</returns>
+    ///<param name="offerId">the unique identifier of the offer</param>  
+    /// <param name = "itemCount" > item count of offer to retrieve</param>
+    ///<param name="index">index of offer to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the offer's products.</returns>
+
 
     [HttpGet("SearchByOffer")]
     [ProducesResponseType(typeof(Result<List<ProductGetByIdResponseDto>>), StatusCodes.Status200OK)]

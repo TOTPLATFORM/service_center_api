@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ public interface IRecruitmentRecordService : IApplicationService, IScopedService
     /// Retrieves all recruitmentRecords.
     /// </summary>
     /// <returns>The result containing a list of recruitmentRecord response data transfer objects.</returns>
-    public Task<Result<List<RecruitmentRecordResponseDto>>> GetAllRecruitmentRecordsAsync();
+    public Task<Result<PaginationResult<RecruitmentRecordResponseDto>>> GetAllRecruitmentRecordsAsync(int itemCount, int index);
 
     /// <summary>
     /// Retrieves a recruitmentRecord by its ID.

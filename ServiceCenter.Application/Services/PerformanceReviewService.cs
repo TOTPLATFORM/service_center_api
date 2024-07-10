@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Application.ExtensionForServices;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using ServiceCenter.Domain.Entities;
 using ServiceCenter.Infrastructure.BaseContext;
@@ -73,12 +75,12 @@ public class PerformanceReviewService(ServiceCenterBaseDbContext dbContext, IMap
     }
 
     /// <inheritdoc/>
-    public async Task<Result<List<PerformanceReviewResponseDto>>> GetAllPerformanceReviewsAsync()
+    public async Task<Result<PaginationResult<PerformanceReviewResponseDto>>> GetAllPerformanceReviewsAsync(int itemCount,int index)
     {
         var performanceReviews = await _dbContext.PerformanceReviews
                   .ProjectTo<PerformanceReviewResponseDto>(_mapper.ConfigurationProvider)
-                  .ToListAsync();
-        _logger.LogInformation("Fetching all performanceReviews. Total count: {performanceReviews}.", performanceReviews.Count);
+                  .GetAllWithPagination(itemCount,index);
+        _logger.LogInformation("Fetching all performanceReviews. Total count: {performanceReviews}.", performanceReviews.Data.Count);
         return Result.Success(performanceReviews);
     }
 

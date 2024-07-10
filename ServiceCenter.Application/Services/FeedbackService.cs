@@ -174,10 +174,10 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
     }
 
 
-    public async Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificProductAsync(int ProductId, int itemCount, int index)
+    public async Task<Result<PaginationResult<FeedbackResponseDto>>> GetFeedbacksForSpecificProductAsync(int productId, int itemCount, int index)
     {
         var Feedbacks = await _dbContext.Feedbacks
-         .Where(s => s.Product.Id == ProductId)
+         .Where(s => s.Product.Id == productId)
          .ProjectTo<FeedbackResponseDto>(_mapper.ConfigurationProvider)
          .GetAllWithPagination(itemCount, index);
 

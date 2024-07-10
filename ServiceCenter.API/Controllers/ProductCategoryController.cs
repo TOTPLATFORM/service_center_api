@@ -31,27 +31,24 @@ public class ProductCategoryController(IProductCategoryService productCategorySe
         return await _productCategoryService.AddProductCategoryAsync(productCategoryDto);
     }
     /// <summary>
-    /// get all product categories in the system.
+    /// retrieves all product category in the system.
     /// </summary>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name = "itemCount" > item count of product category to retrieve</param>
+    ///<param name="index">index of product category to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all product category.</returns> [HttpGet]
     [HttpGet]
     [ProducesResponseType(typeof(Result<PaginationResult<ProductCategoryResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<PaginationResult<ProductCategoryResponseDto>>> GetAllProductCategories(int itemCount, int index)
     {
         return await _productCategoryService.GetAllProductCategoryAsync(itemCount, index);
     }
-  
+
     /// <summary>
-    /// get all inventories in the system.
+    /// retrieves a product category  by their unique identifier.
     /// </summary>
-    ///<param name="id">id of ProductCategory.</param>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name="id">the unique identifier of the product category .</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the product category category details.</returns>[HttpGet("{id}")]
+
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(Result<ProductCategoryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -60,14 +57,14 @@ public class ProductCategoryController(IProductCategoryService productCategorySe
         return await _productCategoryService.GetProductCategoryByIdAsync(id);
     }
     /// <summary>
-    /// get  product category by id in the system.
+    /// Updates an existing product category by its ID asynchronously.
     /// </summary>
-    ///<param name="id">id of product category.</param>
-    ///<param name="productCategoryRequestDto">product category dto.</param>
+    /// <param name="id">The ID of the product category to update.</param>
+    /// <param name="productCategoryRequestDto">The DTO representing the updated product category.</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
+    /// </remarks>]
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin,Manager,WarehouseManager")]
@@ -77,14 +74,15 @@ public class ProductCategoryController(IProductCategoryService productCategorySe
     {
         return await _productCategoryService.UpdateProductCategoryAsync(id, productCategoryRequestDto);
     }
+
     /// <summary>
-    /// delete  Product category by id from the system.
+    /// deletes a product category from the system by their unique identifier.
     /// </summary>
-    ///<param name="id">id</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name="id">the unique identifier of the product category to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin,Manager ,WarehouseManager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -93,12 +91,13 @@ public class ProductCategoryController(IProductCategoryService productCategorySe
     {
         return await _productCategoryService.DeleteProductCategoryAsync(id);
     }
+    /// <summary>
+    /// searches product category  based on a query text.
     /// </summary>
-    ///<param name="text">id</param>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of product categorys to retrieve</param>
+    ///<param name="index">index of product categorys to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of product category  that match the search criteria.</returns>
 
     [HttpGet("search/{text}")]
     [ProducesResponseType(typeof(Result<PaginationResult<ProductCategoryResponseDto>>), StatusCodes.Status200OK)]
@@ -107,6 +106,15 @@ public class ProductCategoryController(IProductCategoryService productCategorySe
     {
         return await _productCategoryService.SearchProductCategoryByTextAsync(text,itemCount,index );
     }
+    /// <summary>
+    /// assigns a product category to product brand.
+    /// </summary>
+    /// <remarks>
+    /// access is limited to users with the "Admin,Manager,WarehouseManager" role.
+    /// </remarks>
+    /// <param name="productBrandId">the unique identifier of the product brand to assign.</param>
+    /// <param name="productCategory">the unique identifier of the product category to assign.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpGet("assign")]
     [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result<List<ProductCategoryResponseDto>>), StatusCodes.Status200OK)]

@@ -31,11 +31,11 @@ public class CenterController(ICenterService centerService) : BaseController
 		return await _centerService.AddCenterAsync(centerRequestDto);
 	}
 
-	/// <summary>
-	/// get center from the system.
-	/// </summary>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpGet]
+    /// <summary>
+    /// retrieves a center 
+    /// </summary>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the center details.</returns>[HttpGet("{id}")]
+    [HttpGet]
 	[ProducesResponseType(typeof(Result<List<CenterGetByIdResponseDto>>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
 

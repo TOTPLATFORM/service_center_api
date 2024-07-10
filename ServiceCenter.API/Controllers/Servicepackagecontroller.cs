@@ -21,7 +21,8 @@ public class ServicePackageController(IServicePackageService ServicePackageServi
     /// <remarks>
     /// Access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>    [HttpPost]
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>  
+    [HttpPost]
     [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -30,26 +31,26 @@ public class ServicePackageController(IServicePackageService ServicePackageServi
         return await _ServicePackageService.AddServicePackageAsync(ServicePackageDto);
     }
     /// <summary>
-    /// get all ServicePackage  in the system.
+    /// retrieves all service package in the system.
     /// </summary>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name = "itemCount" > item count of service package to retrieve</param>
+    ///<param name="index">index of service package to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all service package.</returns> [HttpGet]
     [HttpGet]
     [ProducesResponseType(typeof(Result<PaginationResult<ServicePackageResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<PaginationResult<ServicePackageResponseDto>>> GetAllServicePackage(int itemCont,int index)
+    public async Task<Result<PaginationResult<ServicePackageResponseDto>>> GetAllServicePackage(int itemCount,int index)
     {
-        return await _ServicePackageService.GetAllServicePackageAsync(itemCont,index);
+        return await _ServicePackageService.GetAllServicePackageAsync(itemCount,index);
     }
+
     /// <summary>
-    /// delete  ServicePackage  by id from the system.
+    /// deletes a service package from the system by their unique identifier.
     /// </summary>
-    ///<param name="id">id</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name="id">the unique identifier of the service package to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -77,13 +78,11 @@ public class ServicePackageController(IServicePackageService ServicePackageServi
         return await _ServicePackageService.UpdateServicePackageAsync(id, ServicePackageRequestDto);
     }
     /// <summary>
-    /// get ServicePackage by id in the system.
+    /// retrieves a service package  by their unique identifier.
     /// </summary>
-    ///<param name="id">id of ServicePackage.</param>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name="id">the unique identifier of the service package .</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the service package category details.</returns>[HttpGet("{id}")]
+
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(Result<ServicePackageGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -91,12 +90,13 @@ public class ServicePackageController(IServicePackageService ServicePackageServi
     {
         return await _ServicePackageService.GetServicePackageByIdAsync(id);
     }
+    /// <summary>
+    /// searches service package  based on a query text.
     /// </summary>
-    ///<param name="text">id</param>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of service packages to retrieve</param>
+    ///<param name="index">index of service packages to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of service package  that match the search criteria.</returns>
 
     [HttpGet("search/{text}")]
     [ProducesResponseType(typeof(Result<ServicePackageResponseDto>), StatusCodes.Status200OK)]

@@ -1,4 +1,5 @@
 ﻿using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ public interface ISalaryService : IApplicationService, IScopedService
     /// Retrieves all salaries.
     /// </summary>
     /// <returns>The result containing a list of salary response data transfer objects.</returns>
-    public Task<Result<List<SalaryResponseDto>>> GetAllSalariesAsync();
+    public Task<Result<PaginationResult<SalaryResponseDto>>> GetAllSalariesAsync(int itemCount, int index);
 
     /// <summary>
     /// Retrieves a salary by its ID.
@@ -55,5 +56,5 @@ public interface ISalaryService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="employeeId">The ID of the employee to retrieve.</param>
     /// <returns>The result containing the salary response data transfer object.</returns>
-    public Task<Result<List<SalaryResponseDto>>> GetSalaryByEmployeeIdAsync(string employeeId);
+    public Task<Result<PaginationResult<SalaryResponseDto>>> GetSalaryByEmployeeIdAsync(string employeeId,int itemCount,int index);
 }

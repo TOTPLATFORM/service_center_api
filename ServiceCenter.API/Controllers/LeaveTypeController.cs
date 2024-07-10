@@ -27,14 +27,16 @@ public class LeaveTypeController(ILeaveTypeService leaveTypeService) : BaseContr
     {
         return await _leaveTypeService.AddLeaveTypeAsync(leaveTypeDto);
     }
-
     /// <summary>
-    /// Retrieves all leave types asynchronously.
+    /// retrieves all leave type in the system.
     /// </summary>
+    /// <param name = "itemCount" > item count of leave type to retrieve</param>
+    ///<param name="index">index of leave type to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A result containing a list of leave type response DTOs.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all leave type.</returns> [HttpGet]
+
     [HttpGet]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<LeaveTypeResponseDto>>), StatusCodes.Status200OK)]
@@ -45,13 +47,14 @@ public class LeaveTypeController(ILeaveTypeService leaveTypeService) : BaseContr
     }
 
     /// <summary>
-    /// Retrieves a leave type by its ID asynchronously.
+    /// retrieves a leave type  by their unique identifier.
     /// </summary>
-    /// <param name="id">The ID of the leave type to retrieve.</param>
+    /// <param name="id">the unique identifier of the leave type .</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A result containing the leave type response DTO.</returns>
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the leave type category details.</returns>[HttpGet("{id}")]
+
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<LeaveTypeResponseDto>), StatusCodes.Status200OK)]
@@ -79,14 +82,15 @@ public class LeaveTypeController(ILeaveTypeService leaveTypeService) : BaseContr
         return await _leaveTypeService.UpdateLeaveTypeAsycn(id, leaveTypeDto);
     }
 
+
     /// <summary>
-    /// Deletes a leave type by its ID asynchronously.
+    /// deletes a leave type from the system by their unique identifier.
     /// </summary>
-    /// <param name="id">The ID of the leave type to delete.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A result indicating the outcome of the deletion operation.</returns>
+    /// <param name="id">the unique identifier of the leave type to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -97,19 +101,19 @@ public class LeaveTypeController(ILeaveTypeService leaveTypeService) : BaseContr
     }
 
     /// <summary>
-    /// Searches for leave types by text asynchronously.
+    /// searches leave type  based on a query text.
     /// </summary>
-    /// <param name="typeName">The text to search for in leave types.</param>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A result containing a list of leave type response DTOs matching the search text.</returns>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of leave type to retrieve</param>
+    ///<param name="index">index of leave type to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of offer  that match the search criteria.</returns>
+
     [HttpGet("search/{typeName}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<LeaveTypeResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<PaginationResult<LeaveTypeResponseDto>>> SearchLeaveTypeByText(string typeName, int itemCount, int index)
+    public async Task<Result<PaginationResult<LeaveTypeResponseDto>>> SearchLeaveTypeByText(string text, int itemCount, int index)
     {
-        return await _leaveTypeService.SearchLeaveTypeByTextAsync(typeName, itemCount, index);
+        return await _leaveTypeService.SearchLeaveTypeByTextAsync(text, itemCount, index);
     }
 }
