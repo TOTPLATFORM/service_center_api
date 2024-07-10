@@ -26,17 +26,16 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 	{
 		return await _customerService.RegisterCustomerAsync(customerRequestDto);
 	}
-	 
-	
-
-	/// <summary>
-	/// get all customers in the system.
-	/// </summary>
-	/// <remarks>
-	/// Access is limited to users with the "Admin,Manager,Sales" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpGet]
+    /// <summary>
+    /// retrieves all customer in the system.
+    /// </summary>
+    /// <param name = "itemCount" > item count of customer to retrieve</param>
+    ///<param name="index">index of customer to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Admin,Manager,Sales" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all customer.</returns> [HttpGet]
+    [HttpGet]
 	[Authorize(Roles = "Admin,Manager,Sales")]
 	[ProducesResponseType(typeof(Result<PaginationResult<CustomerResponseDto>>), StatusCodes.Status200OK)]
 	public async Task<Result<PaginationResult<CustomerResponseDto>>> GetAllCustomers(int itemCount, int index)
@@ -44,15 +43,15 @@ public class CustomerController(ICustomerService customerService) : BaseControll
 		return await _customerService.GetAllCustomersAsync(itemCount, index);
 	}
 
-	/// <summary>
-	/// get customer in the system.
-	/// </summary>
-	///<param name="id">id of customer.</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin,Sales,Manager" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpGet("{id}")]
+    /// <summary>
+    /// retrieves a customer  by their unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the customer .</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin,Manager,Sales" role.
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the customer category details.</returns>[HttpGet("{id}")]
+    [HttpGet("{id}")]
 	[Authorize(Roles = "Admin,Manager,Sales")]
 	[ProducesResponseType(typeof(Result<CustomerResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]

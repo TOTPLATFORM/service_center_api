@@ -28,29 +28,30 @@ public class VendorController(IVendorService vendorService) : BaseController
     {
         return await _vendorService.AddVendorAsync(vendorRequestDto);
     }
-
     /// <summary>
-    /// get all vendor in the system.
+    /// retrieves all vendor in the system.
     /// </summary>
+    /// <param name = "itemCount" > item count of vendor to retrieve</param>
+    ///<param name="index">index of vendor to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all vendor.</returns> [HttpGet]
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<VendorResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<PaginationResult<VendorResponseDto>>> GetAllVendor(int itemcount, int index)
+    public async Task<Result<PaginationResult<VendorResponseDto>>> GetAllVendor(int itemCount, int index)
     {
-        return await _vendorService.GetAllVendorsAsync( itemcount,  index);
+        return await _vendorService.GetAllVendorsAsync( itemCount,  index);
     }
     /// <summary>
-    /// get all vendor in the system.
+    /// retrieves a vendor  by their unique identifier.
     /// </summary>
-    ///<param name="id">id of vendor.</param>
+    /// <param name="id">the unique identifier of the vendor .</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// Access is limited to users with the "Admin,Manager" role.
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the vendor category details.</returns>[HttpGet("{id}")]
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<VendorGetByIdResponseDto>), StatusCodes.Status200OK)]
@@ -79,21 +80,23 @@ public class VendorController(IVendorService vendorService) : BaseController
         return await _vendorService.UpdateVendorAsync(id, vendorRequestDto);
     }
     /// <summary>
-    /// search  vendor by text in the system.
+    /// searches vendor  based on a query text.
     /// </summary>
-    ///<param name="text">id</param>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of vendors to retrieve</param>
+    ///<param name="index">index of vendors to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin,Managerr" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of vendor  that match the search criteria.</returns>
 
     [HttpGet("search/{text}")]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<VendorResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-    public async Task<Result<PaginationResult<VendorResponseDto>>> SerachVendorByText(string text, int itemcount, int index)
+    public async Task<Result<PaginationResult<VendorResponseDto>>> SerachVendorByText(string text, int itemCount, int index)
     {
-        return await _vendorService.SearchVendorByTextAsync(text,  itemcount,  index);
+        return await _vendorService.SearchVendorByTextAsync(text,  itemCount,  index);
     }
  
     }

@@ -31,15 +31,14 @@ public class ApplicantController(IApplicantService applicantService) : BaseContr
     }
 
     /// <summary>
-    /// Retrieves all applicants asynchronously.
+    /// retrieves all applicant in the system.
     /// </summary>
-    /// <param name = "itemCount" > item count of appoinments to retrieve</param>
-    ///<param name="index">index of appoinments to retrieve</param>
+    /// <param name = "itemCount" > item count of applicant to retrieve</param>
+    ///<param name="index">index of applicant to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>  
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all applicant.</returns>
-    [HttpGet]
+    /// access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all applicant.</returns> [HttpGet]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<ApplicantResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -49,14 +48,13 @@ public class ApplicantController(IApplicantService applicantService) : BaseContr
     }
 
     /// <summary>
-    /// Retrieves an applicant by its ID asynchronously.
+    /// retrieves a applicant  by their unique identifier.
     /// </summary>
-    /// <param name="id">The ID of the applicant to retrieve.</param>
+    /// <param name="id">the unique identifier of the applicant .</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
-    /// </remarks>    
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the applicant category details.</returns>
-    [HttpGet("{id}")]
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the applicant category details.</returns>[HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<ApplicantResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -73,7 +71,7 @@ public class ApplicantController(IApplicantService applicantService) : BaseContr
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>]
-  /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<ApplicantResponseDto>), StatusCodes.Status200OK)]
@@ -84,21 +82,21 @@ public class ApplicantController(IApplicantService applicantService) : BaseContr
     }
 
     /// <summary>
-    /// Searches for applicants by text asynchronously.
+    /// searches applicant  based on a query text.
     /// </summary>
-    /// <param name="applicantName">The text to search for in applicant names.</param>
-    /// <param name="itemCount"> item count of appoinments to retrieve</param>
-    ///<param name="index">index of appoinments to retrieve</param>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of applicants to retrieve</param>
+    ///<param name="index">index of applicants to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A result containing a list of applicant response DTOs that match the search criteria.</returns>
-    [HttpGet("search/{applicantName}")]
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of applicant  that match the search criteria.</returns>
+    [HttpGet("search/{text}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<ApplicantResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<PaginationResult<ApplicantResponseDto>>> SearchApplicantByText(string applicantName, int itemCount, int index)
+    public async Task<Result<PaginationResult<ApplicantResponseDto>>> SearchApplicantByText(string text, int itemCount, int index)
     {
-        return await _applicantService.SearchApplicantByTextAsync(applicantName, itemCount, index);
+        return await _applicantService.SearchApplicantByTextAsync(text, itemCount, index);
     }
 }

@@ -27,25 +27,31 @@ public class WareHouseManagerController(IWareHouseManagerService wareHousManager
     public async Task<Result> AddWareHouseManager(WareHouseManagerRequestDto wareHouseManagerRequest)
     {
         return await _wareHousManager.AddWareHouseManagerServiceAsync(wareHouseManagerRequest);
-    }
-
-    /// <summary>
-    /// retrieves all warehouse manager in the system.
-    /// </summary>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all warehouse manager.</returns>
+    }  /// <summary>
+       /// retrieves all wareHouse manager in the system.
+       /// </summary>
+       /// <param name = "itemCount" > item count of wareHouse manager to retrieve</param>
+       ///<param name="index">index of wareHouse manager to retrieve</param>
+       /// <remarks>
+       /// access is limited to users with the "Admin" role.
+       /// </remarks>
+       /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all wareHouse manager.</returns> [HttpGet]
     [HttpGet]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<PaginationResult<WareHouseManagerResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<PaginationResult<WareHouseManagerResponseDto>>> GetAllWareHouseManager(int itemcount, int index)
+    public async Task<Result<PaginationResult<WareHouseManagerResponseDto>>> GetAllWareHouseManager(int itemCount, int index)
     {
-        return await _wareHousManager.GetAllWareHouseManagerServicesAsync( itemcount,  index);
+        return await _wareHousManager.GetAllWareHouseManagerServicesAsync( itemCount,  index);
     }
 
     /// <summary>
-    /// retrieves a warehouse manager  by their unique identifier.
+    /// retrieves a wareHouse manager  by their unique identifier.
     /// </summary>
-    /// <param name="id">the unique identifier of the warehouse manager .</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the warehouse manager category details.</returns>
+    /// <param name="id">the unique identifier of the wareHouse manager .</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the wareHouse manager category details.</returns>[HttpGet("{id}")]
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<WareHouseManagerGetByIdResponseDto>), StatusCodes.Status200OK)]
@@ -74,22 +80,24 @@ public class WareHouseManagerController(IWareHouseManagerService wareHousManager
         return await _wareHousManager.UpdateWareHouseManagerServiceAsync(id, wareHouseManagerRequest);
     }
 
-   
-     /// <summary>
-    /// search  warehouse manager by text in the system.
+
+    /// <summary>
+    /// searches wareHouse manager  based on a query text.
     /// </summary>
-    ///<param name="text">id</param>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of wareHouse managers to retrieve</param>
+    ///<param name="index">index of wareHouse managers to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Manager" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of wareHouse manager  that match the search criteria.</returns>
 
     [HttpGet("search/{text}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<PaginationResult<WareHouseManagerResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<PaginationResult<WareHouseManagerResponseDto>>> SerachWarehouseManagerByText(string text, int itemcount, int index)
+    public async Task<Result<PaginationResult<WareHouseManagerResponseDto>>> SerachWarehouseManagerByText(string text, int itemCount, int index)
     {
-        return await _wareHousManager.SearchWareHouseManagerByTextAsync(text,  itemcount,  index);
+        return await _wareHousManager.SearchWareHouseManagerByTextAsync(text,  itemCount,  index);
     }
 }

@@ -28,14 +28,16 @@ public class SalesController(ISalesService salesService) : BaseController
     {
         return await _salesService.AddSalesAsync(salesRequestDto);
     }
-
     /// <summary>
-    /// get all sales in the system.
+    /// retrieves all sales in the system.
     /// </summary>
+    /// <param name = "itemCount" > item count of sales to retrieve</param>
+    ///<param name="index">index of sales to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all sales.</returns> [HttpGet]
+
     [HttpGet]
     [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<List<SalesResponseDto>>), StatusCodes.Status200OK)]
@@ -44,13 +46,14 @@ public class SalesController(ISalesService salesService) : BaseController
         return await _salesService.GetAllSalesAsync(itemCount,index);
     }
     /// <summary>
-    /// get all sales in the system.
+    /// retrieves a sales  by their unique identifier.
     /// </summary>
-    ///<param name="id">id of sales.</param>
+    /// <param name="id">the unique identifier of the sales .</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the sales category details.</returns>[HttpGet("{id}")]
+
     [HttpGet("{id}")]
     [Authorize(Roles = "Manager,Sales,Admin")]
     [ProducesResponseType(typeof(Result<SalesGetByIdResponseDto>), StatusCodes.Status200OK)]
@@ -79,13 +82,15 @@ public class SalesController(ISalesService salesService) : BaseController
         return await _salesService.UpdateSalesAsync(id, salesRequestDto);
     }
     /// <summary>
-    /// search  sales by text in the system.
+    /// searches sales  based on a query text.
     /// </summary>
-    ///<param name="text">id</param>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of saless to retrieve</param>
+    ///<param name="index">index of saless to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of sales  that match the search criteria.</returns>
 
     [HttpGet("search/{text}")]
     [Authorize(Roles = "Manager,Admin")]

@@ -75,12 +75,11 @@ public class RecruitmentRecordService(ServiceCenterBaseDbContext dbContext, IMap
     }
 
     /// <inheritdoc/>
-    public async Task<Result<PaginationResult<RecruitmentRecordResponseDto>>> GetAllRecruitmentRecordsAsync(int itemCount,int index)
+    public async Task<Result<PaginationResult<RecruitmentRecordResponseDto>>> GetAllRecruitmentRecordsAsync(int itemCount, int index)
     {
         var recruitmentRecords = await _dbContext.RecruitmentRecords
                   .ProjectTo<RecruitmentRecordResponseDto>(_mapper.ConfigurationProvider)
-                  .GetAllWithPagination(itemCount,index);
-
+                  .GetAllWithPagination( itemCount,index);
         _logger.LogInformation("Fetching all recruitmentRecords. Total count: {recruitmentRecords}.", recruitmentRecords.Data.Count);
         return Result.Success(recruitmentRecords);
     }

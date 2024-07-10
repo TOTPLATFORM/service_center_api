@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
@@ -11,30 +12,32 @@ public class PerformanceReviewController(IPerformanceReviewService performanceRe
     private readonly IPerformanceReviewService _performanceReviewService = performanceReviewService;
 
     /// <summary>
-    /// Retrieves all performance reviews.
+    /// retrieves all performance review in the system.
     /// </summary>
+    /// <param name = "itemCount" > item count of performance review to retrieve</param>
+    ///<param name="index">index of performance review to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A result containing a list of performance review response DTOs.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all performance review.</returns> [HttpGet]
+
     [HttpGet]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<PerformanceReviewResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<PerformanceReviewResponseDto>>> GetAllPerformanceReviews()
+    public async Task<Result<PaginationResult<PerformanceReviewResponseDto>>> GetAllPerformanceReviews(int itemCount,int index)
     {
-        return await _performanceReviewService.GetAllPerformanceReviewsAsync();
+        return await _performanceReviewService.GetAllPerformanceReviewsAsync(itemCount,index);
     }
-
     /// <summary>
-    /// Retrieves a performance review by its ID.
+    /// retrieves a performance review  by their unique identifier.
     /// </summary>
-    /// <param name="id">The ID of the performance review to retrieve.</param>
+    /// <param name="id">the unique identifier of the performance review .</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A result containing the performance review response DTO.</returns>
-    [HttpGet("{id}")]
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the performance review category details.</returns>[HttpGet("{id}")]
+     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<PerformanceReviewResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -44,13 +47,13 @@ public class PerformanceReviewController(IPerformanceReviewService performanceRe
     }
 
     /// <summary>
-    /// Adds a new performance review.
+    /// Adds a new performance review asynchronously.
     /// </summary>
-    /// <param name="performanceReviewDto">The DTO containing the performance review details.</param>
+    /// <param name="performance reviewDto">The DTO representing the performance review to create.</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns> a task that represents the asynchronous operation, which encapsulates the result of the addition process .</returns>
     [HttpPost]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -79,13 +82,13 @@ public class PerformanceReviewController(IPerformanceReviewService performanceRe
     }
 
     /// <summary>
-    /// Deletes a performance review by its ID.
+    /// deletes a performance review from the system by their unique identifier.
     /// </summary>
-    /// <param name="id">The ID of the performance review to delete.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A result indicating the success of the deletion.</returns>
+    /// <param name="id">the unique identifier of the performance review to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]

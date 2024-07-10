@@ -27,16 +27,15 @@ public class ReportController(IReportService ReportService) : BaseController
     public async Task<Result> AddReport(ReportRequestDto ReportDto)
     {
         return await _ReportService.AddReportAsync(ReportDto);
-    }
-
-
-    /// <summary>
-    /// get all Report in the system.
-    /// </summary>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    }  /// <summary>
+       /// retrieves all report in the system.
+       /// </summary>
+       /// <param name = "itemCount" > item count of report to retrieve</param>
+       ///<param name="index">index of report to retrieve</param>
+       /// <remarks>
+       /// access is limited to users with the "Admin,MAnager" role.
+       /// </remarks>
+       /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all report.</returns> [HttpGet]
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<ReportResponseDto>>), StatusCodes.Status200OK)]
@@ -45,13 +44,14 @@ public class ReportController(IReportService ReportService) : BaseController
         return await _ReportService.GetAllReportAsync(itemCount,index);
     }
     /// <summary>
-    /// get Report by id in the system.
+    /// retrieves a report  by their unique identifier.
     /// </summary>
-    ///<param name="id">id of Report.</param>
+    /// <param name="id">the unique identifier of the report .</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// Access is limited to users with the "Admin,Manager" role.
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the report category details.</returns>[HttpGet("{id}")]
+
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<ReportResponseDto>), StatusCodes.Status200OK)]
@@ -78,14 +78,15 @@ public class ReportController(IReportService ReportService) : BaseController
     {
         return await _ReportService.UpdateReportAsync(id,task );
     }
+
     /// <summary>
-    /// delete  Report  by id from the system.
+    /// deletes a report from the system by their unique identifier.
     /// </summary>
-    ///<param name="id">id</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Manager,Sales" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name="id">the unique identifier of the report to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Manager,Sales")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -95,7 +96,7 @@ public class ReportController(IReportService ReportService) : BaseController
         return await _ReportService.DeleteReportAsync(id);
     }
     /// <summary>
-    /// Updates an existing  report  by its ID.
+    /// Updates an existing  report status  by its ID.
     /// </summary>
     ///<param name="id">id of Report.</param>
     ///<param name="status"> Report status .</param>

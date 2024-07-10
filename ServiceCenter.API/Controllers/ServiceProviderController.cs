@@ -28,14 +28,15 @@ public class ServiceProviderController(IServiceProviderService serviceproviderSe
     {
         return await _serviceproviderService.AddServiceProviderAsync(serviceproviderRequestDto);
     }
-
     /// <summary>
-    /// get all serviceprovider in the system.
+    /// retrieves all service provider in the system.
     /// </summary>
+    /// <param name = "itemCount" > item count of service provider to retrieve</param>
+    ///<param name="index">index of service provider to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all service provider.</returns> [HttpGet]
     [HttpGet]
     [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result<List<ServiceProviderResponseDto>>), StatusCodes.Status200OK)]
@@ -44,13 +45,14 @@ public class ServiceProviderController(IServiceProviderService serviceproviderSe
         return await _serviceproviderService.GetAllServiceProviderAsync(itemCount,index);
     }
     /// <summary>
-    /// get all serviceprovider in the system.
+    /// retrieves a service provider  by their unique identifier.
     /// </summary>
-    ///<param name="id">id of serviceprovider.</param>
+    /// <param name="id">the unique identifier of the service provider .</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// Access is limited to users with the "Admin,Manager,ServiceProvider" role.
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the service provider category details.</returns>[HttpGet("{id}")]
+
     [HttpGet("{id}")]
     [Authorize(Roles = "Manager,ServiceProvider,Admin")]
     [ProducesResponseType(typeof(Result<ServiceProviderGetByIdResponseDto>), StatusCodes.Status200OK)]
@@ -79,13 +81,15 @@ public class ServiceProviderController(IServiceProviderService serviceproviderSe
         return await _serviceproviderService.UpdateServiceProviderAsync(id, serviceproviderRequestDto);
     }
     /// <summary>
-    /// search  serviceprovider by text in the system.
+    /// searches service provider  based on a query text.
     /// </summary>
-    ///<param name="text">id</param>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of service providers to retrieve</param>
+    ///<param name="index">index of service providers to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of service provider  that match the search criteria.</returns>
 
     [HttpGet("search/{text}")]
     [Authorize(Roles = "Manager,Admin")]

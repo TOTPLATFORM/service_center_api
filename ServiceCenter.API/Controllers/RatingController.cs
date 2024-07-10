@@ -18,7 +18,7 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     /// </summary>
     /// <param name="RatingDto">Rating  dto</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Customer" role.
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
     [HttpPost]
@@ -30,12 +30,14 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
         return await _RatingService.AddRatingAsync(RatingDto);
     }
     /// <summary>
-    /// get all Rating categories in the system.
+    /// retrieves all rating in the system.
     /// </summary>
+    /// <param name = "itemCount" > item count of rating to retrieve</param>
+    ///<param name="index">index of rating to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all rating.</returns> [HttpGet]
     [HttpGet]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<PaginationResult<RatingResponseDto>>), StatusCodes.Status200OK)]
@@ -44,13 +46,13 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
         return await _RatingService.GetAllRatingAsync(itemCount, index);
     }
     /// <summary>
-    /// get Rating by id in the system.
+    /// retrieves a rating  by their unique identifier.
     /// </summary>
-    ///<param name="id">id of Rating.</param>
+    /// <param name="id">the unique identifier of the rating .</param>
     /// <remarks>
     /// Access is limited to users with the "Admin,Manager" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the rating category details.</returns>[HttpGet("{id}")]
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin,Manager")]
     [ProducesResponseType(typeof(Result<RatingResponseDto>), StatusCodes.Status200OK)]
@@ -65,7 +67,7 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     ///<param name="id">id of rating.</param>
     ///<param name="ratingValue">rating value dto.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// Access is limited to users with the "Customer" role.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
@@ -77,14 +79,15 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     {
         return await _RatingService.UpdateRatingValueAsync(id, ratingValue);
     }
+
     /// <summary>
-    /// delete  Rating  by id from the system.
+    /// deletes a rating from the system by their unique identifier.
     /// </summary>
-    ///<param name="id">id</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin,Customer,Manager" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name="id">the unique identifier of the rating to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin,Customer,Manager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -93,12 +96,18 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     {
         return await _RatingService.DeleteRatingAsync(id);
     }
+  
+    /// <summary>
+    /// retrieves ratings by their customer unique identifier.
     /// </summary>
-    ///<param name="text">customer id </param>
+    ///<param name="customerId">the unique identifier of the customer</param>  
+    /// <param name = "itemCount" > item count of rating to retrieve</param>
+    ///<param name="index">index of rating to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Manager,Admin,Customer" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the customer's ratings.</returns>
+
     [HttpGet("searchByCustomer/{customerId}")]
     [Authorize(Roles = "Admin,Manager,Customer")]
     [ProducesResponseType(typeof(Result<PaginationResult<RatingResponseDto>>), StatusCodes.Status200OK)]
@@ -107,12 +116,14 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     {
         return await _RatingService.GetRatingsForSpecificCustomerAsync(customerId, itemCount, index);
     }
+    /// <summary>
+    /// retrieves ratings by their product unique identifier.
     /// </summary>
-    ///<param name="text">product id  </param>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    ///<param name="productId">the unique identifier of the product</param>  
+    /// <param name = "itemCount" > item count of rating to retrieve</param>
+    ///<param name="index">index of rating to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the product's ratings.</returns>
+
     [HttpGet("searchByProduct/{productId}")]
     [ProducesResponseType(typeof(Result<PaginationResult<RatingResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -120,12 +131,15 @@ public class RatingController(IRatingService ratingServiceService) : BaseControl
     {
         return await _RatingService.GetRatingsForSpecificProductAsync(productId, itemCount, index);
     }
+
+    /// <summary>
+    /// retrieves ratings by their service unique identifier.
     /// </summary>
-    ///<param name="text">service id </param>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    ///<param name="serviceId">the unique identifier of the service</param>  
+    /// <param name = "itemCount" > item count of rating to retrieve</param>
+    ///<param name="index">index of rating to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the service's ratings.</returns>
+
     [HttpGet("searchByService/{serviceId}")]
     [ProducesResponseType(typeof(Result<PaginationResult<RatingResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]

@@ -45,15 +45,15 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	{
 		return await _departmentService.GetAllDepartmentsAsync(itemCount,index);
 	}
-	/// <summary>
-	/// get all departments in the system.
-	/// </summary>
-	///<param name="id">id of department.</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin,Manager" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
-	[HttpGet("{id}")]
+    /// <summary>
+    /// retrieves a department  by their unique identifier.
+    /// </summary>
+    /// <param name="id">the unique identifier of the department .</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin,Manager" role.
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the department category details.</returns>[HttpGet("{id}")]
+    [HttpGet("{id}")]
 	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<DepartmentResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -63,12 +63,12 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	}
 
     /// <summary>
-    /// get  department by id in the system.
+    /// updates an existing department's information.
     /// </summary>
-    ///<param name="id">id of department.</param>
-    ///<param name="departmentRequestDto">department dto.</param>
+    /// <param name="id">the unique identifier of the expense to update.</param>
+    /// <param name="departmentRequestDto">the data transfer object containing updated details for the department.</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update process.</returns>
 
@@ -80,16 +80,18 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 	{
 		return await _departmentService.UpdateDepartmentAsync(id, departmentRequestDto);
 	}
-	/// <summary>
-	/// search  department by text in the system.
-	/// </summary>
-	///<param name="text">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <summary>
+    /// searches department  based on a query text.
+    /// </summary>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of departments to retrieve</param>
+    ///<param name="index">index of departments to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of department  that match the search criteria.</returns>
 
-	[HttpGet("search")]
+    [HttpGet("search")]
 	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<DepartmentResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -98,16 +100,19 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 		return await _departmentService.SearchDepartmentByTextAsync(text,itemCount,index);
 	}
 
-	/// <summary>
-	/// get all   department by text in the system.
-	/// </summary>
-	///<param name="text">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin,Manager" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <summary>
+    /// retrieves facilities by their property unique identifier.
+    /// </summary>
+    ///<param name="id">the unique identifier of the property</param>  
+    /// <param name = "itemCount" > item count of department to retrieve</param>
+    ///<param name="index">index of department to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Manager,Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the property's facilities.</returns>
 
-	[HttpGet("searchByRelation")]
+
+    [HttpGet("searchByRelation")]
 	[Authorize(Roles = "Admin,Manager")]
 	[ProducesResponseType(typeof(Result<DepartmentResponseDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -116,16 +121,17 @@ public class DepartmentController(IDepartmentService departmentService) : BaseCo
 		return await _departmentService.GetAllEmployeesForSpecificDepartmentAsync(id,itemCount,index);
 	}
 
-	/// <summary>
-	/// delete  department by id from the system.
-	/// </summary>
-	///<param name="id">id</param>
-	/// <remarks>
-	/// Access is limited to users with the "Admin" role.
-	/// </remarks>
-	/// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
 
-	[HttpDelete("{id}")]
+    /// <summary>
+    /// deletes a department from the system by their unique identifier.
+    /// </summary>
+    /// <remarks>
+    /// access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <param name="id">the unique identifier of the department to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
+
+    [HttpDelete("{id}")]
 	[Authorize(Roles = "Admin")]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
 	[ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]

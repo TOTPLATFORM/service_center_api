@@ -30,27 +30,26 @@ public class ProductController(IProductService productService) : BaseController
         return await _productService.AddProductAsync(productDto);
     }
     /// <summary>
-    /// get all product categories in the system.
+    /// retrieves all product  in the system.
     /// </summary>
+    /// <param name = "itemCount" > item count of product  to retrieve</param>
+    ///<param name="index">index of product  to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all product .</returns> [HttpGet]
+
     [HttpGet]
     [ProducesResponseType(typeof(Result<PaginationResult<ProductGetByIdResponseDto>>), StatusCodes.Status200OK)]
-    public async Task<Result<PaginationResult<ProductGetByIdResponseDto>>> GetAllProduct(int itemCount, int index)
+    public async Task<Result<PaginationResult<ProductGetByIdResponseDto>>> GetAllProducts(int itemCount, int index)
     {
         return await _productService.GetAllProductAsync(itemCount, index);
     }
-  
     /// <summary>
-    /// get product by id in the system.
-    /// </summary>
-    ///<param name="id">id of Product.</param>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+     /// retrieves a product   by their unique identifier.
+     /// </summary>
+     /// <param name="id">the unique identifier of the product  .</param>
+     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the product  category details.</returns>[HttpGet("{id}")]
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(Result<ProductGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -76,14 +75,15 @@ public class ProductController(IProductService productService) : BaseController
     {
         return await _productService.UpdateProductAsync(id, productRequestDto);
     }
+
     /// <summary>
-    /// delete  Product  by id from the system.
+    /// deletes a product  from the system by their unique identifier.
     /// </summary>
-    ///<param name="id">id</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name="id">the unique identifier of the product  to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -93,12 +93,13 @@ public class ProductController(IProductService productService) : BaseController
         return await _productService.DeleteProductAsync(id);
     }
 
+    /// <summary>
+    /// searches product   based on a query text.
     /// </summary>
-    ///<param name="text">id</param>
-    /// <remarks>
-    /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <returns>A task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of product s to retrieve</param>
+    ///<param name="index">index of product s to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of product   that match the search criteria.</returns>
 
     [HttpGet("search/{text}")]
     [ProducesResponseType(typeof(Result<PaginationResult<ProductGetByIdResponseDto>>), StatusCodes.Status200OK)]
@@ -107,6 +108,17 @@ public class ProductController(IProductService productService) : BaseController
     {
         return await _productService.SearchProductByTextAsync(text, itemCount, index);
     }
+    /// <summary>
+    /// retrieves products by their product category unique identifier.
+    /// </summary>
+    ///<param name="categoryId">the unique identifier of the product category</param>  
+    /// <param name = "itemCount" > item count of product  to retrieve</param>
+    ///<param name="index">index of product  to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Manager,Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the product category's products.</returns>
+
     [HttpGet("searchByProductCategory/{categoryId}")]
     [ProducesResponseType(typeof(Result<PaginationResult<ProductGetByIdResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]

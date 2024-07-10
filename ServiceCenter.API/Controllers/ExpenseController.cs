@@ -14,12 +14,14 @@ public class ExpenseController(IExpenseService expenseService) : BaseController
     private readonly IExpenseService _expenseService = expenseService;
 
     /// <summary>
-    /// retrieves all expenses in the system.
+    /// retrieves all expense in the system.
     /// </summary>
+    /// <param name = "itemCount" > item count of expense to retrieve</param>
+    ///<param name="index">index of expense to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all expenses.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all expense.</returns> [HttpGet]
     [HttpGet]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<PaginationResult<ExpenseResponseDto>>), StatusCodes.Status200OK)]

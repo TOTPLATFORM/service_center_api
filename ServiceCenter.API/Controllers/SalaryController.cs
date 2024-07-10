@@ -12,12 +12,14 @@ public class SalaryController(ISalaryService salaryService) : BaseController
     private readonly ISalaryService _salaryService = salaryService;
 
     /// <summary>
-    /// Retrieves all salaries.
+    /// retrieves all salary in the system.
     /// </summary>
+    /// <param name = "itemCount" > item count of salary to retrieve</param>
+    ///<param name="index">index of salary to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin" role.
+    /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>A result containing a list of salary response DTOs.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all salary.</returns> [HttpGet]
     [HttpGet]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<SalaryResponseDto>>), StatusCodes.Status200OK)]
@@ -28,13 +30,14 @@ public class SalaryController(ISalaryService salaryService) : BaseController
     }
 
     /// <summary>
-    /// Retrieves a salary by its ID.
+    /// retrieves a salary  by their unique identifier.
     /// </summary>
+    /// <param name="id">the unique identifier of the salary .</param>
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
-    /// </remarks>
-    /// <param name="id">The ID of the salary to retrieve.</param>
-    /// <returns>A result containing the salary response DTO.</returns>
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the salary category details.</returns>[HttpGet("{id}")]
+
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<SalaryResponseDto>), StatusCodes.Status200OK)]
@@ -80,20 +83,23 @@ public class SalaryController(ISalaryService salaryService) : BaseController
     }
 
     /// <summary>
-    /// Retrieves salaries by employee ID.
+    /// retrieves salaries by their employee unique identifier.
     /// </summary>
-    /// <param name="employeeId">The employee ID to filter salaries.</param>
+    ///<param name="employeeId">the unique identifier of the employee</param>  
+    /// <param name = "itemCount" > item count of salary to retrieve</param>
+    ///<param name="index">index of salary to retrieve</param>
     /// <remarks>
-    /// Access is limited to users with the "Admin,Employee" role.
+    /// access is limited to users with the "Manager,Admin" role.
     /// </remarks>
-    /// <returns>A result containing the salary response DTO.</returns>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the employee's salaries.</returns>
+
     [HttpGet("searchByEmployee/{employeeId}")]
     [Authorize(Roles = "Admin, Employee")]
     [ProducesResponseType(typeof(Result<SalaryResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<SalaryResponseDto>>> GetSalaryByEmployeeId(string employeeId)
+    public async Task<Result<PaginationResult<SalaryResponseDto>>> GetSalaryByEmployeeId(string employeeId,int itemCount,int index)
     {
-        return await _salaryService.GetSalaryByEmployeeIdAsync(employeeId);
+        return await _salaryService.GetSalaryByEmployeeIdAsync(employeeId,itemCount,index);
     }
 
     /// <summary>

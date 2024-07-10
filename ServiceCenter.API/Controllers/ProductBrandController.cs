@@ -30,7 +30,12 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
     {
         return await _productBrandService.AddProductBrandAsync(productBrandDto);
     }
-
+    /// <summary>
+    /// retrieves all product brand in the system.
+    /// </summary>
+    /// <param name = "itemCount" > item count of product brand to retrieve</param>
+    ///<param name="index">index of product brand to retrieve</param>    
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all product brand.</returns> [HttpGet]
     [HttpGet]
     [ProducesResponseType(typeof(Result<PaginationResult<ProductBrandResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<PaginationResult<ProductBrandResponseDto>>> GetAllProductBrands(int itemCount, int index)
@@ -38,10 +43,15 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
         return await _productBrandService.GetAllProductBrandAsync(itemCount, index);
     }
 
-	    /// <summary>
-    /// action for get product brand by id that take product brand id.  
+    /// <summary>
+    /// retrieves a product brand  by their unique identifier.
     /// </summary>
-    /// <returns>result of product brand response dto</returns>
+    /// <param name="id">the unique identifier of the product brand .</param>
+    /// <remarks>
+    /// Access is limited to users with the "Admin" role.
+    /// </remarks> 
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the product brand category details.</returns>[HttpGet("{id}")]
+
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(Result<ProductBrandGetByIdResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -66,11 +76,15 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
     {
         return await _productBrandService.UpdateProductBrandAsync(id, productBrandDto);
     }
+
     /// <summary>
-    ///  action for remove product brand that take product brand id   
+    /// deletes a product brand from the system by their unique identifier.
     /// </summary>
-    /// <param name="id">product brand id</param>
-    /// <returns>result of product brand removed successfully </returns>
+    /// <remarks>
+    /// access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <param name="id">the unique identifier of the product brand to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion process.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
@@ -79,12 +93,14 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
     {
         return await _productBrandService.DeleteProductBrandAsync(id);
     }
-
     /// <summary>
-    /// function to search by ProductBrand name  that take  ProductBrand name
+    /// searches product brand  based on a query text.
     /// </summary>
-    /// <param name="text">ProductBrand name</param>
-    /// <returns>ProductBrand response dto </returns>
+    /// <param name="text">the search query text.</param>
+    /// <param name = "itemCount" > item count of product brands to retrieve</param>
+    ///<param name="index">index of product brands to retrieve</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of product brand  that match the search criteria.</returns>
+
     [HttpGet("search /{text}")]
     [ProducesResponseType(typeof(Result<PaginationResult<ProductBrandResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -92,6 +108,16 @@ public class ProductBrandController(IProductBrandService productBrandService) : 
     {
         return await _productBrandService.SearchProductBrandByTextAsync(text,itemCount,index);
     }
+    /// <summary>
+    /// assigns a product brand to inventory.
+    /// </summary>
+    /// <remarks>
+    /// access is limited to users with the "Admin,Manager,WarehouseManager" role.
+    /// </remarks>
+    /// <param name="productBrandId">the unique identifier of the product brand to assign.</param>
+    /// <param name="inventoryId">the unique identifier of the inventory  to assign.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>
+
     [HttpGet("assign")]
     [Authorize(Roles = "Admin,Manager,WarehouseManager")]
     [ProducesResponseType(typeof(Result<List<ProductBrandResponseDto>>), StatusCodes.Status200OK)]

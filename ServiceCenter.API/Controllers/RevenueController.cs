@@ -16,7 +16,12 @@ public class RevenueController(IRevenueService revenueService) : BaseController
     /// <summary>
     /// retrieves all revenues in the system.
     /// </summary>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all revenues.</returns>
+    /// <param name = "itemCount" > item count of revenues to retrieve</param>
+    ///<param name="index">index of revenues to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "Admin" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all revenues.</returns> [HttpGet]
     [HttpGet]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<PaginationResult<RevenueResponseDto>>), StatusCodes.Status200OK)]
@@ -38,10 +43,15 @@ public class RevenueController(IRevenueService revenueService) : BaseController
     }
 
     /// <summary>
-    /// searches revenues based on a query text.
+    /// searches revenues  based on a query date.
     /// </summary>
-    /// <param name="date">the search query date.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of revenues that match the search criteria.</returns>
+    /// <param name="date">the search query .</param>
+    /// <param name = "itemCount" > item count of revenuess to retrieve</param>
+    ///<param name="index">index of revenuess to retrieve</param>
+    /// <remarks>
+    /// access is limited to users with the "WarehouseManager,Admin,Manager,ServiceProvider" role.
+    /// </remarks>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of revenues  that match the search criteria.</returns>
     [HttpGet("Search/{date}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<PaginationResult<RevenueResponseDto>>), StatusCodes.Status200OK)]

@@ -58,5 +58,5 @@ public interface ISalaryService : IApplicationService, IScopedService
     /// </summary>
     /// <param name="employeeId">The ID of the employee to retrieve.</param>
     /// <returns>The result containing the salary response data transfer object.</returns>
-    public Task<Result<List<SalaryResponseDto>>> GetSalaryByEmployeeIdAsync(string employeeId);
+    public Task<Result<PaginationResult<SalaryResponseDto>>> GetSalaryByEmployeeIdAsync(string employeeId,int itemCount,int index);
 }
