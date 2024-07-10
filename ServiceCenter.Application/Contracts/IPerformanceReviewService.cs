@@ -27,7 +27,7 @@ public interface IPerformanceReviewService : IApplicationService, IScopedService
 	/// <param name = "itemCount" > item count of performance reviewes to retrieve</param>
 	///<param name="index">index of performance reviewes to retrieve</param>
 	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of performance review response DTOs.</returns>
-	public Task<Result<List<PerformanceReviewResponseDto>>> GetAllPerformanceReviewsAsync();
+	public Task<Result<PaginationResult<PerformanceReviewResponseDto>>> GetAllPerformanceReviewsAsync(int itemCount, int index);
 
 	/// <summary>
 	/// asynchronously retrieves a performance review by their unique identifier.

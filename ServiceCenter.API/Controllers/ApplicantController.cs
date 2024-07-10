@@ -38,7 +38,8 @@ public class ApplicantController(IApplicantService applicantService) : BaseContr
     /// <remarks>
     /// access is limited to users with the "Admin" role.
     /// </remarks>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all applicant.</returns> [HttpGet]
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of all applicant.</returns> 
+    [HttpGet]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<ApplicantResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -54,7 +55,8 @@ public class ApplicantController(IApplicantService applicantService) : BaseContr
     /// <remarks>
     /// Access is limited to users with the "Admin" role.
     /// </remarks> 
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the applicant category details.</returns>[HttpGet("{id}")]
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the applicant category details.</returns>
+    [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<ApplicantResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
