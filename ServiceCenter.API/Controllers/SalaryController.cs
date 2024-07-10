@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
@@ -21,9 +22,9 @@ public class SalaryController(ISalaryService salaryService) : BaseController
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<SalaryResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<SalaryResponseDto>>> GetAllSalaries()
+    public async Task<Result<PaginationResult<SalaryResponseDto>>> GetAllSalaries(int itemCount, int index)
     {
-        return await _salaryService.GetAllSalariesAsync();
+        return await _salaryService.GetAllSalariesAsync(itemCount, index);
     }
 
     /// <summary>

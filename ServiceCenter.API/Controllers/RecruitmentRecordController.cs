@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ServiceCenter.Application.Contracts;
 using ServiceCenter.Application.DTOS;
+using ServiceCenter.Core.Entities;
 using ServiceCenter.Core.Result;
 
 namespace ServiceCenter.API.Controllers;
@@ -20,9 +21,9 @@ public class RecruitmentRecordController(IRecruitmentRecordService recruitmentRe
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(Result<List<RecruitmentRecordResponseDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<Result<List<RecruitmentRecordResponseDto>>> GetAllRecruitmentRecords()
+    public async Task<Result<PaginationResult<RecruitmentRecordResponseDto>>> GetAllRecruitmentRecords(int itemCount, int index)
     {
-        return await _recruitmentRecordService.GetAllRecruitmentRecordsAsync();
+        return await _recruitmentRecordService.GetAllRecruitmentRecordsAsync(itemCount, index);
     }
 
     /// <summary>

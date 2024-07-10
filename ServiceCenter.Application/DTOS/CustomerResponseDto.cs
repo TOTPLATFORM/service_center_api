@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 namespace ServiceCenter.Application.DTOS;
 
 public class CustomerResponseDto : BaseUserResponseDto
-
 {
-    public Address Address { get; set; } = default;
+	public string City { get; set; } = "";
+	public string Country { get; set; } = "";
+	public string PostalCode { get; set; } = "";
 
 }

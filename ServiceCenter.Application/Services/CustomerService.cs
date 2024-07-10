@@ -17,16 +17,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using MySqlX.XDevAPI;
 
 namespace ServiceCenter.Application.Services;
 
-public class CustomerService(UserManager<ApplicationUser> userManager,ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<CustomerService> logger, IUserContextService userContext) : ICustomerService
+public class CustomerService(UserManager<ApplicationUser> userManager,ServiceCenterBaseDbContext dbContext, IMapper mapper, ILogger<CustomerService> logger, IUserContextService userContext,IAuthService authService) : ICustomerService
 {
 	private readonly UserManager<ApplicationUser> _userManager = userManager;
 	private readonly ServiceCenterBaseDbContext _dbContext = dbContext;
 	private readonly IMapper _mapper = mapper;
 	private readonly ILogger<CustomerService> _logger = logger;
 	private readonly IUserContextService _userContext = userContext;
+	private readonly IAuthService _authService = authService;
+
 	///<inheritdoc/>
 	public async Task<Result> RegisterCustomerAsync(CustomerRequestDto customerRequestDto)
 	{
@@ -46,18 +49,18 @@ public class CustomerService(UserManager<ApplicationUser> userManager,ServiceCen
         var role = "Customer";
 		var customer = _mapper.Map<Customer>(customerRequestDto);
 		customer.Status = ContactStatus.Customer;
-        await _userManager.CreateAsync(customer, customerRequestDto.Password);
-        if (existsContact is not null)
+
+		var clientAdded = await _authService.RegisterUserWithRoleAsync(customer, customerRequestDto.Password, role);
+
+		if (!clientAdded.IsSuccess)
+		{
+			return Result.Error(clientAdded.Errors.FirstOrDefault());
+		}
+
+		if (existsContact is not null)
 		{
 			_dbContext.Contacts.Remove(existsContact);
-		}
-		var customerAddResult = await  _userManager.AddToRoleAsync(customer, role);
-		if (!customerAddResult.Succeeded)
-		{
-			var errors = customerAddResult.Errors.FirstOrDefault().ToString();
-
-			_logger.LogError($"An error occured while creating user: {errors}");
-			return Result.Error(errors);
+			 await _dbContext.SaveChangesAsync();
 		}
 
 		_logger.LogInformation($"Successfully registered a new user with username {customerRequestDto.UserName}");

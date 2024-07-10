@@ -150,42 +150,23 @@ public class ContactServiceTest
     /// fuction to get contact by id as a test case 
     /// </summary>
     /// <param name="id">contact id </param>
-    //[Theory, TestPriority(2)]
-    //[InlineData("0d133c1a-804f-4548-8f7e-8c3f504844u0")]
-    //[InlineData("nksalknsdn")]
-    //public async Task GetByIdContact(string guidString)
-    //{
-    //    // Arrange
-    //    Guid guid = Guid.Parse(guidString);
-    //    CheckService();
+    [Theory, TestPriority(2)]
+    [InlineData("0d133c1a-804f-4548-8f7e-8c3f504844u0")]
+    [InlineData("nksalknsdn")]
+    public async Task GetByIdContact(string guidString)
+    {
+        // Arrange
+        Guid guid = Guid.Parse(guidString);
+        CheckService();
 
-    //    // Act
-    //    var result = await _contactService.GetContacttByIdAsync(guid);
+        // Act
+        var result = await _contactService.GetContacttByIdAsync(guid);
 
-    //    // Assert
-    //    if (result.IsSuccess)
-    //        Assert.True(result.IsSuccess);
-    //    else
-    //        Assert.False(result.IsSuccess);
-    
-    //}
-    //[Theory, TestPriority(2)]
-    //[InlineData(Guid("0d133c1a-804f-4548-8f7e-8c3f504844u0"))]
-    //[InlineData("nksalknsdn")]
-    //public async Task GetByIdContact(string guidString)
-    //{
-    //    // Arrange
-    //    Guid guid = Guid.Parse(guidString);
-    //    CheckService();
+        // Assert
+        if (result.IsSuccess)
+            Assert.True(result.IsSuccess);
+        else
+            Assert.False(result.IsSuccess);
 
-    //    // Act
-    //    var result = await _contactService.GetContacttByIdAsync(guid);
-
-    //    // Assert
-    //    if (result.IsSuccess)
-    //        Assert.True(result.IsSuccess);
-    //    else
-    //        Assert.False(result.IsSuccess);
-
-    //}
+    }
 }

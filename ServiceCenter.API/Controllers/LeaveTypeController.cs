@@ -76,7 +76,7 @@ public class LeaveTypeController(ILeaveTypeService leaveTypeService) : BaseContr
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<Result<LeaveTypeResponseDto>> UpdateLeaveType(int id, LeaveTypeRequestDto leaveTypeDto)
     {
-        return await _leaveTypeService.UpdateLeaveTypeAsycn(id, leaveTypeDto);
+        return await _leaveTypeService.UpdateLeaveTypeAsync(id, leaveTypeDto);
     }
 
     /// <summary>
