@@ -41,18 +41,6 @@ public class OfferService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
             var service = await _dbContext.Services.FirstOrDefaultAsync(o => o.Id == OfferRequestDto.ServiceId);
             result.Service = service;
         }
-        if (result is null)
-        {
-            _logger.LogError("Failed to map DepartmentRequestDto to Department. DepartmentRequestDto: {@DepartmentRequestDto}", OfferRequestDto);
-
-            return Result.Invalid(new List<ValidationError>
-            {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-            });
-        }
         
         result.CreatedBy = _userContext.Email;
 
@@ -122,22 +110,9 @@ public class OfferService(ServiceCenterBaseDbContext dbContext, IMapper mapper, 
 
         result.ModifiedBy = _userContext.Email;
 
-
         _dbContext.SaveChanges();
 
         var OfferResponse = _mapper.Map<OfferResponseDto>(result);
-        if (OfferResponse is null)
-        {
-            _logger.LogError("Failed to map OfferRequestDto to OfferResponseDto. OfferRequestDto: {@OfferRequestDto}", OfferResponse);
-
-            return Result.Invalid(new List<ValidationError>
-        {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-        });
-        }
 
         _logger.LogInformation("Updated Offer , Id {Id}", id);
 

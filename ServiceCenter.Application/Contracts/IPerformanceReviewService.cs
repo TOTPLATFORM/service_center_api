@@ -10,42 +10,44 @@ using System.Threading.Tasks;
 namespace ServiceCenter.Application.Contracts;
 
 /// <summary>
-/// Service interface for handling performance review-related operations.
+/// provides an interface for performance review-related services that manages performance review data across the application. Inherits from IApplicationService and IScopedService.
 /// </summary>
 public interface IPerformanceReviewService : IApplicationService, IScopedService
 {
-    /// <summary>
-    /// Adds a new performanceReview.
-    /// </summary>
-    /// <param name="performanceReviewRequestDto">The data transfer object containing performanceReview information.</param>
-    /// <returns>The result indicating the success of adding the performanceReview.</returns>
-    public Task<Result> AddPerformanceReviewAsync(PerformanceReviewRequestDto performanceReviewRequestDto);
+	/// <summary>
+	/// asynchronously adds a new performance review to the database.
+	/// </summary>
+	/// <param name="performanceReviewRequestDto">the performance review data transfer object containing the details necessary for creation.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the performance review addition.</returns>
+	public Task<Result> AddPerformanceReviewAsync(PerformanceReviewRequestDto performanceReviewRequestDto);
 
-    /// <summary>
-    /// Retrieves all performanceReviews.
-    /// </summary>
-    /// <returns>The result containing a list of performanceReview response data transfer objects.</returns>
-    public Task<Result<PaginationResult<PerformanceReviewResponseDto>>> GetAllPerformanceReviewsAsync(int itemCount ,int index);
+	/// <summary>
+	/// asynchronously retrieves all performance reviews in the system.
+	/// </summary>
+	/// <param name = "itemCount" > item count of performance reviewes to retrieve</param>
+	///<param name="index">index of performance reviewes to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of performance review response DTOs.</returns>
+	public Task<Result<List<PerformanceReviewResponseDto>>> GetAllPerformanceReviewsAsync();
 
-    /// <summary>
-    /// Retrieves a performanceReview by its ID.
-    /// </summary>
-    /// <param name="id">The ID of the performanceReview to retrieve.</param>
-    /// <returns>The result containing the performanceReview response data transfer object.</returns>
-    public Task<Result<PerformanceReviewResponseDto>> GetPerformanceReviewByIdAsync(int id);
+	/// <summary>
+	/// asynchronously retrieves a performance review by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the performance review to retrieve.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the performance review response DTO.</returns>
+	public Task<Result<PerformanceReviewResponseDto>> GetPerformanceReviewByIdAsync(int id);
 
-    /// <summary>
-    /// Updates a performanceReview by its ID.
-    /// </summary>
-    /// <param name="id">The ID of the performanceReview to update.</param>
-    /// <param name="performanceReviewRequestDto">The data transfer object containing updated performanceReview information.</param>
-    /// <returns>The result containing the updated performanceReview response data transfer object.</returns>
-    public Task<Result<PerformanceReviewResponseDto>> UpdatePerformanceReviewAsync(int id, PerformanceReviewRequestDto performanceReviewRequestDto);
+	/// <summary>
+	/// asynchronously updates the data of an existing performance review.
+	/// </summary>
+	/// <param name="id">the unique identifier of the performance review to update.</param>
+	/// <param name="performanceReviewRequestDto">the performance review data transfer object containing the updated details.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
+	public Task<Result<PerformanceReviewResponseDto>> UpdatePerformanceReviewAsync(int id, PerformanceReviewRequestDto performanceReviewRequestDto);
 
-    /// <summary>
-    /// Removes a performanceReview by its ID.
+   /// <summary>
+    /// asynchronously deletes a performance review from the system by their unique identifier.
     /// </summary>
-    /// <param name="id">The ID of the performanceReview to remove.</param>
-    /// <returns>The result indicating the success of removing the performanceReview.</returns>
+    /// <param name="id">the unique identifier of the performance review to delete.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
     public Task<Result> DeletePerformanceReviewAsync(int id);
 }

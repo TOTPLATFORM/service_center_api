@@ -14,41 +14,44 @@ namespace ServiceCenter.Application.Contracts;
 /// </summary>
 public interface IVendorService : IApplicationService, IScopedService
 {
-    /// <summary>
-    /// function to add vendor that take vendorDto   
-    /// </summary>
-    /// <param name="vendorRequestDto">vendor request dto</param>
-    /// <returns>Vendor added successfully </returns>
-    public Task<Result> AddVendorAsync(VendorRequestDto vendorRequestDto);
+	/// <summary>
+	/// asynchronously adds a new vendor to the database.
+	/// </summary>
+	/// <param name="vendorRequestDto">the vendor data transfer object containing the details necessary for creation.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the vendor addition.</returns>
+	public Task<Result> AddVendorAsync(VendorRequestDto vendorRequestDto);
+	/// <summary>
+	/// asynchronously retrieves all vendors in the system.
+	/// </summary>
+	/// <param name = "itemCount" > item count of vendors to retrieve</param>
+	///<param name="index">index of vendors to retrieve</param>
+	///	<returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of vendor response DTOs.</returns>
 
-    /// <summary>
-    /// function to get all vendor 
-    /// </summary>
-    /// <returns>list all vendorResponseDto </returns>
-    public Task<Result<PaginationResult<VendorResponseDto>>> GetAllVendorsAsync(int itemcount, int index);
+	public Task<Result<PaginationResult<VendorResponseDto>>> GetAllVendorsAsync(int itemCount, int index);
 
-    /// <summary>
-    /// function to get vendor by id that take  vendor id
-    /// </summary>
-    /// <param name="id">vendor id</param>
-    /// <returns>vendor response dto</returns>
-    public Task<Result<VendorGetByIdResponseDto>> GetVendorByIdAsync(string id);
+	/// <summary>
+	/// asynchronously retrieves a vendor by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the vendor to retrieve.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the vendor response DTO.</returns>
+	public Task<Result<VendorGetByIdResponseDto>> GetVendorByIdAsync(string id);
 
-    /// <summary>
-    /// function to update vendor that take VendorRequestDto   
-    /// </summary>
-    /// <param name="id">vendor id</param>
-    /// <param name="vendorRequestDto">vendor dto</param>
-    /// <returns>Updated Vendor </returns>
-    public Task<Result<VendorGetByIdResponseDto>> UpdateVendorAsync(string id, VendorRequestDto vendorRequestDto);
+	/// <summary>
+	/// asynchronously updates the data of an existing vendor.
+	/// </summary>
+	/// <param name="id">the unique identifier of the vendor to update.</param>
+	/// <param name="vendorRequestDto">the vendor data transfer object containing the updated details.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
+	public Task<Result<VendorGetByIdResponseDto>> UpdateVendorAsync(string id, VendorRequestDto vendorRequestDto);
 
-
-    /// <summary>
-    /// function to search vendor by text  that take text   
-    /// </summary>
-    /// <param name="text">text</param>
-    /// <returns>all vendores that contain this text </returns>
-    public Task<Result<PaginationResult<VendorResponseDto>>> SearchVendorByTextAsync(string text, int itemcount, int index);
+	/// <summary>
+	/// asynchronously searches for vendors based on the provided text.
+	/// </summary>
+	/// <param name="text">the text to search within vendor data.</param>
+	/// /// <param name = "itemCount" > item count of depatments to retrieve</param>
+	///<param name="index">index of vendors to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of vendor response DTOs that match the search criteria.</returns>
+	public Task<Result<PaginationResult<VendorResponseDto>>> SearchVendorByTextAsync(string text, int itemcount, int index);
 
     
 }

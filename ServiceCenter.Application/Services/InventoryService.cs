@@ -60,18 +60,6 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 
 		var result = _mapper.Map<Inventory>(inventoryRequestDto);
 
-		if (result is null)
-		{
-			_logger.LogError("Failed to map InventoryRequestDto to Inventory. InventoryRequestDto: {@InevntoryRequestDto}", inventoryRequestDto);
-
-			return Result.Invalid(new List<ValidationError>
-			{
-				new ValidationError
-				{
-					ErrorMessage = "Validation Errror"
-				}
-			});
-		}
 		result.CreatedBy = _userContext.Email;
 
 		result.Branch = branch;
@@ -133,19 +121,6 @@ public class InventoryService(ServiceCenterBaseDbContext dbContext, IMapper mapp
 		await _dbContext.SaveChangesAsync();
 
 		var inventory = _mapper.Map<InventoryResponseDto>(result);
-
-		if (inventory is null)
-		{
-			_logger.LogError("Failed to map InventoryRequestDto to InventoryResponseDto. InventoryRequestDto: {@InventoryRequestDto}", inventory);
-
-			return Result.Invalid(new List<ValidationError>
-			{
-					new ValidationError
-					{
-						ErrorMessage = "Validation Errror"
-					}
-			});
-		}
 
 		_logger.LogInformation("Updated Inventory , Id {Id}", id);
 

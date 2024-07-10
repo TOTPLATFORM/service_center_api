@@ -32,18 +32,6 @@ public class CampaginService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 	{
 		var result = _mapper.Map<Campagin>(campaginRequestDto);
 
-		if (result is null)
-		{
-			_logger.LogError("Failed to map CampaginRequestDto to Campagin. CampaginRequestDto: {@CampaginRequestDto}", campaginRequestDto);
-
-			return Result.Invalid(new List<ValidationError>
-			{
-				new ValidationError
-				{
-					ErrorMessage = "Validation Errror"
-				}
-			});
-		}
 		result.CreatedBy = _userContext.Email;
 
 		_dbContext.Campagins.Add(result);
@@ -114,19 +102,6 @@ public class CampaginService(ServiceCenterBaseDbContext dbContext, IMapper mappe
 		await _dbContext.SaveChangesAsync();
 
 		var campagin = _mapper.Map<CampaginGetByIdResposeDto>(result);
-
-		if (campagin is null)
-		{
-			_logger.LogError("Failed to map CampaginRequestDto to CampaginResponseDto. CampaginRequestDto: {@CampaginRequestDto}", campagin);
-
-			return Result.Invalid(new List<ValidationError>
-			{
-					new ValidationError
-					{
-						ErrorMessage = "Validation Errror"
-					}
-			});
-		}
 
 		_logger.LogInformation("Updated Campagin , Id {Id}", id);
 

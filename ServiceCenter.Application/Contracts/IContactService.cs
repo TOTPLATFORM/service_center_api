@@ -22,10 +22,12 @@ public interface IContactService : IApplicationService, IScopedService
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the contact addition.</returns>
 	public Task<Result> AddContactAsync(ContactRequestDto contactRequestDto);
 
-    /// <summary>
-    /// asynchronously retrieves all contacts in the system.
-    /// </summary>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of contact response DTOs.</returns>
+	/// <summary>
+	/// asynchronously retrieves all contacts in the system.
+	/// </summary>
+	/// <param name = "itemCount" > item count of contacts to retrieve</param>
+	///<param name="index">index of contacts to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of contact response DTOs.</returns>
 	public Task<Result<PaginationResult<ContactResponseDto>>> GetAllContactsAsync(int itemCount,int index);
 
     /// <summary>
@@ -49,10 +51,12 @@ public interface IContactService : IApplicationService, IScopedService
     /// <param name="id">the unique identifier of the contact to retrieve.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the contact response DTO.</returns>
     public Task<Result<ContactResponseDto>> GetContacttByIdAsync(Guid id);
-    /// <summary>
-    /// asynchronously searches for contacts based on the provided text.
-    /// </summary>
-    /// <param name="text">the text to search within contact data.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of contact response DTOs that match the search criteria.</returns>
-    public Task<Result<PaginationResult<ContactResponseDto>>> SearchContactByTextAsync(string text, int itemCount, int index);
+	/// <summary>
+	/// asynchronously searches for contacts based on the provided text.
+	/// </summary>
+	/// <param name="text">the text to search within contact data.</param>
+	/// <param name = "itemCount" > item count of contacts to retrieve</param>
+	///<param name="index">index of contacts to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of contact response DTOs that match the search criteria.</returns>
+	public Task<Result<PaginationResult<ContactResponseDto>>> SearchContactByTextAsync(string text, int itemCount, int index);
 }

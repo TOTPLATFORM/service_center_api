@@ -47,19 +47,6 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 			});
 		}
 
-		if (result is null)
-		{
-			_logger.LogError("Failed to map ServiceRequestDto to Service. ServiceRequestDto: {@ServiceRequestDto}", serviceRequestDto);
-
-			return Result.Invalid(new List<ValidationError>
-			{
-				new ValidationError
-				{
-					ErrorMessage = "Validation Errror"
-				}
-			});
-		}
-
 		var serviceCategory = await _dbContext.ServiceCategories.FindAsync(serviceRequestDto.ServiceCategoryId);
 
 		if (serviceCategory == null)
@@ -157,18 +144,6 @@ public class ServiceService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 		await _dbContext.SaveChangesAsync();
 
 		var ServiceResponse = _mapper.Map<ServiceResponseDto>(result);
-		if (ServiceResponse is null)
-		{
-			_logger.LogError("Failed to map ServiceRequestDto to ServiceResponseDto. ServiceRequestDto: {@ServiceRequestDto}", ServiceResponse);
-
-			return Result.Invalid(new List<ValidationError>
-		{
-				new ValidationError
-				{
-					ErrorMessage = "Validation Errror"
-				}
-		});
-		}
 
 		_logger.LogInformation("Updated Service , Id {Id}", id);
 

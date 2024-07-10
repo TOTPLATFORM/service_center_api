@@ -62,17 +62,6 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
             result.Product = product;
             result.Service = service;        
       
-        if (result is null)
-        {
-            _logger.LogError("Failed to map FeedbackRequestDto to Feedback. FeedbackRequestDto: {@FeedbackRequestDto}", feedbackRequestDto);
-            return Result.Invalid(new List<ValidationError>
-    {
-        new ValidationError
-        {
-            ErrorMessage = "Validation Errror"
-        }
-    });
-        }
         result.CreatedBy = _userContext.Email;
         result.Customer = contact;
 
@@ -125,20 +114,7 @@ public class FeedbackService(ServiceCenterBaseDbContext dbContext, IMapper mappe
         result.ModifiedBy = _userContext.Email;
         await _dbContext.SaveChangesAsync();
   
-           
         var FeedbackResponse = _mapper.Map<FeedbackResponseDto>(result);
-        if (FeedbackResponse is null)
-        {
-            _logger.LogError("Failed to map FeedbackRequestDto to FeedbackResponseDto. FeedbackRequestDto: {@FeedbackRequestDto}", FeedbackResponse);
-
-            return Result.Invalid(new List<ValidationError>
-        {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-        });
-        }
 
         _logger.LogInformation("Updated Feedback , Id {Id}", id);
 

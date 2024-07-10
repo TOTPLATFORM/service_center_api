@@ -43,17 +43,6 @@ public class SubscriptionService(ServiceCenterBaseDbContext dbContext, IMapper m
 
 
         var result = _mapper.Map<Subscription>(SubscriptionRequestDto);
-        if (result is null)
-        {
-            _logger.LogError("Failed to map SubscriptionRequestDto to Subscription. SubscriptionRequestDto: {@SubscriptionRequestDto}", SubscriptionRequestDto);
-            return Result.Invalid(new List<ValidationError>
-    {
-        new ValidationError
-        {
-            ErrorMessage = "Validation Errror"
-        }
-    });
-        }
         result.CreatedBy = _userContext.Email;
         result.Customer = contact;
         _dbContext.Subscriptions.Add(result);
@@ -115,18 +104,6 @@ public class SubscriptionService(ServiceCenterBaseDbContext dbContext, IMapper m
         await _dbContext.SaveChangesAsync();
 
         var SubscriptionResponse = _mapper.Map<SubscriptionResponseDto>(result);
-        if (SubscriptionResponse is null)
-        {
-            _logger.LogError("Failed to map SubscriptionRequestDto to SubscriptionResponseDto. SubscriptionRequestDto: {@SubscriptionRequestDto}", SubscriptionResponse);
-
-            return Result.Invalid(new List<ValidationError>
-        {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-        });
-        }
 
         _logger.LogInformation("Updated Subscription , Id {Id}", id);
 

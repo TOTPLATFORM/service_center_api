@@ -31,17 +31,6 @@ public class ItemCategoryService(ServiceCenterBaseDbContext dbContext, IMapper m
         } 
        
         var result = _mapper.Map<ItemCategory>(ItemCategoryRequestDto);
-        if (result is null)
-        {
-            _logger.LogError("Failed to map ItemCategoryRequestDto to ItemCategory. ItemCategoryRequestDto: {@ItemCategoryRequestDto}", ItemCategoryRequestDto);
-            return Result.Invalid(new List<ValidationError>
-            {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-            });
-        }
         result.Inventories = inventory;
         result.CreatedBy = _userContext.Email;
         _dbContext.ItemCategories.Add(result);
@@ -98,18 +87,6 @@ public class ItemCategoryService(ServiceCenterBaseDbContext dbContext, IMapper m
         await _dbContext.SaveChangesAsync();
 
         var ItemCategoryResponse = _mapper.Map<ItemCategoryResponseDto>(result);
-        if (ItemCategoryResponse is null)
-        {
-            _logger.LogError("Failed to map ItemCategoryRequestDto to ItemCategoryResponseDto. ItemCategoryRequestDto: {@ItemCategoryRequestDto}", ItemCategoryResponse);
-
-            return Result.Invalid(new List<ValidationError>
-            {
-                    new ValidationError
-                    {
-                        ErrorMessage = "Validation Errror"
-                    }
-            });
-        }
 
         _logger.LogInformation("Updated ItemCategory , Id {Id}", id);
 

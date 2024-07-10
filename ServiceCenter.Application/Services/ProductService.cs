@@ -29,17 +29,6 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
     {
         var result = _mapper.Map<Product>(productRequestDto);
         var ProductCategory = await _dbContext.ProductCategories.FirstOrDefaultAsync(m => m.Id == productRequestDto.ProductCategoryId);
-        if (result is null)
-        {
-            _logger.LogError("Failed to map ProductRequestDto to Product. ProductRequestDto: {@ProductRequestDto}", productRequestDto);
-            return Result.Invalid(new List<ValidationError>
-        {
-            new ValidationError
-            {
-                ErrorMessage = "Validation Errror"
-            }
-        });
-        }
         result.CreatedBy = _userContext.Email;
         result.ProductCategory = ProductCategory;
         _dbContext.Products.Add(result);
@@ -95,18 +84,6 @@ public class ProductService(ServiceCenterBaseDbContext dbContext, IMapper mapper
         await _dbContext.SaveChangesAsync();
 
         var ProductResponse = _mapper.Map<ProductGetByIdResponseDto>(result);
-        if (ProductResponse is null)
-        {
-            _logger.LogError("Failed to map ProductRequestDto to ProductResponseDto. ProductRequestDto: {@ProductRequestDto}", ProductResponse);
-
-            return Result.Invalid(new List<ValidationError>
-        {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-        });
-        }
 
         _logger.LogInformation("Updated Product , Id {Id}", id);
 

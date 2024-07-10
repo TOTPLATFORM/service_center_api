@@ -95,19 +95,6 @@ public class VendorService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 
         var vendorResponse = _mapper.Map<VendorGetByIdResponseDto>(vendor);
 
-        if (vendorResponse is null)
-        {
-            _logger.LogError("Failed to map vendorRequestDto to vendorResponseDto. vendorRequestDto: {@vendorRequestDto}", vendorRequestDto);
-
-            return Result.Invalid(new List<ValidationError>
-            {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-            });
-        }
-
         _logger.LogInformation("Updated vendor , Id {Id}", id);
 
         return Result.Success(vendorResponse);

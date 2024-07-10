@@ -24,17 +24,6 @@ public class ItemService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
     {
         var result = _mapper.Map<Item>(ItemRequestDto);
         var category = await _dbContext.ItemCategories.FirstOrDefaultAsync(i => i.Id == ItemRequestDto.CategoryId);
-        if (result is null)
-        {
-            _logger.LogError("Failed to map ItemRequestDto to Item. ItemRequestDto: {@ItemRequestDto}", ItemRequestDto);
-            return Result.Invalid(new List<ValidationError>
-            {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-            });
-        }
         result.Category = category;
         result.CreatedBy = _userContext.Email;
         _dbContext.Items.Add(result);
@@ -91,18 +80,6 @@ public class ItemService(ServiceCenterBaseDbContext dbContext, IMapper mapper, I
         await _dbContext.SaveChangesAsync();
 
         var ItemResponse = _mapper.Map<ItemResponseDto>(result);
-        if (ItemResponse is null)
-        {
-            _logger.LogError("Failed to map ItemRequestDto to ItemResponseDto. ItemRequestDto: {@ItemRequestDto}", ItemResponse);
-
-            return Result.Invalid(new List<ValidationError>
-            {
-                    new ValidationError
-                    {
-                        ErrorMessage = "Validation Errror"
-                    }
-            });
-        }
 
         _logger.LogInformation("Updated Item , Id {Id}", id);
 

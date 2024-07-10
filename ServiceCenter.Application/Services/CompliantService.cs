@@ -46,21 +46,9 @@ public class ComplaintService(ServiceCenterBaseDbContext dbContext, IMapper mapp
         var contact = await _dbContext.Customers.FirstOrDefaultAsync(m => m.Id == ComplaintRequestDto.CustomerId);
         if (contact == null)
         {
-            _logger.LogWarning("Customer Id not found,Id {CustomerId}",ComplaintRequestDto.CustomerId);
-
-            return Result.NotFound(["Customer not found"]);
-        }
-        if (result is null)
-        {
-            _logger.LogError("Failed to map ComplaintRequestDto to Complaint. ComplaintRequestDto: {@ComplaintRequestDto}", ComplaintRequestDto);
-            return Result.Invalid(new List<ValidationError>
-    {
-        new ValidationError
-        {
-            ErrorMessage = "Validation Errror"
-        }
-    });
-        }
+            _logger.LogWarning("Customer Id not found,Id {CustomerId}", ComplaintRequestDto.CustomerId);
+			return Result.NotFound(["Customer not found"]);
+		}
         result.CreatedBy = _userContext.Email;
         result.Customer = contact;
 

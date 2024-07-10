@@ -16,41 +16,45 @@ namespace ServiceCenter.Application.Subscriptions;
 public interface ISubscriptionService : IApplicationService, IScopedService
 {
     /// <summary>
-    /// asynchronously adds a new contract to the database.
+    /// asynchronously adds a new subscription to the database.
     /// </summary>
-    /// <param name="contractRequestDto">the contract data transfer object containing the details necessary for creation.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the contract addition.</returns>
-    public Task<Result> AddSubscriptionAsync(SubscriptionRequestDto contractRequestDto);
+    /// <param name="subscriptionRequestDto">the subscription data transfer object containing the details necessary for creation.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the subscription addition.</returns>
+    public Task<Result> AddSubscriptionAsync(SubscriptionRequestDto subscriptionRequestDto);
 
+	/// <summary>
+	/// asynchronously retrieves all subscriptions in the system.
+	/// </summary>
+	/// <param name = "subscriptionitemCount" > subscription count of subscriptions to retrieve</param>
+	///<param name="index">index of subscriptions to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of subscription response DTOs.</returns>
+	public Task<Result<PaginationResult<SubscriptionResponseDto>>> GetAllSubscriptionAsync(int subscriptionitemCount, int index);
     /// <summary>
-    /// asynchronously retrieves all contracts in the system.
+    /// asynchronously retrieves a subscription by their unique identifier.
     /// </summary>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of contract response DTOs.</returns>
-    public Task<Result<PaginationResult<SubscriptionResponseDto>>> GetAllSubscriptionAsync(int itemCount, int index);
-    /// <summary>
-    /// asynchronously retrieves a contract by their unique identifier.
-    /// </summary>
-    /// <param name="id">the unique identifier of the contract to retrieve.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the contract response DTO.</returns>
+    /// <param name="id">the unique identifier of the subscription to retrieve.</param>
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the subscription response DTO.</returns>
     public Task<Result<SubscriptionResponseDto>> GetSubscriptionByIdAsync(int id);
 
     /// <summary>
-    /// asynchronously updates the data of an existing contract.
+    /// asynchronously updates the data of an existing subscription.
     /// </summary>
-    /// <param name="id">the unique identifier of the contract to update.</param>
-    /// <param name="contractRequestDto">the contract data transfer object containing the updated details.</param>
+    /// <param name="id">the unique identifier of the subscription to update.</param>
+    /// <param name="subscriptionRequestDto">the subscription data transfer object containing the updated details.</param>
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
-    public Task<Result<SubscriptionResponseDto>> UpdateSubscriptionAsync(int id, SubscriptionRequestDto contractRequestDto);
-    /// <summary>
-    /// asynchronously deletes a contract from the system by their unique identifier.
-    /// </summary>
-    /// <param name="id">the unique identifier of the contract to delete.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
-    public Task<Result> DeleteSubscriptionAsync(int id);
+    public Task<Result<SubscriptionResponseDto>> UpdateSubscriptionAsync(int id, SubscriptionRequestDto subscriptionRequestDto);
+	/// <summary>
+	/// asynchronously deletes a subscription from the system by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the subscription to delete.</param>
+	/// <param name = "subscriptionitemCount" > subscription count of subscriptions to retrieve</param>
+	///<param name="index">index of subscriptions to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
+	public Task<Result> DeleteSubscriptionAsync(int id);
     /// <summary>
     /// function to search by Product   that take  Product category name
     /// </summary>
     /// <param name="text">Product  name</param>
     /// <returns>Product response dto </returns>
-    public Task<Result<PaginationResult<SubscriptionResponseDto>>> GetSubscriptionsForSpecificCustomerAsync(string customerId, int itemCount, int index);
+    public Task<Result<PaginationResult<SubscriptionResponseDto>>> GetSubscriptionsForSpecificCustomerAsync(string customerId, int subscriptionitemCount, int index);
 }

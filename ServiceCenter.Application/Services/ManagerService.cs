@@ -116,19 +116,6 @@ public class ManagerService(ServiceCenterBaseDbContext dbContext, IMapper mapper
 
         var managerResponse = _mapper.Map<ManagerGetByIdResponseDto>(manager);
 
-        if (managerResponse is null)
-        {
-            _logger.LogError("Failed to map managerRequestDto to managerResponseDto. managerRequestDto: {@managerRequestDto}", managerRequestDto);
-
-            return Result.Invalid(new List<ValidationError>
-            {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-            });
-        }
-
         _logger.LogInformation("Updated manager , Id {Id}", id);
 
         return Result.Success(managerResponse);

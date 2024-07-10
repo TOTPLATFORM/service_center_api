@@ -14,25 +14,31 @@ namespace ServiceCenter.Application.Contracts;
 /// </summary>
 public interface IExpenseService : IApplicationService, IScopedService
 {
-    /// <summary>
-    /// asynchronously retrieves all expenses in the system.
-    /// </summary>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of expense response DTOs.</returns>
-    public Task<Result<PaginationResult<ExpenseResponseDto>>> GetAllExpensesAsync(int pageSize, int index);
+	/// <summary>
+	/// asynchronously retrieves all expenses in the system.
+	/// </summary>
+	/// <param name = "itemCount" > item count of expenses to retrieve</param>
+	///<param name="index">index of expenses to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of expense response DTOs.</returns>
+	public Task<Result<PaginationResult<ExpenseResponseDto>>> GetAllExpensesAsync(int itemCount, int index);
 
-    /// <summary>
-    /// asynchronously retrieves all expenses based on the provided transaction type.
-    /// </summary>
-    /// <param name="transactionType">the transaction type o get its expenses data.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of expense response DTOs that match the transaction type.</returns>
-    public Task<Result<PaginationResult<ExpenseResponseDto>>> GetAllExpensesByTransactionTypeAsync(TransactionType transactionType, int pageSize, int index);
+	/// <summary>
+	/// asynchronously retrieves all expenses based on the provided transaction type.
+	/// </summary>
+	/// <param name="transactionType">the transaction type o get its expenses data.</param>
+	/// <param name = "itemCount" > item count of expenses to retrieve</param>
+	///<param name="index">index of expenses to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of expense response DTOs that match the transaction type.</returns>
+	public Task<Result<PaginationResult<ExpenseResponseDto>>> GetAllExpensesByTransactionTypeAsync(TransactionType transactionType, int itemCount, int index);
 
-    /// <summary>
-    /// asynchronously searches for expenses based on the provided date.
-    /// </summary>
-    /// <param name="date">the date to search within expense data.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of expense response DTOs that match the search criteria.</returns>
-    public Task<Result<PaginationResult<ExpenseResponseDto>>> SearchExpensesByDateAsync(DateOnly date, int pageSize, int index);
+	/// <summary>
+	/// asynchronously searches for expenses based on the provided date.
+	/// </summary>
+	/// <param name="date">the date to search within expense data.</param>
+	/// <param name = "itemCount" > item count of expenses to retrieve</param>
+	///<param name="index">index of expenses to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of expense response DTOs that match the search criteria.</returns>
+	public Task<Result<PaginationResult<ExpenseResponseDto>>> SearchExpensesByDateAsync(DateOnly date, int itemCount, int index);
 
     /// <summary>
     /// asynchronously adds a new expense to the database.

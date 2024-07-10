@@ -72,17 +72,6 @@ public class RatingService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 
         
        
-        if (result is null)
-        {
-            _logger.LogError("Failed to map RatingRequestDto to Rating. RatingRequestDto: {@RatingRequestDto}", ratingRequestDto);
-            return Result.Invalid(new List<ValidationError>
-    {
-        new ValidationError
-        {
-            ErrorMessage = "Validation Errror"
-        }
-    });
-        }
         result.CreatedBy = _userContext.Email;
         result.Customer = contact;
 
@@ -137,18 +126,6 @@ public class RatingService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 
 
         var RatingResponse = _mapper.Map<RatingResponseDto>(result);
-        if (RatingResponse is null)
-        {
-            _logger.LogError("Failed to map RatingRequestDto to RatingResponseDto. RatingRequestDto: {@RatingRequestDto}", RatingResponse);
-
-            return Result.Invalid(new List<ValidationError>
-        {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-        });
-        }
 
         _logger.LogInformation("Updated Rating , Id {Id}", id);
 

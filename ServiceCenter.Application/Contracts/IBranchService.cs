@@ -21,10 +21,12 @@ public interface IBranchService : IApplicationService, IScopedService
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the branch addition.</returns>
 	public Task<Result> AddBranchAsync(BranchRequestDto branchRequestDto);
 
-    /// <summary>
-    /// asynchronously retrieves all branchs in the system.
-    /// </summary>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of branch response DTOs.</returns>
+	/// <summary>
+	/// asynchronously retrieves all branchs in the system.
+	/// </summary>
+	/// <param name = "itemCount" > item count of branches to retrieve</param>
+	///<param name="index">index of branches to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of branch response DTOs.</returns>
 	public Task<Result<PaginationResult<BranchResponseDto>>> GetAllBranchesAsync(int itemCount, int index);
 
     /// <summary>
@@ -42,12 +44,13 @@ public interface IBranchService : IApplicationService, IScopedService
     /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
 	public Task<Result<BranchGetByIdResponseDto>> UpdateBranchAsync(int id, BranchRequestDto branchRequestDto);
 
-
-    /// <summary>
-    /// asynchronously searches for branchs based on the provided text.
-    /// </summary>
-    /// <param name="text">the text to search within branch data.</param>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of branch response DTOs that match the search criteria.</returns>
+	/// <summary>
+	/// asynchronously searches for branchs based on the provided text.
+	/// </summary>
+	/// <param name="text">the text to search within branch data.</param>
+	/// <param name = "itemCount" > item count of branches to retrieve</param>
+	///<param name="index">index of branches to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of branch response DTOs that match the search criteria.</returns>
 	public Task<Result<PaginationResult<BranchResponseDto>>> SearchBranchByTextAsync(string text, int itemCount, int index);
 
     /// <summary>

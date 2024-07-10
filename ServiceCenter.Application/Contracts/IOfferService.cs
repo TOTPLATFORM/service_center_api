@@ -14,50 +14,59 @@ namespace ServiceCenter.Application.Contracts;
 /// </summary>
 public interface IOfferService : IApplicationService, IScopedService
 {
-    /// <summary>
-    /// function to add  Offer  that take  OfferDto   
-    /// </summary>
-    /// <param name="OfferRequestDto">Offer  request dto</param>
-    /// <returns> Offer  added successfully </returns>
-    public Task<Result> AddOfferAsync(OfferRequestDto OfferRequestDto);
-    /// <summary>
-    /// function to get all Offer  
-    /// </summary>
-    /// <returns>list all Offer  response dto </returns>
-    public Task<Result<PaginationResult<OfferResponseDto>>> GetAllOfferAsync(int itemCount , int index);
-    /// <summary>
-    /// function to get  Offer  by id that take   Offer id
-    /// </summary>
-    /// <param name="id"> Offer  id</param>
-    /// <returns> Offer  response dto</returns>
-    public Task<Result<OfferResponseDto>> GetOfferByIdAsync(int id);
-    /// <summary>
-    /// function to update Offer  that take OfferRequestDto   
-    /// </summary>
-    /// <param name="id">Offer id</param>
-    /// <param name="OfferRequestDto">Offer dto</param>
-    /// <returns>Updated Offer </returns>
-    public Task<Result<OfferResponseDto>> UpdateOfferAsync(int id, OfferRequestDto OfferRequestDto);
+	/// <summary>
+	/// asynchronously adds a new offer to the database.
+	/// </summary>
+	/// <param name="offerRequestDto">the offer data transfer object containing the details necessary for creation.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the offer addition.</returns>
+	public Task<Result> AddOfferAsync(OfferRequestDto offerRequestDto);
 
 	/// <summary>
-	/// function to search by offer name  that take  offer name
+	/// asynchronously retrieves all offers in the system.
 	/// </summary>
-	/// <param name="text">offer name</param>
-	/// <returns>offer response dto </returns>
+	/// <param name = "itemCount" > item count of offeres to retrieve</param>
+	///<param name="index">index of offeres to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of offer response DTOs.</returns>
+	public Task<Result<PaginationResult<OfferResponseDto>>> GetAllOfferAsync(int itemCount , int index);
+
+	/// <summary>
+	/// asynchronously retrieves a offer by their unique identifier.
+	/// </summary>
+	/// <param name="id">the unique identifier of the offer to retrieve.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing the offer response DTO.</returns>
+	public Task<Result<OfferResponseDto>> GetOfferByIdAsync(int id);
+
+	/// <summary>
+	/// asynchronously updates the data of an existing offer.
+	/// </summary>
+	/// <param name="id">the unique identifier of the offer to update.</param>
+	/// <param name="offerRequestDto">the offer data transfer object containing the updated details.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the update operation.</returns>
+	public Task<Result<OfferResponseDto>> UpdateOfferAsync(int id, OfferRequestDto offerRequestDto);
+
+	/// <summary>
+	/// asynchronously searches for offers based on the provided text.
+	/// </summary>
+	/// <param name="text">the text to search within offer data.</param>
+	/// <param name = "itemCount" > item count of offeres to retrieve</param>
+	///<param name="index">index of offeres to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of offer response DTOs that match the search criteria.</returns>
 	public Task<Result<PaginationResult<OfferResponseDto>>> SearchOfferByTextAsync(string text,int itemCount,int index);
 
 	/// <summary>
-	/// function to delete Offer  that take Offer  id   
+	/// asynchronously deletes a offer from the system by their unique identifier.
 	/// </summary>
-	/// <param name="id">Offer  id</param>
-	/// <returns>Offer  removed successfully </returns>
+	/// <param name="id">the unique identifier of the offer to delete.</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result of the deletion operation.</returns>
 	public Task<Result> DeleteOfferAsync(int id);
 
-    /// <summary>
-    /// asynchronously retrieves all products for spicific offer  in the system.
-    /// </summary>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of products response DTOs.</returns>
+	/// <summary>
+	/// asynchronously retrieves all products in the system.
+	/// </summary>
+	/// <param name = "itemCount" > item count of offeres to retrieve</param>
+	///<param name="index">index of offeres to retrieve</param>
+	/// <returns>a task that represents the asynchronous operation, which encapsulates the result containing a list of offer response DTOs.</returns>
 
-    public Task<Result<PaginationResult<ProductGetByIdResponseDto>>> GetProductsByOffer(int offerId,int itemCount,int index);
+	public Task<Result<PaginationResult<ProductGetByIdResponseDto>>> GetProductsByOffer(int offerId,int itemCount,int index);
 
 }

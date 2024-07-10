@@ -31,19 +31,6 @@ public class ServicePackageService(ServiceCenterBaseDbContext dbContext, IMapper
     {
         var result = _mapper.Map<ServicePackage>(ServicePackageRequestDto);
 
-        if (result is null)
-        {
-            _logger.LogError("Failed to map ServicePackageRequestDto to ServicePackage. ServicePackageRequestDto: {@ServicePackageRequestDto}", ServicePackageRequestDto);
-
-            return Result.Invalid(new List<ValidationError>
-            {
-                new ValidationError
-                {
-                   ErrorMessage = "Validation Errror"
-                }
-            });
-        }
-
         result.CreatedBy = _userContext.Email;
 
         _dbContext.ServicePackages.Add(result);
@@ -99,18 +86,6 @@ public class ServicePackageService(ServiceCenterBaseDbContext dbContext, IMapper
         await _dbContext.SaveChangesAsync();
 
         var ServicePackageResponse = _mapper.Map<ServicePackageResponseDto>(result);
-        if (ServicePackageResponse is null)
-        {
-            _logger.LogError("Failed to map ServicePackageRequestDto to ServicePackageResponseDto. ServicePackageRequestDto: {@ServicePackageRequestDto}", ServicePackageResponse);
-
-            return Result.Invalid(new List<ValidationError>
-        {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-        });
-        }
 
         _logger.LogInformation("Updated ServicePackage , Id {Id}", id);
 

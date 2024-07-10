@@ -21,11 +21,13 @@ public interface IAttendanceService : IApplicationService, IScopedService
     /// <returns>The result indicating the success of adding the attendance.</returns>
     public Task<Result> AddAttendanceAsync(AttendanceRequestDto attendanceRequestDto);
 
-    /// <summary>
-    /// Retrieves all attendances asynchronously.
-    /// </summary>
-    /// <returns>The result containing a list of attendance response data transfer objects.</returns>
-    public Task<Result<PaginationResult<AttendanceResponseDto>>> GetAllAttendancesAsync(int itemCount, int index);
+	/// <summary>
+	/// Retrieves all attendances asynchronously.
+	/// </summary>
+	/// <param name = "itemCount" > item count of attendence to retrieve</param>
+	///<param name="index">index of attendence to retrieve</param>
+	/// <returns>The result containing a list of attendance response data transfer objects.</returns>
+	public Task<Result<PaginationResult<AttendanceResponseDto>>> GetAllAttendancesAsync(int itemCount, int index);
 
     /// <summary>
     /// Retrieves an attendance by its ID asynchronously.
@@ -49,12 +51,14 @@ public interface IAttendanceService : IApplicationService, IScopedService
     /// <returns>The result indicating the success of removing the attendance.</returns>
     public Task<Result> DeleteAttendanceAsync(int id);
 
-    /// <summary>
-    /// Gets all attendances for a specific employee asynchronously.
-    /// </summary>
-    /// <param name="employeeId">The ID of the employee.</param>
-    /// <returns>A result containing a list of attendance response data transfer objects.</returns>
-    public Task<Result<PaginationResult<AttendanceResponseDto>>> GetAllAttendancesForSpecificEmployeeAsync(string employeeId, int itemCount, int index);
+	/// <summary>
+	/// Gets all attendances for a specific employee asynchronously.
+	/// </summary>
+	/// <param name="employeeId">The ID of the employee.</param>
+	/// <param name = "itemCount" > item count of attendence to retrieve</param>
+	///<param name="index">index of attendence to retrieve</param>
+	/// <returns>A result containing a list of attendance response data transfer objects.</returns>
+	public Task<Result<PaginationResult<AttendanceResponseDto>>> GetAllAttendancesForSpecificEmployeeAsync(string employeeId, int itemCount, int index);
 
     /// <summary>
     /// Adds a clock-in record for a specific employee asynchronously.

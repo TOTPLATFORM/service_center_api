@@ -30,17 +30,6 @@ public class ProductBrandService(ServiceCenterBaseDbContext dbContext, IMapper m
     public async Task<Result> AddProductBrandAsync(ProductBrandRequestDto productBrandRequestDto)
     {
         var result = _mapper.Map<ProductBrand>(productBrandRequestDto);
-        if (result is null)
-        {
-            _logger.LogError("Failed to map ProductBrandRequestDto to ProductBrand. ProductBrandRequestDto: {@ProductBrandRequestDto}", productBrandRequestDto);
-            return Result.Invalid(new List<ValidationError>
-        {
-            new ValidationError
-            {
-                ErrorMessage = "Validation Errror"
-            }
-        });
-        }
         result.CreatedBy = _userContext.Email;
         _dbContext.ProductBrands.Add(result);
         await _dbContext.SaveChangesAsync();
@@ -97,18 +86,6 @@ public class ProductBrandService(ServiceCenterBaseDbContext dbContext, IMapper m
         await _dbContext.SaveChangesAsync();
 
         var ProductBrandResponse = _mapper.Map<ProductBrandResponseDto>(result);
-        if (ProductBrandResponse is null)
-        {
-            _logger.LogError("Failed to map ProductBrandRequestDto to ProductBrandResponseDto. ProductBrandRequestDto: {@ProductBrandRequestDto}", ProductBrandResponse);
-
-            return Result.Invalid(new List<ValidationError>
-        {
-                new ValidationError
-                {
-                    ErrorMessage = "Validation Errror"
-                }
-        });
-        }
 
         _logger.LogInformation("Updated ProductBrand , Id {Id}", id);
 
