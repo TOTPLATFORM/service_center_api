@@ -31,21 +31,13 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 	{
 
         var branch = _mapper.Map<Branch>(branchRequestDto);
-		var center = await _dbContext.Centers.FirstOrDefaultAsync();
-        if (branch == null)
-        {
-            _logger.LogError("Failed to map BranchRequestDto to Branch. BranchRequestDto: {@BranchRequestDto}", branchRequestDto);
 
-            return Result.Invalid(new List<ValidationError>
-            {
-               new ValidationError
-               {
-                ErrorMessage = "Validation Error"
-               }
-            });
-        }
+		var center = await _dbContext.Centers.FirstOrDefaultAsync();
+       
         branch.CreatedBy = _userContext.Email;
+
 		branch.Center = center;
+
         _dbContext.Branches.Add(branch);
 
         await _dbContext.SaveChangesAsync();
@@ -104,19 +96,6 @@ public class BranchService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 		await _dbContext.SaveChangesAsync();
 
 		var branch = _mapper.Map<BranchGetByIdResponseDto>(result);
-
-		if (branch is null)
-		{
-			_logger.LogError("Failed to map BranchRequestDto to BranchResponseDto. BranchRequestDto: {@BranchRequestDto}", branch);
-
-			return Result.Invalid(new List<ValidationError>
-			{
-					new ValidationError
-					{
-						ErrorMessage = "Validation Errror"
-					}
-			});
-		}
 
 		_logger.LogInformation("Updated Branch , Id {Id}", id);
 

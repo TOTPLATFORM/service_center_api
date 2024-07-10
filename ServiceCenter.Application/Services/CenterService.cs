@@ -44,18 +44,6 @@ public class CenterService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 
 		var result = _mapper.Map<Center>(centerRequestDto);
 
-		if (result is null)
-		{
-			_logger.LogError("Failed to map CenterRequestDto to Center. CenterRequestDto: {@CenterRequestDto}", centerRequestDto);
-
-			return Result.Invalid(new List<ValidationError>
-			{
-				new ValidationError
-				{
-					ErrorMessage = "Validation Errror"
-				}
-			});
-		}
 		result.CreatedBy = _userContext.Email;
 
 		_dbContext.Centers.Add(result);
@@ -112,19 +100,6 @@ public class CenterService(ServiceCenterBaseDbContext dbContext, IMapper mapper,
 		await _dbContext.SaveChangesAsync();
 
 		var center = _mapper.Map<CenterResponseDto>(result);
-
-		if (center is null)
-		{
-			_logger.LogError("Failed to map CenterRequestDto to CenterResponseDto. CenterRequestDto: {@CenterRequestDto}", center);
-
-			return Result.Invalid(new List<ValidationError>
-			{
-					new ValidationError
-					{
-						ErrorMessage = "Validation Errror"
-					}
-			});
-		}
 
 		_logger.LogInformation("Updated Center , Id {Id}", id);
 

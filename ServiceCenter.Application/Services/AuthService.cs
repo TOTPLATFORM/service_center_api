@@ -179,18 +179,6 @@ public class AuthService(UserManager<ApplicationUser> userManager, ILogger<Appli
     }
 
     /// <inheritdoc/>
-    public async Task CreateRoles(List<string> roles)
-    {
-        foreach (var role in roles)
-        {
-            if (!await _roleManager.RoleExistsAsync(role))
-            {
-                await _roleManager.CreateAsync(new IdentityRole { Name = role });
-            }
-        }
-    }
-
-    /// <inheritdoc/>
     public async Task CreateAdminAccount()
     {
         var user = new ApplicationUser
