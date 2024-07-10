@@ -21,7 +21,8 @@ public class ServicePackageController(IServicePackageService ServicePackageServi
     /// <remarks>
     /// Access is limited to users with the "Admin,Manager" role.
     /// </remarks>
-    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>    [HttpPost]
+    /// <returns>a task that represents the asynchronous operation, which encapsulates the result of the addition process.</returns>   
+    [HttpPost]
     [Authorize(Roles = "Manager,Admin")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
