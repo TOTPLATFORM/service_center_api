@@ -15,7 +15,7 @@ public static class ManagerMapping
             .ForMember(dest => dest.DepartmentName, src => src.MapFrom(src => src.Department.DepartmentName));
 
         map.CreateMap<Manager, ManagerGetByIdResponseDto>()
-           .ForPath(dest => dest.BranchName, src => src.MapFrom(src => src.Branch.BranchName))
-           .ForPath(dest => dest.DepartmentName, src => src.MapFrom(src => src.Department.DepartmentName));
+           .ForMember(dest => dest.BranchName, src => src.MapFrom(src => src.Branch.BranchName))
+		   .ForMember(dest => dest.DepartmentName, src => src.MapFrom(src => src.Department.DepartmentName));
 	}
 }
